@@ -149,7 +149,7 @@ class _WalletPageState extends State<WalletPage> {
             ),
           )
         : EmptyPageMessage(
-            message: 'no_transactions'.tr(),
+            title: 'no_transactions'.tr(),
             heightRatio: 0.4,
             onRefresh: cubit.refresh,
           );

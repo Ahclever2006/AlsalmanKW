@@ -187,6 +187,8 @@
     "about_event": "عن الفعالية",
     "interests": "الاهتمامات",
     "search_hint": "ما الذي تبحث عنه؟",
+    "no_search_results_found":"لا يوجد (عناصر) تطابق بحثك",
+    "no_search_results_found_subtitle":"تحقق من خيار التدقيق الإملائي والتصفية للبحث عن كلمة رئيسية مختلفة.",
     "no_results_found": "لا توجد نتائج",
     "no_events_found": "لا يوجد فعاليات بعد",
     "clear_all": "مسح الكل",

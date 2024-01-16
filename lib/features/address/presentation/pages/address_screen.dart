@@ -108,7 +108,7 @@ class _AddressesScreenState extends State<AddressesScreen> {
             : SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
                 child: EmptyPageMessage(
-                    message: '${'no'.tr()} ${'addresses'.tr()}'),
+                    title: '${'no'.tr()} ${'addresses'.tr()}'),
               ),
       ),
     );

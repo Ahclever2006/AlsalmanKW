@@ -359,7 +359,7 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                     ),
                   )
                 : EmptyPageMessage(
-                    message: 'no_products_available',
+                    title: 'no_products_available',
                     heightRatio: 0.6,
                     onRefresh: () => categoryProductsCubit.refresh(
                       categoryId: (subCategoryId != null && subCategoryId != -1)

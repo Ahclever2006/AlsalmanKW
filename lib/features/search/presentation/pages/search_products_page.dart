@@ -101,8 +101,11 @@ class _SearchProductsPageState extends State<SearchProductsPage> {
 
         if (state.products?.data?.products?.isNotEmpty != true)
           return const EmptyPageMessage(
-            message: 'no_results_found',
-            textColor: Colors.black,
+            title: 'no_search_results_found',
+            subTitle: "no_search_results_found_subtitle",
+            svgImage: 'water_glass_icon',
+            isSVG: false,
+            textColor: AppColors.PRIMARY_COLOR_DARK,
           );
 
         var products = state.products!.data!.products;

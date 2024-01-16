@@ -121,7 +121,7 @@ class SubCategoriesBottomSheet extends StatelessWidget {
                   );
                 } else
                   return const EmptyPageMessage(
-                    message: 'no_sub_categories_available',
+                    title: 'no_sub_categories_available',
                     heightRatio: 0.3,
                   );
               },

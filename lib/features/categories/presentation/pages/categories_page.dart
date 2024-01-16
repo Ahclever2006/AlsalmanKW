@@ -116,7 +116,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
             ],
           )
         : EmptyPageMessage(
-            message: 'no_categories_available',
+            title: 'no_categories_available',
             onRefresh: () => categoriesCubit.refresh(),
           );
   }

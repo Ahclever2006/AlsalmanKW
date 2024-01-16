@@ -187,6 +187,8 @@
     "about_event": "About Event",
     "interests": "Interests",
     "search_hint": "what are you looking for",
+    "no_search_results_found":"No (Items) Match Your Search",
+    "no_search_results_found_subtitle":"Check your spelling and filtering option for search for a different keyword.",
     "no_results_found": "No results found",
     "no_events_found": "No events found",
     "clear_all": "CLEAR ALL",

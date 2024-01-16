@@ -181,7 +181,7 @@ class _BrandProductsPageState extends State<BrandProductsPage> {
             ),
           )
         : EmptyPageMessage(
-            message: 'no_products_available',
+            title: 'no_products_available',
             onRefresh: () =>
                 brandProductsCubit.refresh(brandId: widget.brandId),
           );

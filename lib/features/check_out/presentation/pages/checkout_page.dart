@@ -242,7 +242,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       children: [
                         EmptyPageMessage(
                             heightRatio: 0.5,
-                            message: '${'no'.tr()} ${'addresses'.tr()}'),
+                            title: '${'no'.tr()} ${'addresses'.tr()}'),
                         DefaultButton(
                             label: 'add_address'.tr(),
                             onPressed: () => _goToAddAddress(context))

@@ -153,7 +153,7 @@ class _OrdersPageState extends State<OrdersPage>
                 )),
           )
         : EmptyPageMessage(
-            message: 'no_current_orders_available',
+            title: 'no_current_orders_available',
             onRefresh: () => orderCubit.refreshCurrentOrders(),
           );
   }
@@ -194,7 +194,7 @@ class _OrdersPageState extends State<OrdersPage>
                 )),
           )
         : EmptyPageMessage(
-            message: 'no_previous_orders_available',
+            title: 'no_previous_orders_available',
             onRefresh: () => orderCubit.refreshPreviousOrders(),
           );
   }

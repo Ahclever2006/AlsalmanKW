@@ -81,7 +81,7 @@ class TopicPage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: content?.isNotEmpty != true
                       ? EmptyPageMessage(
-                          message: 'no_data_found',
+                          title: 'no_data_found',
                           onRefresh: () => cubit.refresh(id),
                         )
                       : _buildAboutUsText(content!),

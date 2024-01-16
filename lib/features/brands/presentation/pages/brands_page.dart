@@ -93,7 +93,7 @@ class _BrandsPageState extends State<BrandsPage> {
               _goToBrandProductsPage(context, brand.id ?? 0, brand.name ?? '');
             })
         : EmptyPageMessage(
-            message: 'no_brands_available',
+            title: 'no_brands_available',
             onRefresh: () => brandsCubit.refresh(),
           );
   }

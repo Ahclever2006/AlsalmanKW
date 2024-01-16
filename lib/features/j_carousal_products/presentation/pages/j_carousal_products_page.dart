@@ -192,7 +192,7 @@ class _CategoryProductsPageState extends State<JCarousalProductsPage> {
               )
             : const SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(),
-                child: EmptyPageMessage(message: 'no_products_available'),
+                child: EmptyPageMessage(title: 'no_products_available'),
               ),
       ),
     );

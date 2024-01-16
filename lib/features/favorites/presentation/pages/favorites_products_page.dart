@@ -136,7 +136,7 @@ class _FavoritesProductsPageState extends State<FavoritesProductsPage> {
           )
         : EmptyPageMessage(
             heightRatio: 0.6,
-            message: '${'no'.tr()} ${'favorites'.tr()}',
+            title: '${'no'.tr()} ${'favorites'.tr()}',
             onRefresh: cubit.refresh,
           );
   }

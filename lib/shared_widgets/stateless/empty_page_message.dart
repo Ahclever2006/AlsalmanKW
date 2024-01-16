@@ -1,3 +1,4 @@
+import 'package:alsalman_app/shared_widgets/stateless/subtitle_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -12,22 +13,28 @@ class EmptyPageMessage extends StatelessWidget {
   ///`heightRatio` from `0.0` to `1.0`
   const EmptyPageMessage({
     Key? key,
-    String? message = 'Empty',
+    String? title = 'Empty',
+    String? subTitle,
     String? svgImage,
+    bool isSVG = true,
     double heightRatio = 0.8,
     Color? textColor,
     RefreshCallback? onRefresh,
-  })  : assert(message != null || svgImage != null,
-            "message or svgImage must be not null"),
-        _message = message,
+  })  : assert(title != null || svgImage != null,
+            "title or svgImage must be not null"),
+        _title = title,
+        _subTitle = subTitle,
         _svgImage = svgImage,
+        _isSVG = isSVG,
         _heightRatio = heightRatio,
         _textColor = textColor,
         _onRefresh = onRefresh,
         super(key: key);
 
-  final String? _message;
+  final String? _title;
+  final String? _subTitle;
   final String? _svgImage;
+  final bool _isSVG;
   bool get _isLink => _svgImage?.contains('http') ?? false;
 
   final double _heightRatio;
@@ -37,8 +44,12 @@ class EmptyPageMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final height = context.height;
-    final emptyMessageWidget =
-        _buildEmptyMessageContent(context, height, message: _message);
+    final emptyMessageWidget = _buildEmptyMessageContent(
+      context,
+      height,
+      title: _title,
+      subTitle: _subTitle,
+    );
 
     final normalEmptyMessage = _onRefresh == null
         ? emptyMessageWidget
@@ -65,7 +76,7 @@ class EmptyPageMessage extends StatelessWidget {
             : _buildEmptyMessageContent(
                 context,
                 height,
-                message: 'connection_error'.tr(),
+                title: 'connection_error'.tr(),
                 showTryAgainButton: true,
               );
       },
@@ -75,41 +86,40 @@ class EmptyPageMessage extends StatelessWidget {
   Widget _buildEmptyMessageContent(
     BuildContext context,
     double height, {
-    String? message,
+    String? title,
+    String? subTitle,
     bool showTryAgainButton = false,
   }) {
     const assetsPath = "lib/res/assets/";
 
-    Widget child = Container(
-      alignment: Alignment.center,
-      width: double.infinity,
-      height: context.height * 0.18,
-      margin: const EdgeInsets.symmetric(horizontal: 16.0),
-      // decoration: const BoxDecoration(
-      //   color: AppColors.PRIMARY_COLOR_LIGHT,
-      //   borderRadius: BorderRadius.all(Radius.circular(10.0)),
-      // ),
-      child: TitleText(
-        text: message ?? 'Empty',
-        textAlign: TextAlign.center,
-        color: _textColor,
-      ),
+    Widget child = TitleText(
+      text: title ?? 'Empty',
+      textAlign: TextAlign.center,
+      color: _textColor,
     );
 
     if (_svgImage != null)
       child = Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _isLink
-              ? SvgPicture.network(
-                  _svgImage!,
-                  height: height * (_heightRatio - .40),
-                )
-              : SvgPicture.asset(
-                  '$assetsPath$_svgImage.svg',
-                  height: height * (_heightRatio - .40),
-                ),
+          _isSVG
+              ? _isLink
+                  ? SvgPicture.network(
+                      _svgImage!,
+                      height: height * (_heightRatio - .40),
+                    )
+                  : SvgPicture.asset(
+                      '$assetsPath$_svgImage.svg',
+                      height: height * (_heightRatio - .40),
+                    )
+              : Image.asset('$assetsPath$_svgImage.png'),
           child,
+          if (subTitle != null)
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 32.0, vertical: 12.0),
+              child: SubtitleText(text: subTitle, textAlign: TextAlign.center),
+            ),
           if (showTryAgainButton) _buildTryAgainButton(),
         ],
       );
