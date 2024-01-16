@@ -18,12 +18,12 @@ class ProductCard extends StatefulWidget {
     required this.oldPrice,
     required this.imageUrl,
     required this.onPress,
-    required this.onAddPress,
+    this.onAddPress,
     required this.size,
     required this.discount,
     required this.isOutOfStock,
     required this.isSubscribedBackInStock,
-    this.isShowAddToCart = true,
+    this.isShowAddToCart = false,
     this.notifyMePress,
     required this.heroTag,
   }) : super(key: key);
@@ -34,7 +34,7 @@ class ProductCard extends StatefulWidget {
   final String? brand;
   final String imageUrl;
   final VoidCallback onPress;
-  final FutureCallback onAddPress;
+  final FutureCallback? onAddPress;
   final double size;
   final num discount;
   final bool isOutOfStock;
@@ -143,7 +143,10 @@ class _ProductCardState extends State<ProductCard> {
       child: Padding(
           padding: const EdgeInsets.only(top: 4.0),
           child: TitleText.small(
-              text: widget.name, textAlign: TextAlign.center, maxLines: 1)),
+            text: widget.name,
+            // textAlign: TextAlign.center,
+            maxLines: 2,
+          )),
     );
   }
 
@@ -167,20 +170,20 @@ class _ProductCardState extends State<ProductCard> {
         Column(
           children: [
             TitleText.medium(text: widget.price, maxLines: 1),
-            if (widget.oldPrice != null)
-              TitleText.medium(
-                text: widget.oldPrice!,
-                maxLines: 1,
-                isLineThrough: true,
-                color: Colors.red,
-              ),
+            // if (widget.oldPrice != null)
+            //   TitleText.medium(
+            //     text: widget.oldPrice!,
+            //     maxLines: 1,
+            //     isLineThrough: true,
+            //     color: Colors.red,
+            //   ),
           ],
         ),
-        if (widget.isShowAddToCart)
+        if (widget.isShowAddToCart && widget.onAddPress != null)
           DefaultButton(
               icon: const Icon(Icons.add),
               padding: const EdgeInsets.all(8.0),
-              onPressed: () => widget.onAddPress())
+              onPressed: () => widget.onAddPress!())
       ]),
     );
   }

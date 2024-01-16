@@ -125,7 +125,6 @@ class _HomeTabState extends State<HomeTab> {
       shrinkWrap: true,
       children: [
         _buildHomeBanners(context, banners),
-        const SizedBox(height: 16.0),
         _buildHomeCategories(context, categories),
         _buildHomeBanners(context, categoriesBanners, autoPlay: false),
         ..._buildHomeCarousalProductSections(context, carousalSections),
@@ -145,12 +144,20 @@ class _HomeTabState extends State<HomeTab> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const TitleText(text: 'explore_categories'),
-              InkWell(
-                child: const TitleText(text: 'view_all'),
-                onTap: () {
-                  _goToCategoriesPage(context);
-                },
-              ),
+              DefaultButton(
+                  label: 'view_all'.tr(),
+                  labelStyle: Theme.of(context)
+                      .textTheme
+                      .displayLarge!
+                      .copyWith(color: AppColors.PRIMARY_COLOR, height: 1.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 8.0),
+                  backgroundColor: AppColors.PRIMARY_COLOR_LIGHT,
+                  borderRadius: const BorderRadius.all(Radius.circular(25.0)),
+                  borderColor: AppColors.PRIMARY_COLOR,
+                  onPressed: () {
+                    _goToCategoriesPage(context);
+                  })
             ],
           ),
         ),
@@ -193,25 +200,29 @@ class _HomeTabState extends State<HomeTab> {
     final cubit = context.read<HomeCubit>();
     var width = context.width;
     if (banners == null || banners.data!.isEmpty) return const SizedBox();
-    return CarouselSlider.builder(
-      options: CarouselOptions(
-        height: width / 2,
-        autoPlay: autoPlay ?? !ZoomDrawer.of(context)!.isOpen(),
-        viewportFraction: 1.0,
-        onPageChanged: (index, reason) => cubit.autoChangedCarouselIndex(index),
-        autoPlayInterval: const Duration(
-          seconds: 10,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: CarouselSlider.builder(
+        options: CarouselOptions(
+          height: width / 2,
+          autoPlay: autoPlay ?? !ZoomDrawer.of(context)!.isOpen(),
+          viewportFraction: 1.0,
+          onPageChanged: (index, reason) =>
+              cubit.autoChangedCarouselIndex(index),
+          autoPlayInterval: const Duration(
+            seconds: 10,
+          ),
         ),
-      ),
-      itemCount: banners.data?.length ?? 0,
-      itemBuilder: (context, index, realIndex) {
-        var banner = banners.data![index];
-        final String? image = banner.fileUrl;
-        final String? bannerType = banner.bannerType;
-        final isGif = bannerType == "Gif";
+        itemCount: banners.data?.length ?? 0,
+        itemBuilder: (context, index, realIndex) {
+          var banner = banners.data![index];
+          final String? image = banner.fileUrl;
+          final String? bannerType = banner.bannerType;
+          final isGif = bannerType == "Gif";
 
-        return _buildImage(context, width, image, banner.link, isGif);
-      },
+          return _buildImage(context, width, image, banner.link, isGif);
+        },
+      ),
     );
   }
 
@@ -241,6 +252,7 @@ class _HomeTabState extends State<HomeTab> {
                 width: double.infinity,
                 urlHeight: 300,
                 urlWidth: 600,
+                borderRadius: const BorderRadius.all(Radius.circular(15.0)),
                 imageMode: ImageMode.Pad,
                 scaleMode: ScaleMode.Both,
                 fit: BoxFit.fill,
@@ -279,7 +291,11 @@ class _HomeTabState extends State<HomeTab> {
                       .textTheme
                       .displayLarge!
                       .copyWith(color: AppColors.PRIMARY_COLOR, height: 1.0),
-                  backgroundColor: Colors.transparent,
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 8.0),
+                  backgroundColor: AppColors.PRIMARY_COLOR_LIGHT,
+                  borderRadius: const BorderRadius.all(Radius.circular(25.0)),
+                  borderColor: AppColors.PRIMARY_COLOR,
                   onPressed: () {
                     _goToJCarousalProductsPage(context, e.id, e.name ?? '');
                   })
