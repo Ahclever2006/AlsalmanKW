@@ -30,6 +30,9 @@ abstract class ApiEndPoint {
       '$_REQUEST_URL/catalog/gethomepagecategories';
   static const getMainCategory = '$_REQUEST_URL/banner/GetRootCategories';
 
+  /// Intro page
+  static const getLandingBanner = '$_REQUEST_URL/banner/list?tag=OnBoarding';
+
   // static const getHomeNewProductsSection =
   //     '$_REQUEST_URL/product/getrecentlyproducts';
 

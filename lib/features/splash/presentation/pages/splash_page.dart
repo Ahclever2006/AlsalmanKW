@@ -9,6 +9,7 @@ import '../../../../shared_widgets/other/show_snack_bar.dart';
 import '../../../../shared_widgets/stateless/custom_app_page.dart';
 import '../../../auth/presentation/blocs/auth_cubit/auth_cubit.dart';
 import '../../../cart_tab/presentation/cubit/cart_cubit.dart';
+import '../../../intro/presentation/pages/intro_page.dart';
 import '../../../layout/presentation/pages/main_layout_page.dart';
 import '../splash_cubit/splash_cubit.dart';
 
@@ -73,7 +74,10 @@ class _SplashPageState extends State<SplashPage> {
           if (state.isError) {
             showSnackBar(context, message: state.errorMessage);
           } else if (state.isLoaded) {
-            _goToHomePage(context);
+            if (state.isFirstLunch == true)
+              _goToIntroPage(context);
+            else
+              _goToHomePage(context);
           }
         },
         child: CustomAppPage(
@@ -88,5 +92,9 @@ class _SplashPageState extends State<SplashPage> {
 
   void _goToHomePage(BuildContext context) {
     NavigatorHelper.of(context).pushReplacementNamed(MainLayOutPage.routeName);
+  }
+
+  void _goToIntroPage(BuildContext context) {
+    NavigatorHelper.of(context).pushReplacementNamed(IntroPage.routeName);
   }
 }

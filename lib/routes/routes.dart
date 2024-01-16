@@ -12,6 +12,7 @@ import '../features/brands/presentation/pages/brands_page.dart';
 import '../features/categories/presentation/pages/categories_page.dart';
 import '../features/check_out/presentation/pages/checkout_page.dart';
 import '../features/favorites/presentation/pages/favorites_products_page.dart';
+import '../features/intro/presentation/pages/intro_page.dart';
 import '../features/layout/presentation/pages/main_layout_page.dart';
 import '../features/orders/presentation/pages/orders_page.dart';
 import '../features/search/presentation/pages/search_products_page.dart';
@@ -20,6 +21,7 @@ import '../features/wallet/presentation/pages/wallet_page.dart';
 
 final routes = <String, WidgetBuilder>{
   SplashPage.routeName: (context) => const SplashPage(),
+  IntroPage.routeName: (context) => const IntroPage(),
   MainLayOutPage.routeName: (context) => const MainLayOutPage(),
   FavoritesProductsPage.routeName: (context) => const FavoritesProductsPage(),
   SearchProductsPage.routeName: (context) => const SearchProductsPage(),
@@ -36,5 +38,4 @@ final routes = <String, WidgetBuilder>{
   WalletPage.routeName: (context) => const WalletPage(),
   ChangePasswordPage.routeName: (context) => const ChangePasswordPage(),
   CategoriesPage.routeName: (context) => const CategoriesPage(),
-  
 };

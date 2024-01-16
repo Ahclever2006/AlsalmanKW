@@ -32,6 +32,9 @@ abstract class CacheService {
 
   Future<bool> saveAppleUserData(String userData);
   Future<String?> getAppleUserData();
+
+  Future<bool> saveIsFirstLunch(bool isFirstLunch);
+  Future<bool?> getIsFirstLunch();
 }
 
 class CacheServiceImpl implements CacheService {
@@ -45,6 +48,7 @@ class CacheServiceImpl implements CacheService {
   static const _IS_AD_TRACKING_NOTIFICATION_ENABLED =
       "IS_AD_TRACKING_NOTIFICATION_ENABLED";
   static const _APPLE_USER_DATA = "APPLE_USER_DATA";
+  static const _IS_FIRST_LUNCH = "IS_FIRST_LUNCH";
 
   @override
   Future<bool> saveUserData(String userData) async {
@@ -122,6 +126,7 @@ class CacheServiceImpl implements CacheService {
   Future<void> clearUserData() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear();
+    await saveIsFirstLunch(false);
   }
 
   @override
@@ -158,6 +163,18 @@ class CacheServiceImpl implements CacheService {
   Future<String?> getAppleUserData() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString(_APPLE_USER_DATA);
+  }
+
+  @override
+  Future<bool?> getIsFirstLunch() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_IS_FIRST_LUNCH);
+  }
+
+  @override
+  Future<bool> saveIsFirstLunch(bool isFirstLunch) async {
+    final prefs = await SharedPreferences.getInstance();
+    return await prefs.setBool(_IS_FIRST_LUNCH, isFirstLunch);
   }
 }
 
@@ -310,6 +327,18 @@ class CacheServiceImplV2 implements CacheService {
   @override
   Future<bool> saveAppleUserData(String userData) {
     // TODO: implement saveAppleUserData
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool?> getIsFirstLunch() {
+    // TODO: implement getIsFirstLunch
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> saveIsFirstLunch(bool isFirstLunch) {
+    // TODO: implement saveIsFirstLunch
     throw UnimplementedError();
   }
 }

@@ -4,6 +4,8 @@ abstract class SplashLocalDataSource {
   Future<String?> getLanguageCode();
 
   Future<void> setLanguageCode(String languageCode);
+
+  Future<bool?> getIsFirstLunch();
 }
 
 class SplashLocalDataSourceImpl implements SplashLocalDataSource {
@@ -17,4 +19,7 @@ class SplashLocalDataSourceImpl implements SplashLocalDataSource {
   @override
   Future<void> setLanguageCode(String languageCode) =>
       _cacheService.setLanguageCode(languageCode);
+
+  @override
+  Future<bool?> getIsFirstLunch() => _cacheService.getIsFirstLunch();
 }

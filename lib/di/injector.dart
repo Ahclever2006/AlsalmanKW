@@ -1,3 +1,7 @@
+import '../features/intro/data/datasources/intro_local_data_source.dart';
+import '../features/intro/data/datasources/intro_remote_data.dart';
+import '../features/intro/data/repositories/intro_repository.dart';
+import '../features/intro/presentation/cubit/intro_cubit.dart';
 import '../features/wallet/presentation/blocs/wallet_withdraw_cubit/wallet_withdraw_cubit.dart';
 
 import '../core/data/datasources/device_type_data_source.dart';
@@ -94,6 +98,22 @@ class Injector {
   SplashLocalDataSource get splashLocalDataSource =>
       _flyweightMap['splashLocalDataSource'] ??=
           SplashLocalDataSourceImpl(cacheService);
+
+  //===================[Intro_CUBIT]===================
+  IntroCubit get introCubit => IntroCubit(introRepository, launcherService);
+
+  IntroRepository get introRepository =>
+      _flyweightMap['introRepository'] ??= IntroRepositoryImpl(
+        introRemoteDataSource,
+        introLocalDataSource,
+      );
+  IntroRemoteDataSource get introRemoteDataSource =>
+      _flyweightMap['introRemoteDataSource'] ??=
+          IntroRemoteDataSourceImpl(networkService);
+
+  IntroLocalDataSource get introLocalDataSource =>
+      _flyweightMap['introLocalDataSource'] ??=
+          IntroLocalDataSourceImpl(cacheService);
 
   //===================[TOPICS_CUBIT]===================
   TopicsCubit get topicsCubit => TopicsCubit(authRepository);

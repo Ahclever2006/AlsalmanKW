@@ -29,13 +29,15 @@ class SplashCubit extends BaseCubit<SplashState> {
 
       emit(state.copyWith(status: SplashStateStatus.loading));
       _splashRepository.setInitLanguageIfNotSet(languageCode);
+      final isFirstLunch = await _splashRepository.getIsFirstLunch();
 
       await initAuth();
       await initCart();
       await _notificationDataSource.initNotification();
 
       await _dynamicLinkService.initDynamicLink(true);
-      emit(state.copyWith(status: SplashStateStatus.loaded));
+      emit(state.copyWith(
+          status: SplashStateStatus.loaded, isFirstLunch: isFirstLunch));
     } on RedundantRequestException catch (e) {
       log(e.toString());
     } catch (e) {
