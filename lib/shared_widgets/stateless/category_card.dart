@@ -18,38 +18,39 @@ class CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        InkWell(
-          onTap: onPress,
-          child: Container(
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            ),
-            child: CustomCachedNetworkImage(
-              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              imageUrl: category.pictureModel?.imageUrl ?? '',
-              urlHeight: 200,
-              urlWidth: 200,
-              imageMode: ImageMode.Pad,
-              scaleMode: ScaleMode.Both,
-              fit: BoxFit.cover,
-              width: size,
-              height: size,
+    return SizedBox(
+      //TODO: check responsive
+      width: 100.0,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          InkWell(
+            onTap: onPress,
+            child: Container(
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              decoration: const BoxDecoration(shape: BoxShape.circle),
+              child: CustomCachedNetworkImage(
+                imageUrl: category.pictureModel?.imageUrl ?? '',
+                urlHeight: 200,
+                urlWidth: 200,
+                imageMode: ImageMode.Pad,
+                scaleMode: ScaleMode.Both,
+                fit: BoxFit.cover,
+                width: size,
+                height: size,
+              ),
             ),
           ),
-        ),
-        const SizedBox(height: 8.0),
-        Flexible(
-          child: TitleText.medium(
-            text: category.name!,
-            maxLines: 2,
-            textAlign: TextAlign.center,
-          ),
-        )
-      ],
+          const SizedBox(height: 8.0),
+          Flexible(
+            child: TitleText.medium(
+              text: category.name!,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+            ),
+          )
+        ],
+      ),
     );
   }
 }

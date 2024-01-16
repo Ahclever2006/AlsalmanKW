@@ -161,25 +161,25 @@ class _HomeTabState extends State<HomeTab> {
             ],
           ),
         ),
-        GridView.builder(
-          padding: const EdgeInsets.all(0.0),
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 4,
-            childAspectRatio: 0.75,
+        SizedBox(
+          //TODO: check responsive
+          height: 150.0,
+          child: ListView.builder(
+            padding: const EdgeInsets.all(0.0),
+            scrollDirection: Axis.horizontal,
+            // shrinkWrap: true,
+            itemCount: categories.data!.length,
+            itemBuilder: (BuildContext context, int index) {
+              final category = categories.data![index];
+              return CategoryCard(
+                  onPress: () {
+                    _goToCategoryProductsPage(
+                        context, category.id ?? 0, category.name ?? '');
+                  },
+                  category: category,
+                  size: context.width / 5);
+            },
           ),
-          shrinkWrap: true,
-          itemCount: categories.data!.length,
-          itemBuilder: (BuildContext context, int index) {
-            final category = categories.data![index];
-            return CategoryCard(
-                onPress: () {
-                  _goToCategoryProductsPage(
-                      context, category.id ?? 0, category.name ?? '');
-                },
-                category: category,
-                size: context.width / 5);
-          },
         ),
       ],
     );
@@ -291,6 +291,7 @@ class _HomeTabState extends State<HomeTab> {
                       .textTheme
                       .displayLarge!
                       .copyWith(color: AppColors.PRIMARY_COLOR, height: 1.0),
+                  margin: const EdgeInsets.symmetric(horizontal: 8.0),
                   padding: const EdgeInsets.symmetric(
                       horizontal: 16.0, vertical: 8.0),
                   backgroundColor: AppColors.PRIMARY_COLOR_LIGHT,
@@ -303,9 +304,9 @@ class _HomeTabState extends State<HomeTab> {
           ),
           SizedBox(
             height: context.sizeHelper(
-              tabletNormal: 270,
-              desktopSmall: 380,
-              mobileLarge: 290,
+              tabletNormal: 240,
+              desktopSmall: 350,
+              mobileLarge: 260,
             ),
             child: ListView(
               scrollDirection: Axis.horizontal,
