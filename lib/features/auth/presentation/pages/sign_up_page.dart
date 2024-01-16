@@ -1,11 +1,12 @@
 import 'dart:io';
 
+import 'package:alsalman_app/core/utils/media_query_values.dart';
+import 'package:alsalman_app/shared_widgets/text_fields/default_text_form_field.dart';
+
+import '../../../../shared_widgets/stateful/check_box_signup.dart';
 import '../../../../shared_widgets/stateless/inner_appbar.dart';
-import '../../../../shared_widgets/text_fields/default_text_form_field.dart';
-import '../../../../shared_widgets/text_fields/first_name_text_form_field.dart';
-import '../../../../shared_widgets/text_fields/last_name_text_form_field.dart';
+
 import '../../../../shared_widgets/text_fields/phone_number_text_field.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
@@ -44,44 +45,33 @@ class _SignUpPageState extends State<SignUpPage> {
 
   PhoneNumber? _phoneNumber;
 
-  int? day;
-  int? month;
-  int? year;
-
-  late final TextEditingController _firstNameTextController;
-  late final TextEditingController _lastNameTextController;
+  late final TextEditingController _fullNameTextController;
   late final TextEditingController _emailTextController;
-  late final TextEditingController _birthDateTextController;
   late final TextEditingController _passwordTextController;
   late final TextEditingController _passwordConfirmTextController;
   late final TextEditingController _phoneTextController;
 
-  late final FocusNode _firstNameFocusNode;
-  late final FocusNode _lastNameFocusNode;
+  late final FocusNode _fullNameFocusNode;
   late final FocusNode _emailFocusNode;
-  late final FocusNode _birthDateFocusNode;
   late final FocusNode _passwordFocusNode;
   late final FocusNode _passwordConfirmFocusNode;
   late final FocusNode _phoneFocusNode;
 
   bool _isAutoValidating = false;
+  bool _isChecked = false;
 
   @override
   void initState() {
     _formKey = GlobalKey<FormState>();
 
-    _firstNameTextController = TextEditingController();
-    _lastNameTextController = TextEditingController();
+    _fullNameTextController = TextEditingController();
     _emailTextController = TextEditingController();
-    _birthDateTextController = TextEditingController();
     _passwordTextController = TextEditingController();
     _passwordConfirmTextController = TextEditingController();
     _phoneTextController = TextEditingController();
 
-    _firstNameFocusNode = FocusNode();
-    _lastNameFocusNode = FocusNode();
+    _fullNameFocusNode = FocusNode();
     _emailFocusNode = FocusNode();
-    _birthDateFocusNode = FocusNode();
     _passwordFocusNode = FocusNode();
     _passwordConfirmFocusNode = FocusNode();
     _phoneFocusNode = FocusNode();
@@ -91,18 +81,14 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   void dispose() {
-    _firstNameTextController.dispose();
-    _lastNameTextController.dispose();
+    _fullNameTextController.dispose();
     _emailTextController.dispose();
-    _birthDateTextController.dispose();
     _passwordTextController.dispose();
     _passwordConfirmTextController.dispose();
     _phoneTextController.dispose();
 
-    _firstNameFocusNode.dispose();
-    _lastNameFocusNode.dispose();
+    _fullNameFocusNode.dispose();
     _emailFocusNode.dispose();
-    _birthDateFocusNode.dispose();
     _passwordFocusNode.dispose();
     _passwordConfirmFocusNode.dispose();
     _phoneFocusNode.dispose();
@@ -128,13 +114,32 @@ class _SignUpPageState extends State<SignUpPage> {
                 InnerPagesAppBar(
                   label: 'sign_up'.tr().toUpperCase(),
                 ),
-                const SizedBox(height: 8.0),
+                _buildLogo(),
+                const SizedBox(height: 32.0),
                 _buildForm(),
                 const SizedBox(height: 16.0),
                 _buildSignUpButton(context),
+                const SizedBox(height: 16.0),
+                MyCheckboxListTile(
+                  callback: (value) {
+                    _isChecked = value;
+                  },
+                ),
                 _buildORText(),
-                _buildGoogleButton(context),
-                if (Platform.isIOS) _buildAppleButton(context),
+                Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: context.width * 0.05),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(child: _buildGoogleButton(context)),
+                      if (Platform.isIOS) ...[
+                        const SizedBox(width: 16.0),
+                        Expanded(child: _buildAppleButton(context))
+                      ],
+                    ],
+                  ),
+                ),
                 const SizedBox(height: 16.0),
                 _buildAlreadyHaveAccountButton(context),
               ],
@@ -143,6 +148,10 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       ),
     );
+  }
+
+  Widget _buildLogo() {
+    return SvgPicture.asset('lib/res/assets/app_logo.svg');
   }
 
   Widget _buildORText() {
@@ -177,16 +186,17 @@ class _SignUpPageState extends State<SignUpPage> {
 
     return DefaultButton(
       label: 'continue_with_google'.tr(),
+      isExpanded: true,
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
       contentAlignment: MainAxisAlignment.start,
       labelStyle: Theme.of(context)
           .textTheme
           .bodyText2!
-          .copyWith(color: AppColors.GREY_DARK_COLOR),
+          .copyWith(color: AppColors.PRIMARY_COLOR_DARK),
       backgroundColor: Colors.white,
-      borderColor: AppColors.GREY_DARK_COLOR,
+      borderColor: AppColors.PRIMARY_COLOR,
       margin: const EdgeInsets.symmetric(vertical: 8.0),
-      icon: SvgPicture.asset('lib/res/assets/google.svg'),
+      icon: SvgPicture.asset('lib/res/assets/google_icon.svg'),
       onPressed: () =>
           authCubit.loginWithGoogle(() => _showEmailDialog(context)),
     );
@@ -197,13 +207,17 @@ class _SignUpPageState extends State<SignUpPage> {
 
     return DefaultButton(
       label: 'continue_with_apple'.tr(),
+      isExpanded: true,
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
       contentAlignment: MainAxisAlignment.start,
-      labelStyle:
-          Theme.of(context).textTheme.bodyText2!.copyWith(color: Colors.white),
-      backgroundColor: Colors.black,
+      labelStyle: Theme.of(context)
+          .textTheme
+          .bodyText2!
+          .copyWith(color: AppColors.PRIMARY_COLOR_DARK),
+      backgroundColor: Colors.white,
+      borderColor: AppColors.PRIMARY_COLOR,
       margin: const EdgeInsets.symmetric(vertical: 8.0),
-      icon: const Icon(FontAwesomeIcons.apple),
+      icon: SvgPicture.asset('lib/res/assets/apple_icon.svg'),
       onPressed: () =>
           authCubit.loginWithApple(() => _showEmailDialog(context)),
     );
@@ -263,16 +277,12 @@ class _SignUpPageState extends State<SignUpPage> {
             : AutovalidateMode.disabled,
         child: Column(
           children: [
-            FirstNameTextFormField(
-                currentController: _firstNameTextController,
-                currentFocusNode: _firstNameFocusNode,
-                nextFocusNode: _lastNameFocusNode),
-            const SizedBox(height: 16.0),
-            LastNameTextFormField(
-              currentController: _lastNameTextController,
-              currentFocusNode: _lastNameFocusNode,
-              nextFocusNode: _emailFocusNode,
-            ),
+            DefaultTextFormField(
+                currentController: _fullNameTextController,
+                isRequired: true,
+                currentFocusNode: _fullNameFocusNode,
+                nextFocusNode: _emailFocusNode,
+                hint: 'full_name'.tr()),
             const SizedBox(height: 16.0),
             EmailTextFormField(
               currentFocusNode: _emailFocusNode,
@@ -284,13 +294,11 @@ class _SignUpPageState extends State<SignUpPage> {
               currentController: _phoneTextController,
               initialValue: _phoneNumber,
               currentFocusNode: _phoneFocusNode,
-              nextFocusNode: _birthDateFocusNode,
+              nextFocusNode: _passwordFocusNode,
               onInputChanged: (PhoneNumber value) {
                 _phoneNumber = value;
               },
             ),
-            const SizedBox(height: 16.0),
-            _buildBirthDateWidget(context),
             const SizedBox(height: 16.0),
             PasswordTextFormField(
                 currentFocusNode: _passwordFocusNode,
@@ -307,69 +315,25 @@ class _SignUpPageState extends State<SignUpPage> {
         ));
   }
 
-  Widget _buildBirthDateWidget(BuildContext context) {
-    final dateTimeStringCallBack = _createDateFormate(context);
-
-    return InkWell(
-      onTap: () {
-        DatePicker.showDatePicker(context,
-            theme: DatePickerTheme(
-                doneStyle: Theme.of(context)
-                    .textTheme
-                    .displayLarge!
-                    .copyWith(color: AppColors.PRIMARY_COLOR_DARK),
-                cancelStyle: Theme.of(context)
-                    .textTheme
-                    .displayLarge!
-                    .copyWith(color: Colors.red),
-                headerColor: AppColors.PRIMARY_COLOR,
-                backgroundColor: AppColors.PRIMARY_COLOR_LIGHT),
-            showTitleActions: true,
-            minTime: DateTime(1900, 1, 1),
-            maxTime: DateTime.now(),
-            onChanged: (date) {}, onConfirm: (date) {
-          day = date.day;
-          month = date.month;
-          year = date.year;
-          _birthDateTextController.text = dateTimeStringCallBack(date);
-        }, currentTime: DateTime.now());
-      },
-      child: DefaultTextFormField(
-          enabled: false,
-          suffixIcon: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12.0),
-            child: SvgPicture.asset('lib/res/assets/calendar_icon.svg'),
-          ),
-          currentFocusNode: _birthDateFocusNode,
-          currentController: _birthDateTextController,
-          hint: 'choose_birth_date'.tr()),
-    );
-  }
-
-  String Function(DateTime e) _createDateFormate(BuildContext context) {
-    final dateFormat = DateFormat('dd/MMMM/yyyy', context.locale.languageCode);
-    return (e) => dateFormat.format(e);
-  }
-
   Widget _buildSignUpButton(BuildContext context) {
     final authCubit = context.read<AuthCubit>();
     return DefaultButton(
       label: 'sign_up'.tr(),
       onPressed: () async {
-        if (_isNotValid()) return;
+        if (!_isChecked) {
+          showSnackBar(context, message: 'please_accept');
+        } else {
+          if (_isNotValid()) return;
 
-        await authCubit.signUp(
-          User(
-            email: _emailTextController.text.trim(),
-            firstName: _firstNameTextController.text.trim(),
-            lastName: _lastNameTextController.text.trim(),
-            phone: _phoneNumber?.phoneNumber ?? '',
-            password: _passwordTextController.text,
-            dateOfBirthDay: day.toString(),
-            dateOfBirthMonth: month.toString(),
-            dateOfBirthYear: year.toString(),
-          ),
-        );
+          await authCubit.signUp(
+            User(
+              email: _emailTextController.text.trim(),
+              firstName: _fullNameTextController.text.trim(),
+              phone: _phoneNumber?.phoneNumber ?? '',
+              password: _passwordTextController.text,
+            ),
+          );
+        }
       },
     );
   }

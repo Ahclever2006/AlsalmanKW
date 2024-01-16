@@ -146,12 +146,12 @@ class _MainTextFormFieldState extends State<MainTextFormField> {
           enabledBorder: OutlineInputBorder(
             borderRadius: const BorderRadius.all(Radius.circular(10.0)),
             borderSide: BorderSide(
-                color: widget.borderColor ?? AppColors.GREY_LIGHT_COLOR),
+                color: widget.borderColor ?? AppColors.PRIMARY_COLOR),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: const BorderRadius.all(Radius.circular(10.0)),
             borderSide: BorderSide(
-                color: widget.borderColor ?? AppColors.GREY_LIGHT_COLOR),
+                color: widget.borderColor ?? AppColors.PRIMARY_COLOR),
           ),
           errorBorder: const OutlineInputBorder(
             borderSide: BorderSide(

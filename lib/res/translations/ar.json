@@ -105,8 +105,8 @@
     "next": "التالي",
     "get_started_page_main_text": "سجل مع خيارك المفضل",
     "continue_with_email": "اكمل بواسطة البريد",
-    "continue_with_apple": "اكمل بواسطة ابل",
-    "continue_with_google": "اكمل بواسطة جوجل",
+    "continue_with_apple": "ابل",
+    "continue_with_google": "جوجل",
     "continue_guest": "اكمل كضيف",
     "choose_your_language": "اختر لغتك المفضلة",
     "welcome_message": "الله يحيك في \nفعاليات السعودية",
@@ -435,5 +435,6 @@
     "discount" : "تخفيض",
     "code_is_there":"تم إدخال الكود",
     "choose_shipping_time":"اختر وقت الشحن أولا من فضلك",
-    "explore":"استكشف"
+    "explore":"استكشف",
+    "please_accept": "يرجى قبول سياستنا"
 }

@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:alsalman_app/core/utils/media_query_values.dart';
+
 import '../../../../shared_widgets/stateless/subtitle_text.dart';
 
 import '../../../../core/utils/navigator_helper.dart';
@@ -87,15 +89,26 @@ class _LoginPageState extends State<LoginPage> {
                   label: 'login'.tr().toUpperCase(),
                 ),
                 _buildLogo(),
-                const SizedBox(height: 40.0),
+                const SizedBox(height: 32.0),
                 _buildForm(),
                 _buildForgetPasswordButton(context),
                 _buildLoginButton(context),
                 const SizedBox(height: 16.0),
                 _buildORText(),
-                // _buildFacebookButton(context),
-                _buildGoogleButton(context),
-                if (Platform.isIOS) _buildAppleButton(context),
+                Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: context.width * 0.05),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(child: _buildGoogleButton(context)),
+                      if (Platform.isIOS) ...[
+                        const SizedBox(width: 16.0),
+                        Expanded(child: _buildAppleButton(context))
+                      ],
+                    ],
+                  ),
+                ),
                 const SizedBox(height: 16.0),
                 _buildAlreadyHaveAccountButton(context),
               ],
@@ -134,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _buildLogo() {
-    return SvgPicture.asset('lib/res/assets/app_logo.svg', height: 80.0);
+    return SvgPicture.asset('lib/res/assets/app_logo.svg');
   }
 
   Widget _buildForm() {
@@ -230,16 +243,17 @@ class _LoginPageState extends State<LoginPage> {
 
     return DefaultButton(
       label: 'continue_with_google'.tr(),
+      isExpanded: true,
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
       contentAlignment: MainAxisAlignment.start,
       labelStyle: Theme.of(context)
           .textTheme
           .bodyText2!
-          .copyWith(color: AppColors.GREY_DARK_COLOR),
+          .copyWith(color: AppColors.PRIMARY_COLOR_DARK),
       backgroundColor: Colors.white,
-      borderColor: AppColors.GREY_DARK_COLOR,
+      borderColor: AppColors.PRIMARY_COLOR,
       margin: const EdgeInsets.symmetric(vertical: 8.0),
-      icon: SvgPicture.asset('lib/res/assets/google.svg'),
+      icon: SvgPicture.asset('lib/res/assets/google_icon.svg'),
       onPressed: () =>
           authCubit.loginWithGoogle(() => _showEmailDialog(context)),
     );
@@ -250,13 +264,17 @@ class _LoginPageState extends State<LoginPage> {
 
     return DefaultButton(
       label: 'continue_with_apple'.tr(),
+      isExpanded: true,
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
       contentAlignment: MainAxisAlignment.start,
-      labelStyle:
-          Theme.of(context).textTheme.bodyText2!.copyWith(color: Colors.white),
-      backgroundColor: Colors.black,
+      labelStyle: Theme.of(context)
+          .textTheme
+          .bodyText2!
+          .copyWith(color: AppColors.PRIMARY_COLOR_DARK),
+      backgroundColor: Colors.white,
+      borderColor: AppColors.PRIMARY_COLOR,
       margin: const EdgeInsets.symmetric(vertical: 8.0),
-      icon: const Icon(FontAwesomeIcons.apple),
+      icon: SvgPicture.asset('lib/res/assets/apple_icon.svg'),
       onPressed: () =>
           authCubit.loginWithApple(() => _showEmailDialog(context)),
     );

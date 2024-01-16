@@ -105,8 +105,8 @@
     "next": "Next",
     "get_started_page_main_text": "Sign up with your preferred option",
     "continue_with_email": "Continue With Email",
-    "continue_with_apple": "Continue With Apple",
-    "continue_with_google": "Continue With Google",
+    "continue_with_apple": "Apple",
+    "continue_with_google": "Google",
     "continue_guest": "Continue as guest",
     "choose_your_language": "Choose your language",
     "welcome_message": "Welcome to\nSaudi Events",
@@ -435,5 +435,6 @@
     "discount" : "Discount",
     "code_is_there":"code Is Entered",
     "choose_shipping_time":"Choose Shipping Time First Please",
-    "explore":"Explore"
+    "explore":"Explore",
+    "please_accept": "Please Accept Our privacy and conditions"
 }
