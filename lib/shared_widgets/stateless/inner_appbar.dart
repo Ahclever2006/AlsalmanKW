@@ -54,18 +54,20 @@ class InnerPagesAppBar extends StatelessWidget {
           ),
           if (NavigatorHelper.of(context).canPop() && !forceHideBackButton)
             PositionedDirectional(
-              top: -8.0,
-              start: 0.0,
+              top: 0.0,
+              start: 8.0,
               child: InkWell(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  padding: const EdgeInsets.all(2.0),
+                  decoration: const BoxDecoration(
+                      color: Colors.white, shape: BoxShape.circle),
                   child: backIcon == null
                       ? Icon(
                           Icons.chevron_left,
-                          color: AppColors.PRIMARY_COLOR_DARK,
+                          color: AppColors.PRIMARY_COLOR,
                           size: context.sizeHelper(
-                            tabletLarge: 36.0,
-                            desktopSmall: 48.0,
+                            tabletLarge: 30.0,
+                            desktopSmall: 40.0,
                           ),
                         )
                       : SvgPicture.asset('lib/res/assets/$backIcon.svg'),
