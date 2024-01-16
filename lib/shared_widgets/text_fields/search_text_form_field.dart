@@ -28,8 +28,13 @@ class SearchTextFormField extends MainTextFormField {
           borderColor: borderColor,
           style: style,
           hintColor: AppColors.PRIMARY_COLOR_DARK,
-          prefixIcon:
-              const Icon(Icons.search, color: AppColors.PRIMARY_COLOR_DARK),
+          prefixIcon: Container(
+              margin: const EdgeInsets.all(8.0),
+              decoration: const BoxDecoration(
+                color: AppColors.SEARCH_ICON_CONTAINER_COLOR,
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              ),
+              child: const Icon(Icons.search, color: AppColors.PRIMARY_COLOR)),
           onChanged: onChanged,
           cursorColor: AppColors.ACCENT_COLOR,
         );
