@@ -434,5 +434,6 @@
     "enter_coupon":"Enter Coupon Code",
     "discount" : "Discount",
     "code_is_there":"code Is Entered",
-    "choose_shipping_time":"Choose Shipping Time First Please"
+    "choose_shipping_time":"Choose Shipping Time First Please",
+    "explore":"Explore"
 }

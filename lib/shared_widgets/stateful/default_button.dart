@@ -19,7 +19,7 @@ class DefaultButton extends StatefulWidget {
       fontWeight: FontWeight.bold,
     ),
     this.alignment = Alignment.center,
-    this.borderRadius = const BorderRadius.all(Radius.circular(24.0)),
+    this.borderRadius = const BorderRadius.all(Radius.circular(12.0)),
     this.borderColor,
     this.shadow,
     this.isExpanded = false,

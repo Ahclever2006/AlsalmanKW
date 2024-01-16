@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 abstract class AppColors {
-  static const PRIMARY_COLOR = Color(0xFF15afcf);
+  static const PRIMARY_COLOR = Color(0xFF5FA8D3);
   static const PRIMARY_COLOR_LIGHT = Color(0xFF40D7F5);
   static const PRIMARY_COLOR_DARK = Color(0xFF0C6274);
   static const BARRIER_COLOR = Color(0xAAF1F3FB);
@@ -15,9 +15,6 @@ abstract class AppColors {
   static const WHATS_APP_COLOR = Color(0xFF55CD6C);
   static const WALLET_SWITCH_CONTAINER_COLOR = Color(0xFFEAF2F6);
   static const CUSTOM_APP_PAGE_COLOR = Color(0xFFE9F4FC);
-
-
-  
 
   static const AUTH_CONTAINER_COLOR = Colors.white;
 

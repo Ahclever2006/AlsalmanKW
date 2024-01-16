@@ -434,5 +434,6 @@
     "enter_coupon":"أدخل رمز الخصم",
     "discount" : "تخفيض",
     "code_is_there":"تم إدخال الكود",
-    "choose_shipping_time":"اختر وقت الشحن أولا من فضلك"
+    "choose_shipping_time":"اختر وقت الشحن أولا من فضلك",
+    "explore":"استكشف"
 }

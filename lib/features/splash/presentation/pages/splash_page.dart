@@ -1,3 +1,5 @@
+import 'package:alsalman_app/core/utils/media_query_values.dart';
+import 'package:alsalman_app/shared_widgets/stateful/default_button.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -74,17 +76,38 @@ class _SplashPageState extends State<SplashPage> {
           if (state.isError) {
             showSnackBar(context, message: state.errorMessage);
           } else if (state.isLoaded) {
-            if (state.isFirstLunch == true)
-              _goToIntroPage(context);
-            else
-              _goToHomePage(context);
+            if (state.isFirstLunch == false) _goToHomePage(context);
           }
         },
         child: CustomAppPage(
           safeBottom: false,
           child:
               // SvgPicture.asset('lib/res/assets/app_logo.svg'),
+              Stack(
+            children: [
               VideoPlayer(_controller),
+              Positioned(
+                bottom: context.height * 0.10,
+                left: 48.0,
+                right: 48.0,
+                child: BlocBuilder<SplashCubit, SplashState>(
+                  builder: (context, state) {
+                    if (state.isLoaded && state.isFirstLunch == true)
+                      return Material(
+                        type: MaterialType.transparency,
+                        child: DefaultButton(
+                            label: 'explore'.tr(),
+                            onPressed: () {
+                              _goToIntroPage(context);
+                            }),
+                      );
+                    else
+                      return const SizedBox();
+                  },
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
