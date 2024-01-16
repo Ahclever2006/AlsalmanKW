@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../../core/utils/navigator_helper.dart';
-import '../../../../di/injector.dart';
 import '../../../../shared_widgets/other/show_snack_bar.dart';
 import '../../../../shared_widgets/stateless/custom_app_page.dart';
 import '../../../auth/presentation/blocs/auth_cubit/auth_cubit.dart';
@@ -29,7 +28,37 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   void initState() {
+    final splashCubit = context.read<SplashCubit>();
+    final authCubit = context.read<AuthCubit>();
+    final cartCubit = context.read<CartCubit>();
+    // final languageCode = context.locale.languageCode;
+
+    splashCubit.init(
+      authCubit.init,
+      () async {
+        if (!authCubit.state.isUserHaveToken) {
+          await authCubit.loginAsGuest();
+          await cartCubit.loadCart();
+        } else {
+          if (DateTime.now()
+                  .difference(
+                      DateTime.parse(authCubit.state.tokenExpirationDate!))
+                  .inDays >=
+              -2) {
+            await authCubit.refreshToken();
+          }
+          await cartCubit.loadCart();
+        }
+      },
+      'en',
+    );
+
     _controller = VideoPlayerController.asset('lib/res/assets/splash_video.mp4')
+      ..addListener(() {
+        if (_controller.value.isCompleted) {
+          splashCubit.changeVideoStatus();
+        }
+      })
       ..initialize().then((_) {
         _controller.play();
       });
@@ -44,70 +73,42 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    final authCubit = context.read<AuthCubit>();
-    final cartCubit = context.read<CartCubit>();
-
-    final languageCode = context.locale.languageCode;
-
-    return BlocProvider(
-      create: (_) => Injector().splashCubit
-        ..init(
-          authCubit.init,
-          () async {
-            if (!authCubit.state.isUserHaveToken) {
-              await authCubit.loginAsGuest();
-              await cartCubit.loadCart();
-            } else {
-              if (DateTime.now()
-                      .difference(
-                          DateTime.parse(authCubit.state.tokenExpirationDate!))
-                      .inDays >=
-                  -2) {
-                await authCubit.refreshToken();
-              }
-              await cartCubit.loadCart();
-            }
-          },
-          languageCode,
-        ),
-      lazy: false,
-      child: BlocListener<SplashCubit, SplashState>(
-        listener: (context, state) {
-          if (state.isError) {
-            showSnackBar(context, message: state.errorMessage);
-          } else if (state.isLoaded) {
-            if (state.isFirstLunch == false) _goToHomePage(context);
-          }
-        },
-        child: CustomAppPage(
-          safeBottom: false,
-          child:
-              // SvgPicture.asset('lib/res/assets/app_logo.svg'),
-              Stack(
-            children: [
-              VideoPlayer(_controller),
-              Positioned(
-                bottom: context.height * 0.10,
-                left: 48.0,
-                right: 48.0,
-                child: BlocBuilder<SplashCubit, SplashState>(
-                  builder: (context, state) {
-                    if (state.isLoaded && state.isFirstLunch == true)
-                      return Material(
-                        type: MaterialType.transparency,
-                        child: DefaultButton(
-                            label: 'explore'.tr(),
-                            onPressed: () {
-                              _goToIntroPage(context);
-                            }),
-                      );
-                    else
-                      return const SizedBox();
-                  },
-                ),
-              )
-            ],
-          ),
+    return BlocListener<SplashCubit, SplashState>(
+      listener: (context, state) {
+        if (state.isError) {
+          showSnackBar(context, message: state.errorMessage);
+        } else if (state.isLoaded && state.isVideoCompleted == true) {
+          if (state.isFirstLunch == false) _goToHomePage(context);
+        }
+      },
+      child: CustomAppPage(
+        safeBottom: false,
+        child:
+            // SvgPicture.asset('lib/res/assets/app_logo.svg'),
+            Stack(
+          children: [
+            VideoPlayer(_controller),
+            Positioned(
+              bottom: context.height * 0.10,
+              left: 48.0,
+              right: 48.0,
+              child: BlocBuilder<SplashCubit, SplashState>(
+                builder: (context, state) {
+                  if (state.isLoaded && state.isFirstLunch == true)
+                    return Material(
+                      type: MaterialType.transparency,
+                      child: DefaultButton(
+                          label: 'explore'.tr(),
+                          onPressed: () {
+                            _goToIntroPage(context);
+                          }),
+                    );
+                  else
+                    return const SizedBox();
+                },
+              ),
+            )
+          ],
         ),
       ),
     );

@@ -41,6 +41,7 @@ void main() async {
                   create: (context) => Injector().addressCubit..getAddresses()),
               BlocProvider(create: (context) => Injector().authCubit),
               BlocProvider(create: (context) => Injector().cartCubit),
+              BlocProvider(create: (context) => Injector().splashCubit),
             ],
             child: const MyApp(),
           ),

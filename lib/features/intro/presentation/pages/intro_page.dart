@@ -93,7 +93,13 @@ class _IntroPageState extends State<IntroPage> {
         ),
         Positioned(
             left: 16.0, right: 16.0, bottom: 100.0, child: _buildTextAndDots()),
-        _buildSkipBtn(context)
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _buildSkipBtn(context),
+            _buildMoreBtn(context),
+          ],
+        )
       ]),
     );
   }
@@ -103,18 +109,39 @@ class _IntroPageState extends State<IntroPage> {
         child: InkWell(
           onTap: () => _goToHomePage(context),
           child: Container(
-            margin: const EdgeInsets.only(bottom: 32.0, left: 8.0, right: 8.0),
+            margin:
+                const EdgeInsets.only(bottom: 48.0, left: 16.0, right: 16.0),
             width: 100.0,
             height: 45.0,
-            decoration: const BoxDecoration(
-              color: AppColors.PRIMARY_COLOR,
-              borderRadius: BorderRadiusDirectional.all(
-                Radius.circular(40.0),
-              ),
-            ),
             padding: const EdgeInsetsDirectional.all(8.0),
             child: const Center(
-                child: TitleText(text: 'skip', color: Colors.white)),
+                child: TitleText(
+              text: 'skip',
+              color: AppColors.PRIMARY_COLOR,
+            )),
+          ),
+        ),
+      );
+
+  Widget _buildMoreBtn(BuildContext context) => Align(
+        alignment: Alignment.bottomRight,
+        child: InkWell(
+          onTap: () {},
+          child: Container(
+            decoration: const BoxDecoration(
+              color: AppColors.PRIMARY_COLOR,
+              borderRadius: BorderRadius.all(Radius.circular(12.0)),
+            ),
+            margin:
+                const EdgeInsets.only(bottom: 48.0, left: 16.0, right: 16.0),
+            width: 100.0,
+            height: 45.0,
+            padding: const EdgeInsetsDirectional.all(8.0),
+            child: const Center(
+                child: TitleText(
+              text: 'more',
+              color: Colors.white,
+            )),
           ),
         ),
       );

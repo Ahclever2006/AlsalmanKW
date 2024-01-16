@@ -45,4 +45,8 @@ class SplashCubit extends BaseCubit<SplashState> {
           status: SplashStateStatus.error, errorMessage: e.toString()));
     }
   }
+
+  void changeVideoStatus() {
+    emit(state.copyWith(isVideoCompleted: true));
+  }
 }

@@ -12,10 +12,12 @@ extension SplashStateX on SplashState {
 class SplashState {
   final SplashStateStatus status;
   final bool? isFirstLunch;
+  final bool? isVideoCompleted;
   final String? errorMessage;
   const SplashState({
     this.status = SplashStateStatus.initial,
     this.isFirstLunch = true,
+    this.isVideoCompleted = false,
     this.errorMessage,
   });
 
@@ -26,21 +28,27 @@ class SplashState {
     return other.runtimeType == runtimeType &&
         (other as SplashState).status == status &&
         other.isFirstLunch == isFirstLunch &&
+        other.isVideoCompleted == isVideoCompleted &&
         other.errorMessage == errorMessage;
   }
 
   @override
   int get hashCode =>
-      status.hashCode ^ isFirstLunch.hashCode ^ errorMessage.hashCode;
+      status.hashCode ^
+      isFirstLunch.hashCode ^
+      isVideoCompleted.hashCode ^
+      errorMessage.hashCode;
 
   SplashState copyWith({
     SplashStateStatus? status,
     bool? isFirstLunch,
+    bool? isVideoCompleted,
     String? errorMessage,
   }) {
     return SplashState(
       status: status ?? this.status,
       isFirstLunch: isFirstLunch ?? this.isFirstLunch,
+      isVideoCompleted: isVideoCompleted ?? this.isVideoCompleted,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }
