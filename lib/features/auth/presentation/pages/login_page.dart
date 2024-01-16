@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:alsalman_app/core/utils/media_query_values.dart';
+import 'package:alsalman_app/shared_widgets/stateless/title_text.dart';
 
 import '../../../../shared_widgets/stateless/subtitle_text.dart';
 
@@ -121,25 +122,28 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildORText() {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 8.0),
-            color: AppColors.PRIMARY_COLOR,
-            height: 2.0,
-            width: 40.0,
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 8.0),
+              color: AppColors.PRIMARY_COLOR,
+              height: 2.0,
+            ),
           ),
-          Text(
-            'or'.tr(),
+          const SubtitleText(
+            text: 'or',
             textAlign: TextAlign.center,
+            color: AppColors.PRIMARY_COLOR_DARK,
           ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 8.0),
-            color: AppColors.PRIMARY_COLOR,
-            height: 2.0,
-            width: 40.0,
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 8.0),
+              color: AppColors.PRIMARY_COLOR,
+              height: 2.0,
+            ),
           ),
         ],
       ),
@@ -181,7 +185,10 @@ class _LoginPageState extends State<LoginPage> {
         child: InkWell(
           child: const Padding(
             padding: EdgeInsets.all(8.0),
-            child: SubtitleText(text: 'forget_password'),
+            child: SubtitleText(
+              text: 'forget_password',
+              color: AppColors.PRIMARY_COLOR_DARK,
+            ),
           ),
           onTap: () => _goToForgetPasswordPage(context),
         ),
@@ -230,7 +237,7 @@ class _LoginPageState extends State<LoginPage> {
               style: Theme.of(context)
                   .textTheme
                   .headline1!
-                  .copyWith(fontSize: 14.0),
+                  .copyWith(fontSize: 14.0, color: AppColors.PRIMARY_COLOR),
               recognizer: TapGestureRecognizer()
                 ..onTap = () => _goToSignUpPage(context),
             ),

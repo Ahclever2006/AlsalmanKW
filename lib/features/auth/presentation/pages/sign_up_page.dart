@@ -6,6 +6,7 @@ import 'package:alsalman_app/shared_widgets/text_fields/default_text_form_field.
 import '../../../../shared_widgets/stateful/check_box_signup.dart';
 import '../../../../shared_widgets/stateless/inner_appbar.dart';
 
+import '../../../../shared_widgets/stateless/subtitle_text.dart';
 import '../../../../shared_widgets/text_fields/phone_number_text_field.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
@@ -156,25 +157,28 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Widget _buildORText() {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 8.0),
-            color: AppColors.PRIMARY_COLOR,
-            height: 2.0,
-            width: 40.0,
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 8.0),
+              color: AppColors.PRIMARY_COLOR,
+              height: 2.0,
+            ),
           ),
-          Text(
-            'or'.tr(),
+          const SubtitleText(
+            text: 'or',
             textAlign: TextAlign.center,
+            color: AppColors.PRIMARY_COLOR_DARK,
           ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 8.0),
-            color: AppColors.PRIMARY_COLOR,
-            height: 2.0,
-            width: 40.0,
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 8.0),
+              color: AppColors.PRIMARY_COLOR,
+              height: 2.0,
+            ),
           ),
         ],
       ),
@@ -360,7 +364,7 @@ class _SignUpPageState extends State<SignUpPage> {
               style: Theme.of(context)
                   .textTheme
                   .headline1!
-                  .copyWith(fontSize: 14.0),
+                  .copyWith(fontSize: 14.0, color: AppColors.PRIMARY_COLOR),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
                   NavigatorHelper.of(context)

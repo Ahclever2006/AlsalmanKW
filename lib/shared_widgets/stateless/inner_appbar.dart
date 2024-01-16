@@ -47,6 +47,7 @@ class InnerPagesAppBar extends StatelessWidget {
             width: double.infinity,
             child: TitleText(
               text: label ?? '',
+              color: AppColors.PRIMARY_COLOR_DARK,
               margin: const EdgeInsets.symmetric(vertical: 8.0),
               textAlign: TextAlign.center,
             ),
