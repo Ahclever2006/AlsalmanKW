@@ -1,0 +1,20 @@
+enum TextPositionEnum {
+  TopVertical,
+  TopRightVertical,
+  TopLeftVertical,
+  CenterVertical,
+  CenterRightVertical,
+  CenterLeftVertical,
+  BottomVertical,
+  BottomRightVertical,
+  BottomLeftVertical,
+  TopHorizontal,
+  TopRightHorizontal,
+  TopLeftHorizontal,
+  CenterHorizontal,
+  CenterRightHorizontal,
+  CenterLeftHorizontal,
+  BottomHorizontal,
+  BottomRightHorizontal,
+  BottomLeftHorizontal
+}

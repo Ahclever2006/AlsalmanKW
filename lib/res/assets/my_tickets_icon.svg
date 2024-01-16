@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:svgjs="http://svgjs.com/svgjs" width="512" height="512" x="0" y="0" viewBox="0 0 24 24" style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
+    <g>
+        <path d="M21 15V3a3 3 0 0 0-3-3h-4v1a2 2 0 0 1-4 0V0H6a3 3 0 0 0-3 3v12h4v2H3v7h7v-1a2 2 0 0 1 4 0v1h7v-7h-4v-2Zm-7 2h-4v-2h4Z" fill="#ffffff" data-original="#000000" class=""></path>
+    </g>
+</svg>

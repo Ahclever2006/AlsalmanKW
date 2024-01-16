@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="18.334" height="19.644" viewBox="0 0 18.334 19.644">
+  <g id="delete_red" data-name="delete red" transform="translate(-2 -1)">
+    <path id="Path_313" data-name="Path 313" d="M2.655,6.31h1.31V19.72a2.311,2.311,0,0,0,2.3,2.3h9.822a2.311,2.311,0,0,0,2.279-2.3V6.31h1.31a.655.655,0,1,0,0-1.31H2.655a.655.655,0,1,0,0,1.31Zm14.405,0V19.72a1,1,0,0,1-1,1H6.243a1,1,0,0,1-.969-1V6.31Z" transform="translate(0 -1.381)" fill="#a30000"/>
+    <path id="Path_314" data-name="Path 314" d="M11.655,2.31h5.238a.655.655,0,1,0,0-1.31H11.655a.655.655,0,0,0,0,1.31Z" transform="translate(-3.107)" fill="#a30000"/>
+    <path id="Path_315" data-name="Path 315" d="M12.335,20.167a.655.655,0,0,0,.655-.655V11.655a.655.655,0,0,0-1.31,0v7.857A.655.655,0,0,0,12.335,20.167Z" transform="translate(-3.342 -3.452)" fill="#a30000"/>
+    <path id="Path_316" data-name="Path 316" d="M18.975,20.167a.655.655,0,0,0,.655-.655V11.655a.655.655,0,0,0-1.31,0v7.857A.655.655,0,0,0,18.975,20.167Z" transform="translate(-5.634 -3.452)" fill="#a30000"/>
+  </g>
+</svg>

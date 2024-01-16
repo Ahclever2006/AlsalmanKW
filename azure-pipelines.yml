@@ -1,0 +1,79 @@
+trigger:
+  - test
+
+variables:
+  - group: "myVariables"
+
+pool:
+  vmImage: macOS-latest
+
+# variables:
+#       DELIVER_ITMSTRANSPORTER_ADDITIONAL_UPLOAD_PARAMETERS: "-asc_provider <your team ID or short name if different>"  
+
+stages:
+  - stage: iOS
+    displayName: iOS
+    dependsOn: []
+    jobs:
+      - job: BuildIosIPA
+        displayName: Build iOS IPA
+        timeoutInMinutes: 30
+        steps:
+          # iOSPreConfigurationJob
+          - task: DownloadSecureFile@1
+            name: cdKey
+            inputs:
+              secureFile: "cdKey"
+              retryCount: "3"
+              socketTimeout: "60000"
+
+          - task: InstallAppleCertificate@2
+            displayName: Install certificate
+            inputs:
+              certSecureFile: "iosKey"
+              certPwd: $(iosKeyPassword)
+              keychain: "temp"
+
+          - task: InstallAppleProvisioningProfile@1
+            displayName: Install provisioning file
+            inputs:
+              provisioningProfileLocation: "secureFiles"
+              provProfileSecureFile: "ios_Profile.mobileprovision"
+
+          # InstallFlutter
+          - task: FlutterInstall@0
+            displayName: "Install Flutter SDK"
+            inputs:
+              mode: "auto"
+              channel: "stable"
+              version: "custom"
+              customVersion: "3.7.6"
+
+          - task: Bash@3
+            displayName: Set flutter and FLUTTER_ROOT to the env PATH
+            inputs:
+              targetType: "inline"
+              script: |
+                echo "##vso[task.prependpath]$(FlutterToolPath)"
+                echo "##vso[task.setvariable variable=FLUTTER_ROOT;]$(FlutterToolPath)"
+
+          # Install fastlane
+          - task: Bash@3
+            displayName: Install fastlane
+            inputs:
+              targetType: inline
+              script: |
+                gem install fastlane
+
+          # Build iOS and distribute
+          - task: Bash@3
+            displayName: Build iOS and distribute on Testflight
+            inputs:
+              targetType: "inline"
+              script: |
+                flutter pub get
+
+                cd ios
+                pod install
+                fastlane deploy secureFile:$(cdKey.secureFilePath)
+                cd ..

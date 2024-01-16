@@ -1,0 +1,7 @@
+<svg id="cart" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25">
+  <rect id="shopping-basket-line" width="25" height="25" fill="none"/>
+  <g id="Group">
+    <path id="Vector" d="M0,0H25V25H0Z" fill="none"/>
+    <path id="Vector-2" data-name="Vector" d="M10.5,0a6.308,6.308,0,0,1,6.3,6.316V7.368H21V9.474H19.775l-.795,9.561A1.051,1.051,0,0,1,17.934,20H3.066a1.051,1.051,0,0,1-1.046-.965l-.8-9.561H0V7.368H4.2V6.316A6.308,6.308,0,0,1,10.5,0Zm7.167,9.474H3.332l.7,8.421H16.967ZM11.55,11.579v4.211H9.45V11.579Zm-4.2,0v4.211H5.25V11.579Zm8.4,0v4.211h-2.1V11.579ZM10.5,2.105a4.2,4.2,0,0,0-4.195,4L6.3,6.316V7.368h8.4V6.316a4.206,4.206,0,0,0-3.99-4.205Z" transform="translate(2 2)" fill="#b4b4b4"/>
+  </g>
+</svg>

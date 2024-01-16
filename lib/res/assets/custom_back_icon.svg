@@ -1,0 +1,4 @@
+<svg id="cancel_icon" data-name="cancel icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <path id="Vector" d="M0,0H24V24H0Z" fill="none"/>
+  <path id="Vector-2" data-name="Vector" d="M6.333,0H20.8a1,1,0,0,1,1,1V17a1,1,0,0,1-1,1H6.333a1,1,0,0,1-.832-.445l-5.333-8a1,1,0,0,1,0-1.11L5.5.445A1,1,0,0,1,6.333,0Zm.535,2L2.2,9l4.666,7H19.8V2ZM12.8,7.586l2.828-2.829,1.415,1.415L14.212,9l2.829,2.828-1.415,1.415L12.8,10.414,9.97,13.243,8.555,11.828,11.384,9,8.555,6.172,9.97,4.757Z" transform="translate(0.202 3)" fill="#03053d"/>
+</svg>

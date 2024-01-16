@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "967518290527",
+    "project_id": "alsalmankw-e3980",
+    "storage_bucket": "alsalmankw-e3980.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:967518290527:android:7f51e652bb8ced611811ea",
+        "android_client_info": {
+          "package_name": "com.baramjk.alsalman"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqf8S7QEGTfxVMh2Ntch-XEAASB-rMEuM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
