@@ -13,4 +13,6 @@ class MainLayoutCubit extends BaseCubit<MainLayoutState> {
         currentIndex: newIndex,
         status: MainLayoutStateStatus.navBarIndexChanged));
   }
+
+  
 }

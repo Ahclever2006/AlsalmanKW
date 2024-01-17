@@ -2,6 +2,9 @@ import '../features/intro/data/datasources/intro_local_data_source.dart';
 import '../features/intro/data/datasources/intro_remote_data.dart';
 import '../features/intro/data/repositories/intro_repository.dart';
 import '../features/intro/presentation/cubit/intro_cubit.dart';
+import '../features/notifications/data/datasources/notifications_remote_data_source.dart';
+import '../features/notifications/data/repositories/order_repository_impl.dart';
+import '../features/notifications/presentation/blocs/order_cubit/notifications_cubit.dart';
 import '../features/wallet/presentation/blocs/wallet_withdraw_cubit/wallet_withdraw_cubit.dart';
 
 import '../core/data/datasources/device_type_data_source.dart';
@@ -117,6 +120,18 @@ class Injector {
 
   //===================[TOPICS_CUBIT]===================
   TopicsCubit get topicsCubit => TopicsCubit(authRepository);
+
+  //===================[NOTIFICATIONS_CUBIT]===================
+  NotificationsCubit get notificationsCubit =>
+      NotificationsCubit(notificationsRepository);
+
+  NotificationsRepository get notificationsRepository =>
+      _flyweightMap['notificationsRepository'] ??=
+          NotificationsRepositoryImpl(notificationsRemoteDataSource);
+
+  NotificationsRemoteDataSource get notificationsRemoteDataSource =>
+      _flyweightMap['notificationsRemoteDataSource'] ??=
+          NotificationsRemoteDataSourceImpl(networkService);
 
   //===================[AUTH_CUBIT]===================
   AuthCubit get authCubit => AuthCubit(

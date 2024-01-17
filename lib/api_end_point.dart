@@ -33,6 +33,12 @@ abstract class ApiEndPoint {
   /// Intro page
   static const getLandingBanner = '$_REQUEST_URL/banner/list?tag=OnBoarding';
 
+  // Notifications
+  static const String getNotificationsList =
+      '$_REQUEST_URL/pushNotification/usernotification/list';
+  static const String getIsUserHasNewNotifications =
+      '$_REQUEST_URL/pushNotification/customer/read';
+
   // static const getHomeNewProductsSection =
   //     '$_REQUEST_URL/product/getrecentlyproducts';
 
