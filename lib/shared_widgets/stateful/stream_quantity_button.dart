@@ -51,42 +51,72 @@ class _StreamQuantityButtonState extends State<StreamQuantityButton> {
     );
     return AnimatedSize(
         duration: const Duration(milliseconds: 900),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            InkWell(
-              onTap: decreaseQuantity,
-              // onLongPress: removeProduct,
-              child: Icon(
-                Icons.remove_circle_outline,
-                size: iconSize,
-                color: AppColors.PRIMARY_COLOR_DARK,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: AppColors.GREY_BORDER_COLOR),
+            borderRadius: const BorderRadius.all(Radius.circular(6.0)),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              InkWell(
+                onTap: decreaseQuantity,
+                // onLongPress: removeProduct,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(color: AppColors.GREY_BORDER_COLOR),
+                    borderRadius: const BorderRadiusDirectional.only(
+                      bottomStart: Radius.circular(6.0),
+                      topStart: Radius.circular(6.0),
+                    ),
+                  ),
+                  child: Icon(
+                    Icons.remove,
+                    size: iconSize,
+                    color: AppColors.PRIMARY_COLOR,
+                  ),
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: TitleText(text: _quantity.toString().padLeft(2, '0')),
-            ),
-            GestureDetector(
-              onTap: increaseQuantity,
-              onLongPressStart: (value) {
-                _isPressed = true;
-                timer =
-                    Timer.periodic(const Duration(milliseconds: 100), (timer) {
-                  increaseQuantity();
-                });
-              },
-              onLongPressEnd: (details) {
-                _isPressed = false;
-                timer?.cancel();
-              },
-              child: Icon(
-                Icons.add_circle_outline_sharp,
-                size: iconSize,
-                color: AppColors.PRIMARY_COLOR_DARK,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: TitleText(
+                  text: _quantity.toString().padLeft(2, '0'),
+                  color: AppColors.PRIMARY_COLOR_DARK,
+                ),
               ),
-            ),
-          ],
+              GestureDetector(
+                onTap: increaseQuantity,
+                onLongPressStart: (value) {
+                  _isPressed = true;
+                  timer = Timer.periodic(const Duration(milliseconds: 100),
+                      (timer) {
+                    increaseQuantity();
+                  });
+                },
+                onLongPressEnd: (details) {
+                  _isPressed = false;
+                  timer?.cancel();
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(color: AppColors.GREY_BORDER_COLOR),
+                    borderRadius: const BorderRadiusDirectional.only(
+                      topEnd: Radius.circular(6.0),
+                      bottomEnd: Radius.circular(6.0),
+                    ),
+                  ),
+                  child: Icon(
+                    Icons.add,
+                    size: iconSize,
+                    color: AppColors.PRIMARY_COLOR,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ));
   }
 

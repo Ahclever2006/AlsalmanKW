@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_svg/svg.dart';
 import '../../../../shared_widgets/stateless/subtitle_text.dart';
 
 import '../../../../core/data/models/cart_model.dart';
@@ -163,50 +164,44 @@ class CartTab extends StatelessWidget {
   Widget _buildCartItem(
       BuildContext context, Item cartItem, List<Item> cartItems) {
     return Container(
+      decoration: const BoxDecoration(
+        color: AppColors.PRIMARY_COLOR_LIGHT,
+        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+      ),
       key: cartItem.warnings!.isNotEmpty
           ? UniqueKey()
           : ValueKey('${cartItem.id}'),
       margin: const EdgeInsets.all(8.0),
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(16.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildImage(cartItem),
+          Expanded(flex: 1, child: _buildImage(cartItem)),
           Expanded(
+            flex: 3,
             child: Padding(
-              padding: const EdgeInsetsDirectional.only(start: 8.0, top: 4.0),
-              child: Row(
+              padding: const EdgeInsetsDirectional.only(start: 16.0, top: 16.0),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TitleText.medium(
-                          text: cartItem.productName!,
-                          maxLines: 2,
-                        ),
-                        Html(
-                          data: cartItem.attributeInfo!,
-                          style: {
-                            "body": Style(
-                                color: AppColors.PRIMARY_COLOR,
-                                fontSize: FontSize(14)),
-                          },
-                        )
-                      ],
-                    ),
+                  Html(
+                    data: cartItem.attributeInfo!,
+                    style: {
+                      "body": Style(
+                          color: AppColors.PRIMARY_COLOR,
+                          fontSize: FontSize(14.0)),
+                    },
                   ),
-                  Column(
+                  TitleText(text: cartItem.unitPrice!),
+                  const SizedBox(height: 8.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      TitleText(
-                        text: cartItem.unitPrice!,
-                      ),
                       _buildQuantitySection(context, cartItem, cartItems),
                       _buildRemoveItem(context, cartItem)
                     ],
-                  ),
+                  )
                 ],
               ),
             ),
@@ -217,18 +212,25 @@ class CartTab extends StatelessWidget {
   }
 
   Widget _buildImage(Item cartItem) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.PRIMARY_COLOR,
-        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-      ),
-      child: CustomCachedNetworkImage(
-        width: 100.0,
-        height: 100.0,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        imageUrl: cartItem.picture!.imageUrl,
-        fit: BoxFit.cover,
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TitleText.medium(text: cartItem.productName!, maxLines: 1),
+        const SizedBox(height: 12.0),
+        Container(
+          decoration: const BoxDecoration(
+            color: AppColors.PRIMARY_COLOR,
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          ),
+          child: CustomCachedNetworkImage(
+            width: 100.0,
+            height: 100.0,
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            imageUrl: cartItem.picture!.imageUrl,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ],
     );
   }
 
@@ -259,19 +261,20 @@ class CartTab extends StatelessWidget {
 
   Widget _buildRemoveItem(BuildContext context, Item cartItem) {
     final cubit = context.read<CartCubit>();
-    return IconButton(
-      icon: const Icon(Icons.delete,
-          color: AppColors.GREY_DARK_COLOR, size: 30.0),
-      onPressed: () {
-        showSimpleBottomSheet(context,
-            label: 'cart_remove_title',
-            subtitle: 'remove_fav_subtitle',
-            onPress: () =>
-                cubit.removeFromCart(cartItem.id.toString()).whenComplete(() {
-                  NavigatorHelper.of(context).pop();
-                }));
-      },
-    );
+    return DefaultButton(
+        padding: const EdgeInsets.all(12.0),
+        backgroundColor: AppColors.SECONDARY_COLOR,
+        labelStyle: Theme.of(context).textTheme.displayLarge!,
+        icon: SvgPicture.asset('lib/res/assets/delete_icon.svg'),
+        onPressed: () {
+          showSimpleBottomSheet(context,
+              label: 'cart_remove_title',
+              subtitle: 'remove_fav_subtitle',
+              onPress: () =>
+                  cubit.removeFromCart(cartItem.id.toString()).whenComplete(() {
+                    NavigatorHelper.of(context).pop();
+                  }));
+        });
   }
 
   Widget _buildPaymentSummarySection(
