@@ -3,6 +3,7 @@ import '../../../../shared_widgets/stateless/drawer_appbar.dart';
 import '../../../auth/presentation/pages/login_page.dart';
 import '../../../wallet/presentation/pages/wallet_page.dart';
 import 'change_password_page.dart';
+import 'contact_us_page.dart';
 import 'language_chooser_page.dart';
 import '../../../../core/utils/media_query_values.dart';
 import '../../../../di/injector.dart';
@@ -168,7 +169,7 @@ class AccountTab extends StatelessWidget {
       _buildAccountItemRow(context,
           icon: 'contact_us_account_icon',
           label: 'contact_us',
-          onPress: () => _goToLanguagePage(context)),
+          onPress: () => _goToContactUsPage(context)),
     ];
   }
 
@@ -229,6 +230,10 @@ class AccountTab extends StatelessWidget {
 
   void _goToLanguagePage(BuildContext context) {
     NavigatorHelper.of(context).pushNamed(LanguageChooserPage.routeName);
+  }
+
+  void _goToContactUsPage(BuildContext context) {
+    NavigatorHelper.of(context).pushNamed(ContactUsPage.routeName);
   }
 
   void _goToTopicsPage(BuildContext context, int topicId) {

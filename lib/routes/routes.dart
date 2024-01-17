@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../features/account_tab/presentation/pages/change_password_page.dart';
+import '../features/account_tab/presentation/pages/contact_us_page.dart';
 import '../features/account_tab/presentation/pages/language_chooser_page.dart';
 
 import '../features/account_tab/presentation/pages/profile_page.dart';
@@ -37,5 +38,6 @@ final routes = <String, WidgetBuilder>{
   ForgetPasswordPage.routeName: (context) => const ForgetPasswordPage(),
   WalletPage.routeName: (context) => const WalletPage(),
   ChangePasswordPage.routeName: (context) => const ChangePasswordPage(),
+  ContactUsPage.routeName: (context) => const ContactUsPage(),
   CategoriesPage.routeName: (context) => const CategoriesPage(),
 };

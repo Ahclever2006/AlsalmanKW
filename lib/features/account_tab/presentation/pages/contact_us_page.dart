@@ -51,10 +51,6 @@ class ContactUsPage extends StatelessWidget {
               label: 'instagram',
               icon: 'instagram_icon',
               onPress: cubit.openInstagramLink),
-          _buildRowItem(
-              label: 'twitter',
-              icon: 'twitter_icon',
-              onPress: cubit.openTwitterLink),
         ],
       );
     });
@@ -75,16 +71,10 @@ class ContactUsPage extends StatelessWidget {
         ),
         child: Row(
           children: [
-            SvgPicture.asset(
-              'lib/res/assets/$icon.svg',
-              color: AppColors.PRIMARY_COLOR_DARK,
-            ),
+            SvgPicture.asset('lib/res/assets/$icon.svg'),
             const SizedBox(width: 16.0),
             Expanded(
-              child: TitleText(
-                text: label,
-                color: AppColors.SECONDARY_COLOR,
-              ),
+              child: TitleText(text: label, color: Colors.white),
             )
           ],
         ),
