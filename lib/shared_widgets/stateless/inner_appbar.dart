@@ -98,8 +98,7 @@ class InnerPagesAppBar extends StatelessWidget {
           if (actionIcon != null)
             PositionedDirectional(
               top: -8.0,
-              end: 0,
-              start: 0,
+              end: 8.0,
               child: DefaultButton(
                   backgroundColor: Colors.transparent,
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
