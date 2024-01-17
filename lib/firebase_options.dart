@@ -63,6 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '967518290527',
     projectId: 'alsalmankw-e3980',
     storageBucket: 'alsalmankw-e3980.appspot.com',
+    androidClientId: '967518290527-iip0uuhfdsaaggn4tohpuah9q8jtfjnr.apps.googleusercontent.com',
+    iosClientId: '967518290527-elrg80mf9cvbtckq7t1p1b55dctvc8ng.apps.googleusercontent.com',
     iosBundleId: 'com.baramjk.alsalman',
   );
 }

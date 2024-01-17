@@ -15,6 +15,7 @@ import '../features/check_out/presentation/pages/checkout_page.dart';
 import '../features/favorites/presentation/pages/favorites_products_page.dart';
 import '../features/intro/presentation/pages/intro_page.dart';
 import '../features/layout/presentation/pages/main_layout_page.dart';
+import '../features/notifications/presentation/pages/notifications_page.dart';
 import '../features/orders/presentation/pages/orders_page.dart';
 import '../features/search/presentation/pages/search_products_page.dart';
 import '../features/splash/presentation/pages/splash_page.dart';
@@ -40,4 +41,5 @@ final routes = <String, WidgetBuilder>{
   ChangePasswordPage.routeName: (context) => const ChangePasswordPage(),
   ContactUsPage.routeName: (context) => const ContactUsPage(),
   CategoriesPage.routeName: (context) => const CategoriesPage(),
+  NotificationsPage.routeName: (context) => const NotificationsPage(),
 };

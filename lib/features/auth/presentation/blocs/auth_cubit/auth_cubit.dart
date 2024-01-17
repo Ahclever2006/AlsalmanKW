@@ -186,7 +186,7 @@ class AuthCubit extends BaseCubit<AuthState> {
 
       await _authRepository.setUserFCMToken();
       await _authRepository.changeUserLanguage();
-      await _authRepository.deActivateAdTrackingNotification();
+      await _authRepository.activateAdTrackingNotification();
       await _authRepository.activateNotification();
 
       emit(state.copyWith(

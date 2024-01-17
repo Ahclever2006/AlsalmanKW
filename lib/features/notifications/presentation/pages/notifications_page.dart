@@ -103,8 +103,11 @@ class _NotificationsPageState extends State<NotificationsPage> {
                 )),
           )
         : EmptyPageMessage(
-            title: 'ohsnap',
-            subTitle: "no_notifications",
+            heightRatio: 0.6,
+            isSVG: false,
+            title: 'no_notification_found',
+            subTitle: "check_our_best",
+            svgImage: 'fish_icon',
             onRefresh: () => notificationsCubit.refresh(),
           );
   }

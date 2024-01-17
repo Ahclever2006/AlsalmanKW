@@ -1,3 +1,4 @@
+import 'package:alsalman_app/features/notifications/presentation/pages/notifications_page.dart';
 import 'package:size_helper/size_helper.dart';
 import '../../../../shared_widgets/stateless/drawer_appbar.dart';
 import '../../../auth/presentation/pages/login_page.dart';
@@ -129,24 +130,25 @@ class AccountTab extends StatelessWidget {
   }
 
   List<Widget> _buildGuestAccountRows(BuildContext context) {
-    final authCubit = context.read<AuthCubit>();
+    // final authCubit = context.read<AuthCubit>();
     return [
       BlocBuilder<AuthCubit, AuthState>(
         builder: (context, state) {
-          final isNotificationEnabled = state.isNotificationEnabled;
-          final isAdTrackingNotificationEnabled =
-              state.isAdTrackingNotificationEnabled;
+          // final isNotificationEnabled = state.isNotificationEnabled;
+          // final isAdTrackingNotificationEnabled =
+          //     state.isAdTrackingNotificationEnabled;
 
           return _buildAccountItemRow(context,
               icon: 'notification_account_icon',
               label: 'notifications', onPress: () {
-            showAdsAndNotificationBottomSheet(context,
-                onPressAds: (value) =>
-                    authCubit.changeAdTrackingNotificationStatus(value),
-                onPressNotification: (value) =>
-                    authCubit.changeNotificationStatus(value),
-                isNotificationEnabled: isNotificationEnabled,
-                isAdsEnabled: isAdTrackingNotificationEnabled);
+            _goToNotificationsPage(context);
+            // showAdsAndNotificationBottomSheet(context,
+            //     onPressAds: (value) =>
+            //         authCubit.changeAdTrackingNotificationStatus(value),
+            //     onPressNotification: (value) =>
+            //         authCubit.changeNotificationStatus(value),
+            //     isNotificationEnabled: isNotificationEnabled,
+            //     isAdsEnabled: isAdTrackingNotificationEnabled);
           });
         },
       ),
@@ -266,9 +268,9 @@ class AccountTab extends StatelessWidget {
     NavigatorHelper.of(context).pushNamed(ChangePasswordPage.routeName);
   }
 
-  // void _goToNotificationsPage(BuildContext context) {
-  //   NavigatorHelper.of(context).pushNamed(routeName);
-  // }
+  void _goToNotificationsPage(BuildContext context) {
+    NavigatorHelper.of(context).pushNamed(NotificationsPage.routeName);
+  }
 
   // void _goToAboutUsPage(BuildContext context) {
   //   NavigatorHelper.of(context).pushNamed(routeName);
