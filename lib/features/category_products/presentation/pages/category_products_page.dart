@@ -1,3 +1,4 @@
+import 'package:alsalman_app/shared_widgets/stateless/title_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -17,11 +18,9 @@ import '../../../../core/data/models/home_section_product_model.dart';
 import '../../../../core/utils/media_query_values.dart';
 import '../../../../core/utils/navigator_helper.dart';
 import '../../../../res/style/app_colors.dart';
-import '../../../../res/style/theme.dart';
 import '../../../../shared_widgets/other/show_filter_bottom_sheet.dart';
 import '../../../../shared_widgets/other/show_sort_bottom_sheet.dart';
 import '../../../../shared_widgets/stateful/brands_filter.dart';
-import '../../../../shared_widgets/stateful/default_button.dart';
 import '../../../../shared_widgets/stateful/scroll_up_button.dart';
 import '../../../../shared_widgets/stateful/sub_categories_filter.dart';
 import '../../../../shared_widgets/stateless/custom_cached_network_image.dart';
@@ -29,7 +28,6 @@ import '../../../../shared_widgets/stateless/empty_page_message.dart';
 import '../../../../shared_widgets/stateless/inner_appbar.dart';
 import '../../../../shared_widgets/stateless/product_card.dart';
 import '../../../../shared_widgets/stateless/sort_and_filter_button.dart';
-import '../../../brands/presentation/pages/brands_page.dart';
 import '../../../cart_tab/presentation/cubit/cart_cubit.dart';
 import '../../../product_details/presentation/pages/product_details_page.dart';
 import '../blocs/cubit/category_products_cubit.dart';
@@ -70,114 +68,181 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
 
   @override
   Widget build(BuildContext context) {
-    Widget child = Column(
-      children: [
-        InnerPagesAppBar(
-          label: widget.categoryName.toUpperCase(),
-          viewCartIcon: true,
-          viewSearchIcon: true,
-        ),
-        _buildSubCategoriesFilterSection(),
-        BlocBuilder<CategoryProductsCubit, CategoryProductsState>(
-          builder: (context, state) {
-            if (state.brandsData != null && state.brandsData!.isNotEmpty)
-              return _buildBrands(context, state.brandsData!);
-            else
-              return const SizedBox();
-          },
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            BlocBuilder<CategoryProductsCubit, CategoryProductsState>(
-              builder: (context, state) {
-                final cubit = context.read<CategoryProductsCubit>();
+    Widget child = BlocProvider(
+      create: (_) => Injector().categoryProductsCubit
+        ..getCategoryProductsData(categoryId: widget.categoryId),
+      child: BlocBuilder<CategoryProductsCubit, CategoryProductsState>(
+        builder: (context, state) {
+          final categoryProductsCubit = context.read<CategoryProductsCubit>();
+          return Stack(
+            children: [
+              Column(
+                children: [
+                  InnerPagesAppBar(
+                    label: widget.categoryName.toUpperCase(),
+                    viewCartIcon: true,
+                    viewSearchIcon: true,
+                  ),
+                  Expanded(
+                    child: LazyLoadScrollView(
+                      onEndOfPage: () =>
+                          categoryProductsCubit.getMoreCategoryProductsData(
+                        categoryId:
+                            (subCategoryId != null && subCategoryId != -1)
+                                ? subCategoryId
+                                : widget.categoryId,
+                        filterOption: filterList,
+                        tags: tagsList,
+                        sort: sortBy,
+                      ),
+                      isLoading: categoryProductsCubit.state.isLoadingMore,
+                      child: RefreshIndicator(
+                        onRefresh: () => categoryProductsCubit.refresh(
+                          categoryId:
+                              (subCategoryId != null && subCategoryId != -1)
+                                  ? subCategoryId
+                                  : widget.categoryId,
+                          tags: tagsList,
+                          filterOption: filterList,
+                        ),
+                        child: SingleChildScrollView(
+                          controller: _scrollController,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          child: Column(
+                            children: [
+                              _buildCategoryBanners(context),
+                              const SizedBox(height: 8.0),
+                              _buildSubCategoriesFilterSection(),
+                              BlocBuilder<CategoryProductsCubit,
+                                  CategoryProductsState>(
+                                builder: (context, state) {
+                                  if (state.brandsData != null &&
+                                      state.brandsData!.isNotEmpty)
+                                    return _buildBrands(
+                                        context, state.brandsData!);
+                                  else
+                                    return const SizedBox();
+                                },
+                              ),
+                              const SizedBox(height: 8.0),
+                              BlocBuilder<CategoryProductsCubit,
+                                  CategoryProductsState>(
+                                builder: (context, state) {
+                                  final cubit =
+                                      context.read<CategoryProductsCubit>();
 
-                return (state.categoryProductsData?.data?.products
-                                ?.isNotEmpty ==
-                            true ||
-                        (tagsList?.isNotEmpty == true ||
-                            filterList?.isNotEmpty == true))
-                    ? SortAndFilterButton(onSortPress: () {
-                        showSortBottomSheet(context,
-                            label: 'sort',
-                            sortData: sortListData, onPress: (sort) async {
-                          sortBy = sort;
-                          await cubit.getCategoryProductsData(
-                            categoryId: widget.categoryId,
-                            sort: sort,
-                            tags: tagsList,
-                            filterOption: filterList,
-                          );
-                        });
-                      }, onFilterPress: () {
-                        showFilterBottomSheet(context,
-                            label: 'filter',
-                            tagsData: cubit.state.tagsData ?? [],
-                            selectedTags: tagsList ?? [],
-                            selectedAttributes: filterList ?? [],
-                            filterData: cubit.state.filterData ?? [],
-                            onPress: (tags, attributes) {
-                          filterList = attributes;
-                          return cubit.getCategoryProductsData(
-                              categoryId: widget.categoryId,
-                              sort: sortBy,
-                              filterOption: attributes,
-                              tags: tags);
-                        });
-                      })
-                    : const SizedBox();
-              },
-            ),
-            DefaultButton(
-                label: 'view_brands'.tr(),
-                margin: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
-                padding: EdgeInsets.zero,
-                backgroundColor: Colors.transparent,
-                labelStyle: Theme.of(context)
-                    .textTheme
-                    .displayLarge!
-                    .copyWith(height: 1.0),
-                onPressed: () => _goToBrandsPage(context)),
-          ],
-        ),
-        Expanded(
-          child: BlocConsumer<CategoryProductsCubit, CategoryProductsState>(
-            listener: (context, state) {
-              if (state.isError)
-                showSnackBar(context, message: state.errorMessage);
-            },
-            builder: (context, state) {
-              if (state.isInitial || state.isLoading)
-                return const CustomLoading(
-                    loadingStyle: LoadingStyle.ShimmerList);
+                                  return (state.categoryProductsData?.data
+                                                  ?.products?.isNotEmpty ==
+                                              true ||
+                                          (tagsList?.isNotEmpty == true ||
+                                              filterList?.isNotEmpty == true))
+                                      ? Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const TitleText(
+                                                text: 'products',
+                                                color: AppColors
+                                                    .PRIMARY_COLOR_DARK,
+                                                margin: EdgeInsets.symmetric(
+                                                    vertical: 8.0,
+                                                    horizontal: 16.0)),
+                                            SortAndFilterButton(
+                                                onSortPress: () {
+                                              showSortBottomSheet(context,
+                                                  label: 'sort',
+                                                  sortData: sortListData,
+                                                  onPress: (sort) async {
+                                                sortBy = sort;
+                                                await cubit
+                                                    .getCategoryProductsData(
+                                                  categoryId: widget.categoryId,
+                                                  sort: sort,
+                                                  tags: tagsList,
+                                                  filterOption: filterList,
+                                                );
+                                              });
+                                            }, onFilterPress: () {
+                                              showFilterBottomSheet(context,
+                                                  label: 'filter',
+                                                  tagsData:
+                                                      cubit.state.tagsData ??
+                                                          [],
+                                                  selectedTags: tagsList ?? [],
+                                                  selectedAttributes:
+                                                      filterList ?? [],
+                                                  filterData:
+                                                      cubit.state.filterData ??
+                                                          [],
+                                                  onPress: (tags, attributes) {
+                                                filterList = attributes;
+                                                return cubit
+                                                    .getCategoryProductsData(
+                                                        categoryId:
+                                                            widget.categoryId,
+                                                        sort: sortBy,
+                                                        filterOption:
+                                                            attributes,
+                                                        tags: tags);
+                                              });
+                                            }),
+                                          ],
+                                        )
+                                      : const SizedBox();
+                                },
+                              ),
+                              BlocConsumer<CategoryProductsCubit,
+                                  CategoryProductsState>(
+                                listener: (context, state) {
+                                  if (state.isError)
+                                    showSnackBar(context,
+                                        message: state.errorMessage);
+                                },
+                                builder: (context, state) {
+                                  if (state.isInitial || state.isLoading)
+                                    return const CustomLoading(
+                                        loadingStyle: LoadingStyle.ShimmerList);
 
-              if (state.categoryProductsData != null)
-                return _buildBody(
-                  context,
-                  categoryProducts: state.categoryProductsData!,
-                );
-              else
-                return const SizedBox();
-            },
-          ),
-        ),
-      ],
+                                  if (state.categoryProductsData != null)
+                                    return _buildBody(
+                                      context,
+                                      categoryProducts:
+                                          state.categoryProductsData!,
+                                    );
+                                  else
+                                    return const SizedBox();
+                                },
+                              ),
+                              _buildPaginationLoading(),
+                              const SizedBox(height: 16.0),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Positioned(
+                  top: context.height * 0.1,
+                  left: context.width * 0.2,
+                  right: context.width * 0.2,
+                  child: ScrollUpButton(scrollController: _scrollController))
+            ],
+          );
+        },
+      ),
     );
 
     child = Scaffold(
       body: child,
-      floatingActionButton: ScrollUpButton(scrollController: _scrollController),
     );
 
-    return BlocProvider(
-      create: (_) => Injector().categoryProductsCubit
-        ..getCategoryProductsData(categoryId: widget.categoryId),
-      child: CustomAppPage(
-        safeTop: true,
-        child: child,
-      ),
+    return CustomAppPage(
+      safeTop: true,
+      child: child,
     );
   }
 
@@ -231,148 +296,79 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
 
     var products = categoryProducts.data!.products;
 
-    return Stack(
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            products!.isNotEmpty
-                ? Expanded(
-                    child: LazyLoadScrollView(
-                      onEndOfPage: () =>
-                          categoryProductsCubit.getMoreCategoryProductsData(
-                        categoryId:
-                            (subCategoryId != null && subCategoryId != -1)
-                                ? subCategoryId
-                                : widget.categoryId,
-                        filterOption: filterList,
-                        tags: tagsList,
-                        sort: sortBy,
-                      ),
-                      isLoading: categoryProductsCubit.state.isLoadingMore,
-                      child: RefreshIndicator(
-                        onRefresh: () => categoryProductsCubit.refresh(
-                          categoryId:
-                              (subCategoryId != null && subCategoryId != -1)
-                                  ? subCategoryId
-                                  : widget.categoryId,
-                          tags: tagsList,
-                          filterOption: filterList,
-                        ),
-                        child: SingleChildScrollView(
-                          controller: _scrollController,
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          child: Column(
-                            children: [
-                              ...[
-                                _buildCategoryBanners(context),
-                              ],
-                              GridView.builder(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16.0),
-                                physics: const NeverScrollableScrollPhysics(),
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  childAspectRatio: context.sizeHelper(
-                                    tabletNormal: 0.65,
-                                    tabletLarge: 0.70,
-                                    mobileLarge: 0.70,
-                                    desktopSmall: 0.85,
-                                  ),
-                                ),
-                                shrinkWrap: true,
-                                itemCount: products.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  final product = products[index];
-                                  return BlocListener<CartCubit, CartState>(
-                                    listener: (context, state) {
-                                      if (state.isNotifiedSuccess) {
-                                        showSnackBar(context,
-                                            message: 'success_subscribe');
-                                        categoryProductsCubit
-                                            .updateProductNotifyStatus();
-                                      }
+    return products!.isNotEmpty
+        ? GridView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: context.sizeHelper(
+                tabletNormal: 0.65,
+                tabletLarge: 0.70,
+                mobileLarge: 0.70,
+                desktopSmall: 0.85,
+              ),
+            ),
+            shrinkWrap: true,
+            itemCount: products.length,
+            itemBuilder: (BuildContext context, int index) {
+              final product = products[index];
+              return BlocListener<CartCubit, CartState>(
+                listener: (context, state) {
+                  if (state.isNotifiedSuccess) {
+                    showSnackBar(context, message: 'success_subscribe');
+                    categoryProductsCubit.updateProductNotifyStatus();
+                  }
 
-                                      if (state.isError)
-                                        showSnackBar(context,
-                                            message: state.errorMessage);
-                                    },
-                                    child: ProductCard(
-                                        key: ValueKey(product.isSubscribedToBackInStock
-                                            .toString()),
-                                        heroTag: '${product.id}',
-                                        name: product.name ?? '',
-                                        brand: product.productManufacturers?.isNotEmpty == true
-                                            ? product.productManufacturers
-                                                ?.first.name
-                                            : null,
-                                        price:
-                                            product.productPrice?.price ?? '0',
-                                        oldPrice:
-                                            product.productPrice?.oldPrice,
-                                        discount:
-                                            product.discountPercentage ?? 0,
-                                        isOutOfStock:
-                                            product.isOutOfStock ?? false,
-                                        isSubscribedBackInStock:
-                                            product.isSubscribedToBackInStock ??
-                                                false,
-                                        imageUrl: product.defaultPictureModel?.imageUrl ??
-                                            '',
-                                        notifyMePress: () async {
-                                          categoryProductsCubit
-                                              .notifyProductIndex(index);
-                                          await cartCubit.notifyMe(product.id!);
-                                        },
-                                        onPress: () => _goToProductDetailsPage(
-                                            context,
-                                            product.id,
-                                            product
-                                                .defaultPictureModel?.imageUrl),
-                                        onAddPress: () => cartCubit
-                                                .addToCartFromCatalog(
-                                                    product.id.toString(), 1)
-                                                .then((value) {
-                                              if (value)
-                                                showSnackBar(context,
-                                                    message:
-                                                        'item_added_to_cart_successfully');
-                                              else {
-                                                _goToProductDetailsPage(
-                                                    context,
-                                                    product.id,
-                                                    product.defaultPictureModel
-                                                        ?.imageUrl);
-                                              }
-                                            }),
-                                        size: size),
-                                  );
-                                },
-                              ),
-                              _buildPaginationLoading(),
-                              const SizedBox(height: navbarHeight)
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
-                : EmptyPageMessage(
-                    title: 'no_products_available',
-                    heightRatio: 0.6,
-                    onRefresh: () => categoryProductsCubit.refresh(
-                      categoryId: (subCategoryId != null && subCategoryId != -1)
-                          ? subCategoryId
-                          : widget.categoryId,
-                      filterOption: filterList,
-                      tags: tagsList,
-                    ),
-                  )
-          ],
-        ),
-      ],
-    );
+                  if (state.isError)
+                    showSnackBar(context, message: state.errorMessage);
+                },
+                child: ProductCard(
+                    key: ValueKey(product.isSubscribedToBackInStock.toString()),
+                    heroTag: '${product.id}',
+                    name: product.name ?? '',
+                    brand: product.productManufacturers?.isNotEmpty == true
+                        ? product.productManufacturers?.first.name
+                        : null,
+                    price: product.productPrice?.price ?? '0',
+                    oldPrice: product.productPrice?.oldPrice,
+                    discount: product.discountPercentage ?? 0,
+                    isOutOfStock: product.isOutOfStock ?? false,
+                    isSubscribedBackInStock:
+                        product.isSubscribedToBackInStock ?? false,
+                    imageUrl: product.defaultPictureModel?.imageUrl ?? '',
+                    notifyMePress: () async {
+                      categoryProductsCubit.notifyProductIndex(index);
+                      await cartCubit.notifyMe(product.id!);
+                    },
+                    onPress: () => _goToProductDetailsPage(context, product.id,
+                        product.defaultPictureModel?.imageUrl),
+                    onAddPress: () => cartCubit
+                            .addToCartFromCatalog(product.id.toString(), 1)
+                            .then((value) {
+                          if (value)
+                            showSnackBar(context,
+                                message: 'item_added_to_cart_successfully');
+                          else {
+                            _goToProductDetailsPage(context, product.id,
+                                product.defaultPictureModel?.imageUrl);
+                          }
+                        }),
+                    size: size),
+              );
+            },
+          )
+        : EmptyPageMessage(
+            title: 'no_products_available',
+            heightRatio: 0.6,
+            onRefresh: () => categoryProductsCubit.refresh(
+              categoryId: (subCategoryId != null && subCategoryId != -1)
+                  ? subCategoryId
+                  : widget.categoryId,
+              filterOption: filterList,
+              tags: tagsList,
+            ),
+          );
   }
 
   Widget _buildBrands(
@@ -420,10 +416,6 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
         image: image,
       );
     }));
-  }
-
-  void _goToBrandsPage(BuildContext context) {
-    NavigatorHelper.of(context).pushNamed(BrandsPage.routeName);
   }
 
   Widget _buildCategoryBanners(BuildContext context) {

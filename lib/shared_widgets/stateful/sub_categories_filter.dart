@@ -43,18 +43,20 @@ class _SubCategoriesFilterState extends State<SubCategoriesFilter> {
             },
             child: Container(
                 alignment: Alignment.center,
-                margin: const EdgeInsets.symmetric(horizontal: 4.0),
                 padding:
-                    const EdgeInsets.symmetric(vertical: 6.0, horizontal: 12.0),
+                    const EdgeInsets.symmetric(vertical: 6.0, horizontal: 16.0),
                 decoration: BoxDecoration(
                   color: isSelected
-                      ? AppColors.PRIMARY_COLOR
-                      : Colors.grey.shade200,
-                  borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+                      ? AppColors.PRIMARY_COLOR_LIGHT
+                      : Colors.transparent,
+                  borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                  border: isSelected
+                      ? Border.all(color: AppColors.PRIMARY_COLOR_DARK)
+                      : null,
                 ),
                 child: TitleText.medium(
                   text: e.name!,
-                  color: isSelected ? Colors.white : null,
+                  color: AppColors.PRIMARY_COLOR_DARK,
                 )),
           );
         }).toList(),
