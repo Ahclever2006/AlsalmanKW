@@ -1,3 +1,4 @@
+import '../features/account_tab/presentation/blocs/contact_us_cubit/contact_us_cubit.dart';
 import '../features/intro/data/datasources/intro_local_data_source.dart';
 import '../features/intro/data/datasources/intro_remote_data.dart';
 import '../features/intro/data/repositories/intro_repository.dart';
@@ -120,6 +121,9 @@ class Injector {
 
   //===================[TOPICS_CUBIT]===================
   TopicsCubit get topicsCubit => TopicsCubit(authRepository);
+
+  //===================[CONTACT_US_CUBIT]===================
+  ContactUsCubit get contactUsCubit => ContactUsCubit(launcherService);
 
   //===================[NOTIFICATIONS_CUBIT]===================
   NotificationsCubit get notificationsCubit =>
