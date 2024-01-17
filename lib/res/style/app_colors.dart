@@ -6,7 +6,7 @@ abstract class AppColors {
   static const PRIMARY_COLOR_DARK = Color(0xFF1B4965);
   static const BARRIER_COLOR = Color(0xAA1B4965);
   static const SECONDARY_COLOR = Color(0xFFF6E2E2);
-  static const ACCENT_COLOR = Color(0xFFD69227);
+  static const ACCENT_COLOR = Color(0xFF002140);
   static const BACKGROUND_COLOR = Color(0xFFFFF9EE);
   static const GREY_LIGHT_COLOR = Color(0xFFF3F3F3);
   static const GREY_NORMAL_COLOR = Color(0xFFB9B9B9);

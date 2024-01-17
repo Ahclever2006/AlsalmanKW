@@ -54,7 +54,13 @@ class CartTab extends StatelessWidget {
               return Column(
                 children: [
                   InnerPagesAppBar(label: 'basket'.tr().toUpperCase()),
-                  const EmptyPageMessage(title: 'no_items_in_basket'),
+                  const EmptyPageMessage(
+                    title: 'no_cart_items_found',
+                    subTitle: "check_our_best",
+                    svgImage: 'water_glass_icon',
+                    isSVG: false,
+                    textColor: AppColors.PRIMARY_COLOR_DARK,
+                  ),
                 ],
               );
           },

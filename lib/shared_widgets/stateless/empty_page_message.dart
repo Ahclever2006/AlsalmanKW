@@ -113,13 +113,17 @@ class EmptyPageMessage extends StatelessWidget {
                       height: height * (_heightRatio - .40),
                     )
               : Image.asset('$assetsPath$_svgImage.png'),
-          const SizedBox(height: 48.0),
+          const SizedBox(height: 24.0),
           child,
           if (subTitle != null)
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 32.0, vertical: 12.0),
-              child: SubtitleText(text: subTitle, textAlign: TextAlign.center),
+              child: SubtitleText(
+                text: subTitle,
+                textAlign: TextAlign.center,
+                color: AppColors.ACCENT_COLOR,
+              ),
             ),
           if (showTryAgainButton) _buildTryAgainButton(),
         ],

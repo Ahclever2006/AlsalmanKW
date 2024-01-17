@@ -278,7 +278,7 @@
     "no_tickets_exists": "No tickets exists",
     "root_detected": "This app cannot run on rooted devices. Please unroot your device and try again.",
     "tv":"TV",
-    "basket":"Basket",
+    "basket":"My Cart",
     "offers":"Offers",
     "account":"Account",
     "welcome_guest":"Welcome Guest",
@@ -444,5 +444,6 @@
     "check_our_best":"go to home page check out our best products",
     "are_you_sure":"Are you sure ?",
     "fav_remove_subtitle":"you want to remove this items from wishlist ?",
-    "no_notification_found":"No notifications"
+    "no_notification_found":"No notifications",
+    "no_cart_items_found":"Your Cart Is Still Empty"
 }
