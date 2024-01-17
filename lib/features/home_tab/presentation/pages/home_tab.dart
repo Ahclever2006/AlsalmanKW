@@ -126,9 +126,19 @@ class _HomeTabState extends State<HomeTab> {
       children: [
         _buildHomeBanners(context, banners),
         _buildHomeCategories(context, categories),
+        _buildShadowDivider(),
         _buildHomeBanners(context, categoriesBanners, autoPlay: false),
         ..._buildHomeCarousalProductSections(context, carousalSections),
       ],
+    );
+  }
+
+  Widget _buildShadowDivider() {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16.0),
+      decoration: const BoxDecoration(
+          color: Colors.white12, boxShadow: AppColors.SHADOW),
+      height: 1.0,
     );
   }
 
@@ -143,7 +153,7 @@ class _HomeTabState extends State<HomeTab> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const TitleText(text: 'explore_categories'),
+              _buildCustomTitle(label: "explore_categories"),
               DefaultButton(
                   label: 'view_all'.tr(),
                   labelStyle: Theme.of(context)
@@ -163,7 +173,7 @@ class _HomeTabState extends State<HomeTab> {
         ),
         SizedBox(
           //TODO: check responsive
-          height: 150.0,
+          height: 145.0,
           child: ListView.builder(
             padding: const EdgeInsets.all(0.0),
             scrollDirection: Axis.horizontal,
@@ -184,6 +194,22 @@ class _HomeTabState extends State<HomeTab> {
       ],
     );
   }
+
+  Widget _buildCustomTitle({required String label}) => Row(
+        children: [
+          Container(
+            height: 20.0,
+            width: 4.0,
+            decoration: const BoxDecoration(
+              color: AppColors.PRIMARY_COLOR,
+              borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(20.0), bottom: Radius.circular(20.0)),
+            ),
+          ),
+          const SizedBox(width: 12.0),
+          TitleText(text: label, color: AppColors.PRIMARY_COLOR_DARK),
+        ],
+      );
 
   void _goToCategoryProductsPage(
       BuildContext context, int categoryId, String categoryName) {
@@ -280,11 +306,10 @@ class _HomeTabState extends State<HomeTab> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: TitleText(text: e.title ?? ''),
-                ),
-              ),
+                  child: Padding(
+                padding: const EdgeInsetsDirectional.only(start: 8.0),
+                child: _buildCustomTitle(label: e.title ?? ''),
+              )),
               DefaultButton(
                   label: 'view_all'.tr(),
                   labelStyle: Theme.of(context)
