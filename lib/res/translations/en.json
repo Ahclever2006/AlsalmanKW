@@ -441,5 +441,7 @@
     "please_accept": "Please Accept Our privacy and conditions",
     "remove_all_fav":"Remove All Favorite",
     "no_fav_items_found":"Your Wishlist is still empty",
-    "check_our_best":"go to home page check out our best products"
+    "check_our_best":"go to home page check out our best products",
+    "are_you_sure":"Are you sure ?",
+    "fav_remove_subtitle":"you want to remove this items from wishlist ?"
 }

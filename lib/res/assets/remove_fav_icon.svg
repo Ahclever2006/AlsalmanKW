@@ -1,0 +1,10 @@
+<svg id="vuesax_linear_heart-slash" data-name="vuesax/linear/heart-slash" xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52">
+  <g id="heart-slash">
+    <g id="Group" transform="translate(4.333 6.695)">
+      <path id="Vector" d="M8.9,31.222C4.117,26.737,0,20.345,0,12.112A12.076,12.076,0,0,1,12.047,0a11.95,11.95,0,0,1,9.62,4.853A11.959,11.959,0,0,1,38.025,2.08" transform="translate(0 0)" fill="none" stroke="#d54444" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      <path id="Vector-2" data-name="Vector" d="M27.56,0a11.989,11.989,0,0,1,.563,3.662c0,15.167-14.04,24.115-20.323,26.282a4.724,4.724,0,0,1-2.687,0A27.892,27.892,0,0,1,0,27.5" transform="translate(15.21 8.472)" fill="none" stroke="#d54444" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+    </g>
+    <path id="Vector-3" data-name="Vector" d="M43.333,0,0,43.333" transform="translate(4.333 4.333)" fill="none" stroke="#d54444" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+    <path id="Vector-4" data-name="Vector" d="M0,0H52V52H0Z" transform="translate(52 52) rotate(180)" fill="none" opacity="0"/>
+  </g>
+</svg>

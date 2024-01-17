@@ -1,3 +1,4 @@
+import 'package:alsalman_app/shared_widgets/other/show_remove_fav_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -153,8 +154,18 @@ class _FavoritesProductsPageState extends State<FavoritesProductsPage> {
                             top: 8.0,
                             end: 16.0,
                             child: InkWell(
-                              onTap: () => cubit
-                                  .removeProductFromFav(product.Id.toString()),
+                              onTap: () {
+                                showRemoveFavDialog(context,
+                                    label: 'are_you_sure',
+                                    subtitle: 'fav_remove_subtitle',
+                                    onPress: () async {
+                                  await cubit
+                                      .removeProductFromFav(
+                                          product.Id.toString())
+                                      .whenComplete(() =>
+                                          NavigatorHelper.of(context).pop());
+                                });
+                              },
                               child: Container(
                                 margin: const EdgeInsets.all(8.0),
                                 padding: const EdgeInsets.all(6.0),
@@ -201,7 +212,15 @@ class _FavoritesProductsPageState extends State<FavoritesProductsPage> {
               backgroundColor: AppColors.SECONDARY_COLOR,
               labelStyle: Theme.of(context).textTheme.displayLarge!,
               icon: SvgPicture.asset('lib/res/assets/delete_icon.svg'),
-              onPressed: () => cubit.removeAllFav())
+              onPressed: () {
+                showRemoveFavDialog(context,
+                    label: 'are_you_sure',
+                    subtitle: 'fav_remove_subtitle', onPress: () async {
+                  await cubit
+                      .removeAllFav()
+                      .whenComplete(() => NavigatorHelper.of(context).pop());
+                });
+              })
         ],
       ),
     );
