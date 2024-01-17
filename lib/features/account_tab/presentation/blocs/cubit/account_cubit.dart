@@ -40,8 +40,4 @@ class AccountCubit extends BaseCubit<AccountState> {
   Future<void> openInstagramLink() async {
     await _launcherService.openWebsite(instagramLink);
   }
-
-  void changeExpansionStatus() async {
-    emit(state.copyWith(isSocialExpanded: !state.isSocialExpanded));
-  }
 }

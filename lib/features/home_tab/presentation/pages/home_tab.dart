@@ -379,7 +379,7 @@ class _HomeTabState extends State<HomeTab> {
                   .toList(),
             ),
           ),
-          if ((i + 1) % indexFactor == 0)
+          if (indexFactor != 0 && (i + 1) % indexFactor == 0)
             _buildHomeBanners(
                 context,
                 ((i + 1) / indexFactor == 1)

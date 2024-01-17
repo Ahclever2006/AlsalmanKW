@@ -61,7 +61,6 @@ class AccountTab extends StatelessWidget {
             ),
             if (isLoggedIn) ..._buildNormalUserAccountRows(context),
             ..._buildGuestAccountRows(context),
-            _buildSocialAccountsSection(context),
           ],
         ),
       ),
@@ -166,6 +165,10 @@ class AccountTab extends StatelessWidget {
           icon: 'language_account_icon',
           label: 'language_title',
           onPress: () => _goToLanguagePage(context)),
+      _buildAccountItemRow(context,
+          icon: 'contact_us_account_icon',
+          label: 'contact_us',
+          onPress: () => _goToLanguagePage(context)),
     ];
   }
 
@@ -220,62 +223,6 @@ class AccountTab extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildSocialAccountsSection(BuildContext context) {
-    return BlocBuilder<AccountCubit, AccountState>(
-      builder: (context, state) {
-        final cubit = context.read<AccountCubit>();
-        return Theme(
-          data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-          child: ExpansionTile(
-            title: const TitleText(text: 'contact_us'),
-            leading: SvgPicture.asset(
-                'lib/res/assets/contact_us_account_icon.svg',
-                width: 24.0),
-            trailing: Icon(
-              state.isSocialExpanded
-                  ? Icons.keyboard_arrow_down_outlined
-                  : Icons.chevron_right,
-              color: AppColors.PRIMARY_COLOR_DARK,
-            ),
-            onExpansionChanged: (value) {
-              cubit.changeExpansionStatus();
-            },
-            iconColor: AppColors.PRIMARY_COLOR_DARK,
-            collapsedIconColor: AppColors.PRIMARY_COLOR_DARK,
-            children: [_buildSocialMediaButtons(context)],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildSocialMediaButtons(BuildContext context) {
-    final cubit = context.read<AccountCubit>();
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          InkWell(
-            child: const Icon(
-              FontAwesomeIcons.whatsapp,
-              color: AppColors.PRIMARY_COLOR,
-            ),
-            onTap: () => cubit.startWhatsAppChat(),
-          ),
-          const SizedBox(width: 16.0),
-          InkWell(
-            onTap: () => cubit.openInstagramLink(),
-            child: SvgPicture.asset(
-              'lib/res/assets/instagram_icon.svg',
-              color: AppColors.PRIMARY_COLOR,
-            ),
-          ),
-        ],
       ),
     );
   }
