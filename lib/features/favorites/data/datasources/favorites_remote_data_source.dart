@@ -11,6 +11,7 @@ abstract class FavoritesRemoteDataSource {
 
   Future<void> addToFav(String id, Map<String, dynamic> data);
   Future<void> removeFromFav(String id);
+  Future<void> removeAllFav();
 }
 
 class FavoritesRemoteDataSourceImpl implements FavoritesRemoteDataSource {
@@ -63,6 +64,19 @@ class FavoritesRemoteDataSourceImpl implements FavoritesRemoteDataSource {
     return _networkService
         .delete(url, queryParameters: params)
         .then((response) {
+      if (response.statusCode != 200) throw RequestException(response.data);
+      final result = response.data;
+      final resultStatus = result['success'];
+      if (resultStatus != null && !resultStatus)
+        throw RequestException(result['errors']);
+    });
+  }
+
+  @override
+  Future<void> removeAllFav() {
+    const url = ApiEndPoint.REMOVE_ALL_WISHLIST;
+
+    return _networkService.delete(url).then((response) {
       if (response.statusCode != 200) throw RequestException(response.data);
       final result = response.data;
       final resultStatus = result['success'];

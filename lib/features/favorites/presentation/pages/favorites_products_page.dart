@@ -1,8 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:size_helper/size_helper.dart';
+import '../../../../res/style/app_colors.dart';
+import '../../../../shared_widgets/stateful/default_button.dart';
+import '../../../../shared_widgets/stateless/title_text.dart';
 import '../../../cart_tab/presentation/cubit/cart_cubit.dart';
 
 import '/di/injector.dart';
@@ -46,6 +50,15 @@ class _FavoritesProductsPageState extends State<FavoritesProductsPage> {
           body: Column(
             children: [
               InnerPagesAppBar(label: 'favorites'.tr().toUpperCase()),
+              BlocBuilder<FavoritesCubit, FavoritesState>(
+                builder: (context, state) {
+                  if (state.isInitial || state.isLoading)
+                    return const SizedBox();
+
+                  return _buildRemoveAll(context,
+                      count: state.favoritesList!.length);
+                },
+              ),
               BlocConsumer<FavoritesCubit, FavoritesState>(
                 listener: (context, state) {
                   if (state.isError)
@@ -91,7 +104,7 @@ class _FavoritesProductsPageState extends State<FavoritesProductsPage> {
               child: RefreshIndicator(
                 onRefresh: () => cubit.refresh(),
                 child: GridView.builder(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   physics: const AlwaysScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
@@ -105,30 +118,57 @@ class _FavoritesProductsPageState extends State<FavoritesProductsPage> {
                   itemCount: products.length,
                   itemBuilder: (BuildContext context, int index) {
                     final product = products[index];
-                    return ProductCard(
-                        heroTag: 'fav${product.Id}',
-                        key: ValueKey(product.Id),
-                        name: product.Name ?? '',
-                        price: product.productPrice?.price ?? '0',
-                        oldPrice: product.productPrice?.oldPrice,
-                        discount: product.DiscountPercentage ?? 0.0,
-                        isOutOfStock: false,
-                        isSubscribedBackInStock: false,
-                        imageUrl: product.DefaultPictureModel?.imageUrl ?? '',
-                        onAddPress: () => cartCubit
-                                .addToCartFromCatalog(product.Id.toString(), 1)
-                                .then((value) {
-                              if (value)
-                                showSnackBar(context,
-                                    message: 'item_added_to_cart_successfully');
-                              else {
-                                _goToProductDetailsPage(context, product.Id,
-                                    product.DefaultPictureModel?.imageUrl);
-                              }
-                            }),
-                        onPress: () => _goToProductDetailsPage(context,
-                            product.Id, product.DefaultPictureModel?.imageUrl),
-                        size: size);
+                    return Stack(
+                      children: [
+                        ProductCard(
+                            heroTag: 'fav${product.Id}',
+                            key: ValueKey(product.Id),
+                            name: product.Name ?? '',
+                            price: product.productPrice?.price ?? '0',
+                            oldPrice: product.productPrice?.oldPrice,
+                            discount: product.DiscountPercentage ?? 0.0,
+                            isOutOfStock: false,
+                            isSubscribedBackInStock: false,
+                            imageUrl:
+                                product.DefaultPictureModel?.imageUrl ?? '',
+                            onAddPress: () => cartCubit
+                                    .addToCartFromCatalog(
+                                        product.Id.toString(), 1)
+                                    .then((value) {
+                                  if (value)
+                                    showSnackBar(context,
+                                        message:
+                                            'item_added_to_cart_successfully');
+                                  else {
+                                    _goToProductDetailsPage(context, product.Id,
+                                        product.DefaultPictureModel?.imageUrl);
+                                  }
+                                }),
+                            onPress: () => _goToProductDetailsPage(
+                                context,
+                                product.Id,
+                                product.DefaultPictureModel?.imageUrl),
+                            size: size),
+                        PositionedDirectional(
+                            top: 8.0,
+                            end: 16.0,
+                            child: InkWell(
+                              onTap: () => cubit
+                                  .removeProductFromFav(product.Id.toString()),
+                              child: Container(
+                                margin: const EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.all(6.0),
+                                decoration: const BoxDecoration(
+                                  color: AppColors.PRIMARY_COLOR_LIGHT,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12.0)),
+                                ),
+                                child: SvgPicture.asset(
+                                    'lib/res/assets/fav_icon.svg'),
+                              ),
+                            ))
+                      ],
+                    );
                   },
                 ),
               ),
@@ -136,9 +176,35 @@ class _FavoritesProductsPageState extends State<FavoritesProductsPage> {
           )
         : EmptyPageMessage(
             heightRatio: 0.6,
-            title: '${'no'.tr()} ${'favorites'.tr()}',
+            isSVG: false,
+            title: 'no_fav_items_found',
+            subTitle: "check_our_best",
+            svgImage: 'fish_icon',
             onRefresh: cubit.refresh,
           );
+  }
+
+  Widget _buildRemoveAll(
+    BuildContext context, {
+    required int? count,
+  }) {
+    if (count == 0) return const SizedBox();
+    final cubit = context.read<FavoritesCubit>();
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const TitleText(text: 'remove_all_fav'),
+          DefaultButton(
+              padding: const EdgeInsets.all(12.0),
+              backgroundColor: AppColors.SECONDARY_COLOR,
+              labelStyle: Theme.of(context).textTheme.displayLarge!,
+              icon: SvgPicture.asset('lib/res/assets/delete_icon.svg'),
+              onPressed: () => cubit.removeAllFav())
+        ],
+      ),
+    );
   }
 
   void _goToProductDetailsPage(

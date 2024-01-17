@@ -9,6 +9,7 @@ abstract class FavoritesRepository {
 
   Future<void> addToFav(String id, Map<String, dynamic> data);
   Future<void> removeFromFav(String id);
+  Future<void> removeAllFav();
 }
 
 class FavoritesRepositoryImpl implements FavoritesRepository {
@@ -34,4 +35,7 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
 
   @override
   Future<void> removeFromFav(String id) => _remoteDataSource.removeFromFav(id);
+  
+  @override
+  Future<void> removeAllFav() => _remoteDataSource.removeAllFav();
 }

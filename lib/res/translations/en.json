@@ -438,5 +438,8 @@
     "code_is_there":"code Is Entered",
     "choose_shipping_time":"Choose Shipping Time First Please",
     "explore":"Explore",
-    "please_accept": "Please Accept Our privacy and conditions"
+    "please_accept": "Please Accept Our privacy and conditions",
+    "remove_all_fav":"Remove All Favorite",
+    "no_fav_items_found":"Your Wishlist is still empty",
+    "check_our_best":"go to home page check out our best products"
 }

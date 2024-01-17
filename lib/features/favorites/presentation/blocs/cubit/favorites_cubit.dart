@@ -58,4 +58,35 @@ class FavoritesCubit extends BaseCubit<FavoritesState> {
           status: FavoritesStateStatus.error, errorMessage: e.toString()));
     }
   }
+
+  Future<void> removeProductFromFav(String id) async {
+    try {
+      emit(state.copyWith(status: FavoritesStateStatus.deleteItem));
+      await _favoritesRepository.removeFromFav(id);
+      var oldFavList = state.favoritesList;
+      oldFavList!.removeWhere((e) => e.Id.toString() == id);
+
+      emit(state.copyWith(
+          status: FavoritesStateStatus.loaded, favoritesList: oldFavList));
+    } on RedundantRequestException catch (e) {
+      log(e.toString());
+    } catch (e) {
+      emit(state.copyWith(
+          status: FavoritesStateStatus.error, errorMessage: e.toString()));
+    }
+  }
+
+  Future<void> removeAllFav() async {
+    try {
+      await _favoritesRepository.removeAllFav();
+
+      emit(state
+          .copyWith(status: FavoritesStateStatus.loaded, favoritesList: []));
+    } on RedundantRequestException catch (e) {
+      log(e.toString());
+    } catch (e) {
+      emit(state.copyWith(
+          status: FavoritesStateStatus.error, errorMessage: e.toString()));
+    }
+  }
 }

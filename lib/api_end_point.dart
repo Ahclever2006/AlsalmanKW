@@ -116,6 +116,7 @@ abstract class ApiEndPoint {
       '$_REQUEST_URL/favoriteproduct/getfavoriteproducts';
   static const ADD_TO_WISHLIST = '$_REQUEST_URL/favoriteproduct/add';
   static const REMOVE_FROM_WISHLIST = '$_REQUEST_URL/favoriteproduct/delete';
+  static const REMOVE_ALL_WISHLIST = '$_REQUEST_URL/favoriteproduct/deleteall';
 
   // Wallet
 

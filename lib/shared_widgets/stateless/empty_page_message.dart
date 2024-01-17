@@ -113,6 +113,7 @@ class EmptyPageMessage extends StatelessWidget {
                       height: height * (_heightRatio - .40),
                     )
               : Image.asset('$assetsPath$_svgImage.png'),
+          const SizedBox(height: 48.0),
           child,
           if (subTitle != null)
             Padding(
