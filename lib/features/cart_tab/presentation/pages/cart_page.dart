@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../../../shared_widgets/other/show_delete_cart_item_bottom_sheet.dart';
 import '../../../../shared_widgets/stateless/subtitle_text.dart';
 
 import '../../../../core/data/models/cart_model.dart';
@@ -10,7 +11,6 @@ import '../../../../core/data/models/payment_summary.dart';
 import '../../../../core/utils/navigator_helper.dart';
 import '../../../../res/style/app_colors.dart';
 import '../../../../shared_widgets/other/show_cart_refresh_bottom_sheet.dart';
-import '../../../../shared_widgets/other/show_simple_bottom_sheet.dart';
 import '../../../../shared_widgets/other/show_snack_bar.dart';
 import '../../../../shared_widgets/stateful/default_button.dart';
 import '../../../../shared_widgets/stateful/stream_quantity_button.dart';
@@ -267,9 +267,11 @@ class CartTab extends StatelessWidget {
         labelStyle: Theme.of(context).textTheme.displayLarge!,
         icon: SvgPicture.asset('lib/res/assets/delete_icon.svg'),
         onPressed: () {
-          showSimpleBottomSheet(context,
+          showDeleteCartItemBottomSheet(context,
               label: 'cart_remove_title',
-              subtitle: 'remove_fav_subtitle',
+              name: cartItem.productName ?? '',
+              deliveryText: 'test delivery message',
+              image: cartItem.picture?.imageUrl ?? '',
               onPress: () =>
                   cubit.removeFromCart(cartItem.id.toString()).whenComplete(() {
                     NavigatorHelper.of(context).pop();
