@@ -121,35 +121,40 @@ class CartTab extends StatelessWidget {
     var warning = cartCubit.state.cart!.minOrderSubtotalWarning;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      margin: const EdgeInsets.only(bottom: 8.0),
-      decoration: const BoxDecoration(color: Colors.white),
+      margin: const EdgeInsets.all(16.0),
+      decoration: const BoxDecoration(
+        color: AppColors.PRIMARY_COLOR,
+        borderRadius: BorderRadius.all(Radius.circular(24.0)),
+      ),
       child: Column(
         children: [
-          _buildPaymentSummarySection(context, payment),
-          if (warning != null) SubtitleText.medium(text: warning.toString()),
-          const SizedBox(height: 8.0),
-          DefaultButton(
-              label: 'proceed_check_out'.tr(),
-              margin: const EdgeInsets.only(bottom: 16.0),
-              isExpanded: true,
-              onPressed: () async {
-                if (warning != null)
-                  return showSnackBar(context, message: warning);
+          Row(
+            children: [
+              Expanded(child: _buildPaymentSummarySection(context, payment)),
+              DefaultButton(
+                  label: 'proceed_check_out'.tr(),
+                  onPressed: () async {
+                    if (warning != null)
+                      return showSnackBar(context, message: warning);
 
-                await cartCubit.checkCartQuantityAvailable().then((value) {
-                  if (value == true) {
-                    NavigatorHelper.of(context)
-                        .pushNamed(CheckoutPage.routeName);
-                  } else {
-                    showCartRefreshDialog(context,
-                        label: 'cart_refresh',
-                        subtitle: 'cart_refresh_subtitle', onPress: () async {
-                      await cartCubit.refreshCartItems().whenComplete(
-                          () => NavigatorHelper.of(context).pop());
+                    await cartCubit.checkCartQuantityAvailable().then((value) {
+                      if (value == true) {
+                        NavigatorHelper.of(context)
+                            .pushNamed(CheckoutPage.routeName);
+                      } else {
+                        showCartRefreshDialog(context,
+                            label: 'cart_refresh',
+                            subtitle: 'cart_refresh_subtitle',
+                            onPress: () async {
+                          await cartCubit.refreshCartItems().whenComplete(
+                              () => NavigatorHelper.of(context).pop());
+                        });
+                      }
                     });
-                  }
-                });
-              })
+                  })
+            ],
+          ),
+          if (warning != null) SubtitleText.medium(text: warning.toString()),
         ],
       ),
     );
@@ -273,11 +278,18 @@ class CartTab extends StatelessWidget {
       BuildContext context, PaymentSummaryModel? payment) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TitleText(text: 'sub_total'.tr()),
-          TitleText(text: payment?.totalsModel?.subTotal ?? ''),
+          TitleText(
+            text: 'sub_total'.tr(),
+            color: Colors.white,
+          ),
+          const SizedBox(height: 4.0),
+          TitleText(
+            text: payment?.totalsModel?.subTotal ?? '',
+            color: Colors.white,
+          ),
         ],
       ),
     );
