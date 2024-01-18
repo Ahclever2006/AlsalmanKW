@@ -1,18 +1,19 @@
 import '../../core/utils/media_query_values.dart';
 
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
+
 import '../../features/auth/data/models/user_info.dart';
 import '../text_fields/last_name_text_form_field.dart';
 import 'show_snack_bar.dart';
 import '../stateful/gender_choice_widget.dart';
 import '../text_fields/default_text_form_field.dart';
 import '../text_fields/first_name_text_form_field.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 import '../../features/auth/presentation/blocs/auth_cubit/auth_cubit.dart';
 import '../../features/layout/presentation/cubit/main_layout_cubit.dart';
 import '../stateful/default_button.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide DatePickerTheme;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 

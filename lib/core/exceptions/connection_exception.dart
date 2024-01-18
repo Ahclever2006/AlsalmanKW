@@ -8,34 +8,34 @@ class ConnectionException implements Exception {
             ? message
             : message is List
                 ? message.join(',\n')
-                : message is DioError
-                    ? _returnMessage(message)
-                    : message.toString();
+                // : message is DioError
+                //  ? _returnMessage(message)
+                : message.toString();
 
   @override
   String toString() => _message;
 
-  static String _returnMessage(DioError dioError) {
-    switch (dioError.type) {
-      case DioErrorType.connectTimeout:
-        return 'Connection timeout with ApiServer';
-      case DioErrorType.sendTimeout:
-        return 'Send timeout with ApiServer';
-      case DioErrorType.receiveTimeout:
-        return 'Receive timeout with ApiServer';
-      case DioErrorType.response:
-        return _returnMessageFromDioResponse(dioError);
-      case DioErrorType.cancel:
-        return 'Request to ApiServer was canceled';
-      case DioErrorType.other:
-        if (dioError.message.contains('SocketException')) {
-          return 'No Internet Connection';
-        }
-        return 'Unexpected Error, Please try again!';
-      default:
-        return 'Opps There was an Error, Please try again';
-    }
-  }
+  // static String _returnMessage(DioException dioError) {
+  //   switch (dioError.type) {
+  //     case DioException.connectTimeout:
+  //       return 'Connection timeout with ApiServer';
+  //     case DioErrorType.sendTimeout:
+  //       return 'Send timeout with ApiServer';
+  //     case DioErrorType.receiveTimeout:
+  //       return 'Receive timeout with ApiServer';
+  //     case DioErrorType.response:
+  //       return _returnMessageFromDioResponse(dioError);
+  //     case DioErrorType.cancel:
+  //       return 'Request to ApiServer was canceled';
+  //     case DioErrorType.other:
+  //       if (dioError.message.contains('SocketException')) {
+  //         return 'No Internet Connection';
+  //       }
+  //       return 'Unexpected Error, Please try again!';
+  //     default:
+  //       return 'Opps There was an Error, Please try again';
+  //   }
+  // }
 
   static String _returnMessageFromDioResponse(DioError dioError) {
     var statusCode = dioError.response!.statusCode;
