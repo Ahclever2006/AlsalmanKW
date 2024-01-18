@@ -151,12 +151,6 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TitleText(
-                text: "${'first_name'.tr()} *",
-                color:
-                    _firstNameTextController.text.isEmpty ? Colors.red : null,
-              ),
-              const SizedBox(height: 8.0),
               FirstNameTextFormField(
                 currentFocusNode: _firstNameFocusNode,
                 nextFocusNode: _emailFocusNode,
@@ -164,23 +158,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 maxLength: 30,
               ),
               const SizedBox(height: 16.0),
-              TitleText(
-                text: 'email_address'.tr(),
-                color:
-                    _firstNameTextController.text.isEmpty ? Colors.red : null,
-              ),
-              const SizedBox(height: 8.0),
               EmailTextFormField(
                 currentFocusNode: _emailFocusNode,
                 currentController: _emailTextController,
               ),
               const SizedBox(height: 16.0),
-              TitleText(
-                text: 'phone_number'.tr(),
-                color:
-                    _firstNameTextController.text.isEmpty ? Colors.red : null,
-              ),
-              const SizedBox(height: 8.0),
               PhoneTextFormField(
                 currentFocusNode: _phoneFocusNode,
                 nextFocusNode: null,
@@ -189,8 +171,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 initialValue: _phoneNumber,
               ),
               const SizedBox(height: 16.0),
-              const TitleText(text: 'birth_date_optional'),
-              const SizedBox(height: 8.0),
               _buildBirthDateWidget(context)
             ],
           ),
@@ -207,6 +187,7 @@ class _ProfilePageState extends State<ProfilePage> {
         child: DefaultButton(
             margin: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 8.0),
             label: 'save'.tr(),
+            borderRadius: const BorderRadius.all(Radius.circular(20.0)),
             onPressed: () async {
               if (_isNotValid()) return;
               final isSuccess = await authCubit.editAccountData(UserInfoData(
@@ -230,6 +211,7 @@ class _ProfilePageState extends State<ProfilePage> {
           label: 'logout'.tr(),
           backgroundColor: Colors.transparent,
           borderColor: AppColors.GREY_NORMAL_COLOR,
+          borderRadius: const BorderRadius.all(Radius.circular(20.0)),
           labelStyle: Theme.of(context).textTheme.displayLarge!,
           margin: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 8.0),
           onPressed: () => showSimpleBottomSheet(context,
@@ -244,9 +226,12 @@ class _ProfilePageState extends State<ProfilePage> {
               })),
       DefaultButton(
           label: 'delete_account'.tr(),
+          icon: SvgPicture.asset('lib/res/assets/delete_account_icon.svg'),
           backgroundColor: Colors.transparent,
-          borderColor: AppColors.GREY_NORMAL_COLOR,
-          labelStyle: Theme.of(context).textTheme.displayLarge!,
+          labelStyle: Theme.of(context)
+              .textTheme
+              .displayLarge!
+              .copyWith(color: AppColors.ERROR_COLOR),
           margin: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 8.0),
           onPressed: () => showDeleteAccountBottomSheet(context,
               label: 'delete_account_title',
@@ -336,10 +321,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   List<Widget> _buildGenderSection(BuildContext context) {
     return [
-      const TitleText(
-          text: 'gender_optional',
-          margin: EdgeInsets.symmetric(horizontal: 16.0)),
-      const SizedBox(height: 8.0),
       GenderChoiceWidget(
           initialGender: gender != null ? int.tryParse(gender!) : null,
           onChange: (value) {

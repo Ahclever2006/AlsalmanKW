@@ -74,7 +74,7 @@ class _GenderChoiceWidgetState extends State<GenderChoiceWidget> {
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
           border: Border.all(color: AppColors.PRIMARY_COLOR_DARK),
-          color: isSelected ? AppColors.PRIMARY_COLOR_DARK : Colors.white,
+          color: isSelected ? AppColors.PRIMARY_COLOR : Colors.white,
           borderRadius: const BorderRadius.all(Radius.circular(10.0)),
         ),
         child: SubtitleText(textAlign: TextAlign.center, text: label),
