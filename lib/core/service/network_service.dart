@@ -15,11 +15,14 @@ import '../utils/custom_printer.dart';
 import 'cache_service.dart';
 // import '../exceptions/request_exception.dart';
 
+CancelToken cancelToken = CancelToken();
+
 abstract class NetworkService {
   Future<Response> get(
     String url, {
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
+    CancelToken? cancelToken,
   });
 
   Future<Response> post(
@@ -27,6 +30,7 @@ abstract class NetworkService {
     data,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
+    CancelToken? cancelToken,
   });
 
   Future<Response> patch(
@@ -34,6 +38,7 @@ abstract class NetworkService {
     data,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
+    CancelToken? cancelToken,
   });
 
   Future<Response> put(
@@ -41,6 +46,7 @@ abstract class NetworkService {
     data,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
+    CancelToken? cancelToken,
   });
 
   Future<Response> delete(
@@ -48,6 +54,7 @@ abstract class NetworkService {
     data,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
+    CancelToken? cancelToken,
   });
 
   Future<Response> downloadFile(
@@ -71,9 +78,11 @@ class NetworkServiceImpl implements NetworkService {
 
   final NetworkServiceUtil _networkServiceUtil;
 
-  final _dio = Dio(BaseOptions(validateStatus: (_) => true))
-    ..interceptors
-        .add(inspectorEnabled ? RequestsInspectorInterceptor() : Interceptor());
+  final _dio = Dio(BaseOptions(
+      contentType: Headers.jsonContentType, validateStatus: (_) => true))
+    ..interceptors.add(inspectorEnabled
+        ? RequestsInspectorInterceptor()
+        : const Interceptor());
 
   String? _requestName;
 
@@ -84,6 +93,7 @@ class NetworkServiceImpl implements NetworkService {
     String url, {
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
+    CancelToken? cancelToken,
   }) async {
     _requestName = _extractName(url);
     headers ??= await getDefaultHeaders();
@@ -100,6 +110,7 @@ class NetworkServiceImpl implements NetworkService {
           url,
           queryParameters: formatQueryIfNeeded(queryParameters),
           headers: headers!,
+          cancelToken: cancelToken,
         )).whenComplete(() => _pendingRequests.remove(requestId));
   }
 
@@ -109,6 +120,7 @@ class NetworkServiceImpl implements NetworkService {
     data,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
+    CancelToken? cancelToken,
   }) async {
     _requestName = _extractName(url);
     headers ??= await getDefaultHeaders();
@@ -126,6 +138,7 @@ class NetworkServiceImpl implements NetworkService {
           queryParameters: formatQueryIfNeeded(queryParameters),
           data: data,
           headers: headers!,
+          cancelToken: cancelToken,
         )).whenComplete(() => _pendingRequests.remove(requestId));
   }
 
@@ -135,6 +148,7 @@ class NetworkServiceImpl implements NetworkService {
     data,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
+    CancelToken? cancelToken,
   }) async {
     _requestName = _extractName(url);
     headers ??= await getDefaultHeaders();
@@ -152,6 +166,7 @@ class NetworkServiceImpl implements NetworkService {
           queryParameters: formatQueryIfNeeded(queryParameters),
           data: data,
           headers: headers!,
+          cancelToken: cancelToken,
         )).whenComplete(() => _pendingRequests.remove(requestId));
   }
 
@@ -161,6 +176,7 @@ class NetworkServiceImpl implements NetworkService {
     data,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
+    CancelToken? cancelToken,
   }) async {
     _requestName = _extractName(url);
     headers ??= await getDefaultHeaders();
@@ -178,6 +194,7 @@ class NetworkServiceImpl implements NetworkService {
           queryParameters: formatQueryIfNeeded(queryParameters),
           data: data,
           headers: headers!,
+          cancelToken: cancelToken,
         )).whenComplete(() => _pendingRequests.remove(requestId));
   }
 
@@ -187,6 +204,7 @@ class NetworkServiceImpl implements NetworkService {
     data,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
+    CancelToken? cancelToken,
   }) async {
     _requestName = _extractName(url);
     headers ??= await getDefaultHeaders();
@@ -204,6 +222,7 @@ class NetworkServiceImpl implements NetworkService {
           queryParameters: formatQueryIfNeeded(queryParameters),
           data: data,
           headers: headers!,
+          cancelToken: cancelToken,
         )).whenComplete(() => _pendingRequests.remove(requestId));
   }
 
@@ -225,14 +244,14 @@ class NetworkServiceImpl implements NetworkService {
     String apiBaseUrl, {
     Map<String, dynamic>? queryParameters,
     required Map<String, dynamic> headers,
+    CancelToken? cancelToken,
   }) async {
     final requestName = _requestName;
     _logRequest(requestName, apiBaseUrl, queryParameters, headers);
-    var response = await _dio.get(
-      apiBaseUrl,
-      queryParameters: queryParameters,
-      options: Options(headers: headers),
-    );
+    var response = await _dio.get(apiBaseUrl,
+        queryParameters: queryParameters,
+        options: Options(headers: headers),
+        cancelToken: cancelToken);
     _logResponse(requestName, response);
 
     // if ([401, 403].contains(response.statusCode))
@@ -260,15 +279,15 @@ class NetworkServiceImpl implements NetworkService {
     Map<String, dynamic>? queryParameters,
     data,
     required Map<String, dynamic> headers,
+    CancelToken? cancelToken,
   }) async {
     final requestName = _requestName;
     _logRequest(requestName, apiBaseUrl, queryParameters, headers, data);
-    var response = await _dio.post(
-      apiBaseUrl,
-      queryParameters: queryParameters,
-      data: data,
-      options: Options(headers: headers),
-    );
+    var response = await _dio.post(apiBaseUrl,
+        queryParameters: queryParameters,
+        data: data,
+        options: Options(headers: headers),
+        cancelToken: cancelToken);
     _logResponse(requestName, response);
 
     // if ([401, 403].contains(response.statusCode))
@@ -291,15 +310,15 @@ class NetworkServiceImpl implements NetworkService {
     Map<String, dynamic>? queryParameters,
     data,
     required Map<String, dynamic> headers,
+    CancelToken? cancelToken,
   }) async {
     final requestName = _requestName;
     _logRequest(requestName, apiBaseUrl, queryParameters, headers, data);
-    var response = await _dio.patch(
-      apiBaseUrl,
-      queryParameters: queryParameters,
-      data: data,
-      options: Options(headers: headers),
-    );
+    var response = await _dio.patch(apiBaseUrl,
+        queryParameters: queryParameters,
+        data: data,
+        options: Options(headers: headers),
+        cancelToken: cancelToken);
     _logResponse(requestName, response);
 
     // if ([401, 403].contains(response.statusCode))
@@ -322,15 +341,15 @@ class NetworkServiceImpl implements NetworkService {
     Map<String, dynamic>? queryParameters,
     data,
     required Map<String, dynamic> headers,
+    CancelToken? cancelToken,
   }) async {
     final requestName = _requestName;
     _logRequest(requestName, apiBaseUrl, queryParameters, headers, data);
-    var response = await _dio.put(
-      apiBaseUrl,
-      queryParameters: queryParameters,
-      data: data,
-      options: Options(headers: headers),
-    );
+    var response = await _dio.put(apiBaseUrl,
+        queryParameters: queryParameters,
+        data: data,
+        options: Options(headers: headers),
+        cancelToken: cancelToken);
     _logResponse(requestName, response);
 
     // if ([401, 403].contains(response.statusCode))
@@ -353,15 +372,15 @@ class NetworkServiceImpl implements NetworkService {
     Map<String, dynamic>? queryParameters,
     data,
     required Map<String, dynamic> headers,
+    CancelToken? cancelToken,
   }) async {
     final requestName = _requestName;
     _logRequest(requestName, apiBaseUrl, queryParameters, headers, data);
-    var response = await _dio.delete(
-      apiBaseUrl,
-      queryParameters: queryParameters,
-      data: data,
-      options: Options(headers: headers),
-    );
+    var response = await _dio.delete(apiBaseUrl,
+        queryParameters: queryParameters,
+        data: data,
+        options: Options(headers: headers),
+        cancelToken: cancelToken);
     _logResponse(requestName, response);
 
     // if ([401, 403].contains(response.statusCode))
