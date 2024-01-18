@@ -29,8 +29,12 @@ class IntroPage extends StatefulWidget {
 }
 
 class _IntroPageState extends State<IntroPage> {
+  late CarouselController imageController;
+
   @override
   void initState() {
+    imageController = CarouselController();
+
     super.initState();
   }
 
@@ -65,34 +69,11 @@ class _IntroPageState extends State<IntroPage> {
     HomeBannerModel? banners,
   }) {
     return Scaffold(
-      body: Stack(children: [
+      body: Column(children: [
+        SizedBox(height: context.height * 0.15),
         _buildIntroBanners(context, banners),
-        Positioned(
-          bottom: 0,
-          left: 0,
-          right: 0,
-          child: IgnorePointer(
-            child: Container(
-              height: context.height / 2,
-              width: context.width,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  stops: const [0, 0.4, 0.7, 1.0],
-                  colors: <Color>[
-                    Colors.black.withOpacity(0.0),
-                    Colors.black.withOpacity(0.37),
-                    Colors.black.withOpacity(0.57),
-                    AppColors.SECONDARY_COLOR,
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-        Positioned(
-            left: 16.0, right: 16.0, bottom: 100.0, child: _buildTextAndDots()),
+        SizedBox(height: context.height * 0.10),
+        Expanded(child: _buildTextAndDots()),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -125,43 +106,49 @@ class _IntroPageState extends State<IntroPage> {
 
   Widget _buildMoreBtn(BuildContext context) => Align(
         alignment: Alignment.bottomRight,
-        child: InkWell(
-          onTap: () {},
-          child: Container(
-            decoration: const BoxDecoration(
-              color: AppColors.PRIMARY_COLOR,
-              borderRadius: BorderRadius.all(Radius.circular(12.0)),
-            ),
-            margin:
-                const EdgeInsets.only(bottom: 48.0, left: 16.0, right: 16.0),
-            width: 100.0,
-            height: 45.0,
-            padding: const EdgeInsetsDirectional.all(8.0),
-            child: const Center(
-                child: TitleText(
-              text: 'more',
-              color: Colors.white,
-            )),
-          ),
+        child: BlocBuilder<IntroCubit, IntroState>(
+          builder: (context, state) {
+            return InkWell(
+              onTap: () {
+                imageController.jumpToPage((state.introBannerIndex! + 1));
+              },
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: AppColors.PRIMARY_COLOR,
+                  borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                ),
+                margin: const EdgeInsets.only(
+                    bottom: 48.0, left: 16.0, right: 16.0),
+                width: 100.0,
+                height: 45.0,
+                padding: const EdgeInsetsDirectional.all(8.0),
+                child: const Center(
+                    child: TitleText(
+                  text: 'more',
+                  color: Colors.white,
+                )),
+              ),
+            );
+          },
         ),
       );
 
   Widget _buildIntroBanners(BuildContext context, HomeBannerModel? banners) {
     final cubit = context.read<IntroCubit>();
-    var width = context.width;
-    var height = context.height;
+    var width = context.width * 0.80;
+    var height = context.height * 0.5;
     if (banners == null || banners.data?.isNotEmpty == false)
       return const SizedBox();
     return CarouselSlider.builder(
       options: CarouselOptions(
         height: height,
-        autoPlay: true,
         viewportFraction: 1.0,
         onPageChanged: (index, reason) => cubit.autoChangedCarouselIndex(index),
         autoPlayInterval: const Duration(
           seconds: 10,
         ),
       ),
+      carouselController: imageController,
       itemCount: banners.data?.length ?? 0,
       itemBuilder: (context, index, realIndex) {
         var banner = banners.data![index];
@@ -183,18 +170,20 @@ class _IntroPageState extends State<IntroPage> {
         var banner = state.introBanners!.data![state.introBannerIndex ?? 0];
         final String text = banner.text ?? '';
         return Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-                width: context.width * 0.75,
-                child: TitleText.large(text: text, color: Colors.white)),
-            const SizedBox(height: 16.0),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 48.0),
+                child: TitleText.large(
+                    text: text, color: AppColors.PRIMARY_COLOR_DARK),
+              ),
+            ),
+            SizedBox(height: context.height * 0.05),
             AnimatedSmoothIndicator(
                 activeIndex: state.introBannerIndex ?? 0,
                 count: state.introBanners?.data?.length ?? 0,
                 effect: const ColorTransitionEffect(
-                  activeDotColor: Colors.white,
+                  activeDotColor: AppColors.PRIMARY_COLOR_DARK,
                   spacing: 4.0,
                   dotColor: AppColors.GREY_NORMAL_COLOR,
                 )),

@@ -1,6 +1,6 @@
 enum TopicType {
   AboutUs(1),
-  Privacy(2),
+  Privacy(8),
   Terms(3);
 
   final int value;
