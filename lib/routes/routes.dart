@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../features/account_tab/presentation/pages/change_password_page.dart';
 import '../features/account_tab/presentation/pages/contact_us_page.dart';
+import '../features/account_tab/presentation/pages/delete_account_page.dart';
 import '../features/account_tab/presentation/pages/language_chooser_page.dart';
 
 import '../features/account_tab/presentation/pages/profile_page.dart';
@@ -42,4 +43,5 @@ final routes = <String, WidgetBuilder>{
   ContactUsPage.routeName: (context) => const ContactUsPage(),
   CategoriesPage.routeName: (context) => const CategoriesPage(),
   NotificationsPage.routeName: (context) => const NotificationsPage(),
+  DeleteAccountPage.routeName:(context) => const DeleteAccountPage()
 };

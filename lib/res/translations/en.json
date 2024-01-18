@@ -299,8 +299,8 @@
     "no_action":"No",
     "guest_mode":"You are now in guest mode",
     "delete_account_title":"Delete your Account?",
-    "delete_account_subtitle":"Deleting your account removes all yours Square account Information, orders, addresses, wallet.",
-    "delete_account_check_message":"I understand that this will remove my Square account!",
+    "delete_account_subtitle":"If You're Sure That You Want To Delete Your Account, Please  Press Delete, Your Account Will Be Deactivated, Which Means Your Information With Your  Data Will Be Delete..",
+    "delete_account_check_message":"I understand that this will remove my Alsalman account!",
     "add_address":"Add New Address",
     "add":"Add",
     "update":"Update",
@@ -450,5 +450,8 @@
     "office_type":"Office",
     "other_type":"Other",
     "customer_service":"Customer service",
-    "whats_app":"WhatsApp"
+    "whats_app":"WhatsApp",
+    "warning":"Warning",
+    "read_information":"Read Information",
+    "warning_subtitle":"Oh Snap, You're Leaving Us?"
 }

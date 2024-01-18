@@ -1,3 +1,4 @@
+import 'package:alsalman_app/features/account_tab/presentation/pages/delete_account_page.dart';
 import 'package:alsalman_app/shared_widgets/other/show_log_out_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,13 +11,10 @@ import '../../../../shared_widgets/stateful/default_button.dart';
 
 import '../../../../core/utils/navigator_helper.dart';
 import '../../../../res/style/app_colors.dart';
-import '../../../../shared_widgets/other/show_delete_account_bottom_sheet.dart';
-import '../../../../shared_widgets/other/show_simple_bottom_sheet.dart';
 import '../../../../shared_widgets/other/show_snack_bar.dart';
 import '../../../../shared_widgets/stateful/gender_choice_widget.dart';
 import '../../../../shared_widgets/stateless/custom_app_page.dart';
 import '../../../../shared_widgets/stateless/inner_appbar.dart';
-import '../../../../shared_widgets/stateless/title_text.dart';
 import '../../../../shared_widgets/text_fields/default_text_form_field.dart';
 import '../../../../shared_widgets/text_fields/email_text_form_field.dart';
 import '../../../../shared_widgets/text_fields/first_name_text_form_field.dart';
@@ -236,18 +234,12 @@ class _ProfilePageState extends State<ProfilePage> {
               .displayLarge!
               .copyWith(color: AppColors.ERROR_COLOR),
           margin: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 8.0),
-          onPressed: () => showDeleteAccountBottomSheet(context,
-              label: 'delete_account_title',
-              subtitle: 'delete_account_subtitle',
-              checkMessage: 'delete_account_check_message',
-              onPress: () => authCubit
-                  .deleteAccount()
-                  .then((value) => authCubit.loginAsGuest())
-                  .whenComplete(() => cartCubit.clearCart())
-                  .whenComplete(() => addressCubit.refreshAddresses())
-                  .whenComplete(() => _goToHomePage(context)))),
+          onPressed: () => _goToDeleteAccountPage(context)),
     ];
   }
+
+  Future<void> _goToDeleteAccountPage(BuildContext context) =>
+      NavigatorHelper.of(context).pushNamed(DeleteAccountPage.routeName);
 
   void _goToHomePage(BuildContext context) {
     final mainLayoutCubit = context.read<MainLayoutCubit>();

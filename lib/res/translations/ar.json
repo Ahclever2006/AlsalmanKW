@@ -299,7 +299,7 @@
     "no_action":"لا",
     "guest_mode":"أنت الآن في وضع الضيف",
     "delete_account_title":"حذف حسابك؟",
-    "delete_account_subtitle":"يؤدي حذف حسابك إلى إزالة جميع معلومات حساب التطبيق الخاصة بك ، والطلبات ، والعناوين ، والمحفظة.",
+    "delete_account_subtitle":"إذا كنت متأكدًا من رغبتك في حذف حسابك، فيرجى الضغط على 'حذف'، سيتم إلغاء تنشيط حسابك، مما يعني أنه سيتم حذف معلوماتك مع بياناتك..",
     "delete_account_check_message":"أنا أفهم أن هذا سيزيل حسابي في التطبيق!",
     "add_address":"اضف عنوان جديد",
     "add":"اضف",
@@ -450,5 +450,8 @@
     "office_type":"مكتب",
     "other_type":"اخري",
     "customer_service":"خدمه العملاء",
-    "whats_app":"واتس"
+    "whats_app":"واتس",
+    "warning":"تحذير",
+    "read_information":"اقرا المعلومات",
+    "warning_subtitle":"هل ستتركنا؟"
 }
