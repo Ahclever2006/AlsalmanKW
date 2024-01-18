@@ -1,8 +1,8 @@
+import '../../../../core/data/models/confirm_order_model.dart';
+import '../../../../core/data/models/payment_methods_model.dart';
 import '/api_end_point.dart';
 import '/core/exceptions/request_exception.dart';
 import '/core/service/network_service.dart';
-import '../models/confirm_order_model.dart';
-import '../models/payment_methods_model.dart';
 
 abstract class PaymentRemoteDataSource {
   Future<PaymentMethodsModel> getPaymentMethods();

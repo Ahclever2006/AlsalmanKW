@@ -414,8 +414,8 @@ class Injector {
   DynamicLinkService get dynamicLinkService =>
       _flyweightMap['dynamicLinkService'] ??= DynamicLinkServiceImpl();
 
-  MyFatoorahService get myFatoorahService =>
-      _flyweightMap['myFatoorahService'] ??= MyFatoorahServiceImpl();
+  // MyFatoorahService get myFatoorahService =>
+  //     _flyweightMap['myFatoorahService'] ??= MyFatoorahServiceImpl();
 
   ExternalLoginDataSource get appleExternalDataSource =>
       _flyweightMap['appleExternalDataSource'] ??=

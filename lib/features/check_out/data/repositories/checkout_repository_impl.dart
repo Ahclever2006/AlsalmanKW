@@ -1,9 +1,9 @@
 import '../../../../core/data/datasources/device_type_data_source.dart';
+import '../../../../core/data/models/confirm_order_model.dart';
+import '../../../../core/data/models/payment_methods_model.dart';
 import '../../../../core/data/models/schedule_delivery_shipping_dates_model.dart';
 import '../../../../core/data/models/schedule_delivery_shipping_methods_model.dart';
 import '../../../../core/data/models/schedule_delivery_shipping_times_model.dart';
-import '../../../payment/data/models/confirm_order_model.dart';
-import '../../../payment/data/models/payment_methods_model.dart';
 import '../datasources/checkout_remote_data_source.dart';
 
 abstract class CheckoutRepository {

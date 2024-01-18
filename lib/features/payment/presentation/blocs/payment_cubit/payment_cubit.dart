@@ -1,14 +1,13 @@
 import 'dart:developer';
 
 import 'package:meta/meta.dart';
-import 'package:myfatoorah_flutter/model/initpayment/SDKInitiatePaymentResponse.dart';
 
-import '/../../../features/payment/data/models/payment_methods_model.dart';
+import '../../../../../core/data/models/confirm_order_model.dart';
+import '../../../../../core/data/models/payment_methods_model.dart';
 import '/../core/abstract/base_cubit.dart';
 import '/../core/exceptions/redundant_request_exception.dart';
 import '../../../../../core/data/models/payment_summary.dart';
 import '../../../../cart_tab/data/repositories/cart_repository.dart';
-import '../../../data/models/confirm_order_model.dart';
 import '../../../data/repositories/payment_repository_impl.dart';
 
 part 'payment_state.dart';
@@ -118,20 +117,20 @@ class PaymentCubit extends BaseCubit<PaymentState> {
     }
   }
 
-  List<PaymentMethods>? myfatoorahPaymentMethods;
+  // List<PaymentMethods>? myfatoorahPaymentMethods;
 
-  void changeFatoorahPaymentMethods(List<PaymentMethods>? data) {
-    emit(PaymentStateLoading(
-      state.paymentMethodsModel,
-      state.paymentSummaryModel,
-    ));
-    myfatoorahPaymentMethods = data;
+  // void changeFatoorahPaymentMethods(List<PaymentMethods>? data) {
+  //   emit(PaymentStateLoading(
+  //     state.paymentMethodsModel,
+  //     state.paymentSummaryModel,
+  //   ));
+  //   myfatoorahPaymentMethods = data;
 
-    emit(PaymentStateLoaded(
-      state.paymentMethodsModel,
-      state.paymentSummaryModel,
-    ));
-  }
+  //   emit(PaymentStateLoaded(
+  //     state.paymentMethodsModel,
+  //     state.paymentSummaryModel,
+  //   ));
+  // }
 
   int? selectedPaymentMethodId;
 

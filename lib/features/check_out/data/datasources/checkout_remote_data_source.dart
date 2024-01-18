@@ -1,11 +1,12 @@
+import '../../../../core/data/models/confirm_order_model.dart';
+import '../../../../core/data/models/payment_methods_model.dart';
 import '../../../../core/data/models/schedule_delivery_shipping_dates_model.dart';
 import '../../../../core/data/models/schedule_delivery_shipping_methods_model.dart';
 import '../../../../core/data/models/schedule_delivery_shipping_times_model.dart';
 import '/api_end_point.dart';
 import '/core/exceptions/request_exception.dart';
 import '/core/service/network_service.dart';
-import '../../../payment/data/models/confirm_order_model.dart';
-import '../../../payment/data/models/payment_methods_model.dart';
+
 
 abstract class CheckoutRemoteDataSource {
   Future<void> setBillingAddress(int id);

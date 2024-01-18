@@ -1,7 +1,7 @@
 import '../../../../core/data/datasources/device_type_data_source.dart';
+import '../../../../core/data/models/confirm_order_model.dart';
+import '../../../../core/data/models/payment_methods_model.dart';
 import '../datasources/payment_remote_data_source.dart';
-import '../models/confirm_order_model.dart';
-import '../models/payment_methods_model.dart';
 
 abstract class PaymentRepository {
   Future<PaymentMethodsModel> getPaymentMethods();

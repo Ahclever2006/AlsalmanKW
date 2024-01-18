@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../../core/abstract/base_cubit.dart';
+import '../../../../../core/data/models/confirm_order_model.dart';
 import '../../../../../core/data/models/payment_summary.dart';
 import '../../../../../core/data/models/schedule_delivery_shipping_dates_model.dart';
 import '../../../../../core/data/models/schedule_delivery_shipping_methods_model.dart';
@@ -12,7 +13,6 @@ import '../../../../../core/data/models/schedule_delivery_shipping_times_model.d
 import '../../../../../core/exceptions/redundant_request_exception.dart';
 import '../../../../../core/service/share_service.dart';
 import '../../../../../features/cart_tab/data/repositories/cart_repository.dart';
-import '../../../../payment/data/models/confirm_order_model.dart';
 import '../../../../wallet/data/repositories/wallet_repository_impl.dart';
 import '../../../data/repositories/checkout_repository_impl.dart';
 
