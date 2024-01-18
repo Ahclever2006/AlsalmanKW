@@ -108,7 +108,7 @@ class AuthCubit extends BaseCubit<AuthState> {
       await _authRepository.activateNotification();
 
       emit(state.copyWith(
-        status: AuthStateStatus.authSuccess,
+        status: AuthStateStatus.authRegisterSuccess,
         isNotificationEnabled: true,
         isAdTrackingNotificationEnabled: true,
         isUserLoggedIn: true,

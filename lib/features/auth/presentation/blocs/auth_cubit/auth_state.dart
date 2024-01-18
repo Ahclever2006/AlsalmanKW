@@ -10,6 +10,7 @@ enum AuthStateStatus {
   forgetPasswordSent,
   changePasswordSuccess,
   authSuccess,
+  authRegisterSuccess,
   newPasswordSet,
 }
 
@@ -21,8 +22,11 @@ extension AuthStateX on AuthState {
   bool get isGuest => status == AuthStateStatus.guest;
   bool get isError => status == AuthStateStatus.error;
   bool get isForgetPasswordSent => status == AuthStateStatus.forgetPasswordSent;
-  bool get isChangePasswordSuccess => status == AuthStateStatus.changePasswordSuccess;
+  bool get isChangePasswordSuccess =>
+      status == AuthStateStatus.changePasswordSuccess;
   bool get isAuthSuccess => status == AuthStateStatus.authSuccess;
+  bool get isAuthRegisterSuccess =>
+      status == AuthStateStatus.authRegisterSuccess;
   bool get isNewPasswordSet => status == AuthStateStatus.newPasswordSet;
 }
 

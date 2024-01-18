@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:alsalman_app/core/utils/media_query_values.dart';
+import 'package:alsalman_app/features/auth/presentation/pages/register_success_page.dart';
 import 'package:alsalman_app/shared_widgets/text_fields/default_text_form_field.dart';
 
 import '../../../../shared_widgets/stateful/check_box_signup.dart';
@@ -8,7 +9,6 @@ import '../../../../shared_widgets/stateless/inner_appbar.dart';
 
 import '../../../../shared_widgets/stateless/subtitle_text.dart';
 import '../../../../shared_widgets/text_fields/phone_number_text_field.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 import '../../../../core/utils/navigator_helper.dart';
@@ -103,7 +103,7 @@ class _SignUpPageState extends State<SignUpPage> {
       listener: (context, state) {
         if (state.isError)
           showSnackBar(context, message: state.errorMessage);
-        else if (state.isAuthSuccess) _goToHomePage(context);
+        else if (state.isAuthRegisterSuccess) _goToHomePage(context);
       },
       child: Builder(
         builder: (context) => CustomAppPage(
@@ -385,8 +385,8 @@ class _SignUpPageState extends State<SignUpPage> {
     cartCubit
         .loadCart()
         .then((value) => NavigatorHelper.of(context)
-            .popUntil(ModalRoute.withName("/MainLayOutPage")))
-        .whenComplete(() => addressCubit.refreshAddresses())
-        .whenComplete(() => showSnackBar(context, message: 'welcome_user'));
+          ..popUntil(ModalRoute.withName("/MainLayOutPage"))
+          ..pushNamed(RegisterSuccessPage.routeName))
+        .whenComplete(() => addressCubit.refreshAddresses());
   }
 }

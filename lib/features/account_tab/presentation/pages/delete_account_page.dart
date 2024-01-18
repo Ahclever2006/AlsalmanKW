@@ -122,7 +122,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
   void _goToHomePage(BuildContext context) {
     final mainLayoutCubit = context.read<MainLayoutCubit>();
 
-    mainLayoutCubit.onBottomNavPressed(1);
+    mainLayoutCubit.onBottomNavPressed(0);
 
     NavigatorHelper.of(context)
         .popUntil(ModalRoute.withName("/MainLayOutPage"));

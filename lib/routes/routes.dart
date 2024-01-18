@@ -9,6 +9,7 @@ import '../features/address/presentation/pages/add_address_screen.dart';
 import '../features/address/presentation/pages/address_screen.dart';
 import '../features/auth/presentation/pages/forget_password_page.dart';
 import '../features/auth/presentation/pages/login_page.dart';
+import '../features/auth/presentation/pages/register_success_page.dart';
 import '../features/auth/presentation/pages/sign_up_page.dart';
 import '../features/brands/presentation/pages/brands_page.dart';
 import '../features/categories/presentation/pages/categories_page.dart';
@@ -43,5 +44,6 @@ final routes = <String, WidgetBuilder>{
   ContactUsPage.routeName: (context) => const ContactUsPage(),
   CategoriesPage.routeName: (context) => const CategoriesPage(),
   NotificationsPage.routeName: (context) => const NotificationsPage(),
-  DeleteAccountPage.routeName:(context) => const DeleteAccountPage()
+  DeleteAccountPage.routeName: (context) => const DeleteAccountPage(),
+  RegisterSuccessPage.routeName: (context) => const RegisterSuccessPage()
 };
