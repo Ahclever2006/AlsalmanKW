@@ -445,5 +445,8 @@
     "are_you_sure":"هل انت متاكد ؟",
     "fav_remove_subtitle":"هل تريد إزالة هذه العناصر من قائمة الرغبات؟",
     "no_notification_found":"لا إشعارات",
-    "no_cart_items_found":"سلة التسوق الخاصة بك لا تزال فارغة"
+    "no_cart_items_found":"سلة التسوق الخاصة بك لا تزال فارغة",
+    "home_type":"منزل",
+    "office_type":"مكتب",
+    "other_type":"اخري"
 }

@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
-
 import '../../../../../core/abstract/base_cubit.dart';
 import '../../../../../core/exceptions/redundant_request_exception.dart';
 import '../../../data/models/address_by_id_model.dart';
@@ -14,8 +13,10 @@ part 'address_state.dart';
 
 class AddressCubit extends BaseCubit<AddressState> {
   final AddressRepository addressRepository;
-  AddressCubit({required this.addressRepository})
-      : super(const AddressInitial());
+
+  AddressCubit({
+    required this.addressRepository,
+  }) : super(const AddressInitial());
 
   Future<void> getAddresses() async {
     emit(AddressStateLoading(

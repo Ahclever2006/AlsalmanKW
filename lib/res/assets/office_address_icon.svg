@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="38" height="38" viewBox="0 0 38 38">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Linear_Building_Infrastructure_Buildings" data-name="Linear / Building, Infrastructure / Buildings" width="38" height="38" rx="3" transform="translate(-0.032 -0.095)" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="Group_36564" data-name="Group 36564" transform="translate(0.032 0.095)" clip-path="url(#clip-path)">
+    <path id="Vector" d="M2619.52,7967H2588" transform="translate(-2584.848 -7932.328)" fill="none" stroke="#6a6a6a" stroke-linecap="round" stroke-width="1.5"/>
+    <path id="Vector-2" data-name="Vector" d="M2597,7951.728c.032-1.955.174-3.058.93-3.8.914-.93,2.4-.93,5.374-.93h3.152c2.979,0,4.46,0,5.374.93.93.914.93,2.4.93,5.374v25.217" transform="translate(-2579.664 -7943.848)" fill="none" stroke="#6a6a6a" stroke-width="1.5"/>
+    <path id="Vector-3" data-name="Vector" d="M2589,7976.792V7956.3c0-2.979,0-4.46.93-5.374.914-.93,2.4-.93,5.374-.93h6.3c2.979,0,4.46,0,5.374.93.93.914.93,2.4.93,5.374v20.488" transform="translate(-2584.272 -7942.12)" fill="none" stroke="#6a6a6a" stroke-width="1.5"/>
+    <path id="Vector-4" data-name="Vector" d="M2595,7968.728V7964" transform="translate(-2580.816 -7934.056)" fill="none" stroke="#6a6a6a" stroke-linecap="round" stroke-width="1.5"/>
+    <path id="Vector-5" data-name="Vector" d="M2592,7953h9.456" transform="translate(-2582.544 -7940.392)" fill="none" stroke="#6a6a6a" stroke-linecap="round" stroke-width="1.5"/>
+    <path id="Vector-6" data-name="Vector" d="M2592,7956h9.456" transform="translate(-2582.544 -7938.664)" fill="none" stroke="#6a6a6a" stroke-linecap="round" stroke-width="1.5"/>
+    <path id="Vector-7" data-name="Vector" d="M2592,7959h9.456" transform="translate(-2582.544 -7936.936)" fill="none" stroke="#6a6a6a" stroke-linecap="round" stroke-width="1.5"/>
+  </g>
+</svg>

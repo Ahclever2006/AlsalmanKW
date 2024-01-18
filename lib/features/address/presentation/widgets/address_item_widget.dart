@@ -1,5 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import '../../../../core/enums/address_type_enum.dart';
 
 import '../../../../res/style/app_colors.dart';
 import '../../../../shared_widgets/stateless/subtitle_text.dart';
@@ -10,91 +12,134 @@ class AddressItemWidget extends StatelessWidget {
   const AddressItemWidget({
     Key? key,
     required this.address,
-    required this.onPress,
-    this.backgroundColor = AppColors.PRIMARY_COLOR,
-    this.borderColor = AppColors.PRIMARY_COLOR,
+    this.onPress,
+    this.inCheckOut = false,
+    this.backgroundColor = AppColors.PRIMARY_COLOR_LIGHT,
+    this.borderColor = AppColors.GREY_NORMAL_COLOR,
   }) : super(key: key);
 
   final Address address;
-  final VoidCallback onPress;
+  final VoidCallback? onPress;
   final Color? backgroundColor;
   final Color? borderColor;
+  final bool? inCheckOut;
 
   @override
   Widget build(BuildContext context) {
     String? placeType = _getPlaceType();
+    String? area = _getArea();
     String? avenue = _getAvenue();
     String? block = _getBlock();
     String? apartment = _getApartment();
     String? floor = _getFloor();
     String? notes = _getNotes();
 
-    return InkWell(
-      onTap: onPress,
-      child: Container(
-        width: double.infinity,
-        margin: const EdgeInsets.symmetric(horizontal: 16.0),
-        padding: const EdgeInsets.all(16.0),
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          border: Border.all(color: borderColor!),
-          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+    return Stack(
+      children: [
+        InkWell(
+          onTap: () {
+            if (onPress != null && inCheckOut == true) onPress!();
+          },
+          child: Container(
+            width: double.infinity,
+            margin: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              border: Border.all(color: borderColor!),
+              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (placeType != null) TitleText.large(text: placeType),
+                const SizedBox(height: 16.0),
+                SubtitleText(text: address.firstName!),
+                if (area != null) SubtitleText(text: area),
+                if (block != null) SubtitleText(text: block),
+                if (address.address1 != null)
+                  SubtitleText(text: address.address1!),
+                if (avenue != null) SubtitleText(text: avenue),
+                if (floor != null) SubtitleText(text: floor),
+                if (apartment != null) SubtitleText(text: apartment),
+                SubtitleText(text: address.phoneNumber!),
+                if (address.countryName != null)
+                  SubtitleText(text: address.countryName!),
+                if (address.stateProvinceName != null)
+                  SubtitleText(text: address.stateProvinceName!),
+                if (address.email != null) SubtitleText(text: address.email!),
+                if (notes != null) SubtitleText(text: notes),
+              ],
+            ),
+          ),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (placeType != null) TitleText.large(text: placeType),
-            const SizedBox(height: 16.0),
-            SubtitleText(text: address.firstName!),
-            if (block != null) SubtitleText(text: block),
-            if (address.address1 != null) SubtitleText(text: address.address1!),
-            if (avenue != null) SubtitleText(text: avenue),
-            if (floor != null) SubtitleText(text: floor),
-            if (apartment != null) SubtitleText(text: apartment),
-            SubtitleText(text: address.phoneNumber!),
-            if (address.countryName != null)
-              SubtitleText(text: address.countryName!),
-            if (address.stateProvinceName != null)
-              SubtitleText(text: address.stateProvinceName!),
-            if (address.email != null) SubtitleText(text: address.email!),
-            if (notes != null) SubtitleText(text: notes),
-          ],
-        ),
-      ),
+        if (onPress != null && inCheckOut == false)
+          PositionedDirectional(
+              top: 16.0,
+              end: 24.0,
+              child: InkWell(
+                onTap: onPress,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SvgPicture.asset('lib/res/assets/edit_icon.svg'),
+                ),
+              ))
+      ],
     );
   }
 
   String? _getPlaceType() {
-    final placeType = address.customAddressAttributes!
-        .firstWhereOrNull((e) => e.id == 2)
+    var placeType = address.customAddressAttributes!
+        .firstWhereOrNull((e) => e.id == 6)
         ?.defaultValue;
+    switch (placeType) {
+      case '0':
+        placeType = AddressType.home_type.name;
+        break;
+
+      case '1':
+        placeType = AddressType.office_type.name;
+        break;
+
+      case '2':
+        placeType = AddressType.other_type.name;
+        break;
+      default:
+    }
     return placeType;
+  }
+
+  String? _getArea() {
+    final area = address.customAddressAttributes!
+        .firstWhereOrNull((e) => e.id == 13)
+        ?.defaultValue;
+    return area;
   }
 
   String? _getBlock() {
     final block = address.customAddressAttributes!
-        .firstWhereOrNull((e) => e.id == 7)
+        .firstWhereOrNull((e) => e.id == 4)
         ?.defaultValue;
     return block;
   }
 
   String? _getAvenue() {
     final avenue = address.customAddressAttributes!
-        .firstWhereOrNull((e) => e.id == 10)
+        .firstWhereOrNull((e) => e.id == 15)
         ?.defaultValue;
     return avenue;
   }
 
   String? _getApartment() {
     final apartment = address.customAddressAttributes!
-        .firstWhereOrNull((e) => e.id == 5)
+        .firstWhereOrNull((e) => e.id == 16)
         ?.defaultValue;
     return apartment;
   }
 
   String? _getFloor() {
     final floor = address.customAddressAttributes!
-        .firstWhereOrNull((e) => e.id == 4)
+        .firstWhereOrNull((e) => e.id == 14)
         ?.defaultValue;
     return floor;
   }

@@ -6,12 +6,14 @@ abstract class AddressState {
   final AddressByIdModel? countries;
   final AddressByIdModel? oldAddress;
   final List<StatesModel>? cities;
-  const AddressState([
-    this.addressModel,
-    this.countries,
-    this.oldAddress,
-    this.cities,
-  ]);
+  final double? lat, lng;
+  const AddressState(
+      [this.addressModel,
+      this.countries,
+      this.oldAddress,
+      this.cities,
+      this.lat,
+      this.lng]);
 
   @override
   bool operator ==(Object other) {
@@ -22,6 +24,8 @@ abstract class AddressState {
         other.addressModel == addressModel &&
         other.countries == countries &&
         other.oldAddress == oldAddress &&
+        other.lat == lat &&
+        other.lng == lng &&
         listEquals(other.cities, cities);
   }
 
@@ -30,7 +34,20 @@ abstract class AddressState {
       addressModel.hashCode ^
       countries.hashCode ^
       oldAddress.hashCode ^
+      lat.hashCode ^
+      lng.hashCode ^
       cities.hashCode;
+}
+
+class AddressStateLocation extends AddressState {
+  const AddressStateLocation(
+      AddressesModel? addressModel,
+      AddressByIdModel? countries,
+      AddressByIdModel? oldAddress,
+      List<StatesModel>? cities,
+      double? lat,
+      double? lng)
+      : super(addressModel, countries, oldAddress, cities, lat, lng);
 }
 
 class AddressInitial extends AddressState {

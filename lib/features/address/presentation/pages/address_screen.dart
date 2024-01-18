@@ -1,16 +1,21 @@
+import 'package:flutter_svg/svg.dart';
+import '../../../../res/style/app_colors.dart';
+import '../../../../shared_widgets/stateful/default_button.dart';
+
+import '../../../../shared_widgets/stateless/empty_page_message.dart';
+import '../../../../shared_widgets/stateless/inner_appbar.dart';
+
+import '../../../../core/utils/navigator_helper.dart';
+import '../../data/models/addresses_model.dart';
+import '../blocs/address_cubit/address_cubit.dart';
+import '../widgets/address_item_widget.dart';
+import '/shared_widgets/other/show_snack_bar.dart';
+import '/shared_widgets/stateless/custom_app_page.dart';
+import '/shared_widgets/stateless/custom_loading.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '/shared_widgets/other/show_snack_bar.dart';
-import '/shared_widgets/stateless/custom_app_page.dart';
-import '/shared_widgets/stateless/custom_loading.dart';
-import '../../../../core/utils/navigator_helper.dart';
-import '../../../../shared_widgets/stateless/empty_page_message.dart';
-import '../../../../shared_widgets/stateless/inner_appbar.dart';
-import '../../data/models/addresses_model.dart';
-import '../blocs/address_cubit/address_cubit.dart';
-import '../widgets/address_item_widget.dart';
 import 'add_address_screen.dart';
 
 class AddressesScreen extends StatefulWidget {
@@ -26,14 +31,31 @@ class _AddressesScreenState extends State<AddressesScreen> {
   Widget build(BuildContext context) {
     return CustomAppPage(
       safeTop: true,
+      stackChildren: [
+        Positioned(
+            bottom: 32.0,
+            left: 48.0,
+            right: 48.0,
+            child: Material(
+                type: MaterialType.transparency,
+                child: DefaultButton(
+                    label: 'add_address'.tr(),
+                    icon: const Icon(Icons.add,
+                        color: AppColors.PRIMARY_COLOR_DARK),
+                    backgroundColor: AppColors.PRIMARY_COLOR_LIGHT,
+                    labelStyle: Theme.of(context)
+                        .textTheme
+                        .displayLarge!
+                        .copyWith(color: AppColors.PRIMARY_COLOR_DARK),
+                    onPressed: () => _goToAddAddress(context))))
+      ],
       child: Scaffold(
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             InnerPagesAppBar(
-                label: 'addresses'.tr().toUpperCase(),
-                actionIcon: 'add_icon',
-                onActionPress: () => _goToAddAddress(context)),
+              label: 'addresses'.tr().toUpperCase(),
+            ),
             BlocConsumer<AddressCubit, AddressState>(
               listener: (context, state) {
                 if (state is AddressStateError)
@@ -89,12 +111,12 @@ class _AddressesScreenState extends State<AddressesScreen> {
                 itemBuilder: (BuildContext context, int index) {
                   return AddressItemWidget(
                     address: addressModel.addresses![index],
+                    backgroundColor: AppColors.PRIMARY_COLOR,
                     onPress: () async {
                       final result = await NavigatorHelper.of(context)
                           .push(MaterialPageRoute(builder: (_) {
                         var address = addressModel.addresses![index];
                         return AddAddressPage(
-                          initialIndex: address.countryId != null ? 0 : 1,
                           isEdit: true,
                           addressId: address.id,
                         );
@@ -107,8 +129,8 @@ class _AddressesScreenState extends State<AddressesScreen> {
               )
             : SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
-                child: EmptyPageMessage(
-                    title: '${'no'.tr()} ${'addresses'.tr()}'),
+                child:
+                    EmptyPageMessage(title: '${'no'.tr()} ${'addresses'.tr()}'),
               ),
       ),
     );

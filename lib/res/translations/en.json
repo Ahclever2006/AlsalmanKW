@@ -445,5 +445,8 @@
     "are_you_sure":"Are you sure ?",
     "fav_remove_subtitle":"you want to remove this items from wishlist ?",
     "no_notification_found":"No notifications",
-    "no_cart_items_found":"Your Cart Is Still Empty"
+    "no_cart_items_found":"Your Cart Is Still Empty",
+    "home_type":"Home",
+    "office_type":"Office",
+    "other_type":"Other"
 }
