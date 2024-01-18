@@ -37,7 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   custom_searchable_dropdown: ^2.1.1
   dartz: ^0.10.1
-  dio: ^5.3.2
+  dio: ^5.4.0
   easy_localization: ^3.0.1
   file_picker: ^5.2.6
   firebase_core: ^2.9.0
@@ -71,7 +71,7 @@ dependencies:
   package_info_plus: ^4.1.0
   path_provider: ^2.1.0
   pin_code_fields: ^8.0.1 
-  requests_inspector: ^3.1.2 
+  requests_inspector: 3.1.2
   rxdart: ^0.27.7
   share_plus: ^7.0.0
   shared_preferences: ^2.2.0

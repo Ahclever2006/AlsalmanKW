@@ -5,11 +5,11 @@ PODS:
   - AppAuth/Core (1.6.2)
   - AppAuth/ExternalUserAgent (1.6.2):
     - AppAuth/Core
+  - audio_session (0.0.1):
+    - Flutter
   - connectivity_plus (0.0.1):
     - Flutter
     - ReachabilitySwift
-  - device_info (0.0.1):
-    - Flutter
   - device_info_plus (0.0.1):
     - Flutter
   - DKImagePickerController/Core (4.3.4):
@@ -161,11 +161,11 @@ PODS:
     - AppAuth/Core (~> 1.6)
     - GTMSessionFetcher/Core (< 4.0, >= 1.5)
   - GTMSessionFetcher/Core (3.2.0)
+  - just_audio (0.0.1):
+    - Flutter
   - libphonenumber_plugin (0.0.1):
     - Flutter
     - PhoneNumberKit
-  - myfatoorah_flutter (0.0.1):
-    - Flutter
   - nanopb (2.30909.1):
     - nanopb/decode (= 2.30909.1)
     - nanopb/encode (= 2.30909.1)
@@ -207,12 +207,14 @@ PODS:
     - Flutter
   - video_player_avfoundation (0.0.1):
     - Flutter
+  - wakelock (0.0.1):
+    - Flutter
   - webview_flutter_wkwebview (0.0.1):
     - Flutter
 
 DEPENDENCIES:
+  - audio_session (from `.symlinks/plugins/audio_session/ios`)
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
-  - device_info (from `.symlinks/plugins/device_info/ios`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
@@ -225,8 +227,8 @@ DEPENDENCIES:
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/ios`)
+  - just_audio (from `.symlinks/plugins/just_audio/ios`)
   - libphonenumber_plugin (from `.symlinks/plugins/libphonenumber_plugin/ios`)
-  - myfatoorah_flutter (from `.symlinks/plugins/myfatoorah_flutter/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - PhoneNumberKit/PhoneNumberKitCore (~> 3.6.0)
@@ -237,6 +239,7 @@ DEPENDENCIES:
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/ios`)
+  - wakelock (from `.symlinks/plugins/wakelock/ios`)
   - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
 
 SPEC REPOS:
@@ -269,10 +272,10 @@ SPEC REPOS:
     - SwiftyGif
 
 EXTERNAL SOURCES:
+  audio_session:
+    :path: ".symlinks/plugins/audio_session/ios"
   connectivity_plus:
     :path: ".symlinks/plugins/connectivity_plus/ios"
-  device_info:
-    :path: ".symlinks/plugins/device_info/ios"
   device_info_plus:
     :path: ".symlinks/plugins/device_info_plus/ios"
   file_picker:
@@ -297,10 +300,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
   google_sign_in_ios:
     :path: ".symlinks/plugins/google_sign_in_ios/ios"
+  just_audio:
+    :path: ".symlinks/plugins/just_audio/ios"
   libphonenumber_plugin:
     :path: ".symlinks/plugins/libphonenumber_plugin/ios"
-  myfatoorah_flutter:
-    :path: ".symlinks/plugins/myfatoorah_flutter/ios"
   package_info_plus:
     :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_foundation:
@@ -319,13 +322,15 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
   video_player_avfoundation:
     :path: ".symlinks/plugins/video_player_avfoundation/ios"
+  wakelock:
+    :path: ".symlinks/plugins/wakelock/ios"
   webview_flutter_wkwebview:
     :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
 
 SPEC CHECKSUMS:
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
+  audio_session: 4f3e461722055d21515cf3261b64c973c062f345
   connectivity_plus: 413a8857dd5d9f1c399a39130850d02fe0feaf7e
-  device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
   device_info_plus: e5c5da33f982a436e103237c0c85f9031142abed
   DKImagePickerController: b512c28220a2b8ac7419f21c491fc8534b7601ac
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
@@ -355,11 +360,11 @@ SPEC CHECKSUMS:
   GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
   GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
   GTMSessionFetcher: 41b9ef0b4c08a6db4b7eb51a21ae5183ec99a2c8
+  just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   libphonenumber_plugin: e8a7d64a6624a7c25f2c4ab0b7ead2a8e341e35e
-  myfatoorah_flutter: 7db54f4e59b70038704a174c3511718e0d1746b1
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
-  package_info_plus: 115f4ad11e0698c8c1c5d8a689390df880f47e85
+  package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   PhoneNumberKit: 962cb725d664c7d4ac5f3e6f93e2de5f543f0d05
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
@@ -367,14 +372,15 @@ SPEC CHECKSUMS:
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   SDWebImage: fc8f2d48bbfd72ef39d70e981bd24a3f3be53fec
   sensors_plus: 5717760720f7e6acd96fdbd75b7428f5ad755ec2
-  share_plus: c3fef564749587fc939ef86ffb283ceac0baf9f5
+  share_plus: 056a1e8ac890df3e33cb503afffaf1e9b4fbae68
   shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
   sign_in_with_apple: f3bf75217ea4c2c8b91823f225d70230119b8440
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
   SwiftyGif: 93a1cc87bf3a51916001cf8f3d63835fb64c819f
   url_launcher_ios: 68d46cc9766d0c41dbdc884310529557e3cd7a86
   video_player_avfoundation: 81e49bb3d9fb63dccf9fa0f6d877dc3ddbeac126
-  webview_flutter_wkwebview: b7e70ef1ddded7e69c796c7390ee74180182971f
+  wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
+  webview_flutter_wkwebview: 4f3e50f7273d31e5500066ed267e3ae4309c5ae4
 
 PODFILE CHECKSUM: 70311dfaa23f46b651bd9fb23301f8680d79bedb
 

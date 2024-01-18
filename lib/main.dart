@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:isolate';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -29,7 +28,6 @@ void main() async {
 
     await _initCrashLytics();
 
-    HttpOverrides.global = MyHttpOverrides();
     runApp(
       EasyLocalization(
         supportedLocales: const [Locale('en'), Locale('ar')],
@@ -119,14 +117,5 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         navigatorKey: navigatorKey,
       ),
     );
-  }
-}
-
-class MyHttpOverrides extends HttpOverrides {
-  @override
-  HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
   }
 }
