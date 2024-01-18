@@ -1,3 +1,4 @@
+import 'package:alsalman_app/shared_widgets/other/show_log_out_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -214,16 +215,18 @@ class _ProfilePageState extends State<ProfilePage> {
           borderRadius: const BorderRadius.all(Radius.circular(20.0)),
           labelStyle: Theme.of(context).textTheme.displayLarge!,
           margin: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 8.0),
-          onPressed: () => showSimpleBottomSheet(context,
-                  label: 'logout',
-                  subtitle: 'log_out_subtitle', onPress: () async {
-                await authCubit
-                    .logOut()
-                    .then((value) => authCubit.loginAsGuest())
-                    .whenComplete(() => cartCubit.clearCart())
-                    .whenComplete(() => addressCubit.refreshAddresses())
-                    .whenComplete(() => _goToHomePage(context));
-              })),
+          onPressed: () {
+            showLogOutDialog(context,
+                label: 'logout',
+                subtitle: 'log_out_subtitle', onPress: () async {
+              await authCubit
+                  .logOut()
+                  .then((value) => authCubit.loginAsGuest())
+                  .whenComplete(() => cartCubit.clearCart())
+                  .whenComplete(() => addressCubit.refreshAddresses())
+                  .whenComplete(() => _goToHomePage(context));
+            });
+          }),
       DefaultButton(
           label: 'delete_account'.tr(),
           icon: SvgPicture.asset('lib/res/assets/delete_account_icon.svg'),
@@ -249,7 +252,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void _goToHomePage(BuildContext context) {
     final mainLayoutCubit = context.read<MainLayoutCubit>();
 
-    mainLayoutCubit.onBottomNavPressed(2);
+    mainLayoutCubit.onBottomNavPressed(1);
 
     NavigatorHelper.of(context)
         .popUntil(ModalRoute.withName("/MainLayOutPage"));
@@ -325,7 +328,8 @@ class _ProfilePageState extends State<ProfilePage> {
           initialGender: gender != null ? int.tryParse(gender!) : null,
           onChange: (value) {
             gender = value.toString();
-          })
+          }),
+      const SizedBox(height: 48.0),
     ];
   }
 }

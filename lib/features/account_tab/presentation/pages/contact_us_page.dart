@@ -66,7 +66,7 @@ class ContactUsPage extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         padding: const EdgeInsets.all(24.0),
         decoration: const BoxDecoration(
-          color: AppColors.PRIMARY_COLOR_LIGHT,
+          color: AppColors.PRIMARY_COLOR,
           borderRadius: BorderRadius.all(Radius.circular(16.0)),
         ),
         child: Row(

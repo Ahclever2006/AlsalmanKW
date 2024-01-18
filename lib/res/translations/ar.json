@@ -448,5 +448,7 @@
     "no_cart_items_found":"سلة التسوق الخاصة بك لا تزال فارغة",
     "home_type":"منزل",
     "office_type":"مكتب",
-    "other_type":"اخري"
+    "other_type":"اخري",
+    "customer_service":"خدمه العملاء",
+    "whats_app":"واتس"
 }

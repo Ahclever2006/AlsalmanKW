@@ -448,5 +448,7 @@
     "no_cart_items_found":"Your Cart Is Still Empty",
     "home_type":"Home",
     "office_type":"Office",
-    "other_type":"Other"
+    "other_type":"Other",
+    "customer_service":"Customer service",
+    "whats_app":"WhatsApp"
 }
