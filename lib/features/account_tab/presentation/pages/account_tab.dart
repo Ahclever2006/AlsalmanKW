@@ -10,14 +10,12 @@ import '../../../../core/utils/media_query_values.dart';
 import '../../../../di/injector.dart';
 import '../../../orders/presentation/pages/orders_page.dart';
 import '../../../../core/enums/topic_type.dart';
-import '../blocs/cubit/account_cubit.dart';
 import 'profile_page.dart';
 import 'topic_page.dart';
 import '../../../address/presentation/pages/address_screen.dart';
 import '../../../auth/presentation/blocs/auth_cubit/auth_cubit.dart';
 import '../../../favorites/presentation/pages/favorites_products_page.dart';
 import '../../../../res/style/app_colors.dart';
-import '../../../../shared_widgets/other/show_ads_and_notifications_bottom_sheet.dart';
 import '../../../../shared_widgets/stateful/default_button.dart';
 import '../../../../shared_widgets/stateless/custom_app_page.dart';
 import '../../../../shared_widgets/stateless/subtitle_text.dart';
@@ -26,7 +24,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../core/utils/navigator_helper.dart';
 
@@ -47,7 +44,8 @@ class AccountTab extends StatelessWidget {
         create: (context) => Injector().accountCubit,
         child: ListView(
           children: [
-            _buildTitle(context),
+            const DrawerAppBarWidget(
+                gifUrl: 'lib/res/assets/logo_animation.gif'),
             if (!isLoggedIn) _buildGuestUserSection(context),
             BlocBuilder<AuthCubit, AuthState>(
               builder: (context, state) {
@@ -67,12 +65,6 @@ class AccountTab extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Widget _buildTitle(BuildContext context) {
-    return DrawerAppBarWidget(
-        key: ValueKey(context.locale.toString()),
-        title: TitleText(text: 'account'.tr().toUpperCase()));
   }
 
   Widget _buildGuestUserSection(BuildContext context) {

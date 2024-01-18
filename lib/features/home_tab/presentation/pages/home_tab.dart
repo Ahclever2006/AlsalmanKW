@@ -84,9 +84,8 @@ class _HomeTabState extends State<HomeTab> {
 
               return Column(
                 children: [
-                  DrawerAppBarWidget(
-                      title: SvgPicture.asset('lib/res/assets/app_logo.svg',
-                          width: 50.0)),
+                  const DrawerAppBarWidget(
+                      gifUrl: 'lib/res/assets/logo_animation.gif'),
                   Expanded(
                     child: RefreshIndicator(
                       onRefresh: () => cubit.refresh(),

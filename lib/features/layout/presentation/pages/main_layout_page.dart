@@ -1,7 +1,8 @@
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:size_helper/size_helper.dart';
 
-import '../../../categories/presentation/pages/categories_page.dart';
+import '../../../cart_tab/presentation/cubit/cart_cubit.dart';
+import '../../../cart_tab/presentation/pages/cart_page.dart';
 import '../cubit/main_layout_cubit.dart';
 import '../../../../shared_widgets/stateless/title_text.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -28,11 +29,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
   Widget build(BuildContext context) {
     List<Widget> pages = [
       const HomeTab(),
-     // const SearchProductsPage(),
-      // const CartTab(),
-      const CategoriesPage(
-        fromSideMenu: true,
-      ),
+      const CartTab(),
       const AccountTab(),
     ];
     return BlocBuilder<MainLayoutCubit, MainLayoutState>(
@@ -112,76 +109,46 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
               ),
               onTap: () => _createNavbarCallback(context, 0),
             ),
-            // _buildDrawerItem(
-            //   padding: padding,
-            //   fontSize: fontSize,
-            //   title: 'search'.tr(),
-            //   icon: SvgPicture.asset(
-            //     'lib/res/assets/search_icon.svg',
-            //     color: selectedIndex == 1
-            //         ? AppColors.PRIMARY_COLOR
-            //         : AppColors.GREY_NORMAL_COLOR,
-            //     width: context.sizeHelper(
-            //       tabletExtraLarge: 24.0,
-            //       desktopSmall: 36.0,
-            //     ),
-            //   ),
-            //   onTap: () => _createNavbarCallback(context, 1),
-            // ),
-            // _buildDrawerItem(
-            //   title: 'basket'.tr(),
-            //   icon: BlocBuilder<CartCubit, CartState>(
-            //     builder: (context, state) {
-            //       return Stack(
-            //         alignment: AlignmentDirectional.center,
-            //         clipBehavior: Clip.none,
-            //         children: [
-            //           SvgPicture.asset(
-            //             'lib/res/assets/basket_fill_icon.svg',
-            //             color: selectedIndex == 2
-            //                 ? AppColors.PRIMARY_COLOR
-            //                 : AppColors.GREY_NORMAL_COLOR,
-            //             width: context.sizeHelper(
-            //               tabletExtraLarge: 24.0,
-            //               desktopSmall: 36.0,
-            //             ),
-            //           ),
-            //           if (state.cartCount > 0)
-            //             PositionedDirectional(
-            //               top: -8.0,
-            //               end: 16.0,
-            //               child: Container(
-            //                 decoration: const BoxDecoration(
-            //                     shape: BoxShape.circle,
-            //                     color: AppColors.PRIMARY_COLOR_DARK),
-            //                 padding: const EdgeInsets.all(6.0),
-            //                 child: TitleText.medium(
-            //                   text: '${state.cartCount}',
-            //                   color: Colors.white,
-            //                 ),
-            //               ),
-            //             ),
-            //         ],
-            //       );
-            //     },
-            //   ),
-            //   onTap: () => _createNavbarCallback(context, 2),
-            // ),
             _buildDrawerItem(
-              title: 'categories'.tr(),
-              icon: SvgPicture.asset(
-                'lib/res/assets/more_icon.svg',
-                color: selectedIndex == 1
-                    ? AppColors.PRIMARY_COLOR
-                    : AppColors.GREY_NORMAL_COLOR,
-                width: context.sizeHelper(
-                  tabletExtraLarge: 24.0,
-                  desktopSmall: 36.0,
-                ),
-              ),
-              onTap: () => _createNavbarCallback(context, 1),
               padding: padding,
               fontSize: fontSize,
+              title: 'basket'.tr(),
+              icon: BlocBuilder<CartCubit, CartState>(
+                builder: (context, state) {
+                  return Stack(
+                    alignment: AlignmentDirectional.center,
+                    clipBehavior: Clip.none,
+                    children: [
+                      SvgPicture.asset(
+                        'lib/res/assets/basket_fill_icon.svg',
+                        color: selectedIndex == 1
+                            ? AppColors.PRIMARY_COLOR
+                            : AppColors.GREY_NORMAL_COLOR,
+                        width: context.sizeHelper(
+                          tabletExtraLarge: 24.0,
+                          desktopSmall: 36.0,
+                        ),
+                      ),
+                      if (state.cartCount > 0)
+                        PositionedDirectional(
+                          top: -8.0,
+                          end: 16.0,
+                          child: Container(
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: AppColors.PRIMARY_COLOR_DARK),
+                            padding: const EdgeInsets.all(6.0),
+                            child: TitleText.medium(
+                              text: '${state.cartCount}',
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                    ],
+                  );
+                },
+              ),
+              onTap: () => _createNavbarCallback(context, 1),
             ),
             _buildDrawerItem(
               title: 'my_account'.tr(),

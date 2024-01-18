@@ -1,12 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../core/utils/media_query_values.dart';
 import '../../../../core/utils/navigator_helper.dart';
-import '../../../../shared_widgets/stateless/drawer_appbar.dart';
 import '../../../../shared_widgets/stateless/inner_appbar.dart';
-import '../../../../shared_widgets/stateless/title_text.dart';
 import '../../../category_products/presentation/pages/category_products_page.dart';
 import '../blocs/cubit/categories_cubit.dart';
-import '../../../../res/style/theme.dart';
 import '../../../../shared_widgets/stateless/category_card.dart';
 import '../../../../core/data/models/home_categ_model.dart';
 
@@ -20,10 +17,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CategoriesPage extends StatefulWidget {
   static const routeName = '/CategoriesPage';
-  final bool fromSideMenu;
   const CategoriesPage({
     Key? key,
-    this.fromSideMenu = false,
   }) : super(key: key);
 
   @override
@@ -37,11 +32,9 @@ class _CategoriesPageState extends State<CategoriesPage> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        widget.fromSideMenu
-            ? _buildTitle(context)
-            : InnerPagesAppBar(
-                label: 'categories'.tr(),
-              ),
+        InnerPagesAppBar(
+          label: 'categories'.tr(),
+        ),
         Expanded(
           child: BlocConsumer<CategoriesCubit, CategoriesState>(
             listener: (context, state) {
@@ -64,9 +57,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
       ],
     );
 
-    return !widget.fromSideMenu
-        ? Scaffold(body: _buildBody(context, child))
-        : _buildBody(context, child);
+    return Scaffold(body: _buildBody(context, child));
   }
 
   Widget _buildBody(BuildContext context, Widget child) => BlocProvider(
@@ -119,12 +110,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
             title: 'no_categories_available',
             onRefresh: () => categoriesCubit.refresh(),
           );
-  }
-
-  Widget _buildTitle(BuildContext context) {
-    return DrawerAppBarWidget(
-        key: ValueKey(context.locale.toString()),
-        title: TitleText(text: 'categories'.tr().toUpperCase()));
   }
 
   void _goToProductsPage(

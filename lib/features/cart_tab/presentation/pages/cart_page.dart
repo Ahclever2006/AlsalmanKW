@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../../shared_widgets/other/show_delete_cart_item_bottom_sheet.dart';
+import '../../../../shared_widgets/stateless/drawer_appbar.dart';
 import '../../../../shared_widgets/stateless/subtitle_text.dart';
 
 import '../../../../core/data/models/cart_model.dart';
@@ -53,9 +54,10 @@ class CartTab extends StatelessWidget {
               );
             } else
               return Column(
-                children: [
-                  InnerPagesAppBar(label: 'basket'.tr().toUpperCase()),
-                  const EmptyPageMessage(
+                children: const [
+                  DrawerAppBarWidget(
+                      gifUrl: 'lib/res/assets/logo_animation.gif'),
+                  EmptyPageMessage(
                     title: 'no_cart_items_found',
                     subTitle: "check_our_best",
                     svgImage: 'water_glass_icon',

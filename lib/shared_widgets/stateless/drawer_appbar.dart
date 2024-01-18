@@ -7,11 +7,33 @@ import '../../features/search/presentation/pages/search_products_page.dart';
 import '../../res/style/app_colors.dart';
 import '../stateful/default_button.dart';
 import 'cart_icon.dart';
+import 'package:gif/gif.dart';
 
-class DrawerAppBarWidget extends StatelessWidget {
-  final Widget title;
+import 'custom_loading.dart';
 
-  const DrawerAppBarWidget({Key? key, required this.title}) : super(key: key);
+class DrawerAppBarWidget extends StatefulWidget {
+  final String gifUrl;
+
+  const DrawerAppBarWidget({Key? key, required this.gifUrl}) : super(key: key);
+
+  @override
+  State<DrawerAppBarWidget> createState() => _DrawerAppBarWidgetState();
+}
+
+class _DrawerAppBarWidgetState extends State<DrawerAppBarWidget>
+    with TickerProviderStateMixin {
+  late final GifController _controller;
+  @override
+  void initState() {
+    _controller = GifController(vsync: this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +47,21 @@ class DrawerAppBarWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _buildDrawerIcon(context),
-              Transform.translate(offset: const Offset(24.0, 0), child: title),
+              Transform.translate(
+                  offset: const Offset(24.0, 0),
+                  child: SizedBox(
+                    height: 75.0,
+                    child: Gif(
+                      image: AssetImage(widget.gifUrl),
+                      controller: _controller,
+                      autostart: Autostart.loop,
+                      placeholder: (context) => const CustomLoading(),
+                      onFetchCompleted: () {
+                        _controller.reset();
+                        _controller.forward();
+                      },
+                    ),
+                  )),
               Row(
                 children: [
                   DefaultButton(
