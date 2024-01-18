@@ -57,6 +57,7 @@ dependencies:
   flutter_secure_storage: ^7.0.1
   flutter_svg: ^2.0.1
   flutter_tap_payment: ^0.0.4
+  flutter_xlider: ^3.5.0
   font_awesome_flutter: ^10.1.0
   gif: ^2.2.0
   google_fonts: ^4.0.4
