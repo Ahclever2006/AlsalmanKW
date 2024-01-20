@@ -46,7 +46,6 @@ class _BrandsPageState extends State<BrandsPage> {
         children: [
           InnerPagesAppBar(
             label: 'brands'.tr().toUpperCase(),
-            viewCartIcon: true,
             viewSearchIcon: true,
           ),
           Expanded(

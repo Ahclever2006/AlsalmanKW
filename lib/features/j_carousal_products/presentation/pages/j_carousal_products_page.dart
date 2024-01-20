@@ -57,7 +57,6 @@ class _CategoryProductsPageState extends State<JCarousalProductsPage> {
         children: [
           InnerPagesAppBar(
               label: widget.carousalName.toUpperCase(),
-              viewCartIcon: true,
               viewSearchIcon: true),
           Expanded(
             child: Stack(

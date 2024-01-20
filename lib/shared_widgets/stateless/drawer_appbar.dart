@@ -73,8 +73,8 @@ class _DrawerAppBarWidgetState extends State<DrawerAppBarWidget>
                       onPressed: () {
                         _goToSearchPage(context);
                       }),
-                  const SizedBox(width: 4.0),
-                  const CartIcon(fromDrawer: true),
+                  // const SizedBox(width: 4.0),
+                  // const CartIcon(fromDrawer: true),
                 ],
               )
             ],

@@ -56,7 +56,6 @@ class _BrandProductsPageState extends State<BrandProductsPage> {
         children: [
           InnerPagesAppBar(
             label: widget.brandName.toUpperCase(),
-            viewCartIcon: true,
             viewSearchIcon: true,
           ),
           Expanded(

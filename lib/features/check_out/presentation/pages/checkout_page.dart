@@ -696,9 +696,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   NavigatorHelper.of(context)
                       .push(MaterialPageRoute(builder: (_) {
                     return TapPayment(
-                      apiKey: "sk_test_ytlzZPQhfjcJ2LCTEvYA6O1R",
+                      // apiKey: "sk_test_ytlzZPQhfjcJ2LCTEvYA6O1R",
                       // apiKey: "sk_live_lLOp45bgKfYMi0r1aeHtvsmZ",
-                      // apiKey: "sk_live_cgDsHV1Fmq8pn3G7wtzR24kQ",
+                      apiKey: "sk_live_cgDsHV1Fmq8pn3G7wtzR24kQ",
                       redirectUrl: "https://tap.company",
                       postUrl: "https://tap.company",
                       paymentData: {
@@ -728,7 +728,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                             "number": userInfo?.phone ?? ''
                           }
                         },
-                        "merchant": const {"id": "17288713"},
+                        "merchant": const {"id": "19084091"},
 
                         "source": {
                           "id": cubit.state.selectedPaymentMethod == 1

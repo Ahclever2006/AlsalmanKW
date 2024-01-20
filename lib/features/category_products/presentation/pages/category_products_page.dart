@@ -80,7 +80,6 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                 children: [
                   InnerPagesAppBar(
                     label: widget.categoryName.toUpperCase(),
-                    viewCartIcon: true,
                     viewSearchIcon: true,
                   ),
                   Expanded(
