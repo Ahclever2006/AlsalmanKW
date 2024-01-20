@@ -47,7 +47,7 @@ stages:
               mode: "auto"
               channel: "stable"
               version: "custom"
-              customVersion: "3.7.6"
+              customVersion: "3.10.6"
 
           - task: Bash@3
             displayName: Set flutter and FLUTTER_ROOT to the env PATH
