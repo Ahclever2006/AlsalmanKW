@@ -312,6 +312,8 @@
     "avenue":"شارع",
     "floor":"الطابق",
     "apartment":"شقة",
+    "office":"مكتب",
+    "other":"اخرى",
     "notes":"ملحوظات",
     "please_choose_country":"الرجاء اختيار الدولة",
     "please_choose_city":"الرجاء اختيار المدينة",

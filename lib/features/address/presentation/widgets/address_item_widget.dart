@@ -27,13 +27,12 @@ class AddressItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String? placeType = _getPlaceType();
-    String? area = _getArea();
     String? avenue = _getAvenue();
     String? block = _getBlock();
     String? apartment = _getApartment();
     String? floor = _getFloor();
     String? notes = _getNotes();
-
+    //TODO: adjust extra fields
     return Stack(
       children: [
         InkWell(
@@ -55,7 +54,6 @@ class AddressItemWidget extends StatelessWidget {
                 if (placeType != null) TitleText.large(text: placeType),
                 const SizedBox(height: 16.0),
                 SubtitleText(text: address.firstName!),
-                if (area != null) SubtitleText(text: area),
                 if (block != null) SubtitleText(text: block),
                 if (address.address1 != null)
                   SubtitleText(text: address.address1!),
@@ -90,7 +88,7 @@ class AddressItemWidget extends StatelessWidget {
 
   String? _getPlaceType() {
     var placeType = address.customAddressAttributes!
-        .firstWhereOrNull((e) => e.id == 6)
+        .firstWhereOrNull((e) => e.id == 2)
         ?.defaultValue;
     switch (placeType) {
       case '0':
@@ -109,39 +107,46 @@ class AddressItemWidget extends StatelessWidget {
     return placeType;
   }
 
-  String? _getArea() {
-    final area = address.customAddressAttributes!
-        .firstWhereOrNull((e) => e.id == 13)
+  String? _getOther(Address address) {
+    String? other = address.customAddressAttributes!
+        .firstWhereOrNull((e) => e.id == 12)
         ?.defaultValue;
-    return area;
+    return other;
   }
 
   String? _getBlock() {
     final block = address.customAddressAttributes!
-        .firstWhereOrNull((e) => e.id == 4)
+        .firstWhereOrNull((e) => e.id == 7)
         ?.defaultValue;
     return block;
   }
 
   String? _getAvenue() {
     final avenue = address.customAddressAttributes!
-        .firstWhereOrNull((e) => e.id == 15)
+        .firstWhereOrNull((e) => e.id == 10)
         ?.defaultValue;
     return avenue;
   }
 
   String? _getApartment() {
     final apartment = address.customAddressAttributes!
-        .firstWhereOrNull((e) => e.id == 16)
+        .firstWhereOrNull((e) => e.id == 5)
         ?.defaultValue;
     return apartment;
   }
 
   String? _getFloor() {
     final floor = address.customAddressAttributes!
-        .firstWhereOrNull((e) => e.id == 14)
+        .firstWhereOrNull((e) => e.id == 4)
         ?.defaultValue;
     return floor;
+  }
+
+  String? _getOffice(Address address) {
+    final office = address.customAddressAttributes!
+        .firstWhereOrNull((e) => e.id == 9)
+        ?.defaultValue;
+    return office;
   }
 
   String? _getNotes() {

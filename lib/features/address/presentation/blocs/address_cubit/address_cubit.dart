@@ -24,6 +24,9 @@ class AddressCubit extends BaseCubit<AddressState> {
       state.countries,
       state.oldAddress,
       state.cities,
+      state.lat,
+      state.lng,
+      state.addressType,
     ));
     try {
       final addressModel = await addressRepository.getAddresses();
@@ -32,6 +35,9 @@ class AddressCubit extends BaseCubit<AddressState> {
         state.countries,
         state.oldAddress,
         state.cities,
+        state.lat,
+        state.lng,
+        state.addressType,
       ));
     } on RedundantRequestException catch (e) {
       log(e.toString());
@@ -42,6 +48,9 @@ class AddressCubit extends BaseCubit<AddressState> {
         state.countries,
         state.oldAddress,
         state.cities,
+        state.lat,
+        state.lng,
+        state.addressType,
       ));
     }
   }
@@ -54,6 +63,9 @@ class AddressCubit extends BaseCubit<AddressState> {
       state.countries,
       state.oldAddress,
       state.cities,
+      state.lat,
+      state.lng,
+      state.addressType,
     ));
     try {
       final countries = await addressRepository.getCountries();
@@ -62,6 +74,9 @@ class AddressCubit extends BaseCubit<AddressState> {
         countries,
         state.oldAddress,
         state.cities,
+        state.lat,
+        state.lng,
+        state.addressType,
       ));
     } on RedundantRequestException catch (e) {
       log(e.toString());
@@ -72,6 +87,9 @@ class AddressCubit extends BaseCubit<AddressState> {
         state.countries,
         state.oldAddress,
         state.cities,
+        state.lat,
+        state.lng,
+        state.addressType,
       ));
     }
   }
@@ -82,6 +100,9 @@ class AddressCubit extends BaseCubit<AddressState> {
       state.countries,
       state.oldAddress,
       state.cities,
+      state.lat,
+      state.lng,
+      state.addressType,
     ));
     try {
       final cities = await addressRepository.getStates(id);
@@ -90,6 +111,9 @@ class AddressCubit extends BaseCubit<AddressState> {
         state.countries,
         state.oldAddress,
         cities,
+        state.lat,
+        state.lng,
+        state.addressType,
       ));
     } on RedundantRequestException catch (e) {
       log(e.toString());
@@ -100,6 +124,9 @@ class AddressCubit extends BaseCubit<AddressState> {
         state.countries,
         state.oldAddress,
         state.cities,
+        state.lat,
+        state.lng,
+        state.addressType,
       ));
     }
   }
@@ -110,6 +137,9 @@ class AddressCubit extends BaseCubit<AddressState> {
       state.countries,
       state.oldAddress,
       state.cities,
+      state.lat,
+      state.lng,
+      state.addressType,
     ));
     try {
       await addressRepository.addAddress(data);
@@ -118,6 +148,9 @@ class AddressCubit extends BaseCubit<AddressState> {
         state.countries,
         state.oldAddress,
         state.cities,
+        state.lat,
+        state.lng,
+        state.addressType,
       ));
     } on RedundantRequestException catch (e) {
       log(e.toString());
@@ -128,6 +161,9 @@ class AddressCubit extends BaseCubit<AddressState> {
         state.countries,
         state.oldAddress,
         state.cities,
+        state.lat,
+        state.lng,
+        state.addressType,
       ));
     }
   }
@@ -139,6 +175,9 @@ class AddressCubit extends BaseCubit<AddressState> {
       state.countries,
       state.oldAddress,
       state.cities,
+      state.lat,
+      state.lng,
+      state.addressType,
     ));
     try {
       final oldAddress = await addressRepository.getAddressById(id);
@@ -147,6 +186,9 @@ class AddressCubit extends BaseCubit<AddressState> {
         state.countries,
         oldAddress,
         state.cities,
+        state.lat,
+        state.lng,
+        state.addressType,
       ));
     } on RedundantRequestException catch (e) {
       log(e.toString());
@@ -157,6 +199,9 @@ class AddressCubit extends BaseCubit<AddressState> {
         state.countries,
         state.oldAddress,
         state.cities,
+        state.lat,
+        state.lng,
+        state.addressType,
       ));
     }
   }
@@ -167,6 +212,9 @@ class AddressCubit extends BaseCubit<AddressState> {
       state.countries,
       state.oldAddress,
       state.cities,
+      state.lat,
+      state.lng,
+      state.addressType,
     ));
     try {
       await addressRepository.editAddress(id, data);
@@ -175,6 +223,9 @@ class AddressCubit extends BaseCubit<AddressState> {
         state.countries,
         state.oldAddress,
         state.cities,
+        state.lat,
+        state.lng,
+        state.addressType,
       ));
     } on RedundantRequestException catch (e) {
       log(e.toString());
@@ -185,6 +236,9 @@ class AddressCubit extends BaseCubit<AddressState> {
         state.countries,
         state.oldAddress,
         state.cities,
+        state.lat,
+        state.lng,
+        state.addressType,
       ));
     }
   }
@@ -195,6 +249,9 @@ class AddressCubit extends BaseCubit<AddressState> {
       state.countries,
       state.oldAddress,
       state.cities,
+      state.lat,
+      state.lng,
+      state.addressType,
     ));
     try {
       await addressRepository.deleteAddress(id);
@@ -204,6 +261,9 @@ class AddressCubit extends BaseCubit<AddressState> {
         state.countries,
         state.oldAddress,
         state.cities,
+        state.lat,
+        state.lng,
+        state.addressType,
       ));
       return true;
     } on RedundantRequestException catch (e) {
@@ -216,8 +276,23 @@ class AddressCubit extends BaseCubit<AddressState> {
         state.countries,
         state.oldAddress,
         state.cities,
+        state.lat,
+        state.lng,
+        state.addressType,
       ));
       return false;
     }
+  }
+
+  void changeAddressType(int addressType) {
+    emit(AddressTypeChangeState(
+      state.addressModel,
+      state.countries,
+      state.oldAddress,
+      state.cities,
+      state.lat,
+      state.lng,
+      addressType,
+    ));
   }
 }

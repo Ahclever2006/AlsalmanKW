@@ -111,7 +111,7 @@ class _AddressesScreenState extends State<AddressesScreen> {
                 itemBuilder: (BuildContext context, int index) {
                   return AddressItemWidget(
                     address: addressModel.addresses![index],
-                    backgroundColor: AppColors.PRIMARY_COLOR,
+                    backgroundColor: AppColors.PRIMARY_COLOR_LIGHT,
                     onPress: () async {
                       final result = await NavigatorHelper.of(context)
                           .push(MaterialPageRoute(builder: (_) {

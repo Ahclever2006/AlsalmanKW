@@ -312,6 +312,8 @@
     "avenue":"Avenue",
     "floor":"Floor",
     "apartment":"Apartment",
+    "office":"Office",
+    "other":"Other",
     "notes":"Notes",
     "please_choose_country":"Please Choose Country",
     "please_choose_city":"Please Choose City",

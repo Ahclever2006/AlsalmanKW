@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:alsalman_app/shared_widgets/stateless/subtitle_text.dart';
 import 'package:collection/collection.dart';
 import 'package:custom_searchable_dropdown/custom_searchable_dropdown.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -55,7 +56,6 @@ class _AddAddressPageState extends State<AddAddressPage> {
 
   late final TextEditingController _addressNameTextController;
   late final TextEditingController _emailTextController;
-  late final TextEditingController _areaTextController;
   late final TextEditingController _blockTextController;
   late final TextEditingController _addressTextController;
   late final TextEditingController _phoneTextController;
@@ -63,11 +63,12 @@ class _AddAddressPageState extends State<AddAddressPage> {
   late final TextEditingController _placeTypeTextController;
   late final TextEditingController _floorTextController;
   late final TextEditingController _apartmentTextController;
+  late final TextEditingController _officeTextController;
+  late final TextEditingController _otherTextController;
   late final TextEditingController _notesTextController;
 
   late final FocusNode _addressNameFocusNode;
   late final FocusNode _emailFocusNode;
-  late final FocusNode _areaFocusNode;
   late final FocusNode _blockFocusNode;
   late final FocusNode _addressFocusNode;
   late final FocusNode _phoneFocusNode;
@@ -85,19 +86,20 @@ class _AddAddressPageState extends State<AddAddressPage> {
 
     _addressNameTextController = TextEditingController();
     _emailTextController = TextEditingController();
-    _areaTextController = TextEditingController();
     _blockTextController = TextEditingController();
     _addressTextController = TextEditingController();
     _phoneTextController = TextEditingController();
     _avenueTextController = TextEditingController();
-    _placeTypeTextController = TextEditingController();
+    _placeTypeTextController =
+        TextEditingController(text: AddressType.home_type.index.toString());
     _floorTextController = TextEditingController();
     _apartmentTextController = TextEditingController();
+    _officeTextController = TextEditingController();
+    _otherTextController = TextEditingController();
     _notesTextController = TextEditingController();
 
     _addressNameFocusNode = FocusNode();
     _emailFocusNode = FocusNode();
-    _areaFocusNode = FocusNode();
     _blockFocusNode = FocusNode();
     _addressFocusNode = FocusNode();
     _phoneFocusNode = FocusNode();
@@ -116,7 +118,6 @@ class _AddAddressPageState extends State<AddAddressPage> {
     _addressTextController.dispose();
     _phoneTextController.dispose();
     _emailTextController.dispose();
-    _areaTextController.dispose();
     _blockTextController.dispose();
     _avenueTextController.dispose();
     _placeTypeTextController.dispose();
@@ -128,7 +129,6 @@ class _AddAddressPageState extends State<AddAddressPage> {
     _addressFocusNode.dispose();
     _emailFocusNode.dispose();
     _phoneFocusNode.dispose();
-    _areaFocusNode.dispose();
     _blockFocusNode.dispose();
     _avenueFocusNode.dispose();
     _placeTypeFocusNode.dispose();
@@ -220,7 +220,6 @@ class _AddAddressPageState extends State<AddAddressPage> {
     _addressNameTextController.text = address.firstName!;
     _addressTextController.text = address.address1!;
     _emailTextController.text = address.email ?? '';
-    _areaTextController.text = _getArea(address) ?? '';
     _blockTextController.text = _getBlock(address) ?? '';
     _floorTextController.text = _getFloor(address) ?? '';
     _apartmentTextController.text = _getApartment(address) ?? '';
@@ -251,44 +250,51 @@ class _AddAddressPageState extends State<AddAddressPage> {
 
   String? _getPlaceType(Address address) {
     final placeType = address.customAddressAttributes!
-        .firstWhereOrNull((e) => e.id == 6)
+        .firstWhereOrNull((e) => e.id == 2)
         ?.defaultValue;
     return placeType;
   }
 
-  String? _getArea(Address address) {
-    String? area = address.customAddressAttributes!
-        .firstWhereOrNull((e) => e.id == 13)
+  String? _getOther(Address address) {
+    String? other = address.customAddressAttributes!
+        .firstWhereOrNull((e) => e.id == 12)
         ?.defaultValue;
-    return area;
+    return other;
   }
 
   String? _getBlock(Address address) {
     final block = address.customAddressAttributes!
-        .firstWhereOrNull((e) => e.id == 4)
+        .firstWhereOrNull((e) => e.id == 7)
         ?.defaultValue;
     return block;
   }
 
   String? _getAvenue(Address address) {
     final avenue = address.customAddressAttributes!
-        .firstWhereOrNull((e) => e.id == 15)
+        .firstWhereOrNull((e) => e.id == 10)
         ?.defaultValue;
     return avenue;
   }
 
   String? _getApartment(Address address) {
     final apartment = address.customAddressAttributes!
-        .firstWhereOrNull((e) => e.id == 16)
+        .firstWhereOrNull((e) => e.id == 5)
         ?.defaultValue;
     return apartment;
   }
 
   String? _getFloor(Address address) {
     final floor = address.customAddressAttributes!
-        .firstWhereOrNull((e) => e.id == 14)
+        .firstWhereOrNull((e) => e.id == 4)
         ?.defaultValue;
     return floor;
+  }
+
+  String? _getOffice(Address address) {
+    final office = address.customAddressAttributes!
+        .firstWhereOrNull((e) => e.id == 9)
+        ?.defaultValue;
+    return office;
   }
 
   String? _getNotes(Address address) {
@@ -306,9 +312,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _buildForm(context, addressCubit.state.countries),
-          const SizedBox(
-            height: 32.0,
-          ),
+          const SizedBox(height: 32.0),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: DefaultButton(
@@ -335,15 +339,14 @@ class _AddAddressPageState extends State<AddAddressPage> {
                               cityName: selectedCityName ?? '',
                               address: _addressTextController.text,
                               form: FormModel(
-                                addressAttribute_4: _blockTextController.text,
-                                addressAttribute_5: _addressTextController.text,
-                                addressAttribute_6:
+                                addressAttribute_7: _blockTextController.text,
+                                addressAttribute_8: _addressTextController.text,
+                                addressAttribute_2:
                                     _placeTypeTextController.text,
-                                addressAttribute_15: _avenueTextController.text,
-                                addressAttribute_14: _floorTextController.text,
+                                addressAttribute_10: _avenueTextController.text,
+                                addressAttribute_4: _floorTextController.text,
                                 addressAttribute_11: _notesTextController.text,
-                                addressAttribute_13: _areaTextController.text,
-                                addressAttribute_16:
+                                addressAttribute_5:
                                     _apartmentTextController.text,
                               ),
                               phone: _phoneNumber?.phoneNumber ?? ''),
@@ -359,15 +362,14 @@ class _AddAddressPageState extends State<AddAddressPage> {
                               cityName: selectedCityName ?? '',
                               address: _addressTextController.text,
                               form: FormModel(
-                                addressAttribute_4: _blockTextController.text,
-                                addressAttribute_5: _addressTextController.text,
-                                addressAttribute_6:
+                                addressAttribute_7: _blockTextController.text,
+                                addressAttribute_8: _addressTextController.text,
+                                addressAttribute_2:
                                     _placeTypeTextController.text,
-                                addressAttribute_15: _avenueTextController.text,
-                                addressAttribute_14: _floorTextController.text,
+                                addressAttribute_10: _avenueTextController.text,
+                                addressAttribute_4: _floorTextController.text,
                                 addressAttribute_11: _notesTextController.text,
-                                addressAttribute_13: _areaTextController.text,
-                                addressAttribute_16:
+                                addressAttribute_5:
                                     _apartmentTextController.text,
                               ),
                               phone: _phoneNumber?.phoneNumber ?? ''),
@@ -379,8 +381,17 @@ class _AddAddressPageState extends State<AddAddressPage> {
     );
   }
 
+  Widget _buildTitle({required String label}) {
+    return SubtitleText(
+      text: label,
+      color: AppColors.PRIMARY_COLOR_DARK,
+      margin: const EdgeInsets.only(bottom: 8.0),
+    );
+  }
+
   Widget _buildForm(BuildContext context, AddressByIdModel? countries) {
     var initialValue = int.tryParse(_placeTypeTextController.text);
+    final addressCubit = context.read<AddressCubit>();
     return Form(
         key: _formKey,
         autovalidateMode: _isAutoValidating
@@ -389,14 +400,17 @@ class _AddAddressPageState extends State<AddAddressPage> {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AddressTypeSelector(
                   key: ValueKey(initialValue.toString()),
                   initialValue: initialValue ?? AddressType.home_type.index,
                   onPress: (value) {
+                    addressCubit.changeAddressType(value);
                     _placeTypeTextController.text = value.toString();
                   }),
               const SizedBox(height: 16.0),
+              _buildTitle(label: '${'address_name'.tr()} ${'*'.tr()}'),
               DefaultTextFormField(
                   isRequired: true,
                   hint: 'address_name'.tr(),
@@ -404,23 +418,20 @@ class _AddAddressPageState extends State<AddAddressPage> {
                   currentFocusNode: _addressNameFocusNode,
                   nextFocusNode: _emailFocusNode),
               const SizedBox(height: 16.0),
+              _buildTitle(label: '${'governorate'.tr()} ${'*'.tr()}'),
               _buildCountriesDropDown(context, countries),
               const SizedBox(height: 16.0),
+              _buildTitle(label: '${'area'.tr()} ${'*'.tr()}'),
               _buildCitiesDropDown(),
               const SizedBox(height: 16.0),
+              _buildTitle(label: '${'email_address'.tr()} ${'*'.tr()}'),
               EmailTextFormField(
                 currentFocusNode: _emailFocusNode,
-                nextFocusNode: _areaFocusNode,
+                nextFocusNode: _blockFocusNode,
                 currentController: _emailTextController,
               ),
               const SizedBox(height: 16.0),
-              DefaultTextFormField(
-                  isRequired: true,
-                  currentFocusNode: _areaFocusNode,
-                  nextFocusNode: _blockFocusNode,
-                  currentController: _areaTextController,
-                  hint: 'area'.tr()),
-              const SizedBox(height: 16.0),
+              _buildTitle(label: '${'block'.tr()} ${'*'.tr()}'),
               DefaultTextFormField(
                   isRequired: true,
                   currentFocusNode: _blockFocusNode,
@@ -428,6 +439,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
                   currentController: _blockTextController,
                   hint: 'block'.tr()),
               const SizedBox(height: 16.0),
+              _buildTitle(label: '${'street'.tr()} ${'*'.tr()}'),
               DefaultTextFormField(
                   isRequired: true,
                   currentFocusNode: _addressFocusNode,
@@ -435,24 +447,59 @@ class _AddAddressPageState extends State<AddAddressPage> {
                   currentController: _addressTextController,
                   hint: 'street'.tr()),
               const SizedBox(height: 16.0),
+              _buildTitle(label: 'avenue'.tr()),
               DefaultTextFormField(
                   currentFocusNode: _avenueFocusNode,
                   nextFocusNode: _placeTypeFocusNode,
                   currentController: _avenueTextController,
                   hint: 'avenue'.tr()),
               const SizedBox(height: 16.0),
+              _buildTitle(label: 'floor'.tr()),
               DefaultTextFormField(
                   currentFocusNode: _floorFocusNode,
                   nextFocusNode: _apartmentFocusNode,
                   currentController: _floorTextController,
                   hint: 'floor'.tr()),
               const SizedBox(height: 16.0),
-              DefaultTextFormField(
-                  currentFocusNode: _apartmentFocusNode,
-                  nextFocusNode: _phoneFocusNode,
-                  currentController: _apartmentTextController,
-                  hint: 'apartment'.tr()),
+              BlocBuilder<AddressCubit, AddressState>(
+                builder: (context, state) {
+                  var isHome =
+                      (state.addressType == AddressType.home_type.index ||
+                          state.addressType == null);
+                  var isOffice =
+                      state.addressType == AddressType.office_type.index;
+                  return _buildTitle(
+                      label: isHome
+                          ? 'apartment'.tr()
+                          : isOffice
+                              ? 'office'.tr()
+                              : 'other'.tr());
+                },
+              ),
+              BlocBuilder<AddressCubit, AddressState>(
+                builder: (context, state) {
+                  var isHome =
+                      (state.addressType == AddressType.home_type.index ||
+                          state.addressType == null);
+                  var isOffice =
+                      state.addressType == AddressType.office_type.index;
+                  return DefaultTextFormField(
+                      currentFocusNode: _apartmentFocusNode,
+                      nextFocusNode: _phoneFocusNode,
+                      currentController: isHome
+                          ? _apartmentTextController
+                          : isOffice
+                              ? _officeTextController
+                              : _otherTextController,
+                      hint: isHome
+                          ? 'apartment'.tr()
+                          : isOffice
+                              ? 'office'.tr()
+                              : 'other'.tr());
+                },
+              ),
               const SizedBox(height: 16.0),
+              _buildTitle(label: '${'phone_number'.tr()} ${'*'.tr()}'),
               PhoneTextFormField(
                 currentController: _phoneTextController,
                 initialValue: _phoneNumber,
@@ -461,6 +508,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
                 onInputChanged: (value) => _phoneNumber = value,
               ),
               const SizedBox(height: 16.0),
+              _buildTitle(label: 'notes'.tr()),
               DefaultTextFormField(
                   currentFocusNode: _notesFocusNode,
                   currentController: _notesTextController,

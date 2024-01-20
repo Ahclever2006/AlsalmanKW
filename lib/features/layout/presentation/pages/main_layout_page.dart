@@ -37,7 +37,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
         var widget =
             Scaffold(extendBody: true, body: pages[state.currentIndex!]);
         return Material(
-            color: AppColors.BACKGROUND_COLOR,
+            color: AppColors.CUSTOM_APP_PAGE_COLOR,
             type: MaterialType.card,
             child: _buildZoomDrawer(context, widget, state.currentIndex ?? 0));
       },
@@ -60,7 +60,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
       androidCloseOnBackTap: true,
       mainScreenTapClose: true,
       menuScreenWidth: width,
-      slideWidth: width * 0.45,
+      slideWidth: width * 0.80,
       mainScreenOverlayColor: Colors.black12,
       mainScreen: mainScreen,
       menuScreen: _buildDrawer(context, selectedIndex),

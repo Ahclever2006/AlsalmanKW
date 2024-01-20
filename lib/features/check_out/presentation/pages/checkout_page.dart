@@ -222,12 +222,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                   state.addressId ==
                                       addressModel.addresses![index].id)
                                 const PositionedDirectional(
-                                  top: 16.0,
-                                  end: 32.0,
+                                  top: 12.0,
+                                  start: 32.0,
                                   child: Icon(
                                     Icons.check_circle_outline_outlined,
                                     color: AppColors.PRIMARY_COLOR_DARK,
-                                    size: 40.0,
+                                    size: 24.0,
                                   ),
                                 )
                             ],

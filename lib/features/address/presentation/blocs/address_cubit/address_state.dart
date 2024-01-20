@@ -7,13 +7,16 @@ abstract class AddressState {
   final AddressByIdModel? oldAddress;
   final List<StatesModel>? cities;
   final double? lat, lng;
-  const AddressState(
-      [this.addressModel,
-      this.countries,
-      this.oldAddress,
-      this.cities,
-      this.lat,
-      this.lng]);
+  final int? addressType;
+  const AddressState([
+    this.addressModel,
+    this.countries,
+    this.oldAddress,
+    this.cities,
+    this.lat,
+    this.lng,
+    this.addressType,
+  ]);
 
   @override
   bool operator ==(Object other) {
@@ -26,6 +29,7 @@ abstract class AddressState {
         other.oldAddress == oldAddress &&
         other.lat == lat &&
         other.lng == lng &&
+        other.addressType == addressType &&
         listEquals(other.cities, cities);
   }
 
@@ -36,18 +40,20 @@ abstract class AddressState {
       oldAddress.hashCode ^
       lat.hashCode ^
       lng.hashCode ^
+      addressType.hashCode ^
       cities.hashCode;
 }
 
 class AddressStateLocation extends AddressState {
   const AddressStateLocation(
-      AddressesModel? addressModel,
-      AddressByIdModel? countries,
-      AddressByIdModel? oldAddress,
-      List<StatesModel>? cities,
-      double? lat,
-      double? lng)
-      : super(addressModel, countries, oldAddress, cities, lat, lng);
+    AddressesModel? addressModel,
+    AddressByIdModel? countries,
+    AddressByIdModel? oldAddress,
+    List<StatesModel>? cities,
+    double? lat,
+    double? lng,
+    int? addressType,
+  ) : super(addressModel, countries, oldAddress, cities, lat, lng, addressType);
 }
 
 class AddressInitial extends AddressState {
@@ -60,12 +66,10 @@ class AddressStateLoading extends AddressState {
     AddressByIdModel? countries,
     AddressByIdModel? oldAddress,
     List<StatesModel>? cities,
-  ) : super(
-          addressModel,
-          countries,
-          oldAddress,
-          cities,
-        );
+    double? lat,
+    double? lng,
+    int? addressType,
+  ) : super(addressModel, countries, oldAddress, cities, lat, lng, addressType);
 }
 
 class AddressStateLoaded extends AddressState {
@@ -74,12 +78,10 @@ class AddressStateLoaded extends AddressState {
     AddressByIdModel? countries,
     AddressByIdModel? oldAddress,
     List<StatesModel>? cities,
-  ) : super(
-          addressModel,
-          countries,
-          oldAddress,
-          cities,
-        );
+    double? lat,
+    double? lng,
+    int? addressType,
+  ) : super(addressModel, countries, oldAddress, cities, lat, lng, addressType);
 }
 
 class GetEditedAddressStateLoaded extends AddressState {
@@ -88,12 +90,10 @@ class GetEditedAddressStateLoaded extends AddressState {
     AddressByIdModel? countries,
     AddressByIdModel? oldAddress,
     List<StatesModel>? cities,
-  ) : super(
-          addressModel,
-          countries,
-          oldAddress,
-          cities,
-        );
+    double? lat,
+    double? lng,
+    int? addressType,
+  ) : super(addressModel, countries, oldAddress, cities, lat, lng, addressType);
 }
 
 class AddressAddedState extends AddressState {
@@ -102,12 +102,10 @@ class AddressAddedState extends AddressState {
     AddressByIdModel? countries,
     AddressByIdModel? oldAddress,
     List<StatesModel>? cities,
-  ) : super(
-          addressModel,
-          countries,
-          oldAddress,
-          cities,
-        );
+    double? lat,
+    double? lng,
+    int? addressType,
+  ) : super(addressModel, countries, oldAddress, cities, lat, lng, addressType);
 }
 
 class GetAddressForEditState extends AddressState {
@@ -116,12 +114,10 @@ class GetAddressForEditState extends AddressState {
     AddressByIdModel? countries,
     AddressByIdModel? oldAddress,
     List<StatesModel>? cities,
-  ) : super(
-          addressModel,
-          countries,
-          oldAddress,
-          cities,
-        );
+    double? lat,
+    double? lng,
+    int? addressType,
+  ) : super(addressModel, countries, oldAddress, cities, lat, lng, addressType);
 }
 
 class AddressUpdatedState extends AddressState {
@@ -130,12 +126,10 @@ class AddressUpdatedState extends AddressState {
     AddressByIdModel? countries,
     AddressByIdModel? oldAddress,
     List<StatesModel>? cities,
-  ) : super(
-          addressModel,
-          countries,
-          oldAddress,
-          cities,
-        );
+    double? lat,
+    double? lng,
+    int? addressType,
+  ) : super(addressModel, countries, oldAddress, cities, lat, lng, addressType);
 }
 
 class AddressDeletedState extends AddressState {
@@ -144,12 +138,22 @@ class AddressDeletedState extends AddressState {
     AddressByIdModel? countries,
     AddressByIdModel? oldAddress,
     List<StatesModel>? cities,
-  ) : super(
-          addressModel,
-          countries,
-          oldAddress,
-          cities,
-        );
+    double? lat,
+    double? lng,
+    int? addressType,
+  ) : super(addressModel, countries, oldAddress, cities, lat, lng, addressType);
+}
+
+class AddressTypeChangeState extends AddressState {
+  const AddressTypeChangeState(
+    AddressesModel? addressModel,
+    AddressByIdModel? countries,
+    AddressByIdModel? oldAddress,
+    List<StatesModel>? cities,
+    double? lat,
+    double? lng,
+    int? addressType,
+  ) : super(addressModel, countries, oldAddress, cities, lat, lng, addressType);
 }
 
 class AddressStateError extends AddressState {
@@ -160,12 +164,10 @@ class AddressStateError extends AddressState {
     AddressByIdModel? countries,
     AddressByIdModel? oldAddress,
     List<StatesModel>? cities,
-  ) : super(
-          addressModel,
-          countries,
-          oldAddress,
-          cities,
-        );
+    double? lat,
+    double? lng,
+    int? addressType,
+  ) : super(addressModel, countries, oldAddress, cities, lat, lng, addressType);
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
