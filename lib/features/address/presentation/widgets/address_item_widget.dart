@@ -30,6 +30,8 @@ class AddressItemWidget extends StatelessWidget {
     String? avenue = _getAvenue();
     String? block = _getBlock();
     String? apartment = _getApartment();
+    String? office = _getOffice();
+    String? other = _getOther();
     String? floor = _getFloor();
     String? notes = _getNotes();
     //TODO: adjust extra fields
@@ -59,7 +61,13 @@ class AddressItemWidget extends StatelessWidget {
                   SubtitleText(text: address.address1!),
                 if (avenue != null) SubtitleText(text: avenue),
                 if (floor != null) SubtitleText(text: floor),
-                if (apartment != null) SubtitleText(text: apartment),
+                if (apartment != null &&
+                    placeType == AddressType.home_type.name)
+                  SubtitleText(text: apartment),
+                if (office != null && placeType == AddressType.office_type.name)
+                  SubtitleText(text: office),
+                if (other != null && placeType == AddressType.other_type.name)
+                  SubtitleText(text: other),
                 SubtitleText(text: address.phoneNumber!),
                 if (address.countryName != null)
                   SubtitleText(text: address.countryName!),
@@ -107,7 +115,7 @@ class AddressItemWidget extends StatelessWidget {
     return placeType;
   }
 
-  String? _getOther(Address address) {
+  String? _getOther() {
     String? other = address.customAddressAttributes!
         .firstWhereOrNull((e) => e.id == 12)
         ?.defaultValue;
@@ -142,7 +150,7 @@ class AddressItemWidget extends StatelessWidget {
     return floor;
   }
 
-  String? _getOffice(Address address) {
+  String? _getOffice() {
     final office = address.customAddressAttributes!
         .firstWhereOrNull((e) => e.id == 9)
         ?.defaultValue;
