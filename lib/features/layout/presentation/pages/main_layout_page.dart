@@ -1,13 +1,21 @@
+import 'package:alsalman_app/core/utils/media_query_values.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:size_helper/size_helper.dart';
 
 import '../../../../core/enums/topic_type.dart';
 import '../../../../core/utils/navigator_helper.dart';
+import '../../../account_tab/presentation/pages/change_password_page.dart';
 import '../../../account_tab/presentation/pages/contact_us_page.dart';
 import '../../../account_tab/presentation/pages/language_chooser_page.dart';
 import '../../../account_tab/presentation/pages/topic_page.dart';
+import '../../../address/presentation/pages/address_screen.dart';
+import '../../../auth/presentation/blocs/auth_cubit/auth_cubit.dart';
 import '../../../cart_tab/presentation/cubit/cart_cubit.dart';
 import '../../../cart_tab/presentation/pages/cart_page.dart';
+import '../../../favorites/presentation/pages/favorites_products_page.dart';
+import '../../../notifications/presentation/pages/notifications_page.dart';
+import '../../../orders/presentation/pages/orders_page.dart';
+import '../../../wallet/presentation/pages/wallet_page.dart';
 import '../cubit/main_layout_cubit.dart';
 import '../../../../shared_widgets/stateless/title_text.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -31,6 +39,12 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
 
   @override
   Widget build(BuildContext context) {
+    final authCubit = context.read<AuthCubit>();
+    final isLoggedIn = authCubit.state.isUserLoggedIn;
+    if (isLoggedIn) {
+      final authCubit = context.read<AuthCubit>();
+      authCubit.getUserData();
+    }
     List<Widget> pages = [
       const HomeTab(),
     ];
@@ -41,13 +55,13 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
         return Material(
             color: AppColors.CUSTOM_APP_PAGE_COLOR,
             type: MaterialType.card,
-            child: _buildZoomDrawer(context, widget, state.currentIndex ?? 0));
+            child: _buildZoomDrawer(context, widget, isLoggedIn));
       },
     );
   }
 
   ZoomDrawer _buildZoomDrawer(
-      BuildContext context, Widget mainScreen, int selectedIndex) {
+      BuildContext context, Widget mainScreen, bool isLoggedIn) {
     var width = MediaQuery.of(context).size.width;
     return ZoomDrawer(
       controller: drawerController,
@@ -65,7 +79,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
       slideWidth: width * 0.80,
       mainScreenOverlayColor: Colors.black12,
       mainScreen: mainScreen,
-      menuScreen: _buildDrawer(context),
+      menuScreen: _buildDrawer(context, isLoggedIn),
     );
   }
 
@@ -77,7 +91,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
         ),
       );
 
-  Widget _buildDrawer(BuildContext context) {
+  Widget _buildDrawer(BuildContext context, bool isLoggedIn) {
     final padding = context.sizeHelper(
       tabletNormal: 8.0,
       tabletLarge: 12.0,
@@ -136,6 +150,78 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
               ),
               onTap: () => _goToCartPage(context),
             ),
+            if (isLoggedIn)
+              _buildDrawerItem(
+                title: 'favorites'.tr(),
+                icon: SvgPicture.asset(
+                  'lib/res/assets/fav_account_icon.svg',
+                  width: iconWidth,
+                  height: iconWidth,
+                ),
+                onTap: () => _goToFavoritesPage(context),
+                padding: padding,
+                fontSize: fontSize,
+              ),
+            if (isLoggedIn)
+              _buildDrawerItem(
+                title: 'wallet'.tr(),
+                icon: SvgPicture.asset(
+                  'lib/res/assets/wallet_account_icon.svg',
+                  width: iconWidth,
+                  height: iconWidth,
+                ),
+                onTap: () => _goToWalletPage(context),
+                padding: padding,
+                fontSize: fontSize,
+              ),
+            _buildDivider(),
+            if (isLoggedIn)
+              _buildDrawerItem(
+                title: 'orders'.tr(),
+                icon: SvgPicture.asset(
+                  'lib/res/assets/orders_account_icon.svg',
+                  width: iconWidth,
+                  height: iconWidth,
+                ),
+                onTap: () => _goToOrdersPage(context),
+                padding: padding,
+                fontSize: fontSize,
+              ),
+            if (isLoggedIn)
+              _buildDrawerItem(
+                title: 'addresses'.tr(),
+                icon: SvgPicture.asset(
+                  'lib/res/assets/addresses_account_icon.svg',
+                  width: iconWidth,
+                  height: iconWidth,
+                ),
+                onTap: () => _goToAddressesPage(context),
+                padding: padding,
+                fontSize: fontSize,
+              ),
+            _buildDivider(),
+            _buildDrawerItem(
+              title: 'change_password'.tr(),
+              icon: SvgPicture.asset(
+                'lib/res/assets/change_password_account_icon.svg',
+                width: iconWidth,
+                height: iconWidth,
+              ),
+              onTap: () => _goToChangePasswordPage(context),
+              padding: padding,
+              fontSize: fontSize,
+            ),
+            _buildDrawerItem(
+              title: 'notifications'.tr(),
+              icon: SvgPicture.asset(
+                'lib/res/assets/notification_account_icon.svg',
+                width: iconWidth,
+                height: iconWidth,
+              ),
+              onTap: () => _goToNotificationsPage(context),
+              padding: padding,
+              fontSize: fontSize,
+            ),
             _buildDrawerItem(
               title: 'language'.tr(),
               icon: SvgPicture.asset(
@@ -147,6 +233,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
               padding: padding,
               fontSize: fontSize,
             ),
+            _buildDivider(),
             _buildDrawerItem(
               title: 'contact_us'.tr(),
               icon: SvgPicture.asset(
@@ -193,6 +280,14 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
             ),
           ],
         ));
+  }
+
+  Widget _buildDivider() {
+    return Divider(
+      thickness: 1,
+      color: AppColors.PRIMARY_COLOR,
+      endIndent: context.width * 0.22,
+    );
   }
 
   Widget _buildDrawerItem(
@@ -244,5 +339,29 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
     NavigatorHelper.of(context).push(MaterialPageRoute(builder: (_) {
       return TopicPage(id: topicId);
     }));
+  }
+
+  void _goToFavoritesPage(BuildContext context) {
+    NavigatorHelper.of(context).pushNamed(FavoritesProductsPage.routeName);
+  }
+
+  void _goToWalletPage(BuildContext context) {
+    NavigatorHelper.of(context).pushNamed(WalletPage.routeName);
+  }
+
+  void _goToOrdersPage(BuildContext context) {
+    NavigatorHelper.of(context).pushNamed(OrdersPage.routeName);
+  }
+
+  void _goToAddressesPage(BuildContext context) {
+    NavigatorHelper.of(context).pushNamed(AddressesScreen.routeName);
+  }
+
+  void _goToChangePasswordPage(BuildContext context) {
+    NavigatorHelper.of(context).pushNamed(ChangePasswordPage.routeName);
+  }
+
+  void _goToNotificationsPage(BuildContext context) {
+    NavigatorHelper.of(context).pushNamed(NotificationsPage.routeName);
   }
 }
