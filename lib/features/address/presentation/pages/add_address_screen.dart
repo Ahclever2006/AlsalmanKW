@@ -223,6 +223,8 @@ class _AddAddressPageState extends State<AddAddressPage> {
     _blockTextController.text = _getBlock(address) ?? '';
     _floorTextController.text = _getFloor(address) ?? '';
     _apartmentTextController.text = _getApartment(address) ?? '';
+    _officeTextController.text = _getOffice(address) ?? '';
+    _otherTextController.text = _getOther(address) ?? '';
     _placeTypeTextController.text = _getPlaceType(address) ?? '';
     _avenueTextController.text = _getAvenue(address) ?? '';
     _notesTextController.text = _getNotes(address) ?? '';
@@ -244,6 +246,10 @@ class _AddAddressPageState extends State<AddAddressPage> {
     }
 
     _addressTextController.text = oldAddress.address!.address1!;
+
+    context
+        .read<AddressCubit>()
+        .changeAddressType(int.parse(_placeTypeTextController.text));
 
     setState(() {});
   }
@@ -348,6 +354,8 @@ class _AddAddressPageState extends State<AddAddressPage> {
                                 addressAttribute_11: _notesTextController.text,
                                 addressAttribute_5:
                                     _apartmentTextController.text,
+                                addressAttribute_9: _officeTextController.text,
+                                addressAttribute_12: _otherTextController.text,
                               ),
                               phone: _phoneNumber?.phoneNumber ?? ''),
                         );
@@ -371,6 +379,8 @@ class _AddAddressPageState extends State<AddAddressPage> {
                                 addressAttribute_11: _notesTextController.text,
                                 addressAttribute_5:
                                     _apartmentTextController.text,
+                                addressAttribute_9: _officeTextController.text,
+                                addressAttribute_12: _otherTextController.text,
                               ),
                               phone: _phoneNumber?.phoneNumber ?? ''),
                         );

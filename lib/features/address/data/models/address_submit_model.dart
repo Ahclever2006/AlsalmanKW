@@ -131,6 +131,7 @@ class FormModel {
   final String? addressAttribute_4;
   final String? addressAttribute_10;
   final String? addressAttribute_5;
+  final String? addressAttribute_9;
   final String? addressAttribute_12;
   FormModel({
     this.addressAttribute_7,
@@ -141,6 +142,7 @@ class FormModel {
     this.addressAttribute_4,
     this.addressAttribute_10,
     this.addressAttribute_5,
+    this.addressAttribute_9,
     this.addressAttribute_12,
   });
 
@@ -153,6 +155,7 @@ class FormModel {
     String? addressAttribute_4,
     String? addressAttribute_10,
     String? addressAttribute_5,
+    String? addressAttribute_9,
     String? addressAttribute_12,
   }) {
     return FormModel(
@@ -164,6 +167,7 @@ class FormModel {
       addressAttribute_4: addressAttribute_4 ?? this.addressAttribute_4,
       addressAttribute_10: addressAttribute_10 ?? this.addressAttribute_10,
       addressAttribute_5: addressAttribute_5 ?? this.addressAttribute_5,
+      addressAttribute_9: addressAttribute_9 ?? this.addressAttribute_9,
       addressAttribute_12: addressAttribute_12 ?? this.addressAttribute_12,
     );
   }
@@ -178,6 +182,7 @@ class FormModel {
       'address_attribute_4': addressAttribute_4,
       'address_attribute_10': addressAttribute_10,
       'address_attribute_5': addressAttribute_5,
+      'address_attribute_9': addressAttribute_9,
       'address_attribute_12': addressAttribute_12,
     }..removeWhere((_, v) => v == null);
   }
@@ -192,6 +197,7 @@ class FormModel {
       addressAttribute_4: map['address_attribute_4'],
       addressAttribute_10: map['address_attribute_10'],
       addressAttribute_5: map['address_attribute_5'],
+      addressAttribute_9: map['address_attribute_9'],
       addressAttribute_12: map['address_attribute_12'],
     );
   }
@@ -203,7 +209,7 @@ class FormModel {
 
   @override
   String toString() {
-    return 'FormModel(addressAttribute_7: $addressAttribute_7, addressAttribute_8: $addressAttribute_8, addressAttribute_2: $addressAttribute_2, addressAttribute_11: $addressAttribute_11, addressAttribute_13: $addressAttribute_13, addressAttribute_4: $addressAttribute_4, addressAttribute_10: $addressAttribute_10, addressAttribute_5: $addressAttribute_5, addressAttribute_12: $addressAttribute_12)';
+    return 'FormModel(addressAttribute_7: $addressAttribute_7, addressAttribute_8: $addressAttribute_8, addressAttribute_2: $addressAttribute_2, addressAttribute_11: $addressAttribute_11, addressAttribute_13: $addressAttribute_13, addressAttribute_4: $addressAttribute_4, addressAttribute_10: $addressAttribute_10, addressAttribute_5: $addressAttribute_5, addressAttribute_12: $addressAttribute_12, addressAttribute_9: $addressAttribute_9)';
   }
 
   @override
@@ -219,6 +225,7 @@ class FormModel {
         other.addressAttribute_4 == addressAttribute_4 &&
         other.addressAttribute_10 == addressAttribute_10 &&
         other.addressAttribute_5 == addressAttribute_5 &&
+        other.addressAttribute_9 == addressAttribute_9 &&
         other.addressAttribute_12 == addressAttribute_12;
   }
 
@@ -232,6 +239,7 @@ class FormModel {
         addressAttribute_4.hashCode ^
         addressAttribute_10.hashCode ^
         addressAttribute_5.hashCode ^
+        addressAttribute_9.hashCode ^
         addressAttribute_12.hashCode;
   }
 }
