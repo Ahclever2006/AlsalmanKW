@@ -673,8 +673,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   NavigatorHelper.of(context)
                       .push(MaterialPageRoute(builder: (_) {
                     return TapPayment(
-                      // apiKey: "sk_test_ytlzZPQhfjcJ2LCTEvYA6O1R",
-                      apiKey: "sk_live_lLOp45bgKfYMi0r1aeHtvsmZ",
+                      apiKey: "sk_test_ytlzZPQhfjcJ2LCTEvYA6O1R",
+                      // apiKey: "sk_live_lLOp45bgKfYMi0r1aeHtvsmZ",
+                      // apiKey: "sk_live_cgDsHV1Fmq8pn3G7wtzR24kQ",
                       redirectUrl: "https://tap.company",
                       postUrl: "https://tap.company",
                       paymentData: {

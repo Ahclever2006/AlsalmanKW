@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter_svg/svg.dart';
 import 'package:gif/gif.dart';
 
@@ -8,7 +6,6 @@ import '../../../../shared_widgets/other/show_snack_bar.dart';
 import '../../../../shared_widgets/stateless/title_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 import '../../../../core/enums/topic_type.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -117,26 +114,26 @@ class _TopicPageState extends State<TopicPage> with TickerProviderStateMixin {
   }
 
   Widget _buildAboutUsText(String data) {
-    // return Html(
-    //   data: data,
-    //   style: {
-    //     "body": Style(color: AppColors.PRIMARY_COLOR),
-    //   },
-    // );
-
-    return HtmlWidget(
-      data,
-      customWidgetBuilder: (element) {
-        String text;
-        element.attributes.forEach((key, value) {
-          log(value);
-          if (value.toLowerCase().contains('gif')) {
-            value = 'gif';
-          }
-        });
-
-        // return Text(text);
+    return Html(
+      data: data,
+      style: {
+        "body": Style(color: AppColors.PRIMARY_COLOR),
       },
     );
+
+    // return HtmlWidget(
+    //   data,
+    //   customWidgetBuilder: (element) {
+    //     String text;
+    //     element.attributes.forEach((key, value) {
+    //       log(value);
+    //       if (value.toLowerCase().contains('gif')) {
+    //         value = 'gif';
+    //       }
+    //     });
+
+    //     // return Text(text);
+    //   },
+    // );
   }
 }
