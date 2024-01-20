@@ -12,6 +12,7 @@ import '../features/auth/presentation/pages/login_page.dart';
 import '../features/auth/presentation/pages/register_success_page.dart';
 import '../features/auth/presentation/pages/sign_up_page.dart';
 import '../features/brands/presentation/pages/brands_page.dart';
+import '../features/cart_tab/presentation/pages/cart_page.dart';
 import '../features/categories/presentation/pages/categories_page.dart';
 import '../features/check_out/presentation/pages/checkout_page.dart';
 import '../features/favorites/presentation/pages/favorites_products_page.dart';
@@ -45,5 +46,6 @@ final routes = <String, WidgetBuilder>{
   CategoriesPage.routeName: (context) => const CategoriesPage(),
   NotificationsPage.routeName: (context) => const NotificationsPage(),
   DeleteAccountPage.routeName: (context) => const DeleteAccountPage(),
-  RegisterSuccessPage.routeName: (context) => const RegisterSuccessPage()
+  RegisterSuccessPage.routeName: (context) => const RegisterSuccessPage(),
+  CartTab.routeName: (context) => const CartTab(),
 };

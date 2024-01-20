@@ -1,6 +1,11 @@
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:size_helper/size_helper.dart';
 
+import '../../../../core/enums/topic_type.dart';
+import '../../../../core/utils/navigator_helper.dart';
+import '../../../account_tab/presentation/pages/contact_us_page.dart';
+import '../../../account_tab/presentation/pages/language_chooser_page.dart';
+import '../../../account_tab/presentation/pages/topic_page.dart';
 import '../../../cart_tab/presentation/cubit/cart_cubit.dart';
 import '../../../cart_tab/presentation/pages/cart_page.dart';
 import '../cubit/main_layout_cubit.dart';
@@ -11,7 +16,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../res/style/app_colors.dart';
-import '../../../account_tab/presentation/pages/account_tab.dart';
 import '../../../home_tab/presentation/pages/home_tab.dart';
 
 class MainLayOutPage extends StatefulWidget {
@@ -29,8 +33,6 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
   Widget build(BuildContext context) {
     List<Widget> pages = [
       const HomeTab(),
-      const CartTab(),
-      const AccountTab(),
     ];
     return BlocBuilder<MainLayoutCubit, MainLayoutState>(
       builder: (context, state) {
@@ -63,7 +65,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
       slideWidth: width * 0.80,
       mainScreenOverlayColor: Colors.black12,
       mainScreen: mainScreen,
-      menuScreen: _buildDrawer(context, selectedIndex),
+      menuScreen: _buildDrawer(context),
     );
   }
 
@@ -75,7 +77,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
         ),
       );
 
-  Widget _buildDrawer(BuildContext context, int selectedIndex) {
+  Widget _buildDrawer(BuildContext context) {
     final padding = context.sizeHelper(
       tabletNormal: 8.0,
       tabletLarge: 12.0,
@@ -86,6 +88,11 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
       tabletLarge: 16.0,
       desktopSmall: 24.0,
     );
+
+    final iconWidth = context.sizeHelper(
+      tabletExtraLarge: 24.0,
+      desktopSmall: 36.0,
+    );
     return Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -93,22 +100,6 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildLogo(),
-            _buildDrawerItem(
-              padding: padding,
-              fontSize: fontSize,
-              title: 'home'.tr(),
-              icon: SvgPicture.asset(
-                'lib/res/assets/home_icon.svg',
-                color: selectedIndex == 0
-                    ? AppColors.PRIMARY_COLOR
-                    : AppColors.GREY_NORMAL_COLOR,
-                width: context.sizeHelper(
-                  tabletExtraLarge: 24.0,
-                  desktopSmall: 36.0,
-                ),
-              ),
-              onTap: () => _createNavbarCallback(context, 0),
-            ),
             _buildDrawerItem(
               padding: padding,
               fontSize: fontSize,
@@ -121,13 +112,8 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
                     children: [
                       SvgPicture.asset(
                         'lib/res/assets/basket_fill_icon.svg',
-                        color: selectedIndex == 1
-                            ? AppColors.PRIMARY_COLOR
-                            : AppColors.GREY_NORMAL_COLOR,
-                        width: context.sizeHelper(
-                          tabletExtraLarge: 24.0,
-                          desktopSmall: 36.0,
-                        ),
+                        width: iconWidth,
+                        height: iconWidth,
                       ),
                       if (state.cartCount > 0)
                         PositionedDirectional(
@@ -148,21 +134,60 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
                   );
                 },
               ),
-              onTap: () => _createNavbarCallback(context, 1),
+              onTap: () => _goToCartPage(context),
             ),
             _buildDrawerItem(
-              title: 'my_account'.tr(),
+              title: 'language'.tr(),
               icon: SvgPicture.asset(
-                'lib/res/assets/user_icon.svg',
-                color: selectedIndex == 2
-                    ? AppColors.PRIMARY_COLOR
-                    : AppColors.GREY_NORMAL_COLOR,
-                width: context.sizeHelper(
-                  tabletExtraLarge: 24.0,
-                  desktopSmall: 36.0,
-                ),
+                'lib/res/assets/language_icon.svg',
+                width: iconWidth,
+                height: iconWidth,
               ),
-              onTap: () => _createNavbarCallback(context, 2),
+              onTap: () => _goToLanguagePage(context),
+              padding: padding,
+              fontSize: fontSize,
+            ),
+            _buildDrawerItem(
+              title: 'contact_us'.tr(),
+              icon: SvgPicture.asset(
+                'lib/res/assets/contact_us_account_icon.svg',
+                width: iconWidth,
+                height: iconWidth,
+              ),
+              onTap: () => _goToContactUsPage(context),
+              padding: padding,
+              fontSize: fontSize,
+            ),
+            _buildDrawerItem(
+              title: 'privacy_policy'.tr(),
+              icon: SvgPicture.asset(
+                'lib/res/assets/privacy_account_icon.svg',
+                width: iconWidth,
+                height: iconWidth,
+              ),
+              onTap: () => _goToTopicsPage(context, TopicType.Privacy.value),
+              padding: padding,
+              fontSize: fontSize,
+            ),
+            _buildDrawerItem(
+              title: 'terms_of_use'.tr(),
+              icon: SvgPicture.asset(
+                'lib/res/assets/terms_account_icon.svg',
+                width: iconWidth,
+                height: iconWidth,
+              ),
+              onTap: () => _goToTopicsPage(context, TopicType.Terms.value),
+              padding: padding,
+              fontSize: fontSize,
+            ),
+            _buildDrawerItem(
+              title: 'about_us'.tr(),
+              icon: SvgPicture.asset(
+                'lib/res/assets/about_us_account_icon.svg',
+                width: iconWidth,
+                height: iconWidth,
+              ),
+              onTap: () => _goToTopicsPage(context, TopicType.AboutUs.value),
               padding: padding,
               fontSize: fontSize,
             ),
@@ -181,181 +206,43 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: padding),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             icon,
             const SizedBox(width: 8),
-            TitleText(text: title),
+            Expanded(
+                flex: 3,
+                child: TitleText(
+                    text: title, color: AppColors.PRIMARY_COLOR_DARK)),
+            const Icon(
+              Icons.chevron_right,
+              color: AppColors.PRIMARY_COLOR_DARK,
+            ),
+            const Spacer(),
           ],
         ),
       ),
     );
   }
 
-// class _CustomBottomNavBar extends StatefulWidget {
-//   const _CustomBottomNavBar({
-//     required this.selectedIndex,
-//     Key? key,
-//   }) : super(key: key);
-
-//   final int selectedIndex;
-
-//   @override
-//   State<_CustomBottomNavBar> createState() => _CustomBottomNavBarState();
-// }
-
-// class _CustomBottomNavBarState extends State<_CustomBottomNavBar> {
-//   @override
-//   void initState() {
-//     super.initState();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SizedBox(
-//       height: context.sizeHelper(
-//         tabletExtraLarge: navbarHeight,
-//         desktopSmall: navbarHeight * 1.5,
-//       ),
-//       width: context.width,
-//       child: Stack(
-//         alignment: Alignment.center,
-//         children: [
-//           Container(
-//             margin: const EdgeInsets.all(8.0),
-//             height: context.sizeHelper(
-//               tabletExtraLarge: navbarHeight,
-//               desktopSmall: navbarHeight * 1.5,
-//             ),
-//             decoration: const BoxDecoration(
-//               color: Colors.white,
-//               boxShadow: AppColors.SHADOW_LIGHT,
-//               borderRadius: BorderRadius.vertical(
-//                   top: Radius.circular(24.0), bottom: Radius.circular(8.0)),
-//             ),
-//           ),
-//           Container(
-//             height: context.sizeHelper(
-//               tabletExtraLarge: navbarHeight,
-//               desktopSmall: navbarHeight * 1.5,
-//             ),
-//             padding: const EdgeInsets.symmetric(horizontal: 12.0),
-//             child: Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//               children: [
-//                 _buildNormalNavBarItem(
-//                   title: 'account'.tr(),
-//                   icon: SvgPicture.asset(
-//                     'lib/res/assets/home_icon.svg',
-//                     color: widget.selectedIndex == 0
-//                         ? AppColors.PRIMARY_COLOR
-//                         : AppColors.GREY_NORMAL_COLOR,
-//                     width: context.sizeHelper(
-//                       tabletExtraLarge: 24.0,
-//                       desktopSmall: 36.0,
-//                     ),
-//                   ),
-//                   onTap: () => _createNavbarCallback(context, 0),
-//                 ),
-//                 _buildNormalNavBarItem(
-//                   title: 'projects'.tr(),
-//                   icon: SvgPicture.asset(
-//                     'lib/res/assets/search_icon.svg',
-//                     color: widget.selectedIndex == 1
-//                         ? AppColors.PRIMARY_COLOR
-//                         : AppColors.GREY_NORMAL_COLOR,
-//                     width: context.sizeHelper(
-//                       tabletExtraLarge: 24.0,
-//                       desktopSmall: 36.0,
-//                     ),
-//                   ),
-//                   onTap: () => _createNavbarCallback(context, 1),
-//                 ),
-//                 _buildNormalNavBarItem(
-//                   title: 'developer'.tr(),
-//                   icon: BlocBuilder<CartCubit, CartState>(
-//                     builder: (context, state) {
-//                       return Stack(
-//                         alignment: AlignmentDirectional.center,
-//                         clipBehavior: Clip.none,
-//                         children: [
-//                           SvgPicture.asset(
-//                             'lib/res/assets/basket_fill_icon.svg',
-//                             color: widget.selectedIndex == 2
-//                                 ? AppColors.PRIMARY_COLOR
-//                                 : AppColors.GREY_NORMAL_COLOR,
-//                             width: context.sizeHelper(
-//                               tabletExtraLarge: 24.0,
-//                               desktopSmall: 36.0,
-//                             ),
-//                           ),
-//                           if (state.cartCount > 0)
-//                             PositionedDirectional(
-//                               top: -8.0,
-//                               end: 16.0,
-//                               child: Container(
-//                                 decoration: const BoxDecoration(
-//                                     shape: BoxShape.circle,
-//                                     color: AppColors.PRIMARY_COLOR_DARK),
-//                                 padding: const EdgeInsets.all(6.0),
-//                                 child: TitleText.medium(
-//                                   text: '${state.cartCount}',
-//                                   color: Colors.white,
-//                                 ),
-//                               ),
-//                             ),
-//                         ],
-//                       );
-//                     },
-//                   ),
-//                   onTap: () => _createNavbarCallback(context, 2),
-//                 ),
-//                 _buildNormalNavBarItem(
-//                   title: 'account'.tr(),
-//                   icon: SvgPicture.asset(
-//                     'lib/res/assets/user_icon.svg',
-//                     color: widget.selectedIndex == 3
-//                         ? AppColors.PRIMARY_COLOR
-//                         : AppColors.GREY_NORMAL_COLOR,
-//                     width: context.sizeHelper(
-//                       tabletExtraLarge: 24.0,
-//                       desktopSmall: 36.0,
-//                     ),
-//                   ),
-//                   onTap: () => _createNavbarCallback(context, 3),
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-
-  // Widget _buildNormalNavBarItem({
-  //   required String title,
-  //   required Widget icon,
-  //   required VoidCallback onTap,
-  // }) {
-  //   return Flexible(
-  //     child: Container(
-  //       margin: const EdgeInsets.symmetric(horizontal: 4.0),
-  //       alignment: Alignment.center,
-  //       child: InkWell(
-  //         onTap: onTap,
-  //         child: Column(
-  //           mainAxisSize: MainAxisSize.min,
-  //           mainAxisAlignment: MainAxisAlignment.center,
-  //           children: [icon],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  void _createNavbarCallback(BuildContext context, int tabNum) {
+  void _goToLanguagePage(BuildContext context) {
     drawerController.toggle!();
-    final cubit = context.read<MainLayoutCubit>();
-    cubit.onBottomNavPressed(tabNum);
+
+    NavigatorHelper.of(context).pushNamed(LanguageChooserPage.routeName);
+  }
+
+  void _goToCartPage(BuildContext context) {
+    drawerController.toggle!();
+
+    NavigatorHelper.of(context).pushNamed(CartTab.routeName);
+  }
+
+  void _goToContactUsPage(BuildContext context) {
+    NavigatorHelper.of(context).pushNamed(ContactUsPage.routeName);
+  }
+
+  void _goToTopicsPage(BuildContext context, int topicId) {
+    NavigatorHelper.of(context).push(MaterialPageRoute(builder: (_) {
+      return TopicPage(id: topicId);
+    }));
   }
 }

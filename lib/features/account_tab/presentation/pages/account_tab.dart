@@ -4,14 +4,10 @@ import '../../../../shared_widgets/stateless/drawer_appbar.dart';
 import '../../../auth/presentation/pages/login_page.dart';
 import '../../../wallet/presentation/pages/wallet_page.dart';
 import 'change_password_page.dart';
-import 'contact_us_page.dart';
-import 'language_chooser_page.dart';
 import '../../../../core/utils/media_query_values.dart';
 import '../../../../di/injector.dart';
 import '../../../orders/presentation/pages/orders_page.dart';
-import '../../../../core/enums/topic_type.dart';
-import 'profile_page.dart';
-import 'topic_page.dart';
+         import 'profile_page.dart';
 import '../../../address/presentation/pages/address_screen.dart';
 import '../../../auth/presentation/blocs/auth_cubit/auth_cubit.dart';
 import '../../../favorites/presentation/pages/favorites_products_page.dart';
@@ -144,26 +140,6 @@ class AccountTab extends StatelessWidget {
           });
         },
       ),
-      _buildAccountItemRow(context,
-          label: 'about_us',
-          icon: 'about_us_account_icon',
-          onPress: () => _goToTopicsPage(context, TopicType.AboutUs.value)),
-      _buildAccountItemRow(context,
-          label: 'terms_of_use',
-          icon: 'terms_account_icon',
-          onPress: () => _goToTopicsPage(context, TopicType.Terms.value)),
-      _buildAccountItemRow(context,
-          label: 'privacy_policy',
-          icon: 'privacy_account_icon',
-          onPress: () => _goToTopicsPage(context, TopicType.Privacy.value)),
-      _buildAccountItemRow(context,
-          icon: 'language_account_icon',
-          label: 'language_title',
-          onPress: () => _goToLanguagePage(context)),
-      _buildAccountItemRow(context,
-          icon: 'contact_us_account_icon',
-          label: 'contact_us',
-          onPress: () => _goToContactUsPage(context)),
     ];
   }
 
@@ -220,20 +196,6 @@ class AccountTab extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void _goToLanguagePage(BuildContext context) {
-    NavigatorHelper.of(context).pushNamed(LanguageChooserPage.routeName);
-  }
-
-  void _goToContactUsPage(BuildContext context) {
-    NavigatorHelper.of(context).pushNamed(ContactUsPage.routeName);
-  }
-
-  void _goToTopicsPage(BuildContext context, int topicId) {
-    NavigatorHelper.of(context).push(MaterialPageRoute(builder: (_) {
-      return TopicPage(id: topicId);
-    }));
   }
 
   void _goToProfilePage(BuildContext context) {

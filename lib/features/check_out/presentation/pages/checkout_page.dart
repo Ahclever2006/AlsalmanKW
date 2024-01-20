@@ -9,7 +9,6 @@ import '../../../../core/service/app_info_service.dart';
 import '../../../../shared_widgets/other/show_wallet_status_change_dialog.dart';
 import '../../../../shared_widgets/stateful/wallet_switch.dart';
 import '../../../auth/presentation/blocs/auth_cubit/auth_cubit.dart';
-import '../../../orders/presentation/pages/order_details_page.dart';
 import '../../../../main.dart';
 
 import '../../../../features/cart_tab/presentation/cubit/cart_cubit.dart';

@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../../shared_widgets/other/show_delete_cart_item_bottom_sheet.dart';
-import '../../../../shared_widgets/stateless/drawer_appbar.dart';
 import '../../../../shared_widgets/stateless/subtitle_text.dart';
 
 import '../../../../core/data/models/cart_model.dart';
@@ -36,37 +35,37 @@ class CartTab extends StatelessWidget {
     return Scaffold(
       body: CustomAppPage(
         safeTop: true,
-        child: BlocConsumer<CartCubit, CartState>(
-          listener: (context, state) {
-            if (state.isError && state.cart == null)
-              showSnackBar(context, message: state.errorMessage);
-          },
-          builder: (context, state) {
-            if (state.isInitial || (state.isLoading && state.cart == null))
-              return const CustomLoading(
-                loadingStyle: LoadingStyle.ShimmerList,
-              );
-            if (state.cart?.items?.isNotEmpty == true) {
-              return _buildBody(
-                context,
-                cartData: state.cart,
-                payment: state.paymentSummary!,
-              );
-            } else
-              return Column(
-                children: const [
-                  DrawerAppBarWidget(
-                      gifUrl: 'lib/res/assets/logo_animation.gif'),
-                  EmptyPageMessage(
+        child: Column(
+          children: [
+            InnerPagesAppBar(label: 'basket'.tr().toUpperCase()),
+            BlocConsumer<CartCubit, CartState>(
+              listener: (context, state) {
+                if (state.isError && state.cart == null)
+                  showSnackBar(context, message: state.errorMessage);
+              },
+              builder: (context, state) {
+                if (state.isInitial || (state.isLoading && state.cart == null))
+                  return const CustomLoading(
+                    loadingStyle: LoadingStyle.ShimmerList,
+                  );
+                if (state.cart?.items?.isNotEmpty == true) {
+                  return _buildBody(
+                    context,
+                    cartData: state.cart,
+                    payment: state.paymentSummary!,
+                  );
+                } else
+                  return const EmptyPageMessage(
                     title: 'no_cart_items_found',
                     subTitle: "check_our_best",
                     svgImage: 'water_glass_icon',
                     isSVG: false,
+                    heightRatio: 0.6,
                     textColor: AppColors.PRIMARY_COLOR_DARK,
-                  ),
-                ],
-              );
-          },
+                  );
+              },
+            ),
+          ],
         ),
       ),
     );
@@ -82,7 +81,6 @@ class CartTab extends StatelessWidget {
 
     return Column(
       children: [
-        InnerPagesAppBar(label: 'basket'.tr().toUpperCase()),
         Expanded(
           child: RefreshIndicator(
               onRefresh: () => cubit.refresh(),
