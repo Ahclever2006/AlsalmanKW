@@ -465,5 +465,9 @@
     "fish":"الاسماك...",
     "welcome_to":"مرحبا بك في ",
     "alsalman":"السلمان!",
-    "pay_now":"ادفع الان"
+    "pay_now":"ادفع الان",
+    "order_success":"تم الطلب بنجاح",
+    "order_failed":"فشل الطلب",
+    "order_success_subtitle":"لقد تم طلبك #{} بنجاح",
+    "order_failed_subtitle":"لم نتمكن من معالجة عملية الدفع الخاصة بك، يرجى المحاولة مرة أخرى..."
 }

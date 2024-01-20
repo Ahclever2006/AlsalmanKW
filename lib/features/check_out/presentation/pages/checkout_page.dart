@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:alsalman_app/features/payment/presentation/pages/payment_success_screen.dart';
 import 'package:flutter_tap_payment/flutter_tap_payment.dart';
 import '../../../../core/data/datasources/device_type_data_source.dart';
 import '../../../../core/data/models/schedule_delivery_shipping_dates_model.dart';
@@ -687,9 +688,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
               if (totalPrice == 0) {
                 _goToHomePage(context, '');
                 navigatorKey.currentState?.push(MaterialPageRoute(builder: (_) {
-                  return OrderDetailsPage(
-                      paymentStatus: true,
-                      orderId: cubit.state.confirmModel!.id);
+                  return PaymentSuccessScreen(
+                      isSuccess: true, orderId: cubit.state.confirmModel!.id);
                 }));
               } else {
                 if (cubit.state.confirmModel!.id != null) {
@@ -743,9 +743,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         await cubit
                             .confirmPayment(invoiceId: params['id'])
                             .whenComplete(() => navigatorKey.currentState
-                                    ?.push(MaterialPageRoute(builder: (_) {
-                                  return OrderDetailsPage(
-                                      paymentStatus: true,
+                                    ?.pushReplacement(
+                                        MaterialPageRoute(builder: (_) {
+                                  return PaymentSuccessScreen(
+                                      isSuccess: true,
                                       orderId: cubit.state.confirmModel!.id);
                                 })));
                       },
@@ -753,9 +754,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         //log(error.toString());
                         Future.delayed(const Duration(milliseconds: 200), () {
                           navigatorKey.currentState
-                              ?.push(MaterialPageRoute(builder: (_) {
-                            return OrderDetailsPage(
-                                paymentStatus: false,
+                              ?.pushReplacement(MaterialPageRoute(builder: (_) {
+                            return PaymentSuccessScreen(
+                                isSuccess: false,
                                 orderId: cubit.state.confirmModel!.id);
                           }));
                         });
@@ -803,9 +804,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         height: 80.0,
                         width: double.infinity,
                         padding: const EdgeInsets.symmetric(vertical: 24.0),
-                        decoration: const BoxDecoration(
-                          color: AppColors.PRIMARY_COLOR,
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                        decoration: BoxDecoration(
+                          color: selectedMethod == 1
+                              ? AppColors.PRIMARY_COLOR
+                              : AppColors.GREY_NORMAL_COLOR,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(15)),
                         ),
                         child: Image.asset(
                           'lib/res/assets/knet.png',
@@ -831,9 +835,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         height: 80.0,
                         width: double.infinity,
                         padding: const EdgeInsets.symmetric(vertical: 32.0),
-                        decoration: const BoxDecoration(
-                          color: AppColors.PRIMARY_COLOR,
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                        decoration: BoxDecoration(
+                          color: selectedMethod == 2
+                              ? AppColors.PRIMARY_COLOR
+                              : AppColors.GREY_NORMAL_COLOR,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(15)),
                         ),
                         child: Image.asset(
                           'lib/res/assets//visa.png',
