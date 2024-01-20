@@ -32,9 +32,6 @@ class AccountTab extends StatelessWidget {
         create: (context) => Injector().accountCubit,
         child: ListView(
           children: [
-            const DrawerAppBarWidget(
-                gifUrl: 'lib/res/assets/logo_animation.gif'),
-            if (!isLoggedIn) _buildGuestUserSection(context),
             BlocBuilder<AuthCubit, AuthState>(
               builder: (context, state) {
                 if (!state.isUserLoggedIn || state.userInfo == null) {
@@ -52,24 +49,6 @@ class AccountTab extends StatelessWidget {
       ),
     );
   }
-
-  Widget _buildGuestUserSection(BuildContext context) {
-    var width = context.width;
-    return Container(
-        padding: const EdgeInsets.symmetric(vertical: 32.0),
-        margin: const EdgeInsets.all(16.0),
-        decoration: BoxDecoration(
-          border: Border.all(color: AppColors.PRIMARY_COLOR_DARK),
-          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-        ),
-        child: DefaultButton(
-            label: 'login'.tr().toUpperCase(),
-            margin: EdgeInsets.symmetric(horizontal: width * 0.20),
-            onPressed: () => _goToSignUpPage(context)));
-  }
-
-  Future<void> _goToSignUpPage(BuildContext context) =>
-      NavigatorHelper.of(context).pushNamed(LoginPage.routeName);
 
   Widget _buildNormalUserSection(
       BuildContext context, String? username, String? phone) {

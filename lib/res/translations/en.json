@@ -469,5 +469,6 @@
     "order_success":"Order Success",
     "order_failed":"Order Failed",
     "order_success_subtitle":"Your order #{} has been successful",
-    "order_failed_subtitle":"We are unable to process your payment please try again..."
+    "order_failed_subtitle":"We are unable to process your payment please try again...",
+    "not_logged_in":"You Are Not Logged In"
 }
