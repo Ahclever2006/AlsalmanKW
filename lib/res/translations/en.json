@@ -394,7 +394,7 @@
     "grand_total":"Grand Total",
     "submit_order":"Submit Order",
     "share_order":"Share",
-    "order_summary":"Order Summary",
+    "order_summary":"Items Details",
     "message_title":"Message",
     "order_details":"Order Details",
     "order_shared":"Order Shared",
@@ -464,5 +464,6 @@
     "with":"with",
     "fish":"fish...",
     "welcome_to":"Welcome To",
-    "alsalman":"alsalman!"
+    "alsalman":"alsalman!",
+    "pay_now":"Pay Now"
 }

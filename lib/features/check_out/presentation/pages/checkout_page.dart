@@ -387,6 +387,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
     NavigatorHelper.of(context)
         .popUntil(ModalRoute.withName("/MainLayOutPage"));
 
+    //TODO: check below code & push cart page
+
     cartCubit.clearCart();
 
     if (message.isNotEmpty) showSnackBar(context, message: message);
@@ -425,9 +427,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                 : 'subtitle_deactive');
                       });
                     }),
-                _buildDivider(),
                 ..._buildOrderSummary(context),
-                _buildCouponDiscount(context,
+                ..._buildCouponDiscount(context,
                     couponCode: payment!.totalsModel!.orderTotalDiscount != null
                         ? enteredCouponCode
                         : null),
@@ -461,7 +462,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
         ...normalItems
             .map((cartItem) => _buildCartItem(context, cartItem))
             .toList(),
-      if (normalItems != null) _buildDivider(),
+      if (normalItems != null) const SizedBox(height: 16.0)
     ];
   }
 
@@ -500,66 +501,90 @@ class _CheckoutPageState extends State<CheckoutPage> {
     );
   }
 
-  Widget _buildCouponDiscount(BuildContext context, {String? couponCode}) {
+  List<Widget> _buildCouponDiscount(BuildContext context,
+      {String? couponCode}) {
     final cartCubit = context.read<CartCubit>();
     final checkOutCubit = context.read<CheckoutCubit>();
-    return BlocBuilder<CheckoutCubit, CheckoutState>(
-      builder: (context, state) {
-        return Container(
-          margin: const EdgeInsets.all(16.0),
-          padding: const EdgeInsets.symmetric(horizontal: 4.0),
-          decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(color: AppColors.GREY_BORDER_COLOR, width: 2),
-              borderRadius: const BorderRadius.all(
-                Radius.circular(10.0),
-              )),
-          child: Row(
-            children: [
-              Expanded(
-                child: TextFormField(
-                  enabled: couponCode == null,
-                  controller: _discountController,
-                  decoration: InputDecoration(
-                      enabledBorder: InputBorder.none,
-                      disabledBorder: InputBorder.none,
-                      hintText: couponCode == null
-                          ? 'enter_coupon'.tr()
-                          : couponCode.tr()),
-                ),
-              ),
-              BlocListener<CartCubit, CartState>(
-                listener: (context, state) {
-                  if (state.isError)
-                    showSnackBar(context, message: state.errorMessage);
-                },
-                child: DefaultButton(
-                    backgroundColor: Colors.transparent,
-                    label:
-                        couponCode == null ? 'apply'.tr() : 'deactivate'.tr(),
-                    labelStyle: Theme.of(context).textTheme.displayLarge!,
-                    borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 8.0),
-                    onPressed: () async {
-                      if (couponCode == null)
-                        await cartCubit
-                            .applyCoupon(_discountController.text.trim())
-                            .then((value) async {
-                          await cartCubit.loadCart();
-                          await checkOutCubit.getPaymentSummary();
-                        });
-                      else {
-                        cartCubit.deactivateCoupon().whenComplete(
-                            () => checkOutCubit.getPaymentSummary());
-                      }
-                    }),
-              ),
-            ],
+    return [
+      Row(
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.all(8.0),
+            decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10.0),
+                )),
+            child: SvgPicture.asset('lib/res/assets/coupon_icon.svg'),
           ),
-        );
-      },
-    );
+          const TitleText(
+            text: 'coupon',
+            color: AppColors.PRIMARY_COLOR_DARK,
+          )
+        ],
+      ),
+      BlocBuilder<CheckoutCubit, CheckoutState>(
+        builder: (context, state) {
+          return Container(
+            margin: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: AppColors.PRIMARY_COLOR, width: 2),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(10.0),
+                )),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    enabled: couponCode == null,
+                    controller: _discountController,
+                    decoration: InputDecoration(
+                        enabledBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        hintText: couponCode == null
+                            ? 'enter_coupon'.tr()
+                            : couponCode.tr()),
+                  ),
+                ),
+                BlocListener<CartCubit, CartState>(
+                  listener: (context, state) {
+                    if (state.isError)
+                      showSnackBar(context, message: state.errorMessage);
+                  },
+                  child: DefaultButton(
+                      label:
+                          couponCode == null ? 'apply'.tr() : 'deactivate'.tr(),
+                      labelStyle: Theme.of(context)
+                          .textTheme
+                          .displayLarge!
+                          .copyWith(color: Colors.white),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(8.0)),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 8.0),
+                      onPressed: () async {
+                        if (couponCode == null)
+                          await cartCubit
+                              .applyCoupon(_discountController.text.trim())
+                              .then((value) async {
+                            await cartCubit.loadCart();
+                            await checkOutCubit.getPaymentSummary();
+                          });
+                        else {
+                          cartCubit.deactivateCoupon().whenComplete(
+                              () => checkOutCubit.getPaymentSummary());
+                        }
+                      }),
+                ),
+              ],
+            ),
+          );
+        },
+      )
+    ];
   }
 
   Widget _buildDivider() {
@@ -572,8 +597,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
       BuildContext context, PaymentSummaryModel? payment) {
     return Container(
       padding: const EdgeInsets.all(16.0),
-      decoration:
-          const BoxDecoration(color: Colors.white, boxShadow: AppColors.SHADOW),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.end,
@@ -596,11 +619,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
       _buildCheckOutSummaryItem(
           label: 'wallet',
           value: payment?.totalsModel?.customProperties?.deductFromWallet ?? '',
-          color: Colors.red),
+          color: AppColors.PRIMARY_COLOR),
       _buildCheckOutSummaryItem(
           label: 'discount',
           value: payment?.totalsModel?.customProperties?.totalDiscount ?? '',
-          color: Colors.red),
+          color: AppColors.PRIMARY_COLOR),
       _buildCheckOutSummaryItem(
           label: 'grand_total', value: payment?.totalsModel?.orderTotal ?? '')
     ];
@@ -619,10 +642,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
               children: [
                 TitleText(
                   text: label,
+                  color: color ?? AppColors.PRIMARY_COLOR_DARK,
                 ),
                 TitleText(
                   text: value,
-                  color: color,
+                  color: color ?? AppColors.PRIMARY_COLOR_DARK,
                 ),
               ],
             ),
@@ -648,7 +672,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     return Expanded(
       flex: 2,
       child: DefaultButton(
-          label: 'submit_order'.tr(),
+          label: 'pay_now'.tr(),
           margin: const EdgeInsets.symmetric(vertical: 8.0),
           onPressed: () async {
             final appInfo = await AppInfoServiceImpl().init();
@@ -762,37 +786,75 @@ class _CheckoutPageState extends State<CheckoutPage> {
     return [
       const TitleText(
           text: 'payment_method',
+          color: AppColors.PRIMARY_COLOR_DARK,
           margin: EdgeInsets.symmetric(horizontal: 16.0)),
-      RadioListTile<int>(
-        value: 1,
-        groupValue: selectedMethod,
-        onChanged: (newVal) {
-          cubit.onPaymentOptionRadioPressed(
-            newVal,
-            'kNet',
-          );
-        },
-        title: const TitleText(text: 'kNet'),
-        secondary: Image.asset(
-          'lib/res/assets/knet.png',
-          height: 40.0,
+      const SizedBox(height: 16.0),
+      SizedBox(
+        height: 130.0,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Container(
+                        height: 80.0,
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(vertical: 24.0),
+                        decoration: const BoxDecoration(
+                          color: AppColors.PRIMARY_COLOR,
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                        ),
+                        child: Image.asset(
+                          'lib/res/assets/knet.png',
+                        )),
+                    Radio(
+                      value: 1,
+                      groupValue: selectedMethod,
+                      onChanged: (newVal) {
+                        cubit.onPaymentOptionRadioPressed(
+                          newVal,
+                          'kNet',
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 24.0),
+              Expanded(
+                child: Column(
+                  children: [
+                    Container(
+                        height: 80.0,
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(vertical: 32.0),
+                        decoration: const BoxDecoration(
+                          color: AppColors.PRIMARY_COLOR,
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                        ),
+                        child: Image.asset(
+                          'lib/res/assets//visa.png',
+                        )),
+                    Radio(
+                      value: 2,
+                      groupValue: selectedMethod,
+                      onChanged: (newVal) {
+                        cubit.onPaymentOptionRadioPressed(
+                          newVal,
+                          'Visa/Master',
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-      RadioListTile<dynamic>(
-        value: 2,
-        groupValue: selectedMethod,
-        onChanged: (newVal) {
-          cubit.onPaymentOptionRadioPressed(
-            newVal,
-            'Visa/Master',
-          );
-        },
-        title: const TitleText(text: 'Visa/Master'),
-        secondary: Image.asset(
-          'lib/res/assets//visa.png',
-          height: 40.0,
-        ),
-      ),
+      )
     ];
   }
 }
