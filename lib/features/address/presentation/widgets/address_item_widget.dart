@@ -14,6 +14,7 @@ class AddressItemWidget extends StatelessWidget {
     required this.address,
     this.onPress,
     this.inCheckOut = false,
+    this.isSelected = false,
     this.backgroundColor = AppColors.PRIMARY_COLOR_LIGHT,
     this.borderColor = AppColors.GREY_NORMAL_COLOR,
   }) : super(key: key);
@@ -23,6 +24,7 @@ class AddressItemWidget extends StatelessWidget {
   final Color? backgroundColor;
   final Color? borderColor;
   final bool? inCheckOut;
+  final bool? isSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +55,18 @@ class AddressItemWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (placeType != null) TitleText.large(text: placeType),
+                if (placeType != null)
+                  Row(
+                    children: [
+                      if (isSelected == true)
+                        Padding(
+                          padding: const EdgeInsetsDirectional.only(end: 16.0),
+                          child: SvgPicture.asset(
+                              'lib/res/assets/selected_icon.svg'),
+                        ),
+                      TitleText.large(text: placeType),
+                    ],
+                  ),
                 const SizedBox(height: 16.0),
                 SubtitleText(text: address.firstName!),
                 if (block != null) SubtitleText(text: block),

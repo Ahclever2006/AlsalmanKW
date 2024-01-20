@@ -188,49 +188,26 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         buildWhen: (previous, current) =>
                             previous.addressId != current.addressId,
                         builder: (context, state) {
-                          return Stack(
-                            children: [
-                              AddressItemWidget(
-                                address: addressModel.addresses![index],
-                                borderColor: (state.addressId != null &&
-                                        state.addressId !=
-                                            addressModel.addresses![index].id)
-                                    ? AppColors.PRIMARY_COLOR_DARK
-                                    : AppColors.PRIMARY_COLOR_LIGHT,
-                                backgroundColor: (state.addressId != null &&
-                                        state.addressId !=
-                                            addressModel.addresses![index].id)
-                                    ? AppColors.GREY_LIGHT_COLOR
-                                    : AppColors.PRIMARY_COLOR_LIGHT,
-                                onPress: () {
-                                  checkoutCubit.chooseAddresses(
-                                      addressModel.addresses![index].id!);
-                                },
-                              ),
-                              if (state.addressId != null &&
-                                  state.addressId !=
-                                      addressModel.addresses![index].id)
-                                Positioned(
-                                  top: 0,
-                                  bottom: 0,
-                                  left: 0,
-                                  right: 0,
-                                  child: CustomPaint(
-                                      foregroundPainter: DiagonalPainter()),
-                                ),
-                              if (state.addressId != null &&
-                                  state.addressId ==
-                                      addressModel.addresses![index].id)
-                                const PositionedDirectional(
-                                  top: 12.0,
-                                  start: 32.0,
-                                  child: Icon(
-                                    Icons.check_circle_outline_outlined,
-                                    color: AppColors.PRIMARY_COLOR_DARK,
-                                    size: 24.0,
-                                  ),
-                                )
-                            ],
+                          return AddressItemWidget(
+                            address: addressModel.addresses![index],
+                            // borderColor: (state.addressId != null &&
+                            //         state.addressId !=
+                            //             addressModel.addresses![index].id)
+                            //     ? AppColors.PRIMARY_COLOR_DARK
+                            //     : AppColors.PRIMARY_COLOR_LIGHT,
+                            // backgroundColor: (state.addressId != null &&
+                            //         state.addressId !=
+                            //             addressModel.addresses![index].id)
+                            //     ? AppColors.GREY_LIGHT_COLOR
+                            //     : AppColors.PRIMARY_COLOR_LIGHT,
+                            onPress: () {
+                              checkoutCubit.chooseAddresses(
+                                  addressModel.addresses![index].id!);
+                            },
+                            inCheckOut: true,
+                            isSelected: state.addressId != null &&
+                                state.addressId ==
+                                    addressModel.addresses![index].id,
                           );
                         },
                       );
