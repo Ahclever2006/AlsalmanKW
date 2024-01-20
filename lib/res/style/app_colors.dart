@@ -9,7 +9,7 @@ abstract class AppColors {
   static const ACCENT_COLOR = Color(0xFF002140);
   static const BACKGROUND_COLOR = Color(0xFFFFF9EE);
   static const GREY_LIGHT_COLOR = Color(0xFFF3F3F3);
-  static const GREY_NORMAL_COLOR = Color(0xFFB9B9B9);
+  static const GREY_NORMAL_COLOR = Color(0xFFD7E0E5);
   static const GREY_DARK_COLOR = Color(0xFF707070);
   static const GREY_BORDER_COLOR = Color(0xFFDEDEDE);
   static const WHATS_APP_COLOR = Color(0xFF55CD6C);
@@ -17,9 +17,6 @@ abstract class AppColors {
   static const CUSTOM_APP_PAGE_COLOR = Color(0xFFE9F4FC);
   static const SEARCH_ICON_CONTAINER_COLOR = Color(0xFFE8F1F2);
   static const ERROR_COLOR = Color(0xFFD54444);
-
-
-  
 
   static const AUTH_CONTAINER_COLOR = Colors.white;
 

@@ -1,3 +1,5 @@
+import 'package:flutter_svg/svg.dart';
+
 import '../../../../core/data/models/schedule_delivery_shipping_times_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -50,18 +52,34 @@ class ShippingMethodItemWidget extends StatelessWidget {
             decoration: BoxDecoration(
               color: backgroundColor,
               border: Border.all(color: borderColor!),
-              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+              borderRadius: const BorderRadius.all(Radius.circular(20.0)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TitleText(text: shippingMethod.title ?? ''),
+                Row(
+                  children: [
+                    if (isSelected)
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(end: 16.0),
+                        child: SvgPicture.asset(
+                            'lib/res/assets/selected_icon.svg'),
+                      ),
+                    Expanded(
+                        child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TitleText(text: shippingMethod.title ?? ''),
+                        if (shippingMethod.description != null)
+                          SubtitleText(text: shippingMethod.description ?? ''),
+                      ],
+                    )),
+                    TitleText(
+                        text:
+                            '${shippingMethod.price!.toStringAsFixed(3)} ${'currency'.tr()}'),
+                  ],
+                ),
                 const SizedBox(height: 12.0),
-                TitleText(
-                    text:
-                        '${shippingMethod.price!.toStringAsFixed(3)} ${'currency'.tr()}'),
-                const SizedBox(height: 12.0),
-                SubtitleText(text: shippingMethod.description ?? ''),
                 if (shippingMethod.type == 'DateAndTime' &&
                     isSelected &&
                     dates != null &&
@@ -80,19 +98,8 @@ class ShippingMethodItemWidget extends StatelessWidget {
             ),
           ),
         ),
-        PositionedDirectional(top: 16.0, end: 32.0, child: _buildCheckMark())
       ],
     );
-  }
-
-  Widget _buildCheckMark() {
-    return isSelected
-        ? const Icon(
-            Icons.check_circle_outline_outlined,
-            color: AppColors.PRIMARY_COLOR_DARK,
-            size: 40.0,
-          )
-        : const SizedBox();
   }
 }
 

@@ -284,10 +284,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                 time.id!, time.fullTimeText!);
                           },
                           borderColor: !isAvailable
-                              ? AppColors.PRIMARY_COLOR_DARK
+                              ? AppColors.GREY_NORMAL_COLOR
                               : AppColors.PRIMARY_COLOR_LIGHT,
-                          backgroundColor: !isAvailable
-                              ? AppColors.GREY_LIGHT_COLOR
+                          backgroundColor: (!isAvailable || !isChecked)
+                              ? AppColors.GREY_NORMAL_COLOR
                               : AppColors.PRIMARY_COLOR_LIGHT,
                           onPress: () async {
                             if (e.isAvailable!) {
