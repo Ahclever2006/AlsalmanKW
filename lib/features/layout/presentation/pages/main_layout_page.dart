@@ -143,9 +143,8 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
               final authCubit = context.read<AuthCubit>();
               authCubit.getUserData();
             }
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            return ListView(
+              padding: EdgeInsets.zero,
               children: [
                 _buildLogo(),
                 if (!isLoggedIn) _buildGuestUserSection(context),
