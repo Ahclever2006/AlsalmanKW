@@ -1,9 +1,6 @@
-import '../../../../core/enums/text_size.dart';
 import '../../../../shared_widgets/other/show_register_first_snack_bar.dart';
 
 import '../../../../api_end_point.dart';
-import '../../../../core/enums/text_position.dart';
-import '../../../../core/utils/hex_color_helper.dart';
 import '../../../../core/utils/media_query_values.dart';
 
 import '../../../../shared_widgets/dialogs/image_interactive_dialog.dart';
@@ -302,31 +299,68 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     final cubit = context.read<ProductDetailsCubit>();
     var width = context.width;
     if (images == null) return const SizedBox();
-    return Stack(
-      clipBehavior: Clip.none,
+    return Column(
       children: [
-        CarouselSlider.builder(
-          options: CarouselOptions(
-            height: width - 16.0,
-            autoPlay: false,
-            viewportFraction: 1,
-            onPageChanged: (index, reason) {
-              cubit.autoChangedCarouselIndex(index);
-              cubit.changeImageId(pictureModel![index].id);
-            },
-          ),
-          carouselController: imageController,
-          itemCount: images.length,
-          itemBuilder: (context, index, realIndex) {
-            String? image;
-            if (images.isNotEmpty == true)
-              image = images[cubit.state.bannerIndex];
-            return _buildImage(width, image, images, cubit.state.bannerIndex);
-          },
+        Stack(
+          clipBehavior: Clip.none,
+          children: [
+            CarouselSlider.builder(
+              options: CarouselOptions(
+                height: width - 16.0,
+                autoPlay: false,
+                viewportFraction: 1,
+                onPageChanged: (index, reason) {
+                  cubit.autoChangedCarouselIndex(index);
+                  cubit.changeImageId(pictureModel![index].id);
+                },
+              ),
+              carouselController: imageController,
+              itemCount: images.length,
+              itemBuilder: (context, index, realIndex) {
+                String? image;
+                if (images.isNotEmpty == true)
+                  image = images[cubit.state.bannerIndex];
+                return _buildImage(
+                    width, image, images, cubit.state.bannerIndex);
+              },
+            ),
+            _buildBackButton(context),
+            _buildFavButton(isLoggedIn, context),
+            _buildShareButton(context),
+          ],
         ),
-        _buildBackButton(context),
-        _buildFavButton(isLoggedIn, context),
-        _buildShareButton(context),
+        if (images.length > 1)
+          Container(
+            margin: const EdgeInsets.only(bottom: 16.0),
+            height: 80.0,
+            child: ListView.builder(
+              itemCount: images.length,
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (BuildContext context, int index) {
+                return InkWell(
+                  onTap: () {
+                    imageController.jumpToPage(index);
+                  },
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                    ),
+                    margin: const EdgeInsetsDirectional.only(end: 4.0),
+                    child: CustomCachedNetworkImage(
+                      imageUrl: images[index],
+                      fit: BoxFit.cover,
+                      width: 80.0,
+                      height: 80.0,
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(15.0)),
+                    ),
+                  ),
+                );
+              },
+            ),
+          )
       ],
     );
   }
