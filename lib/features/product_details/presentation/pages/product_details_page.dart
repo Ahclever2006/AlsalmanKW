@@ -82,7 +82,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         ..getProductDetailsConditionalAttributesData(widget.productId)
         ..getProductDetailsCombinationAttributesData(widget.productId),
       child: CustomAppPage(
-        //safeTop: true,
         safeBottom: false,
         onWillPop: widget.isFromFavPage
             ? () async {
@@ -95,18 +94,14 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           body: BlocBuilder<ProductDetailsCubit, ProductDetailsState>(
               builder: (context, state) {
             final productDetailsCubit = context.read<ProductDetailsCubit>();
-            final vendorId =
-                state.productDetailsData?.productDetailsModel?.vendorModel?.id;
 
             return SizedBox(
               height: context.height,
               child: Column(
                 children: [
-                  if (vendorId == 33 || vendorId == 35)
-                    _buildImagesSection(isLoggedIn, vendorId == 35),
                   Expanded(
                     child: _buildWholeBodySection(
-                        productDetailsCubit, vendorId, isLoggedIn, context),
+                        productDetailsCubit, isLoggedIn, context),
                   ),
                 ],
               ),
@@ -118,7 +113,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   }
 
   Widget _buildWholeBodySection(ProductDetailsCubit productDetailsCubit,
-      int? vendorId, bool isLoggedIn, BuildContext context) {
+      bool isLoggedIn, BuildContext context) {
     return RefreshIndicator(
       onRefresh: () => productDetailsCubit.refresh(widget.productId),
       child: Stack(
@@ -129,8 +124,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             physics: const AlwaysScrollableScrollPhysics(),
             child: Column(
               children: [
-                if (vendorId != 33 && vendorId != 35)
-                  _buildImagesSection(isLoggedIn, false),
+                _buildImagesSection(isLoggedIn, false),
                 BlocConsumer<ProductDetailsCubit, ProductDetailsState>(
                   listener: (context, state) {
                     const snackBarMargin =
@@ -201,169 +195,14 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               .indexWhere((e) => e.id == state.imageId);
           imageController.jumpToPage(pageNumber);
         }
-        int? textPosition;
-        int? textSize;
-        String? fontFamily;
 
-        var productDetailsModelClass =
-            state.productDetailsData?.productDetailsModel;
-        if (productDetailsModelClass?.hasSpacialAttributes == true) {
-          textPosition = productDetailsModelClass?.textPosition;
-          textSize = productDetailsModelClass?.fontSize;
-          fontFamily = productDetailsModelClass?.fontName;
-        }
-
-        double fontSize = textSize == TextSizeEnum.Small.index
-            ? 14
-            : textSize == TextSizeEnum.Medium.index
-                ? 18
-                : 24;
-
-        var isTextVertical = [
-          TextPositionEnum.TopVertical.index,
-          TextPositionEnum.BottomVertical.index,
-          TextPositionEnum.CenterVertical.index,
-          TextPositionEnum.TopLeftVertical.index,
-          TextPositionEnum.TopRightVertical.index,
-          TextPositionEnum.BottomLeftVertical.index,
-          TextPositionEnum.BottomRightVertical.index,
-          TextPositionEnum.CenterRightVertical.index,
-          TextPositionEnum.CenterLeftVertical.index,
-        ].contains(textPosition);
-
-        var isTextPositionTop = [
-          TextPositionEnum.TopVertical.index,
-          TextPositionEnum.TopHorizontal.index,
-          TextPositionEnum.TopLeftHorizontal.index,
-          TextPositionEnum.TopLeftVertical.index,
-          TextPositionEnum.TopRightHorizontal.index,
-          TextPositionEnum.TopRightVertical.index,
-        ].contains(textPosition);
-
-        var isTextPositionBottom = [
-          TextPositionEnum.BottomHorizontal.index,
-          TextPositionEnum.BottomLeftHorizontal.index,
-          TextPositionEnum.BottomLeftVertical.index,
-          TextPositionEnum.BottomRightHorizontal.index,
-          TextPositionEnum.BottomRightVertical.index,
-          TextPositionEnum.BottomVertical.index,
-        ].contains(textPosition);
-
-        var isTextPositionCenter = [
-          TextPositionEnum.CenterHorizontal.index,
-          TextPositionEnum.CenterLeftHorizontal.index,
-          TextPositionEnum.CenterLeftVertical.index,
-          TextPositionEnum.CenterRightHorizontal.index,
-          TextPositionEnum.CenterRightVertical.index,
-          TextPositionEnum.CenterVertical.index,
-        ].contains(textPosition);
-
-        var isTextPositionLeft = [
-          TextPositionEnum.TopLeftHorizontal.index,
-          TextPositionEnum.TopLeftVertical.index,
-          TextPositionEnum.BottomLeftHorizontal.index,
-          TextPositionEnum.BottomLeftVertical.index,
-          TextPositionEnum.CenterLeftHorizontal.index,
-          TextPositionEnum.CenterLeftVertical.index,
-        ].contains(textPosition);
-
-        var topPosition = textPosition != null
-            ? isTextPositionTop
-                ? context.toPadding / 2
-                : context.width * 0.40
-            : context.width * 0.33;
-
-        var leftPosition = textPosition != null
-            ? isTextPositionLeft
-                ? context.width / 1.8
-                : context.width / 2.5
-            : context.width / 2.5;
-
-        var rightPosition = textPosition != null
-            ? isTextPositionLeft
-                ? context.width / 3
-                : context.width / 2.5
-            : context.width / 2.5;
-
-        return Stack(
-          children: [
-            _buildBanners(
-                context,
-                images,
-                state.productDetailsData?.productDetailsModel?.pictureModels,
-                isLoggedIn),
-            if (state.bannerIndex == 0 || showTextOnAllImages)
-              Positioned(
-                top: topPosition,
-                bottom: 0,
-                left: leftPosition,
-                right: rightPosition,
-                child: BlocBuilder<ProductDetailsCubit, ProductDetailsState>(
-                  builder: (context, state) {
-                    var text = state.text;
-                    var isDotsBetweenInitials =
-                        state.isDotsBetweenInitials ?? false;
-                    text = _addDotsBetweenInitialIfNeeded(
-                        isDotsBetweenInitials, text);
-                    var child = IgnorePointer(
-                      child: Text(
-                        text ?? '',
-                        style: TextStyle(
-                          fontFamily: state.fontFamily ??
-                              getFontFamily(fontFamily ?? '') ??
-                              'Roboto',
-                          fontWeight: FontWeight.bold,
-                          fontSize: state.fontSize ?? fontSize,
-                          color: state.textColor != null
-                              ? HexColor(state.textColor!)
-                              : Colors.red,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    );
-
-                    return isTextVertical
-                        ? Transform(
-                            alignment: isTextPositionTop
-                                ? Alignment.topRight
-                                : isTextPositionCenter
-                                    ? Alignment.topCenter
-                                    : Alignment.center,
-                            transform: Matrix4.rotationZ(-90 * 3.1415927 / 180),
-                            child: child,
-                          )
-                        : child;
-                  },
-                ),
-              )
-          ],
-        );
+        return _buildBanners(
+            context,
+            images,
+            state.productDetailsData?.productDetailsModel?.pictureModels,
+            isLoggedIn);
       },
     );
-  }
-
-  String? _addDotsBetweenInitialIfNeeded(
-      bool isDotsBetweenInitials, String? text) {
-    if (isDotsBetweenInitials == true && text != null) {
-      text = text.split('').toList().join('.').toString();
-    }
-    return text;
-  }
-
-  String? getFontFamily(String item) {
-    switch (item.toUpperCase()) {
-      case 'LATO':
-        return 'Lato';
-
-      case 'CAIRO':
-        return 'Cairo';
-
-      case 'ROBOTO':
-        return 'Roboto';
-
-      default:
-        return null;
-    }
   }
 
   Widget _buildBody(
@@ -411,18 +250,22 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   Widget _buildShareButton(BuildContext context) {
     final cubit = context.read<ProductDetailsCubit>();
 
-    return ShareButton(onShareTap: () {
-      final box = context.findRenderObject() as RenderBox?;
+    return PositionedDirectional(
+      top: 40.0,
+      end: 24.0,
+      child: ShareButton(onShareTap: () {
+        final box = context.findRenderObject() as RenderBox?;
 
-      final seName =
-          cubit.state.productDetailsData!.productDetailsModel!.seName!;
-      final link = '${ApiEndPoint.domainUrl}/$seName';
+        final seName =
+            cubit.state.productDetailsData!.productDetailsModel!.seName!;
+        final link = '${ApiEndPoint.domainUrl}/$seName';
 
-      cubit.shareProduct(
-        box == null ? null : box.localToGlobal(Offset.zero) & box.size,
-        link,
-      );
-    });
+        cubit.shareProduct(
+          box == null ? null : box.localToGlobal(Offset.zero) & box.size,
+          link,
+        );
+      }),
+    );
   }
 
   Widget _buildAttributes(List<ProductAttribute>? attributes) {
@@ -459,36 +302,31 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     final cubit = context.read<ProductDetailsCubit>();
     var width = context.width;
     if (images == null) return const SizedBox();
-    return Column(
+    return Stack(
+      clipBehavior: Clip.none,
       children: [
-        Stack(
-          clipBehavior: Clip.none,
-          children: [
-            CarouselSlider.builder(
-              options: CarouselOptions(
-                height: width - 16.0,
-                autoPlay: false,
-                viewportFraction: 1,
-                onPageChanged: (index, reason) {
-                  cubit.autoChangedCarouselIndex(index);
-                  cubit.changeImageId(pictureModel![index].id);
-                },
-              ),
-              carouselController: imageController,
-              itemCount: images.length,
-              itemBuilder: (context, index, realIndex) {
-                String? image;
-                if (images.isNotEmpty == true)
-                  image = images[cubit.state.bannerIndex];
-                return _buildImage(
-                    width, image, images, cubit.state.bannerIndex);
-              },
-            ),
-            _buildBackButton(context),
-            _buildFavButton(isLoggedIn, context),
-            _buildDots(cubit.state.bannerIndex, images.length),
-          ],
+        CarouselSlider.builder(
+          options: CarouselOptions(
+            height: width - 16.0,
+            autoPlay: false,
+            viewportFraction: 1,
+            onPageChanged: (index, reason) {
+              cubit.autoChangedCarouselIndex(index);
+              cubit.changeImageId(pictureModel![index].id);
+            },
+          ),
+          carouselController: imageController,
+          itemCount: images.length,
+          itemBuilder: (context, index, realIndex) {
+            String? image;
+            if (images.isNotEmpty == true)
+              image = images[cubit.state.bannerIndex];
+            return _buildImage(width, image, images, cubit.state.bannerIndex);
+          },
         ),
+        _buildBackButton(context),
+        _buildFavButton(isLoggedIn, context),
+        _buildShareButton(context),
       ],
     );
   }
@@ -496,14 +334,15 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   Widget _buildFavButton(bool isLoggedIn, BuildContext context) {
     final cubit = context.read<ProductDetailsCubit>();
     return PositionedDirectional(
-      top: 40.0,
+      bottom: 40.0,
       end: 24.0,
       child: BlocBuilder<ProductDetailsCubit, ProductDetailsState>(
         builder: (context, state) {
           return Container(
-            padding: const EdgeInsets.all(4.0),
             decoration: const BoxDecoration(
-                shape: BoxShape.circle, color: Colors.white),
+              color: AppColors.PRIMARY_COLOR_LIGHT,
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            ),
             child: FavoriteButton(
               key: ValueKey(isFav.toString()),
               initial: isFav,
@@ -550,8 +389,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         onTap: () => NavigatorHelper.of(context).pop(isFav),
         child: Container(
           padding: const EdgeInsets.all(4.0),
-          decoration:
-              const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+          decoration: const BoxDecoration(
+              shape: BoxShape.circle, color: AppColors.PRIMARY_COLOR_LIGHT),
           child: const Icon(
             Icons.chevron_left,
             size: 36.0,
@@ -691,16 +530,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
       required num price,
       required String? vendor}) {
     return [
-      Row(
-        children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: TitleText.large(text: name ?? ''),
-            ),
-          ),
-          _buildShareButton(context),
-        ],
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: TitleText.large(text: name ?? ''),
       ),
       const SizedBox(height: 8.0),
       Padding(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../core/utils/type_defs.dart';
-import '../../res/style/app_colors.dart';
 
 class FavoriteButton extends StatefulWidget {
   const FavoriteButton({
@@ -35,12 +34,11 @@ class _FavoriteButtonState extends State<FavoriteButton> {
   Widget build(BuildContext context) {
     return InkWell(
       child: Container(
-        padding: const EdgeInsets.all(6.0),
+        padding: const EdgeInsets.all(12.0),
         child: SvgPicture.asset(
           _isFavorite
-              ? 'lib/res/assets/heart_fill_icon.svg'
+              ? 'lib/res/assets/fav_icon.svg'
               : 'lib/res/assets/heart_icon.svg',
-          color: _isFavorite ? null : AppColors.PRIMARY_COLOR,
         ),
       ),
       onTap: _isLoading

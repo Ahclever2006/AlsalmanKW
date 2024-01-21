@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../core/utils/type_defs.dart';
 import '../../res/style/app_colors.dart';
@@ -23,12 +24,13 @@ class _ShareButtonState extends State<ShareButton> {
   Widget build(BuildContext context) {
     return InkWell(
       child: Container(
-          padding: const EdgeInsets.all(6.0),
-          child: const Icon(
-            Icons.share,
-            color: AppColors.PRIMARY_COLOR_DARK,
-            size: 30.0,
-          )),
+        decoration: const BoxDecoration(
+          color: AppColors.PRIMARY_COLOR_LIGHT,
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        ),
+        padding: const EdgeInsets.all(12.0),
+        child: SvgPicture.asset('lib/res/assets/share_icon.svg'),
+      ),
       onTap: _isLoading
           ? () {}
           : () {

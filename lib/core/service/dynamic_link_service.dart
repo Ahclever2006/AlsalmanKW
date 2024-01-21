@@ -65,9 +65,8 @@ class DynamicLinkServiceImpl implements DynamicLinkService {
     String? imageUrl,
   }) async {
     final picture = imageUrl;
-    final url = Uri.parse('https://square-upgrade.k-pack.online/Product/$id');
-    final fallbackUrl =
-        Uri.parse('https://square-upgrade.k-pack.online/$seName');
+    final url = Uri.parse('https://alsalmankw.k-pack.online/Product/$id');
+    final fallbackUrl = Uri.parse('https://alsalmankw.k-pack.online/$seName');
     final parameters = DynamicLinkParameters(
       uriPrefix: 'https://alsalmankw.page.link',
       link: url,
@@ -77,7 +76,7 @@ class DynamicLinkServiceImpl implements DynamicLinkService {
       ),
       iosParameters: IOSParameters(
         fallbackUrl: fallbackUrl,
-        appStoreId: '6448727597',
+        appStoreId: '6476140940',
         bundleId: 'com.baramjk.alsalman',
       ),
       socialMetaTagParameters: SocialMetaTagParameters(
