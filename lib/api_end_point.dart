@@ -148,6 +148,7 @@ abstract class ApiEndPoint {
   static const confirmOrder =
       '$_REQUEST_URL/scheduledelivery/order/confirmorder';
   static const reOrder = '$_REQUEST_URL/order/reorder/';
+  static const getOrderPDF = '$_REQUEST_URL/order/getpdfinvoice/';
   static const createOrderShareLink =
       '$_REQUEST_URL/orderpaymentlink/createpaymenturl';
   static const deleteItemCart =

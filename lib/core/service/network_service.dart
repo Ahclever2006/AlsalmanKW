@@ -59,7 +59,8 @@ abstract class NetworkService {
 
   Future<Response> downloadFile(
     String apiBaseUrl,
-    String savePath, {
+    String savePath,
+    ResponseType responseType, {
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
   });
@@ -428,11 +429,13 @@ class NetworkServiceImpl implements NetworkService {
   @override
   Future<Response> downloadFile(
     String apiBaseUrl,
-    String savePath, {
+    String savePath,
+    ResponseType responseType, {
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
   }) {
-    return _dio.download(apiBaseUrl, savePath);
+    return _dio.download(apiBaseUrl, savePath,
+        options: Options(headers: headers, responseType: responseType));
   }
 
   @override

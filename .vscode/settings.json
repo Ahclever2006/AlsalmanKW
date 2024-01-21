@@ -39,6 +39,7 @@
         "getbrandsbycategoryids",
         "getfavoriteproducts",
         "gethomepagecategories",
+        "getpdfinvoice",
         "getproductcombinations",
         "getproductdetails",
         "getproducts",

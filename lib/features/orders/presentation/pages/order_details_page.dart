@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import '../../../../core/utils/media_query_values.dart';
 
 import '../../../../core/utils/navigator_helper.dart';
@@ -27,11 +26,9 @@ class OrderDetailsPage extends StatefulWidget {
   const OrderDetailsPage({
     Key? key,
     required this.orderId,
-    this.paymentStatus,
   }) : super(key: key);
 
   final int orderId;
-  final bool? paymentStatus;
 
   @override
   State<OrderDetailsPage> createState() => _OrderDetailsPageState();
@@ -52,13 +49,6 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
           body: Column(
             children: [
               InnerPagesAppBar(label: 'order_details'.tr().toUpperCase()),
-              if (widget.paymentStatus != null)
-                SvgPicture.asset(
-                  widget.paymentStatus == true
-                      ? 'lib/res/assets/payment_success_icon.svg'
-                      : 'lib/res/assets/payment_fail_icon.svg',
-                  height: 100.0,
-                ),
               Expanded(
                 child: Builder(builder: (context) {
                   final orderDetailsCubit = context.read<OrderDetailsCubit>();
@@ -112,38 +102,30 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (widget.paymentStatus == null)
-          SvgPicture.asset(
-            orderDetailsModel!.orderStatus == 'Complete'
-                ? 'lib/res/assets/payment_success_icon.svg'
-                : 'lib/res/assets/order_pending_icon.svg',
-            height: 100.0,
-          ),
         _buildTopSection(orderDetailsModel),
-        _buildDivider(),
         ..._buildDeliveryAddressSection(orderDetailsModel!.shippingAddress),
-        _buildDivider(),
         ..._buildShippingMethodSection(orderDetailsModel.shippingMethod),
-        _buildDivider(),
         ..._buildOrderSummary(context, orderDetailsModel.items),
-        if (widget.paymentStatus == null)
-          DefaultButton(
-              margin: EdgeInsets.symmetric(
-                  horizontal: context.width * 0.15, vertical: 16.0),
-              label: 're_order'.tr(),
-              onPressed: () => orderCubit.reOrder(orderDetails.data!.id!))
-        else
-          _buildGoToHomeButton(context)
+        DefaultButton(
+            margin: EdgeInsets.symmetric(
+                horizontal: context.width * 0.15, vertical: 16.0),
+            label: 're_order'.tr(),
+            onPressed: () => orderCubit.reOrder(orderDetails.data!.id!)),
+        DefaultButton(
+            margin: EdgeInsets.symmetric(
+                horizontal: context.width * 0.15, vertical: 16.0),
+            label: 'share'.tr(),
+            backgroundColor: AppColors.PRIMARY_COLOR_DARK,
+            onPressed: () {
+              final box = context.findRenderObject() as RenderBox?;
+              return orderCubit.getPdfInvoice(
+                  widget.orderId,
+                  box == null
+                      ? null
+                      : box.localToGlobal(Offset.zero) & box.size);
+            })
       ],
     );
-  }
-
-  Widget _buildGoToHomeButton(BuildContext context) {
-    return DefaultButton(
-        margin: EdgeInsets.symmetric(
-            horizontal: context.width * 0.15, vertical: 16.0),
-        label: 'home_page'.tr(),
-        onPressed: NavigatorHelper.of(context).pop);
   }
 
   List<Widget> _buildOrderSummary(
@@ -180,7 +162,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
     return Container(
       height: 156.0,
       decoration: const BoxDecoration(
-        color: AppColors.SECONDARY_COLOR,
+        color: AppColors.PRIMARY_COLOR_LIGHT,
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
       ),
       margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -223,14 +205,12 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
     );
   }
 
-  Widget _buildDivider() {
-    return const Divider(
-      color: AppColors.PRIMARY_COLOR_DARK,
-    );
-  }
-
   Widget _buildTopSection(Data? order) {
     return Container(
+      decoration: const BoxDecoration(
+        color: AppColors.PRIMARY_COLOR_LIGHT,
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+      ),
       margin: const EdgeInsets.symmetric(horizontal: 16.0),
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
       child: Column(
@@ -267,7 +247,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
       ),
       AddressItemWidget(
         address: shippingAddress!,
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColors.PRIMARY_COLOR_LIGHT,
         borderColor: Colors.transparent,
       )
     ];
@@ -279,8 +259,13 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
         padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: TitleText(text: 'shipping_method'),
       ),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      Container(
+        decoration: const BoxDecoration(
+          color: AppColors.PRIMARY_COLOR_LIGHT,
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        ),
+        padding: const EdgeInsets.all(16.0),
+        margin: const EdgeInsets.symmetric(horizontal: 16.0),
         child: TitleText.medium(text: shippingMethod ?? ''),
       )
     ];

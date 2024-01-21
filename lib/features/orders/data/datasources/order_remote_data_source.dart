@@ -1,8 +1,14 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
+
 import '/api_end_point.dart';
 import '/core/exceptions/request_exception.dart';
 import '/core/service/network_service.dart';
 import '../models/my_orders_model.dart';
 import '../models/order_details_model.dart';
+
+import 'package:path_provider/path_provider.dart';
 
 abstract class OrderRemoteDataSource {
   Future<MyOrdersModel?> getCurrentOrders({
@@ -12,6 +18,8 @@ abstract class OrderRemoteDataSource {
 
   Future<OrderDetailsModel?> getOrderDetails(int id);
   Future<void> reOrder(int id);
+
+  Future<String> getPdfInvoice(int id);
 }
 
 class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
@@ -62,5 +70,21 @@ class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
       if (resultStatus != null && !resultStatus)
         throw RequestException(result['Errors']);
     });
+  }
+
+  @override
+  Future<String> getPdfInvoice(int id) async {
+    final url = ApiEndPoint.getOrderPDF + id.toString();
+    final Directory directory = await getApplicationDocumentsDirectory();
+    final String filePath = '${directory.path}/Baqah/orderDetails$id.pdf';
+
+    final headers = await _networkService.getDefaultHeaders();
+
+    headers['Keep-Alive'] = 'true';
+
+    await _networkService.downloadFile(url, filePath, ResponseType.bytes,
+        headers: headers);
+
+    return filePath;
   }
 }

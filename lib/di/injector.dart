@@ -1,3 +1,5 @@
+import '../core/data/datasources/file_local_data_source.dart';
+import '../core/data/datasources/file_remote_data_source.dart';
 import '../features/account_tab/presentation/blocs/contact_us_cubit/contact_us_cubit.dart';
 import '../features/intro/data/datasources/intro_local_data_source.dart';
 import '../features/intro/data/datasources/intro_remote_data.dart';
@@ -15,7 +17,6 @@ import '../core/service/app_info_service.dart';
 import '../core/service/cache_service.dart';
 import '../core/service/dynamic_link_service.dart';
 import '../core/service/launcher_service.dart';
-import '../core/service/my_fatoorah_service.dart';
 import '../core/service/network_service.dart';
 import '../core/service/notification_service.dart';
 import '../core/service/share_service.dart';
@@ -267,14 +268,15 @@ class Injector {
   OrderCubit get orderCubit => OrderCubit(orderRepository);
 
   OrderRepository get orderRepository => _flyweightMap['orderRepository'] ??=
-      OrderRepositoryImpl(orderRemoteDataSource);
+      OrderRepositoryImpl(orderRemoteDataSource, fileLocalDataSource);
 
   OrderRemoteDataSource get orderRemoteDataSource =>
       _flyweightMap['orderRemoteDataSource'] ??=
           OrderRemoteDataSourceImpl(networkService);
 
   //===================[ORDER_DETAILS_CUBIT]===================
-  OrderDetailsCubit get orderDetailsCubit => OrderDetailsCubit(orderRepository);
+  OrderDetailsCubit get orderDetailsCubit =>
+      OrderDetailsCubit(orderRepository, shareService);
 
   //===================[ADDRESS_CUBIT]===================
   AddressCubit get addressCubit =>
@@ -423,4 +425,10 @@ class Injector {
   ExternalLoginDataSource get googleExternalDataSource =>
       _flyweightMap['googleExternalDataSource'] ??=
           GoogleExternalLoginDataSourceImpl();
+
+  FileRemoteDataSource get fileRemoteDataSource =>
+      _flyweightMap['fileRemoteDataSource'] ??=
+          FileRemoteDataSourceImpl(networkService);
+  FileLocalDataSource get fileLocalDataSource =>
+      _flyweightMap['fileLocalDataSource'] ??= FileLocalDataSourceImpl();
 }
