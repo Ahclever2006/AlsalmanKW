@@ -37,6 +37,7 @@ class ProductDetailsState {
   final double? fontSize;
   final int? imageId;
   final bool? isDotsBetweenInitials;
+  final bool? isBookingFeatureEnable;
   final int? timeId;
   final String? date;
   final List<TimesOptionModel>? timesList;
@@ -58,6 +59,7 @@ class ProductDetailsState {
     this.fontSize,
     this.imageId,
     this.isDotsBetweenInitials,
+    this.isBookingFeatureEnable = false,
     this.timeId,
     this.date,
     this.timesList,
@@ -81,6 +83,7 @@ class ProductDetailsState {
         other.fontSize == fontSize &&
         other.imageId == imageId &&
         other.isDotsBetweenInitials == isDotsBetweenInitials &&
+        other.isBookingFeatureEnable == isBookingFeatureEnable &&
         other.date == date &&
         other.timeId == timeId &&
         listEquals(other.timesList, timesList) &&
@@ -109,6 +112,7 @@ class ProductDetailsState {
       fontSize.hashCode ^
       imageId.hashCode ^
       isDotsBetweenInitials.hashCode ^
+      isBookingFeatureEnable.hashCode ^
       timeId.hashCode ^
       errorMessage.hashCode ^
       timesList.hashCode ^
@@ -131,6 +135,7 @@ class ProductDetailsState {
     double? fontSize,
     int? imageId,
     bool? isDotsBetweenInitials,
+    bool? isBookingFeatureEnable,
     int? timeId,
     String? date,
     List<TimesOptionModel>? timesList,
@@ -156,6 +161,8 @@ class ProductDetailsState {
       imageId: imageId ?? this.imageId,
       isDotsBetweenInitials:
           isDotsBetweenInitials ?? this.isDotsBetweenInitials,
+      isBookingFeatureEnable:
+          isBookingFeatureEnable ?? this.isBookingFeatureEnable,
       timeId: timeId ?? this.timeId,
       date: date ?? this.date,
       timesList: timesList ?? this.timesList,

@@ -1,9 +1,11 @@
+import '../../../../core/data/models/times_options_model.dart';
 import '../../../../shared_widgets/other/show_register_first_snack_bar.dart';
 
 import '../../../../api_end_point.dart';
 import '../../../../core/utils/media_query_values.dart';
 
 import '../../../../shared_widgets/dialogs/image_interactive_dialog.dart';
+import '../../../../shared_widgets/stateless/empty_page_message.dart';
 import '../../../cart_tab/presentation/cubit/cart_cubit.dart';
 import '../../../../shared_widgets/other/show_size_guide_bottom_sheet.dart';
 
@@ -224,11 +226,13 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           price: productPrice,
         ),
         _buildShortDescription(context, productDetailsModel.shortDescription),
-        ..._buildDescription(context, productDetailsModel.fullDescription),
         if (productDetailsModel.isDownload == true)
           ..._buildSizeGuide(context, productDetailsModel.downloadUrl),
-        _buildAttributes(productDetailsModel.productAttributes),
+        _buildAttributes(context, productDetailsModel.productAttributes),
+        _buildDatePicker(),
+        _buildTimesList(),
         _buildConditionalAttributes(conditionalAttributes),
+        ..._buildDescription(context, productDetailsModel.fullDescription),
         if (productDetailsModel.hasSampleDownload!)
           _buildDownLoadProductSample(context),
         if (productDetailsModel.customProperties?.relatedProducts?.isNotEmpty ==
@@ -265,12 +269,18 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     );
   }
 
-  Widget _buildAttributes(List<ProductAttribute>? attributes) {
+  Widget _buildAttributes(
+      BuildContext context, List<ProductAttribute>? attributes) {
+    var cubit = context.read<ProductDetailsCubit>();
+
     attributes?.forEach((element) {
       if (element.textPrompt == 'Select Time')
         _timeAttributeId = element.id;
-      else if (element.textPrompt == 'Select Date')
+      else if (element.textPrompt == 'Select Date') {
         _dateAttributeId = element.id;
+        if (cubit.state.isBookingFeatureEnable != true)
+          cubit.setBookingFeatureEnable();
+      }
     });
     return AttributesListWidget(
         attributes: attributes!
@@ -519,10 +529,28 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           return AddToCartButton(
             initialQuantity: 1,
             onAddPress: (quantity) {
-              return cubit
-                  .addProductToCart(widget.productId.toString(), quantity,
-                      cubit.state.selectedAttributesList ?? {})
-                  .whenComplete(() => cartCubit.loadCart());
+              if (cubit.state.isBookingFeatureEnable == true) {
+                if (cubit.state.date != null &&
+                    (cubit.state.timeId != null && cubit.state.timeId != -1)) {
+                  cubit.addToAttributeList({
+                    'product_attribute_$_dateAttributeId':
+                        cubit.state.date!.split(' ').first,
+                    'product_attribute_$_timeAttributeId':
+                        cubit.state.timeId.toString()
+                  });
+
+                  return cubit
+                      .addProductToCart(widget.productId.toString(), quantity,
+                          cubit.state.selectedAttributesList ?? {})
+                      .whenComplete(() => cartCubit.loadCart());
+                } else
+                  showSnackBar(context, message: 'choose_date_time');
+              } else {
+                return cubit
+                    .addProductToCart(widget.productId.toString(), quantity,
+                        cubit.state.selectedAttributesList ?? {})
+                    .whenComplete(() => cartCubit.loadCart());
+              }
             },
           );
         },
@@ -670,6 +698,130 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         color: AppColors.PRIMARY_COLOR_DARK,
       )
     ];
+  }
+
+  Widget _buildDatePicker() {
+    return BlocBuilder<ProductDetailsCubit, ProductDetailsState>(
+      builder: (context, state) {
+        if (state.isBookingFeatureEnable == false)
+          return const SizedBox();
+        else
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const TitleText(
+                  text: 'select_date',
+                  color: AppColors.PRIMARY_COLOR_DARK,
+                ),
+                InkWell(
+                  onTap: () => showTheDatePicker(context),
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(vertical: 16.0),
+                    padding: const EdgeInsets.all(12.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(15.0)),
+                      border: Border.all(color: AppColors.PRIMARY_COLOR),
+                    ),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset('lib/res/assets/calendar_icon.svg'),
+                        Expanded(
+                          child: TitleText(
+                            margin:
+                                const EdgeInsets.symmetric(horizontal: 12.0),
+                            text: state.date?.split(' ').first ?? 'choose_date',
+                            color: AppColors.PRIMARY_COLOR_DARK,
+                          ),
+                        ),
+                        const Icon(
+                          Icons.arrow_drop_down,
+                          color: AppColors.PRIMARY_COLOR,
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          );
+      },
+    );
+  }
+
+  Future<void> showTheDatePicker(BuildContext context) async {
+    final cubit = context.read<ProductDetailsCubit>();
+    DateTime? picked;
+    picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(const Duration(days: 90)),
+    );
+
+    if (picked != null) {
+      await cubit.loadTimes(
+          productId: widget.productId, date: picked.toString());
+    }
+  }
+
+  Widget _buildTimesList() {
+    return BlocBuilder<ProductDetailsCubit, ProductDetailsState>(
+      builder: (context, state) {
+        final cubit = context.read<ProductDetailsCubit>();
+        if (state.timesList == null) return const SizedBox();
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const TitleText(
+              margin: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
+              text: 'select_time',
+              color: AppColors.PRIMARY_COLOR_DARK,
+            ),
+            GridView.builder(
+              padding:
+                  const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
+              shrinkWrap: true,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 3.5,
+                  crossAxisSpacing: 16.0,
+                  mainAxisSpacing: 16.0),
+              itemCount: state.timesList!.length,
+              itemBuilder: (context, index) {
+                final time = state.timesList![index];
+                final isAvailable = time.isAvailable;
+                final isSelected = state.timeId == time.productAttributeId;
+                return InkWell(
+                  onTap: () {
+                    if (isAvailable == true)
+                      cubit.setTime(time.productAttributeId!);
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color:
+                            isSelected ? AppColors.PRIMARY_COLOR : Colors.white,
+                        borderRadius: BorderRadius.circular(25)),
+                    child: TitleText.medium(
+                      text: '${time.start} - ${time.end}',
+                      color: isSelected
+                          ? Colors.white
+                          : isAvailable == true
+                              ? AppColors.PRIMARY_COLOR
+                              : AppColors.GREY_NORMAL_COLOR,
+                    ),
+                  ),
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   // Future<void> _goToSignUpPage(BuildContext context) =>

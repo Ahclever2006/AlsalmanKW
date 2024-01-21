@@ -1,3 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="21.099" height="22" viewBox="0 0 21.099 22">
-  <path id="calendar_13_" data-name="calendar (13)" d="M19.165,2.242h-.44V1.121a1.121,1.121,0,0,0-2.242,0V2.242h-7.3V1.121A1.05,1.05,0,0,0,8.066,0,1.05,1.05,0,0,0,6.945,1.121V2.242H5.934A3.988,3.988,0,0,0,2,6.176v11.89A3.988,3.988,0,0,0,5.934,22H19.165A3.988,3.988,0,0,0,23.1,18.066V6.176A3.988,3.988,0,0,0,19.165,2.242ZM5.934,4.484H19.165a1.737,1.737,0,0,1,1.692,1.692v1.56H4.242V6.176A1.737,1.737,0,0,1,5.934,4.484ZM19.165,19.736H5.934a1.737,1.737,0,0,1-1.692-1.692V9.978H20.835v8.066A1.7,1.7,0,0,1,19.165,19.736Z" transform="translate(-2)" fill="#4f5748"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="21.236" height="23.374" viewBox="0 0 21.236 23.374">
+  <g id="Group_38640" data-name="Group 38640" transform="translate(1 1)">
+    <rect id="Rectangle_21810" data-name="Rectangle 21810" width="19.236" height="19.236" rx="2" transform="translate(0 2.137)" fill="none" stroke="#5fa8d3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="Path_42551" data-name="Path 42551" d="M250.1,778v4.275" transform="translate(-236.207 -778)" fill="none" stroke="#5fa8d3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="Path_42552" data-name="Path 42552" d="M244.5,778v4.275" transform="translate(-239.157 -778)" fill="none" stroke="#5fa8d3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="Path_42553" data-name="Path 42553" d="M241,783.6h19.236" transform="translate(-241 -775.05)" fill="none" stroke="#5fa8d3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  </g>
 </svg>

@@ -74,6 +74,12 @@ class ProductDetailsCubit extends BaseCubit<ProductDetailsState> {
 
   Future<void> refresh(int productId) => getProductDetailsData(productId, true);
 
+  void setBookingFeatureEnable() {
+    emit(state.copyWith(
+        status: ProductDetailsStateStatus.loaded,
+        isBookingFeatureEnable: true));
+  }
+
   Future<void> loadTimes({
     required int productId,
     required String date,

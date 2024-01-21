@@ -470,5 +470,9 @@
     "order_failed":"فشل الطلب",
     "order_success_subtitle":"لقد تم طلبك #{} بنجاح",
     "order_failed_subtitle":"لم نتمكن من معالجة عملية الدفع الخاصة بك، يرجى المحاولة مرة أخرى...",
-    "not_logged_in":"لم تقم بتسجيل الدخول"
+    "not_logged_in":"لم تقم بتسجيل الدخول",
+    "choose_date":"اختر التاريخ",
+    "select_date":"حدد التاريخ",
+    "select_time":"حدد الوقت",
+    "choose_date_time":"اختر التاريخ والموعد اولا من فضلك"
 }
