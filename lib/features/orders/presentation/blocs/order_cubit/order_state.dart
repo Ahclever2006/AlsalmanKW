@@ -5,6 +5,7 @@ enum OrderStateStatus {
   loading,
   loaded,
   loadingMore,
+  reOrder,
   error,
 }
 
@@ -13,19 +14,18 @@ extension OrderStateX on OrderState {
   bool get isLoading => status == OrderStateStatus.loading;
   bool get isLoaded => status == OrderStateStatus.loaded;
   bool get isLoadingMore => status == OrderStateStatus.loadingMore;
+  bool get isReOrder => status == OrderStateStatus.reOrder;
   bool get isError => status == OrderStateStatus.error;
 }
 
 @immutable
 class OrderState {
-  final MyOrdersModel? currentOrders;
-  final MyOrdersModel? previousOrders;
+  final MyOrdersModel? orders;
   final OrderStateStatus status;
   final String? errorMessage;
 
   const OrderState({
-    this.currentOrders,
-    this.previousOrders,
+    this.orders,
     this.status = OrderStateStatus.initial,
     this.errorMessage,
   });
@@ -35,29 +35,22 @@ class OrderState {
     if (identical(this, other)) return true;
 
     return other.runtimeType == runtimeType &&
-        (other as OrderState).currentOrders == currentOrders &&
-        other.previousOrders == previousOrders &&
+        (other as OrderState).orders == orders &&
         other.status == status &&
         other.errorMessage == errorMessage;
   }
 
   @override
-  int get hashCode =>
-      currentOrders.hashCode ^
-      previousOrders.hashCode ^
-      status.hashCode ^
-      errorMessage.hashCode;
+  int get hashCode => orders.hashCode ^ status.hashCode ^ errorMessage.hashCode;
 
   OrderState copyWith({
     OrderStateStatus? status,
-    MyOrdersModel? currentOrders,
-    MyOrdersModel? previousOrders,
+    MyOrdersModel? orders,
     String? errorMessage,
   }) {
     return OrderState(
       status: status ?? this.status,
-      currentOrders: currentOrders ?? this.currentOrders,
-      previousOrders: previousOrders ?? this.previousOrders,
+      orders: orders ?? this.orders,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }

@@ -19,12 +19,10 @@ class OrderCubit extends BaseCubit<OrderState> {
   Future<void> getOrders() async {
     emit(state.copyWith(status: OrderStateStatus.loading));
     try {
-      final currentOrders = await _orderRepository.getCurrentOrders();
-      final previousOrders = await _orderRepository.getPreviousOrders();
+      final orders = await _orderRepository.getCurrentOrders();
       emit(state.copyWith(
         status: OrderStateStatus.loaded,
-        currentOrders: currentOrders,
-        previousOrders: previousOrders,
+        orders: orders,
       ));
     } on RedundantRequestException catch (e) {
       log(e.toString());
@@ -40,7 +38,7 @@ class OrderCubit extends BaseCubit<OrderState> {
 
       emit(state.copyWith(
         status: OrderStateStatus.loaded,
-        currentOrders: orderModel,
+        orders: orderModel,
       ));
     } on RedundantRequestException catch (e) {
       log(e.toString());
@@ -54,7 +52,7 @@ class OrderCubit extends BaseCubit<OrderState> {
     int sort = 0,
     int pageSize = 10,
   }) async {
-    var oldCurrentOrders = state.currentOrders!.orders;
+    var oldCurrentOrders = state.orders!.orders;
     int pageNumber = ((oldCurrentOrders!.length / 10).floor() + 1);
     if (oldCurrentOrders.length % 10 != 0) return;
     try {
@@ -68,7 +66,7 @@ class OrderCubit extends BaseCubit<OrderState> {
       emit(
         state.copyWith(
             status: OrderStateStatus.loaded,
-            currentOrders: state.currentOrders!.copyWith(
+            orders: state.orders!.copyWith(
                 orders: [...oldCurrentOrders, ...?newCurrentOrders?.orders])),
       );
     } on RedundantRequestException catch (e) {
@@ -81,13 +79,11 @@ class OrderCubit extends BaseCubit<OrderState> {
 
   Future<void> refreshCurrentOrders() => getCurrentOrders();
 
-  Future<void> getPreviousOrders() async {
+  Future<void> reOrder(int orderId) async {
     try {
-      final orderModel = await _orderRepository.getPreviousOrders();
-      emit(state.copyWith(
-        status: OrderStateStatus.loaded,
-        previousOrders: orderModel,
-      ));
+      await _orderRepository.reOrder(orderId);
+
+      emit(state.copyWith(status: OrderStateStatus.reOrder));
     } on RedundantRequestException catch (e) {
       log(e.toString());
     } catch (e) {
@@ -95,35 +91,4 @@ class OrderCubit extends BaseCubit<OrderState> {
           status: OrderStateStatus.error, errorMessage: e.toString()));
     }
   }
-
-  Future<void> getMorePreviousOrders({
-    int sort = 0,
-    int pageSize = 10,
-  }) async {
-    var oldPreviousOrders = state.previousOrders!.orders;
-    int pageNumber = ((oldPreviousOrders!.length / 10).floor() + 1);
-    if (oldPreviousOrders.length % 10 != 0) return;
-    try {
-      emit(state.copyWith(status: OrderStateStatus.loadingMore));
-
-      final newPreviousOrders = await _orderRepository.getPreviousOrders(
-        pageSize: pageSize,
-        pageNumber: pageNumber,
-      );
-
-      emit(
-        state.copyWith(
-            status: OrderStateStatus.loaded,
-            previousOrders: state.previousOrders!.copyWith(
-                orders: [...oldPreviousOrders, ...?newPreviousOrders?.orders])),
-      );
-    } on RedundantRequestException catch (e) {
-      log(e.toString());
-    } catch (e) {
-      emit(state.copyWith(
-          status: OrderStateStatus.error, errorMessage: e.toString()));
-    }
-  }
-
-  Future<void> refreshPreviousOrders() => getPreviousOrders();
 }

@@ -369,33 +369,31 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
         ),
-        child: Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TitleText(
-                  text: 'welcome'.tr(args: [username ?? 'user_name'.tr()]),
-                  color: AppColors.PRIMARY_COLOR,
-                  maxLines: 2),
-              const SizedBox(height: 12.0),
-              SubtitleText(
-                text: email ?? 'Unknown',
-                color: AppColors.PRIMARY_COLOR_DARK,
-              ),
-              Align(
-                alignment: AlignmentDirectional.bottomEnd,
-                child: InkWell(
-                    onTap: () => _goToProfilePage(context),
-                    child: Container(
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: const BoxDecoration(
-                            color: AppColors.PRIMARY_COLOR,
-                            shape: BoxShape.circle),
-                        child: SvgPicture.asset(
-                            'lib/res/assets/settings_icon.svg'))),
-              ),
-            ],
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TitleText(
+                text: 'welcome'.tr(args: [username ?? 'user_name'.tr()]),
+                color: AppColors.PRIMARY_COLOR,
+                maxLines: 2),
+            const SizedBox(height: 12.0),
+            SubtitleText(
+              text: email ?? 'Unknown',
+              color: AppColors.PRIMARY_COLOR_DARK,
+            ),
+            Align(
+              alignment: AlignmentDirectional.bottomEnd,
+              child: InkWell(
+                  onTap: () => _goToProfilePage(context),
+                  child: Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: const BoxDecoration(
+                          color: AppColors.PRIMARY_COLOR,
+                          shape: BoxShape.circle),
+                      child: SvgPicture.asset(
+                          'lib/res/assets/settings_icon.svg'))),
+            ),
+          ],
         ));
   }
 

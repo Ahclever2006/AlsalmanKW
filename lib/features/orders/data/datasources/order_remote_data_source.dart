@@ -9,12 +9,8 @@ abstract class OrderRemoteDataSource {
     int pageNumber = 1,
     int pageSize = 10,
   });
-  Future<MyOrdersModel?> getPreviousOrders({
-    int pageNumber = 1,
-    int pageSize = 10,
-  });
-  Future<OrderDetailsModel?> getOrderDetails(int id);
 
+  Future<OrderDetailsModel?> getOrderDetails(int id);
   Future<void> reOrder(int id);
 }
 
@@ -29,30 +25,8 @@ class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
     int pageSize = 10,
   }) {
     const url = ApiEndPoint.getUserOrders;
-    return _networkService.post(url, queryParameters: {
+    return _networkService.get(url, queryParameters: {
       "withFirstProductPicture": false,
-      "dateBasedStatus": 1,
-      'PageNumber': pageNumber,
-      'PageSize': pageSize
-    }).then((response) {
-      if (response.statusCode != 200) throw RequestException(response.data);
-      final result = response.data;
-      final resultStatus = result['IsSuccess'];
-      if (resultStatus != null && !resultStatus)
-        throw RequestException(result['Errors']);
-      return MyOrdersModel.fromMap(result['Data']);
-    });
-  }
-
-  @override
-  Future<MyOrdersModel?> getPreviousOrders({
-    int pageNumber = 1,
-    int pageSize = 10,
-  }) {
-    const url = ApiEndPoint.getUserOrders;
-    return _networkService.post(url, queryParameters: {
-      "withFirstProductPicture": false,
-      "dateBasedStatus": 0,
       'PageNumber': pageNumber,
       'PageSize': pageSize
     }).then((response) {

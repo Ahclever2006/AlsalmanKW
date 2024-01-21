@@ -126,32 +126,32 @@ class Order {
 
   Map<String, dynamic> toMap() {
     return {
-      'customOrderNumber': customOrderNumber,
-      'orderTotal': orderTotal,
-      'isReturnRequestAllowed': isReturnRequestAllowed,
-      'orderStatusEnum': orderStatusEnum,
-      'orderStatus': orderStatus,
-      'paymentStatus': paymentStatus,
-      'shippingStatus': shippingStatus,
-      'firstProductPicture': firstProductPicture?.toMap(),
-      'createdOn': createdOn,
+      'custom_order_number': customOrderNumber,
+      'order_total': orderTotal,
+      'is_return_request_allowed': isReturnRequestAllowed,
+      'order_status_enum': orderStatusEnum,
+      'order_status': orderStatus,
+      'payment_status': paymentStatus,
+      'shipping_status': shippingStatus,
+      'first_product_picture': firstProductPicture?.toMap(),
+      'created_on': createdOn,
       'id': id,
     };
   }
 
   factory Order.fromMap(Map<String, dynamic> map) {
     return Order(
-      customOrderNumber: map['customOrderNumber'],
-      orderTotal: map['orderTotal'],
-      isReturnRequestAllowed: map['isReturnRequestAllowed'],
-      orderStatusEnum: map['orderStatusEnum']?.toInt(),
-      orderStatus: map['orderStatus'],
-      paymentStatus: map['paymentStatus'],
-      shippingStatus: map['shippingStatus'],
-      firstProductPicture: map['firstProductPicture'] != null
-          ? FirstProductPicture.fromMap(map['firstProductPicture'])
+      customOrderNumber: map['custom_order_number'],
+      orderTotal: map['order_total'],
+      isReturnRequestAllowed: map['is_return_request_allowed'],
+      orderStatusEnum: map['order_status_enum']?.toInt(),
+      orderStatus: map['order_status'],
+      paymentStatus: map['payment_status'],
+      shippingStatus: map['shipping_status'],
+      firstProductPicture: map['first_product_picture'] != null
+          ? FirstProductPicture.fromMap(map['first_product_picture'])
           : null,
-      createdOn: map['createdOn'],
+      createdOn: map['created_on'],
       id: map['id']?.toInt(),
     );
   }

@@ -67,8 +67,8 @@ abstract class ApiEndPoint {
   // static const  getNotificationsList =
   //     '$_REQUEST_URL/PushNotification/userNotification/List';
 
-  static const getUserOrders =
-      '$_REQUEST_URL/tistheseason/order/customerorders';
+  static const getUserOrders = '$_REQUEST_URL/order/customerorders';
+
   static const getOrderDetails = '$_REQUEST_URL/order/details/';
 
   // static const  deleteAllFavoriteItems =

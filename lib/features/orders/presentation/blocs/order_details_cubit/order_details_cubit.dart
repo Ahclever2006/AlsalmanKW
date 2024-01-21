@@ -35,7 +35,7 @@ class OrderDetailsCubit extends BaseCubit<OrderDetailsState> {
 
   Future<void> refresh(int id) => getOrderDetails(id, true);
 
-  Future<void> reOrder(int orderId) async {
+    Future<void> reOrder(int orderId) async {
     try {
       await _orderRepository.reOrder(orderId);
 

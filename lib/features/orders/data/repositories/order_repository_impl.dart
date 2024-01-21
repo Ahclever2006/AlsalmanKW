@@ -7,12 +7,8 @@ abstract class OrderRepository {
     int pageNumber = 1,
     int pageSize = 10,
   });
-  Future<MyOrdersModel?> getPreviousOrders({
-    int pageNumber = 1,
-    int pageSize = 10,
-  });
-  Future<OrderDetailsModel?> getOrderDetails(int id);
 
+  Future<OrderDetailsModel?> getOrderDetails(int id);
   Future<void> reOrder(int id);
 }
 
@@ -27,16 +23,6 @@ class OrderRepositoryImpl implements OrderRepository {
     int pageSize = 10,
   }) =>
       _orderRemoteDataSource.getCurrentOrders(
-        pageNumber: pageNumber,
-        pageSize: pageSize,
-      );
-
-  @override
-  Future<MyOrdersModel?> getPreviousOrders({
-    int pageNumber = 1,
-    int pageSize = 10,
-  }) =>
-      _orderRemoteDataSource.getPreviousOrders(
         pageNumber: pageNumber,
         pageSize: pageSize,
       );

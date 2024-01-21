@@ -2,10 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../../../res/style/theme.dart';
-import '../../../../shared_widgets/stateful/default_button.dart';
+import '../../../../core/utils/media_query_values.dart';
 
 import '../../../../core/utils/navigator_helper.dart';
+import '../../../../shared_widgets/stateful/default_button.dart';
 import '../../../cart_tab/presentation/cubit/cart_cubit.dart';
 import '../../../layout/presentation/cubit/main_layout_cubit.dart';
 import '/di/injector.dart';
@@ -47,24 +47,6 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
           Injector().orderDetailsCubit..getOrderDetails(widget.orderId),
       child: CustomAppPage(
         safeTop: true,
-        stackChildren: [
-          if (widget.paymentStatus == null)
-            Positioned(
-              bottom: 24.0,
-              left: 16.0,
-              right: 16.0,
-              child: Material(
-                type: MaterialType.transparency,
-                child: Builder(builder: (context) {
-                  final cubit = context.read<OrderDetailsCubit>();
-                  return DefaultButton(
-                    onPressed: () => cubit.reOrder(widget.orderId),
-                    label: 're_order'.tr(),
-                  );
-                }),
-              ),
-            )
-        ],
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           body: Column(
@@ -124,10 +106,19 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
     BuildContext context, {
     required OrderDetailsModel orderDetails,
   }) {
+    final orderCubit = context.read<OrderDetailsCubit>();
+
     var orderDetailsModel = orderDetails.data;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        if (widget.paymentStatus == null)
+          SvgPicture.asset(
+            orderDetailsModel!.orderStatus == 'Complete'
+                ? 'lib/res/assets/payment_success_icon.svg'
+                : 'lib/res/assets/order_pending_icon.svg',
+            height: 100.0,
+          ),
         _buildTopSection(orderDetailsModel),
         _buildDivider(),
         ..._buildDeliveryAddressSection(orderDetailsModel!.shippingAddress),
@@ -135,26 +126,30 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
         ..._buildShippingMethodSection(orderDetailsModel.shippingMethod),
         _buildDivider(),
         ..._buildOrderSummary(context, orderDetailsModel.items),
-        const SizedBox(height: navbarHeight),
+        if (widget.paymentStatus == null)
+          DefaultButton(
+              margin: EdgeInsets.symmetric(
+                  horizontal: context.width * 0.15, vertical: 16.0),
+              label: 're_order'.tr(),
+              onPressed: () => orderCubit.reOrder(orderDetails.data!.id!))
+        else
+          _buildGoToHomeButton(context)
       ],
     );
   }
 
-  void _goToHomePage(BuildContext context) {
-    final cartCubit = context.read<CartCubit>();
-
-    final mainLayoutCubit = context.read<MainLayoutCubit>();
-    mainLayoutCubit.onBottomNavPressed(2);
-
-    cartCubit
-        .loadCart()
-        .then((value) => NavigatorHelper.of(context)
-            .popUntil(ModalRoute.withName("/MainLayOutPage")))
-        .whenComplete(() => showSnackBar(context, message: 're_order_success'));
+  Widget _buildGoToHomeButton(BuildContext context) {
+    return DefaultButton(
+        margin: EdgeInsets.symmetric(
+            horizontal: context.width * 0.15, vertical: 16.0),
+        label: 'home_page'.tr(),
+        onPressed: NavigatorHelper.of(context).pop);
   }
 
   List<Widget> _buildOrderSummary(
       BuildContext context, List<Items>? orderProducts) {
+    // var normalItems = orderProducts?.where((e) => e.productId != 348).toList();
+
     return [
       if (orderProducts != null && orderProducts.isNotEmpty)
         const Padding(
@@ -168,9 +163,28 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
     ];
   }
 
+  void _goToHomePage(BuildContext context) {
+    final cartCubit = context.read<CartCubit>();
+
+    final mainLayoutCubit = context.read<MainLayoutCubit>();
+    mainLayoutCubit.onBottomNavPressed(3);
+
+    cartCubit
+        .loadCart()
+        .then((value) => NavigatorHelper.of(context)
+            .popUntil(ModalRoute.withName("/MainLayOutPage")))
+        .whenComplete(() => showSnackBar(context, message: 're_order_success'));
+  }
+
   Widget _buildCartItem(BuildContext context, Items cartItem) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+    return Container(
+      height: 156.0,
+      decoration: const BoxDecoration(
+        color: AppColors.SECONDARY_COLOR,
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+      ),
+      margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      padding: const EdgeInsets.all(8.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -180,24 +194,30 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
             ),
             child: CustomCachedNetworkImage(
-              width: 50.0,
-              height: 50.0,
+              width: 140.0,
+              height: 140.0,
               borderRadius: const BorderRadius.all(Radius.circular(10)),
               imageUrl: cartItem.picture!.imageUrl,
               fit: BoxFit.cover,
             ),
           ),
           Expanded(
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-              child: TitleText(
-                text: cartItem.productName!,
-                maxLines: 2,
-              ),
+              child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TitleText(
+                  text: cartItem.productName!,
+                  maxLines: 2,
+                ),
+                const Spacer(),
+                TitleText(text: '${'qty'.tr()} : ${cartItem.quantity}'),
+                const SizedBox(height: 12.0),
+                TitleText(text: cartItem.subTotal ?? ''),
+              ],
             ),
-          ),
-          TitleText(text: cartItem.subTotal ?? ''),
+          )),
         ],
       ),
     );
@@ -246,10 +266,10 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
         child: TitleText(text: 'delivery_address'),
       ),
       AddressItemWidget(
-          address: shippingAddress!,
-          backgroundColor: Colors.transparent,
-          borderColor: Colors.transparent,
-          onPress: () {})
+        address: shippingAddress!,
+        backgroundColor: Colors.transparent,
+        borderColor: Colors.transparent,
+      )
     ];
   }
 

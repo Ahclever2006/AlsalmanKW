@@ -1,5 +1,4 @@
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
-import '../../../../shared_widgets/stateless/title_text.dart';
 
 import '../../../../../features/orders/presentation/pages/order_details_page.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -7,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/utils/navigator_helper.dart';
-import '../../../../res/style/app_colors.dart';
+
+import '../../../cart_tab/presentation/cubit/cart_cubit.dart';
+import '../../../layout/presentation/cubit/main_layout_cubit.dart';
 import '/di/injector.dart';
 import '/shared_widgets/other/show_snack_bar.dart';
 import '/shared_widgets/stateless/custom_app_page.dart';
@@ -26,21 +27,14 @@ class OrdersPage extends StatefulWidget {
   State<OrdersPage> createState() => _OrdersPageState();
 }
 
-class _OrdersPageState extends State<OrdersPage>
-    with SingleTickerProviderStateMixin {
-  int selectedTabIndex = 0;
-  late final TabController _tabController;
-
+class _OrdersPageState extends State<OrdersPage> {
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
-
     super.initState();
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
     super.dispose();
   }
 
@@ -53,15 +47,17 @@ class _OrdersPageState extends State<OrdersPage>
         child: Scaffold(
           body: Column(
             children: [
-              InnerPagesAppBar(label: 'orders'.tr().toUpperCase()),
+              InnerPagesAppBar(label: 'orders'.tr()),
               BlocConsumer<OrderCubit, OrderState>(
                 listener: (context, state) {
                   if (state.isError)
                     showSnackBar(context, message: state.errorMessage);
+
+                  if (state.isReOrder) _goToHomePage(context);
                 },
                 builder: (context, state) {
                   if (state.isInitial ||
-                      (state.isLoading && state.currentOrders == null))
+                      (state.isLoading && state.orders == null))
                     return const Expanded(
                       child: CustomLoading(
                         loadingStyle: LoadingStyle.ShimmerList,
@@ -69,11 +65,7 @@ class _OrdersPageState extends State<OrdersPage>
                     );
 
                   return Expanded(
-                    child: _buildPageView(
-                      context,
-                      state.currentOrders,
-                      state.previousOrders,
-                    ),
+                    child: _buildOrdersList(context, orderModel: state.orders),
                   );
                 },
               ),
@@ -84,48 +76,7 @@ class _OrdersPageState extends State<OrdersPage>
     );
   }
 
-  Widget _buildPageView(
-    BuildContext context,
-    MyOrdersModel? currentOrders,
-    MyOrdersModel? previousOrders,
-  ) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.only(top: 12.0),
-          color: AppColors.PRIMARY_COLOR,
-          child: TabBar(
-            indicatorColor: Colors.white,
-            indicatorWeight: 4.0,
-            onTap: (index) {
-              selectedTabIndex = index;
-              setState(() {});
-            },
-            tabs: [
-              TitleText(
-                text: 'current',
-                color: selectedTabIndex == 0 ? Colors.white : Colors.black,
-              ),
-              TitleText(
-                text: 'previous',
-                color: selectedTabIndex == 1 ? Colors.white : Colors.black,
-              ),
-            ],
-            controller: _tabController,
-          ),
-        ),
-        const SizedBox(height: 12.0),
-        Expanded(
-          child: TabBarView(controller: _tabController, children: [
-            _buildCurrentOrderList(context, orderModel: currentOrders),
-            _buildPreviousOrderList(context, orderModel: previousOrders),
-          ]),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildCurrentOrderList(
+  Widget _buildOrdersList(
     BuildContext context, {
     required MyOrdersModel? orderModel,
   }) {
@@ -164,38 +115,16 @@ class _OrdersPageState extends State<OrdersPage>
     }));
   }
 
-  Widget _buildPreviousOrderList(
-    BuildContext context, {
-    required MyOrdersModel? orderModel,
-  }) {
-    final orderCubit = context.read<OrderCubit>();
+  void _goToHomePage(BuildContext context) {
+    final cartCubit = context.read<CartCubit>();
 
-    return orderModel?.orders?.isNotEmpty == true
-        ? LazyLoadScrollView(
-            onEndOfPage: () => orderCubit.getMorePreviousOrders(),
-            isLoading: orderCubit.state.isLoadingMore,
-            child: RefreshIndicator(
-                onRefresh: () => orderCubit.refreshPreviousOrders(),
-                child: ListView.separated(
-                  padding: EdgeInsets.zero,
-                  itemCount: orderModel!.orders!.length,
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(
-                      height: 16,
-                    );
-                  },
-                  itemBuilder: (BuildContext context, int index) {
-                    var order = orderModel.orders![index];
-                    return OrderItemWidget(
-                      order: order,
-                      onPress: () => _goToOrdersPage(context, order.id!),
-                    );
-                  },
-                )),
-          )
-        : EmptyPageMessage(
-            title: 'no_previous_orders_available',
-            onRefresh: () => orderCubit.refreshPreviousOrders(),
-          );
+    final mainLayoutCubit = context.read<MainLayoutCubit>();
+    mainLayoutCubit.onBottomNavPressed(3);
+
+    cartCubit
+        .loadCart()
+        .then((value) => NavigatorHelper.of(context)
+            .popUntil(ModalRoute.withName("/MainLayOutPage")))
+        .whenComplete(() => showSnackBar(context, message: 're_order_success'));
   }
 }
