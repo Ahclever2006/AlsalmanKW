@@ -1,3 +1,4 @@
+import 'package:alsalman_app/shared_widgets/stateless/subtitle_text.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -111,12 +112,12 @@ class _RadioListAttributeState extends State<RadioListAttribute> {
                     ),
                   ),
                   Expanded(
-                    child: TitleText(
+                    child: SubtitleText(
                         text: model.values![index].name!,
                         color: AppColors.PRIMARY_COLOR_DARK),
                   ),
                   if (model.values![index].priceAdjustmentValue! > 0)
-                    TitleText(
+                    SubtitleText(
                         text: model.values![index].priceAdjustmentValue
                             .toString(),
                         color: AppColors.PRIMARY_COLOR)

@@ -55,36 +55,39 @@ class _ColorSquareAttributesState extends State<ColorSquareAttributes> {
           widget.attributeModel!.values![model.selectedColorBox!];
     }
 
-    final Widget notRequiredTitle =
-        TitleText(text: widget.attributeModel!.name!);
+    final Widget notRequiredTitle = TitleText(
+      text: '${widget.attributeModel!.name!} : ',
+      color: AppColors.PRIMARY_COLOR_DARK,
+    );
     final Widget requiredTitle = Row(
       children: [
         TitleText(
           text: widget.attributeModel!.name!,
+          color: AppColors.PRIMARY_COLOR_DARK,
         ),
         const SizedBox(
           width: 5.0,
         ),
         const Text(
-          "*",
-          style: TextStyle(color: Colors.red),
+          "* : ",
+          style: TextStyle(color: AppColors.PRIMARY_COLOR_DARK),
         ),
       ],
     );
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        if (widget.attributeModel!.name != null &&
-            widget.attributeModel!.name.toString().isNotEmpty)
-          widget.attributeModel!.isRequired! ? requiredTitle : notRequiredTitle,
-        const SizedBox(
-          height: 10.0,
-        ),
-        SizedBox(
-          height: 52,
-          child: ListView.builder(
+    return SizedBox(
+      height: 60.0,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          if (widget.attributeModel!.name != null &&
+              widget.attributeModel!.name.toString().isNotEmpty)
+            widget.attributeModel!.isRequired!
+                ? requiredTitle
+                : notRequiredTitle,
+          ListView.builder(
             scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
             itemCount: model.values!.length,
             itemBuilder: (BuildContext context, int index) {
               Color? color;
@@ -137,51 +140,52 @@ class _ColorSquareAttributesState extends State<ColorSquareAttributes> {
                     selectedColorIndex = index;
                   });
                 },
-                child: Stack(
-                  alignment: AlignmentDirectional.center,
+                child: Column(
                   children: [
-                    Stack(
-                      alignment: AlignmentDirectional.topStart,
-                      children: <Widget>[
-                        Container(
-                          decoration: BoxDecoration(
-                            color: color,
-                            shape: BoxShape.circle,
-                            border: selectedColorIndex == index
-                                ? Border.all(
-                                    color: AppColors.PRIMARY_COLOR_DARK,
-                                    width: 2.0)
-                                : null,
-                            // borderRadius:
-                            //     const BorderRadius.all(Radius.circular(10.0)),
-                          ),
-                          padding: const EdgeInsets.all(16.0),
-                          margin: const EdgeInsets.symmetric(horizontal: 4.0),
-                          // child: Container(
-                          //   padding: const EdgeInsets.all(2.0),
-                          //   color: Colors.black26,
-                          //   child: Text(
-                          //     model.values![index].name!,
-                          //     textAlign: TextAlign.center,
-                          //     style: Theme.of(context)
-                          //         .textTheme
-                          //         .bodySmall!
-                          //         .copyWith(color: Colors.white),
-                          //   ),
-                          // ),
-                        ),
-                      ],
-                    )
+                    Container(
+                      decoration: BoxDecoration(
+                        color: color,
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                            color: AppColors.PRIMARY_COLOR_DARK, width: 1.0),
+                        // borderRadius:
+                        //     const BorderRadius.all(Radius.circular(10.0)),
+                      ),
+                      padding: const EdgeInsets.all(14.0),
+                      margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                      // child: Container(
+                      //   padding: const EdgeInsets.all(2.0),
+                      //   color: Colors.black26,
+                      //   child: Text(
+                      //     model.values![index].name!,
+                      //     textAlign: TextAlign.center,
+                      //     style: Theme.of(context)
+                      //         .textTheme
+                      //         .bodySmall!
+                      //         .copyWith(color: Colors.white),
+                      //   ),
+                      // ),
+                    ),
+                    if (selectedColorIndex == index)
+                      Container(
+                        width: 16.0,
+                        height: 16.0,
+                        margin: const EdgeInsets.only(top: 12.0),
+                        decoration: const BoxDecoration(
+                            color: AppColors.PRIMARY_COLOR,
+                            shape: BoxShape.circle),
+                        child: const Icon(Icons.check, size: 10.0),
+                      )
                   ],
                 ),
               );
             },
           ),
-        ),
-        const SizedBox(
-          height: 15.0,
-        ),
-      ],
+          const SizedBox(
+            height: 15.0,
+          ),
+        ],
+      ),
     );
   }
 }
