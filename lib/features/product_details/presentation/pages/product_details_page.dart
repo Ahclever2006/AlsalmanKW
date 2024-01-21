@@ -532,12 +532,16 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     return [
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: TitleText.large(text: name ?? ''),
+        child: TitleText.large(
+            text: name ?? '', color: AppColors.PRIMARY_COLOR_DARK),
       ),
       const SizedBox(height: 8.0),
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: TitleText(text: '$price ${'currency'.tr()}'),
+        child: TitleText(
+          text: '$price ${'currency'.tr()}',
+          color: AppColors.PRIMARY_COLOR_DARK,
+        ),
       ),
       if (vendor != null) const SizedBox(height: 8.0),
       if (vendor != null)
@@ -548,23 +552,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             color: AppColors.PRIMARY_COLOR,
           ),
         ),
-      // if (sku != null)
-      const SizedBox(height: 8.0),
-      const Divider(
-        color: AppColors.PRIMARY_COLOR,
-        thickness: 2.0,
-        indent: 8.0,
-        endIndent: 8.0,
-      ),
-      // if (sku != null)
-      //   Padding(
-      //     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      //     child: TitleText(
-      //       text: 'SKU: $sku',
-      //       color: AppColors.PRIMARY_COLOR,
-      //     ),
-      //   ),
-      const SizedBox(height: 8.0),
     ];
   }
 

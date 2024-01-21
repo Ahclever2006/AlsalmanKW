@@ -44,17 +44,20 @@ class _RadioListAttributeState extends State<RadioListAttribute> {
     final cubit = context.read<ProductDetailsCubit>();
     final RadioButtonAttributeModel model =
         RadioButtonAttributeModel(values: widget.attributeModel!.values);
-    final Widget notRequiredTitle =
-        TitleText(text: widget.attributeModel!.name!);
+    final Widget notRequiredTitle = TitleText(
+        text: widget.attributeModel!.name!,
+        color: AppColors.PRIMARY_COLOR_DARK);
     final Widget requiredTitle = Row(
       children: <Widget>[
-        TitleText(text: widget.attributeModel!.name!),
+        TitleText(
+            text: widget.attributeModel!.name!,
+            color: AppColors.PRIMARY_COLOR_DARK),
         const SizedBox(
           width: 5.0,
         ),
         const Text(
           "*",
-          style: TextStyle(color: Colors.red),
+          style: TextStyle(color: AppColors.PRIMARY_COLOR_DARK),
         ),
       ],
     );
@@ -80,7 +83,7 @@ class _RadioListAttributeState extends State<RadioListAttribute> {
                           if (states.contains(MaterialState.pressed)) {
                             return AppColors.PRIMARY_COLOR_LIGHT;
                           } else
-                            return AppColors.PRIMARY_COLOR_DARK;
+                            return AppColors.PRIMARY_COLOR;
                         }),
                       )),
                       child: Radio<Value>(
@@ -107,15 +110,22 @@ class _RadioListAttributeState extends State<RadioListAttribute> {
                       ),
                     ),
                   ),
-                  TitleText(text: model.values![index].name!),
+                  Expanded(
+                    child: TitleText(
+                        text: model.values![index].name!,
+                        color: AppColors.PRIMARY_COLOR_DARK),
+                  ),
+                  if (model.values![index].priceAdjustmentValue! > 0)
+                    TitleText(
+                        text: model.values![index].priceAdjustmentValue
+                            .toString(),
+                        color: AppColors.PRIMARY_COLOR)
                 ],
               );
             },
           ),
         ),
-        const SizedBox(
-          height: 15.0,
-        ),
+        const SizedBox(height: 15.0),
       ],
     );
   }
