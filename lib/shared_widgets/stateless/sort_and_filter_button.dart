@@ -42,7 +42,10 @@ class _SortAndFilterButtonState extends State<SortAndFilterButton> {
         icon: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SvgPicture.asset('lib/res/assets/$icon.svg'),
+            SvgPicture.asset(
+              'lib/res/assets/$icon.svg',
+              color: AppColors.PRIMARY_COLOR,
+            ),
           ],
         ));
   }

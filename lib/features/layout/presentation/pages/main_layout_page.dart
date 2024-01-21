@@ -145,6 +145,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
             }
             return ListView(
               padding: EdgeInsets.zero,
+              physics: const BouncingScrollPhysics(),
               children: [
                 _buildLogo(),
                 if (!isLoggedIn) _buildGuestUserSection(context),
