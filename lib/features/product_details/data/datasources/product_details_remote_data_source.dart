@@ -1,3 +1,4 @@
+import '../../../../core/data/models/times_options_model.dart';
 import '/api_end_point.dart';
 import '/core/exceptions/request_exception.dart';
 import '/core/service/network_service.dart';
@@ -7,7 +8,8 @@ import '../model/product_details_model.dart';
 
 abstract class ProductDetailsRemoteDataSource {
   Future<ProductDetailsModel> loadProductDetailsData(int productId);
-  // Future<SliderModel> loadProductDetailsSlider(int productId);
+  Future<List<TimesOptionModel>> getTimes(
+      {required int productId, required String date});
   Future<List<ConditionalAttributesModel>>
       loadProductDetailsConditionalAttributes(int productId);
 
@@ -73,6 +75,26 @@ class ProductDetailsRemoteDataSourceImpl
           .map((attributeMap) =>
               CombinationAttributesModel.fromMap(attributeMap))
           .toList();
+    });
+  }
+
+  @override
+  Future<List<TimesOptionModel>> getTimes(
+      {required int productId, required String date}) {
+    const url = ApiEndPoint.getBookingTimes;
+
+    final params = {'productId': productId, 'date': date};
+
+    return _networkService.get(url, queryParameters: params).then((response) {
+      if (![200, 201].contains(response.statusCode))
+        throw RequestException(response.data);
+      if (response.statusCode != 200) throw RequestException(response.data);
+      final result = response.data;
+      final resultStatus = result['IsSuccess'];
+      if (resultStatus != null && !resultStatus)
+        throw RequestException(result['Message']);
+      final states = result['Data'] as List;
+      return states.map((e) => TimesOptionModel.fromMap(e)).toList();
     });
   }
 

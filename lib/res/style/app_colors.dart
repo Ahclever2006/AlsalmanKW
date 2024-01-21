@@ -17,6 +17,7 @@ abstract class AppColors {
   static const CUSTOM_APP_PAGE_COLOR = Color(0xFFE9F4FC);
   static const SEARCH_ICON_CONTAINER_COLOR = Color(0xFFE8F1F2);
   static const ERROR_COLOR = Color(0xFFD54444);
+  static const ADD_TO_CART_COLOR = Color(0xFFEFFFFA);
 
   static const AUTH_CONTAINER_COLOR = Colors.white;
 

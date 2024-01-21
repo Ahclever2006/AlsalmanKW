@@ -1,3 +1,4 @@
+import '../../../../core/data/models/times_options_model.dart';
 import '../datasources/product_details_remote_data_source.dart';
 import '../model/combination_attributes_model.dart';
 import '../model/conditional_attributes_model.dart';
@@ -5,6 +6,9 @@ import '../model/product_details_model.dart';
 
 abstract class ProductDetailsRepository {
   Future<ProductDetailsModel> loadProductDetails(int productId);
+
+  Future<List<TimesOptionModel>> getTimes(
+      {required int productId, required String date});
 
   // Future<SliderModel> loadProductDetailsSlider(int id);
 
@@ -40,6 +44,12 @@ class ProductDetailsRepositoryImpl implements ProductDetailsRepository {
       loadProductDetailsCombinationAttributes(int productId) =>
           _productDetailsRemoteDataSource
               .loadProductDetailsCombinationAttributes(productId);
+
+  @override
+  Future<List<TimesOptionModel>> getTimes(
+          {required int productId, required String date}) =>
+      _productDetailsRemoteDataSource.getTimes(
+          productId: productId, date: date);
 
   // @override
   // Future<String> uploadProductFiles(String id, File file) =>

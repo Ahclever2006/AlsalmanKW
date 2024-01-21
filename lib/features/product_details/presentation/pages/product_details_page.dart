@@ -63,6 +63,8 @@ class ProductDetailsPage extends StatefulWidget {
 
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
   bool? isFav;
+  int? _timeAttributeId;
+  int? _dateAttributeId;
   late CarouselController imageController;
   @override
   void initState() {
@@ -424,8 +426,18 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   }
 
   Widget _buildAttributes(List<ProductAttribute>? attributes) {
+    attributes?.forEach((element) {
+      if (element.textPrompt == 'Select Time')
+        _timeAttributeId = element.id;
+      else if (element.textPrompt == 'Select Date')
+        _dateAttributeId = element.id;
+    });
     return AttributesListWidget(
-        attributes: attributes!.where((e) => !e.hasCondition!).toList());
+        attributes: attributes!
+            .where((e) => (!e.hasCondition! &&
+                e.textPrompt != 'Select Time' &&
+                e.textPrompt != 'Select Date'))
+            .toList());
   }
 
   Widget _buildConditionalAttributes(List<ProductAttribute>? attributes) {
@@ -838,54 +850,46 @@ class _AddToCartButtonState extends State<AddToCartButton> {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.topCenter,
-      height: 85.0,
+      height: 100.0,
       padding: const EdgeInsets.only(
-          left: 16.0, right: 16.0, top: 16.0, bottom: 16.0),
+          left: 12.0, right: 12.0, top: 24.0, bottom: 24.0),
       decoration: const BoxDecoration(
-        color: Colors.white,
-        boxShadow: AppColors.SHADOW,
+        color: AppColors.PRIMARY_COLOR_DARK,
+        borderRadius: BorderRadius.all(Radius.circular(15.0)),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(
-            child: DefaultButton(
-                borderColor: AppColors.PRIMARY_COLOR_DARK,
-                backgroundColor: Colors.transparent,
-                label: 'add_to_cart'.tr(),
-                iconLocation: DefaultButtonIconLocation.End,
-                icon: SvgPicture.asset(
-                  'lib/res/assets/basket_fill_icon.svg',
-                  color: AppColors.PRIMARY_COLOR,
-                ),
-                labelStyle: Theme.of(context)
-                    .textTheme
-                    .displayLarge!
-                    .copyWith(color: Colors.black, height: 1.0),
-                keepButtonSizeOnLoading: true,
-                onPressed: () async {
-                  if (_initialQuantity <= 0) {
-                    showSnackBar(context,
-                        message: 'choose_quantity_and_add',
-                        duration: 1,
-                        margin: const EdgeInsets.fromLTRB(
-                            16, 16, 16, navbarHeight));
-                  } else {
-                    await widget.onAddPress(_initialQuantity);
-                  }
-                }),
-          ),
           // if (_initialQuantity > 0)
-          Expanded(
-            child: QuantityButton(
-                quantity: _initialQuantity,
-                onAddToCart: (quantity) {
-                  _initialQuantity = quantity;
-                },
-                onRemoveFromCart: (quantity) {
-                  _initialQuantity = quantity;
-                }),
-          )
+          QuantityButton(
+              quantity: _initialQuantity,
+              onAddToCart: (quantity) {
+                _initialQuantity = quantity;
+              },
+              onRemoveFromCart: (quantity) {
+                _initialQuantity = quantity;
+              }),
+          DefaultButton(
+              backgroundColor: Colors.transparent,
+              label: 'add_to_cart'.tr(),
+              iconLocation: DefaultButtonIconLocation.Start,
+              icon: SvgPicture.asset('lib/res/assets/add_to_cart_icon.svg'),
+              labelStyle: Theme.of(context)
+                  .textTheme
+                  .displayLarge!
+                  .copyWith(color: Colors.white, height: 1.0),
+              keepButtonSizeOnLoading: true,
+              onPressed: () async {
+                if (_initialQuantity <= 0) {
+                  showSnackBar(context,
+                      message: 'choose_quantity_and_add',
+                      duration: 1,
+                      margin:
+                          const EdgeInsets.fromLTRB(16, 16, 16, navbarHeight));
+                } else {
+                  await widget.onAddPress(_initialQuantity);
+                }
+              }),
         ],
       ),
     );

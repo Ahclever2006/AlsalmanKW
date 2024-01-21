@@ -175,6 +175,7 @@ abstract class ApiEndPoint {
   //     '$_REQUEST_URL/Customer/PasswordRecoverySend';
 
   static const getProductDetailsData = '$_REQUEST_URL/baqah/product/';
+  static const getBookingTimes = '$_REQUEST_URL/booking/timeslot/list';
   static const GET_PRODUCT_DETAILS_CONDITIONAL_ATTRIBUTES_DATA =
       '$_REQUEST_URL/Product/GetConditionAttribute';
   static const GET_PRODUCT_DETAILS_COMBINATION_ATTRIBUTES_DATA =

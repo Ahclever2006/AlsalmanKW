@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 
 import '../../../../../core/abstract/base_cubit.dart';
+import '../../../../../core/data/models/times_options_model.dart';
 import '../../../../../core/exceptions/redundant_request_exception.dart';
 import '../../../../../core/service/dynamic_link_service.dart';
 import '../../../../../core/service/share_service.dart';
@@ -72,6 +73,31 @@ class ProductDetailsCubit extends BaseCubit<ProductDetailsState> {
   }
 
   Future<void> refresh(int productId) => getProductDetailsData(productId, true);
+
+  Future<void> loadTimes({
+    required int productId,
+    required String date,
+  }) async {
+    try {
+      emit(state.copyWith(status: ProductDetailsStateStatus.loading));
+      final timesList = await _productDetailsRepository.getTimes(
+          productId: productId, date: date);
+
+      emit(state.copyWith(
+        status: ProductDetailsStateStatus.loaded,
+        timesList: timesList,
+        date: date,
+        timeId: -1,
+      ));
+    } on Exception catch (e) {
+      emit(state.copyWith(
+          status: ProductDetailsStateStatus.error, errorMessage: e.toString()));
+    }
+  }
+
+  void setTime(int id) {
+    emit(state.copyWith(status: ProductDetailsStateStatus.loaded, timeId: id));
+  }
 
   Future<void> getProductDetailsCombinationAttributesData(
     int productId,

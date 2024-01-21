@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:alsalman_app/core/utils/media_query_values.dart';
 import 'package:flutter/material.dart';
 import 'package:size_helper/size_helper.dart';
 
@@ -42,16 +43,17 @@ class _QuantityButtonState extends State<QuantityButton> {
   @override
   Widget build(BuildContext context) {
     final double iconSize = context.sizeHelper(
-      tabletLarge: 24.0,
+      tabletLarge: 28.0,
       desktopSmall: 40.0,
     );
     return Container(
+      width: context.width * 0.35,
       alignment: Alignment.center,
-      decoration: BoxDecoration(
-          border: Border.all(color: AppColors.PRIMARY_COLOR_DARK),
-          borderRadius: const BorderRadius.all(Radius.circular(24.0))),
+      decoration: const BoxDecoration(
+          color: AppColors.ADD_TO_CART_COLOR,
+          borderRadius: BorderRadius.all(Radius.circular(16.0))),
       margin: const EdgeInsets.symmetric(horizontal: 12.0),
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -67,7 +69,10 @@ class _QuantityButtonState extends State<QuantityButton> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: TitleText(text: _quantity.toString()),
+            child: TitleText(
+              text: _quantity.toString(),
+              color: AppColors.PRIMARY_COLOR_DARK,
+            ),
           ),
           GestureDetector(
             onTap: increaseQuantity,
@@ -82,10 +87,12 @@ class _QuantityButtonState extends State<QuantityButton> {
               _isPressed = false;
               timer?.cancel();
             },
-            child: Icon(
-              Icons.add,
-              size: iconSize,
-              color: AppColors.PRIMARY_COLOR,
+            child: Container(
+              padding: EdgeInsets.all(4.0),
+              decoration: BoxDecoration(
+                  color: AppColors.PRIMARY_COLOR,
+                  borderRadius: BorderRadius.all(Radius.circular(8.0))),
+              child: Icon(Icons.add, size: iconSize),
             ),
           ),
         ],
@@ -99,7 +106,7 @@ class _QuantityButtonState extends State<QuantityButton> {
   }
 
   void decreaseQuantity() {
-    if (_quantity > 0) {
+    if (_quantity > (widget.quantity ?? 0)) {
       setState(() => _quantity--);
       widget.onRemoveFromCart(_quantity);
     }

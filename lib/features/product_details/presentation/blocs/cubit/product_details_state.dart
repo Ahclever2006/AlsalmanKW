@@ -37,6 +37,9 @@ class ProductDetailsState {
   final double? fontSize;
   final int? imageId;
   final bool? isDotsBetweenInitials;
+  final int? timeId;
+  final String? date;
+  final List<TimesOptionModel>? timesList;
   final String? errorMessage;
 
   const ProductDetailsState({
@@ -55,6 +58,9 @@ class ProductDetailsState {
     this.fontSize,
     this.imageId,
     this.isDotsBetweenInitials,
+    this.timeId,
+    this.date,
+    this.timesList,
     this.errorMessage,
   });
 
@@ -75,6 +81,9 @@ class ProductDetailsState {
         other.fontSize == fontSize &&
         other.imageId == imageId &&
         other.isDotsBetweenInitials == isDotsBetweenInitials &&
+        other.date == date &&
+        other.timeId == timeId &&
+        listEquals(other.timesList, timesList) &&
         other.errorMessage == errorMessage &&
         listEquals(
             other.conditionalAttributesModel, conditionalAttributesModel) &&
@@ -100,6 +109,9 @@ class ProductDetailsState {
       fontSize.hashCode ^
       imageId.hashCode ^
       isDotsBetweenInitials.hashCode ^
+      timeId.hashCode ^
+      errorMessage.hashCode ^
+      timesList.hashCode ^
       errorMessage.hashCode;
 
   ProductDetailsState copyWith({
@@ -119,6 +131,9 @@ class ProductDetailsState {
     double? fontSize,
     int? imageId,
     bool? isDotsBetweenInitials,
+    int? timeId,
+    String? date,
+    List<TimesOptionModel>? timesList,
   }) {
     return ProductDetailsState(
       status: status ?? this.status,
@@ -141,6 +156,9 @@ class ProductDetailsState {
       imageId: imageId ?? this.imageId,
       isDotsBetweenInitials:
           isDotsBetweenInitials ?? this.isDotsBetweenInitials,
+      timeId: timeId ?? this.timeId,
+      date: date ?? this.date,
+      timesList: timesList ?? this.timesList,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }
