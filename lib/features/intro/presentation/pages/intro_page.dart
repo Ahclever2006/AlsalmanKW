@@ -173,12 +173,14 @@ class _IntroPageState extends State<IntroPage> {
           children: [
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 48.0),
-                child: TitleText.large(
-                    text: text, color: AppColors.PRIMARY_COLOR_DARK),
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: TitleText(
+                    subtractedSize: -4,
+                    text: text,
+                    textAlign: TextAlign.center,
+                    color: AppColors.PRIMARY_COLOR_DARK),
               ),
             ),
-            SizedBox(height: context.height * 0.05),
             AnimatedSmoothIndicator(
                 activeIndex: state.introBannerIndex ?? 0,
                 count: state.introBanners?.data?.length ?? 0,

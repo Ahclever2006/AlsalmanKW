@@ -80,7 +80,7 @@ class InnerPagesAppBar extends StatelessWidget {
           if (viewSearchIcon)
             PositionedDirectional(
               top: -8.0,
-              end: 48,
+              end: viewCartIcon ? 48.0 : 16.0,
               child: DefaultButton(
                   backgroundColor: Colors.transparent,
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
