@@ -1,4 +1,3 @@
-import 'package:flutter_svg/svg.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import '../../../../shared_widgets/stateless/drawer_appbar.dart';
