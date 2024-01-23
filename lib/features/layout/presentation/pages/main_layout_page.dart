@@ -173,13 +173,13 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
                           ),
                           if (state.cartCount > 0)
                             PositionedDirectional(
-                              top: -8.0,
-                              end: 16.0,
+                              top: -12.0,
+                              end: 4.0,
                               child: Container(
                                 decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: AppColors.PRIMARY_COLOR_DARK),
-                                padding: const EdgeInsets.all(6.0),
+                                padding: const EdgeInsets.all(4.0),
                                 child: TitleText.medium(
                                   text: '${state.cartCount}',
                                   color: Colors.white,

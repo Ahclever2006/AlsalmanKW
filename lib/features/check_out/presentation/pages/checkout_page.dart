@@ -596,6 +596,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
   Widget _buildBottomSection(
       BuildContext context, PaymentSummaryModel? payment) {
     return Container(
+      decoration: const BoxDecoration(
+          color: AppColors.CUSTOM_APP_PAGE_COLOR,
+          boxShadow: AppColors.SHADOW_LIGHT),
       padding: const EdgeInsets.all(16.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
