@@ -744,18 +744,17 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         await cubit
                             .confirmPayment(invoiceId: params['id'])
                             .whenComplete(() => navigatorKey.currentState
-                                    ?.pushReplacement(
-                                        MaterialPageRoute(builder: (_) {
+                                    ?.push(MaterialPageRoute(builder: (_) {
                                   return PaymentSuccessScreen(
                                       isSuccess: true,
-                                      orderId: cubit.state.confirmModel!.id);
+                                    orderId: cubit.state.confirmModel!.id);
                                 })));
                       },
                       onError: (error) {
                         //log(error.toString());
                         Future.delayed(const Duration(milliseconds: 200), () {
                           navigatorKey.currentState
-                              ?.pushReplacement(MaterialPageRoute(builder: (_) {
+                              ?.push(MaterialPageRoute(builder: (_) {
                             return PaymentSuccessScreen(
                                 isSuccess: false,
                                 orderId: cubit.state.confirmModel!.id);

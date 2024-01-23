@@ -253,7 +253,9 @@ class AuthCubit extends BaseCubit<AuthState> {
 
   Future<void> changeUserLanguage() async {
     try {
+      emit(state.copyWith(status: AuthStateStatus.initial));
       await _authRepository.changeUserLanguage();
+      emit(state.copyWith(status: AuthStateStatus.userLanguageChanged));
     } on RedundantRequestException catch (e) {
       log(e.toString());
     } catch (e) {
@@ -273,6 +275,8 @@ class AuthCubit extends BaseCubit<AuthState> {
       try {
         await _authRepository
             .editAccountData(editedUser.copyWith(email: oldUser?.email));
+
+        await getUserData();
 
         emit(state.copyWith(status: AuthStateStatus.loggedIn));
         return true;

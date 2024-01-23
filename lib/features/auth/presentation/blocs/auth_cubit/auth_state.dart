@@ -5,6 +5,7 @@ enum AuthStateStatus {
   loading,
   loggedIn,
   userInfoLoaded,
+  userLanguageChanged,
   guest,
   error,
   forgetPasswordSent,
@@ -19,6 +20,8 @@ extension AuthStateX on AuthState {
   bool get isLoading => status == AuthStateStatus.loading;
   bool get isLoggedIn => status == AuthStateStatus.loggedIn;
   bool get isUserInfoLoaded => status == AuthStateStatus.userInfoLoaded;
+  bool get isUserLanguageChanged =>
+      status == AuthStateStatus.userLanguageChanged;
   bool get isGuest => status == AuthStateStatus.guest;
   bool get isError => status == AuthStateStatus.error;
   bool get isForgetPasswordSent => status == AuthStateStatus.forgetPasswordSent;

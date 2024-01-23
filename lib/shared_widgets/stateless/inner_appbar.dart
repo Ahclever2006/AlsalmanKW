@@ -58,17 +58,13 @@ class InnerPagesAppBar extends StatelessWidget {
               start: 8.0,
               child: InkWell(
                 child: Container(
-                  padding: const EdgeInsets.all(2.0),
+                  padding: const EdgeInsets.all(10.0),
                   decoration: const BoxDecoration(
                       color: Colors.white, shape: BoxShape.circle),
                   child: backIcon == null
-                      ? Icon(
-                          Icons.chevron_left,
-                          color: AppColors.PRIMARY_COLOR,
-                          size: context.sizeHelper(
-                            tabletLarge: 30.0,
-                            desktopSmall: 40.0,
-                          ),
+                      ? SvgPicture.asset(
+                          'lib/res/assets/back_arrow.svg',
+                          matchTextDirection: true,
                         )
                       : SvgPicture.asset('lib/res/assets/$backIcon.svg'),
                 ),

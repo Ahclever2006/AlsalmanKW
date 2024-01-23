@@ -5,6 +5,7 @@ import '../../../../shared_widgets/stateless/drawer_appbar.dart';
 import '../../../../core/utils/media_query_values.dart';
 import 'package:upgrader/upgrader.dart';
 import '../../../../shared_widgets/stateful/gif_widget.dart';
+import '../../../auth/presentation/blocs/auth_cubit/auth_cubit.dart';
 import '../../../cart_tab/presentation/cubit/cart_cubit.dart';
 import '../../../categories/presentation/pages/categories_page.dart';
 import '../../../j_carousal_products/presentation/pages/j_carousal_products_page.dart';
@@ -118,17 +119,24 @@ class _HomeTabState extends State<HomeTab> {
     HomeBannerModel? categoriesBanners,
     JCarouselsModel? carousalSections,
   }) {
-    return ListView(
-      physics: const NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.zero,
-      shrinkWrap: true,
-      children: [
-        _buildHomeBanners(context, banners),
-        _buildHomeCategories(context, categories),
-        _buildShadowDivider(),
-        _buildHomeBanners(context, categoriesBanners, autoPlay: false),
-        ..._buildHomeCarousalProductSections(context, carousalSections),
-      ],
+    final homeCubit = context.read<HomeCubit>();
+
+    return BlocListener<AuthCubit, AuthState>(
+      listener: (context, state) {
+        if (state.isUserLanguageChanged) homeCubit.refresh();
+      },
+      child: ListView(
+        physics: const NeverScrollableScrollPhysics(),
+        padding: EdgeInsets.zero,
+        shrinkWrap: true,
+        children: [
+          _buildHomeBanners(context, banners),
+          _buildHomeCategories(context, categories),
+          _buildShadowDivider(),
+          _buildHomeBanners(context, categoriesBanners, autoPlay: false),
+          ..._buildHomeCarousalProductSections(context, carousalSections),
+        ],
+      ),
     );
   }
 

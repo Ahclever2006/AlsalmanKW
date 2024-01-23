@@ -98,18 +98,13 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
               end: 8.0,
               child: InkWell(
                 child: Container(
-                  padding: const EdgeInsets.all(2.0),
-                  decoration: const BoxDecoration(
-                      color: Colors.white, shape: BoxShape.circle),
-                  child: Icon(
-                    Icons.chevron_left,
-                    color: AppColors.PRIMARY_COLOR,
-                    size: context.sizeHelper(
-                      tabletLarge: 36.0,
-                      desktopSmall: 45.0,
-                    ),
-                  ),
-                ),
+                    padding: const EdgeInsets.all(12.0),
+                    decoration: const BoxDecoration(
+                        color: Colors.white, shape: BoxShape.circle),
+                    child: SvgPicture.asset(
+                      'lib/res/assets/back_arrow.svg',
+                      matchTextDirection: true,
+                    )),
                 onTap: () {
                   drawerController.toggle!();
                 },
@@ -159,7 +154,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
                 _buildDrawerItem(
                   padding: padding,
                   fontSize: fontSize,
-                  title: 'basket'.tr(),
+                  title: 'basket',
                   icon: BlocBuilder<CartCubit, CartState>(
                     builder: (context, state) {
                       return Stack(
@@ -194,7 +189,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
                 ),
                 if (isLoggedIn)
                   _buildDrawerItem(
-                    title: 'favorites'.tr(),
+                    title: 'favorites',
                     icon: SvgPicture.asset(
                       'lib/res/assets/fav_account_icon.svg',
                       width: iconWidth,
@@ -206,7 +201,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
                   ),
                 if (isLoggedIn)
                   _buildDrawerItem(
-                    title: 'wallet'.tr(),
+                    title: 'wallet',
                     icon: SvgPicture.asset(
                       'lib/res/assets/wallet_account_icon.svg',
                       width: iconWidth,
@@ -219,7 +214,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
                 if (isLoggedIn) _buildDivider(),
                 if (isLoggedIn)
                   _buildDrawerItem(
-                    title: 'orders'.tr(),
+                    title: 'orders',
                     icon: SvgPicture.asset(
                       'lib/res/assets/orders_account_icon.svg',
                       width: iconWidth,
@@ -231,7 +226,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
                   ),
                 if (isLoggedIn)
                   _buildDrawerItem(
-                    title: 'addresses'.tr(),
+                    title: 'addresses',
                     icon: SvgPicture.asset(
                       'lib/res/assets/addresses_account_icon.svg',
                       width: iconWidth,
@@ -243,7 +238,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
                   ),
                 _buildDivider(),
                 _buildDrawerItem(
-                  title: 'change_password'.tr(),
+                  title: 'change_password',
                   icon: SvgPicture.asset(
                     'lib/res/assets/change_password_account_icon.svg',
                     width: iconWidth,
@@ -253,7 +248,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
                   fontSize: fontSize,
                 ),
                 _buildDrawerItem(
-                  title: 'notifications'.tr(),
+                  title: 'notifications',
                   icon: SvgPicture.asset(
                     'lib/res/assets/notification_account_icon.svg',
                     width: iconWidth,
@@ -264,7 +259,8 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
                   fontSize: fontSize,
                 ),
                 _buildDrawerItem(
-                  title: 'language'.tr(),
+                  isLanguage: true,
+                  title: 'language',
                   icon: SvgPicture.asset(
                     'lib/res/assets/language_icon.svg',
                     width: iconWidth,
@@ -276,7 +272,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
                 ),
                 _buildDivider(),
                 _buildDrawerItem(
-                  title: 'contact_us'.tr(),
+                  title: 'contact_us',
                   icon: SvgPicture.asset(
                     'lib/res/assets/contact_us_account_icon.svg',
                     width: iconWidth,
@@ -287,7 +283,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
                   fontSize: fontSize,
                 ),
                 _buildDrawerItem(
-                  title: 'privacy_policy'.tr(),
+                  title: 'privacy_policy',
                   icon: SvgPicture.asset(
                     'lib/res/assets/privacy_account_icon.svg',
                     width: iconWidth,
@@ -299,7 +295,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
                   fontSize: fontSize,
                 ),
                 _buildDrawerItem(
-                  title: 'terms_of_use'.tr(),
+                  title: 'terms_of_use',
                   icon: SvgPicture.asset(
                     'lib/res/assets/terms_account_icon.svg',
                     width: iconWidth,
@@ -310,7 +306,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
                   fontSize: fontSize,
                 ),
                 _buildDrawerItem(
-                  title: 'about_us'.tr(),
+                  title: 'about_us',
                   icon: SvgPicture.asset(
                     'lib/res/assets/about_us_account_icon.svg',
                     width: iconWidth,
@@ -419,18 +415,20 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
 
   Widget _buildDivider() {
     return Divider(
-      thickness: 1,
-      color: AppColors.PRIMARY_COLOR,
+      thickness: 2,
+      color: AppColors.PRIMARY_COLOR_LIGHT,
       endIndent: context.width * 0.22,
     );
   }
 
-  Widget _buildDrawerItem(
-      {required String title,
-      required VoidCallback onTap,
-      required double padding,
-      required double fontSize,
-      required Widget icon}) {
+  Widget _buildDrawerItem({
+    required String title,
+    required VoidCallback onTap,
+    required double padding,
+    required double fontSize,
+    required Widget icon,
+    bool? isLanguage = false,
+  }) {
     return InkWell(
       onTap: onTap,
       child: Padding(
@@ -442,11 +440,18 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
             Expanded(
                 flex: 3,
                 child: TitleText(
-                    text: title, color: AppColors.PRIMARY_COLOR_DARK)),
-            const Icon(
-              Icons.chevron_right,
-              color: AppColors.PRIMARY_COLOR_DARK,
-            ),
+                    text: isLanguage == true ? 'language_title' : title,
+                    color: AppColors.PRIMARY_COLOR_DARK)),
+            isLanguage == true
+                ? TitleText(
+                    text: title,
+                    color: AppColors.PRIMARY_COLOR_DARK,
+                    margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                  )
+                : const Icon(
+                    Icons.chevron_right,
+                    color: AppColors.PRIMARY_COLOR_DARK,
+                  ),
             const Spacer(),
           ],
         ),
