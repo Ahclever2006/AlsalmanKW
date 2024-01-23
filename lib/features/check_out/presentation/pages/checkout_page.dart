@@ -24,7 +24,6 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../shared_widgets/stateless/custom_cached_network_image.dart';
 import '../../../../shared_widgets/stateless/diagonal_line.dart';
-import '../../../layout/presentation/cubit/main_layout_cubit.dart';
 import '../blocs/order_cubit/checkout_cubit.dart';
 
 import '../../../../core/utils/navigator_helper.dart';
@@ -379,10 +378,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
   }
 
   void _goToHomePage(BuildContext context, String message) {
-    final mainLayoutCubit = context.read<MainLayoutCubit>();
+    // final mainLayoutCubit = context.read<MainLayoutCubit>();
     final cartCubit = context.read<CartCubit>();
 
-    mainLayoutCubit.onBottomNavPressed(0);
+    // mainLayoutCubit.onBottomNavPressed(0);
 
     NavigatorHelper.of(context)
         .popUntil(ModalRoute.withName("/MainLayOutPage"));

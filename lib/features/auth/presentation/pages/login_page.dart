@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:alsalman_app/core/utils/media_query_values.dart';
-import 'package:alsalman_app/shared_widgets/stateless/title_text.dart';
 
 import '../../../../shared_widgets/stateless/subtitle_text.dart';
 
@@ -9,7 +8,6 @@ import '../../../../core/utils/navigator_helper.dart';
 import '../../../../shared_widgets/stateless/inner_appbar.dart';
 import '../../../address/presentation/blocs/address_cubit/address_cubit.dart';
 import '../../../cart_tab/presentation/cubit/cart_cubit.dart';
-import '../../../layout/presentation/cubit/main_layout_cubit.dart';
 import '../blocs/auth_cubit/auth_cubit.dart';
 import 'sign_up_page.dart';
 import '../../../../res/style/app_colors.dart';
@@ -24,7 +22,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'forget_password_page.dart';
 
@@ -298,8 +295,8 @@ class _LoginPageState extends State<LoginPage> {
     final cartCubit = context.read<CartCubit>();
     final addressCubit = context.read<AddressCubit>();
 
-    final mainLayoutCubit = context.read<MainLayoutCubit>();
-    mainLayoutCubit.onBottomNavPressed(0);
+    // final mainLayoutCubit = context.read<MainLayoutCubit>();
+    // mainLayoutCubit.onBottomNavPressed(0);
 
     cartCubit
         .loadCart()

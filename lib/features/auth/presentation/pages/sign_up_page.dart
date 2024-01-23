@@ -14,7 +14,6 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import '../../../../core/utils/navigator_helper.dart';
 import '../../../address/presentation/blocs/address_cubit/address_cubit.dart';
 import '../../../cart_tab/presentation/cubit/cart_cubit.dart';
-import '../../../layout/presentation/cubit/main_layout_cubit.dart';
 import '../../data/models/user.dart';
 import '../../../../res/style/app_colors.dart';
 import '../../../../shared_widgets/other/show_snack_bar.dart';
@@ -379,8 +378,8 @@ class _SignUpPageState extends State<SignUpPage> {
     final cartCubit = context.read<CartCubit>();
     final addressCubit = context.read<AddressCubit>();
 
-    final mainLayoutCubit = context.read<MainLayoutCubit>();
-    mainLayoutCubit.onBottomNavPressed(0);
+    // final mainLayoutCubit = context.read<MainLayoutCubit>();
+    // mainLayoutCubit.onBottomNavPressed(0);
 
     cartCubit
         .loadCart()

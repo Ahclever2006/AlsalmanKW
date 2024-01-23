@@ -10,7 +10,6 @@ import '../text_fields/default_text_form_field.dart';
 import '../text_fields/first_name_text_form_field.dart';
 
 import '../../features/auth/presentation/blocs/auth_cubit/auth_cubit.dart';
-import '../../features/layout/presentation/cubit/main_layout_cubit.dart';
 import '../stateful/default_button.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart' hide DatePickerTheme;
@@ -257,8 +256,8 @@ class _EditUserInfoBottomSheetWidgetState
   }
 
   void _goToHomePage(BuildContext context) {
-    final mainLayoutCubit = context.read<MainLayoutCubit>();
-    mainLayoutCubit.onBottomNavPressed(0);
+    // final mainLayoutCubit = context.read<MainLayoutCubit>();
+    // mainLayoutCubit.onBottomNavPressed(0);
 
     NavigatorHelper.of(context)
         .popUntil(ModalRoute.withName("/MainLayOutPage"));

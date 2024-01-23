@@ -11,7 +11,6 @@ import '../../../../shared_widgets/stateless/inner_appbar.dart';
 import '../../../../shared_widgets/stateless/subtitle_text.dart';
 
 import '../../../cart_tab/presentation/cubit/cart_cubit.dart';
-import '../../../layout/presentation/cubit/main_layout_cubit.dart';
 import '/shared_widgets/stateless/custom_app_page.dart';
 import '/shared_widgets/stateful/default_button.dart';
 import '/shared_widgets/other/show_snack_bar.dart';
@@ -120,9 +119,9 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
   }
 
   void _goToHomePage(BuildContext context) {
-    final mainLayoutCubit = context.read<MainLayoutCubit>();
+    // final mainLayoutCubit = context.read<MainLayoutCubit>();
 
-    mainLayoutCubit.onBottomNavPressed(0);
+    // mainLayoutCubit.onBottomNavPressed(0);
 
     NavigatorHelper.of(context)
         .popUntil(ModalRoute.withName("/MainLayOutPage"));

@@ -6,7 +6,6 @@ import '../../../../core/utils/media_query_values.dart';
 import '../../../../core/utils/navigator_helper.dart';
 import '../../../../shared_widgets/stateful/default_button.dart';
 import '../../../cart_tab/presentation/cubit/cart_cubit.dart';
-import '../../../layout/presentation/cubit/main_layout_cubit.dart';
 import '/di/injector.dart';
 import '/shared_widgets/other/show_snack_bar.dart';
 import '/shared_widgets/stateless/custom_app_page.dart';
@@ -148,8 +147,8 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
   void _goToHomePage(BuildContext context) {
     final cartCubit = context.read<CartCubit>();
 
-    final mainLayoutCubit = context.read<MainLayoutCubit>();
-    mainLayoutCubit.onBottomNavPressed(3);
+    // final mainLayoutCubit = context.read<MainLayoutCubit>();
+    // mainLayoutCubit.onBottomNavPressed(0);
 
     cartCubit
         .loadCart()

@@ -24,7 +24,6 @@ import '../../../address/presentation/blocs/address_cubit/address_cubit.dart';
 import '../../../auth/data/models/user_info.dart';
 import '../../../auth/presentation/blocs/auth_cubit/auth_cubit.dart';
 import '../../../cart_tab/presentation/cubit/cart_cubit.dart';
-import '../../../layout/presentation/cubit/main_layout_cubit.dart';
 
 class ProfilePage extends StatefulWidget {
   static const routeName = '/ProfilePage';
@@ -260,9 +259,9 @@ class _ProfilePageState extends State<ProfilePage> {
       NavigatorHelper.of(context).pushNamed(DeleteAccountPage.routeName);
 
   void _goToHomePage(BuildContext context) {
-    final mainLayoutCubit = context.read<MainLayoutCubit>();
+    // final mainLayoutCubit = context.read<MainLayoutCubit>();
 
-    mainLayoutCubit.onBottomNavPressed(0);
+    // mainLayoutCubit.onBottomNavPressed(0);
 
     NavigatorHelper.of(context)
         .popUntil(ModalRoute.withName("/MainLayOutPage"));
@@ -315,8 +314,8 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void _goToHomePageAfterUpdate(BuildContext context) {
-    final mainLayoutCubit = context.read<MainLayoutCubit>();
-    mainLayoutCubit.onBottomNavPressed(2);
+    // final mainLayoutCubit = context.read<MainLayoutCubit>();
+    // mainLayoutCubit.onBottomNavPressed(0);
 
     NavigatorHelper.of(context)
         .popUntil(ModalRoute.withName("/MainLayOutPage"));
