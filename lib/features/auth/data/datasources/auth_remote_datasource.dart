@@ -15,6 +15,9 @@ abstract class AuthRemoteDataSource {
   Future<User> refreshToken(String refreshTokenDate);
   Future<UserInfoModel?> getUserData();
   Future<void> editAccountData(UserInfoData newUser);
+  Future<String?> getAvatar();
+  Future<void> uploadAvatar(File file);
+  Future<void> deleteAvatar();
   Future<Topic?> getTopicData(int id);
   Future<void> deleteAccount();
   Future<void> changeUserLanguage(int languageId);
@@ -366,6 +369,54 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         throw RequestException(response.data['Message']);
 
       return await login(user.email!, user.password!);
+    });
+  }
+
+  @override
+  Future<String?> getAvatar() {
+    const url = ApiEndPoint.getAvatar;
+
+    return _networkService.get(url).then((response) async {
+      if (response.statusCode! > 399)
+        throw RequestException(response.data['Message']);
+
+      final result = response.data;
+
+      return result['Data']['avatar_url'];
+    });
+  }
+
+  @override
+  Future<void> deleteAvatar() {
+    const url = ApiEndPoint.deleteAvatar;
+
+    return _networkService.delete(url).then((response) async {
+      if (response.statusCode! > 399)
+        throw RequestException(response.data['Message']);
+
+      // final result = response.data;
+
+      // return result['Data']['avatar_url'];
+    });
+  }
+
+  @override
+  Future<void> uploadAvatar(File file) {
+    const url = ApiEndPoint.uploadAvatar;
+
+    String? fileName = file.path.split('/').last;
+
+    final params = {'fileName': fileName, 'contentType': 'jpeg'};
+
+    return _networkService
+        .post(
+      url,
+      queryParameters: params,
+      data: file.readAsBytesSync(),
+    )
+        .then((response) async {
+      if (response.statusCode! > 399)
+        throw RequestException(response.data['Message']);
     });
   }
 }

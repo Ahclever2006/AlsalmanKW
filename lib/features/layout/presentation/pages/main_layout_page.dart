@@ -6,6 +6,7 @@ import 'package:size_helper/size_helper.dart';
 import '../../../../core/enums/topic_type.dart';
 import '../../../../core/utils/navigator_helper.dart';
 import '../../../../shared_widgets/stateful/default_button.dart';
+import '../../../../shared_widgets/stateful/user_profile_image_picker.dart';
 import '../../../account_tab/presentation/pages/change_password_page.dart';
 import '../../../account_tab/presentation/pages/contact_us_page.dart';
 import '../../../account_tab/presentation/pages/language_chooser_page.dart';
@@ -153,7 +154,8 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
                   _buildNormalUserSection(
                       context,
                       state.userInfo?.data?.firstName ?? '',
-                      state.userInfo?.data?.email ?? ''),
+                      state.userInfo?.data?.email ?? '',
+                      state.userAvatar),
                 _buildDrawerItem(
                   padding: padding,
                   fontSize: fontSize,
@@ -359,8 +361,8 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
     NavigatorHelper.of(context).pushNamed(LoginPage.routeName);
   }
 
-  Widget _buildNormalUserSection(
-      BuildContext context, String? username, String? email) {
+  Widget _buildNormalUserSection(BuildContext context, String? username,
+      String? email, String? userAvatar) {
     return Container(
         width: double.infinity,
         margin: EdgeInsetsDirectional.only(end: context.width * 0.2),
@@ -369,29 +371,41 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TitleText(
-                text: 'welcome'.tr(args: [username ?? 'user_name'.tr()]),
-                color: AppColors.PRIMARY_COLOR,
-                maxLines: 2),
-            const SizedBox(height: 12.0),
-            SubtitleText(
-              text: email ?? 'Unknown',
-              color: AppColors.PRIMARY_COLOR_DARK,
-            ),
-            Align(
-              alignment: AlignmentDirectional.bottomEnd,
-              child: InkWell(
-                  onTap: () => _goToProfilePage(context),
-                  child: Container(
-                      padding: const EdgeInsets.all(8.0),
-                      decoration: const BoxDecoration(
-                          color: AppColors.PRIMARY_COLOR,
-                          shape: BoxShape.circle),
-                      child: SvgPicture.asset(
-                          'lib/res/assets/settings_icon.svg'))),
+            UserProfileImagePicker(
+                key: ValueKey(userAvatar),
+                normalImagePicker: true,
+                currentImage: userAvatar),
+            const SizedBox(width: 12.0),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TitleText(
+                      text: 'welcome'.tr(args: [username ?? 'user_name'.tr()]),
+                      color: AppColors.PRIMARY_COLOR,
+                      maxLines: 2),
+                  const SizedBox(height: 12.0),
+                  SubtitleText(
+                    text: email ?? 'Unknown',
+                    color: AppColors.PRIMARY_COLOR_DARK,
+                  ),
+                  Align(
+                    alignment: AlignmentDirectional.bottomEnd,
+                    child: InkWell(
+                        onTap: () => _goToProfilePage(context),
+                        child: Container(
+                            padding: const EdgeInsets.all(8.0),
+                            decoration: const BoxDecoration(
+                                color: AppColors.PRIMARY_COLOR,
+                                shape: BoxShape.circle),
+                            child: SvgPicture.asset(
+                                'lib/res/assets/settings_icon.svg'))),
+                  ),
+                ],
+              ),
             ),
           ],
         ));

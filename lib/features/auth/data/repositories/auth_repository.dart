@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import '../../../../core/data/datasources/device_type_data_source.dart';
 import '../../../../core/data/datasources/external_login_data_source.dart';
 import '../../../../core/data/datasources/notification_data_source.dart';
@@ -20,6 +22,9 @@ abstract class AuthRepository {
   Future<void> logout();
   Future<UserInfoModel?> getUserData();
   Future<void> editAccountData(UserInfoData newUser);
+  Future<String?> getAvatar();
+  Future<void> uploadAvatar(File file);
+  Future<void> deleteAvatar();
   Future<Topic?> getTopicsData(int id);
   Future<void> deleteAccount();
   Future<void> changeUserLanguage();
@@ -307,4 +312,13 @@ class AuthRepositoryImpl implements AuthRepository {
 
     return resultUser;
   }
+
+  @override
+  Future<String?> getAvatar() => _remoteDataSource.getAvatar();
+
+  @override
+  Future<void> deleteAvatar() => _remoteDataSource.deleteAvatar();
+
+  @override
+  Future<void> uploadAvatar(File file) => _remoteDataSource.uploadAvatar(file);
 }

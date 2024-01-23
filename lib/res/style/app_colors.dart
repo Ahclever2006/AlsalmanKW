@@ -13,6 +13,8 @@ abstract class AppColors {
   static const GREY_DARK_COLOR = Color(0xFF707070);
   static const GREY_BORDER_COLOR = Color(0xFFDEDEDE);
   static const WHATS_APP_COLOR = Color(0xFF55CD6C);
+  static const PROFILE_CONTAINER_BORDER_COLOR = Color(0xFF0D986A);
+  static const PROFILE_EDIT_COLOR = Color(0xFFFBF9ED);
   static const WALLET_SWITCH_CONTAINER_COLOR = Color(0xFFEAF2F6);
   static const CUSTOM_APP_PAGE_COLOR = Color(0xFFE9F4FC);
   static const SEARCH_ICON_CONTAINER_COLOR = Color(0xFFE8F1F2);

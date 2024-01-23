@@ -13,6 +13,7 @@ import '../../../../core/utils/navigator_helper.dart';
 import '../../../../res/style/app_colors.dart';
 import '../../../../shared_widgets/other/show_snack_bar.dart';
 import '../../../../shared_widgets/stateful/gender_choice_widget.dart';
+import '../../../../shared_widgets/stateful/user_profile_image_picker.dart';
 import '../../../../shared_widgets/stateless/custom_app_page.dart';
 import '../../../../shared_widgets/stateless/inner_appbar.dart';
 import '../../../../shared_widgets/text_fields/default_text_form_field.dart';
@@ -34,6 +35,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  String? _userProfileImage;
+
   late final GlobalKey<FormState> _formKey;
 
   bool _isAutoValidating = false;
@@ -117,6 +120,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final authCubit = context.read<AuthCubit>();
+    _userProfileImage ??= authCubit.state.userAvatar;
     return CustomAppPage(
       safeTop: true,
       child: Scaffold(
@@ -126,6 +131,12 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               const InnerPagesAppBar(
                 label: 'account_info',
+              ),
+              UserProfileImagePicker(
+                heroTag: 'profileImage',
+                isLarge: true,
+                currentImage: _userProfileImage,
+                onImageSelected: ((value) => _userProfileImage = value),
               ),
               ..._buildBody(context),
             ],
@@ -189,14 +200,21 @@ class _ProfilePageState extends State<ProfilePage> {
             borderRadius: const BorderRadius.all(Radius.circular(20.0)),
             onPressed: () async {
               if (_isNotValid()) return;
-              final isSuccess = await authCubit.editAccountData(UserInfoData(
-                  firstName: _firstNameTextController.text.trim(),
-                  email: _emailTextController.text.trim(),
-                  gender: gender,
-                  phone: _phoneNumber?.phoneNumber,
-                  dateOfBirthDay: day,
-                  dateOfBirthMonth: month,
-                  dateOfBirthYear: year));
+              if (_userProfileImage != null &&
+                  !_userProfileImage!.contains('http') == true) {
+                authCubit.uploadAvatar(_userProfileImage!);
+              }
+              final isSuccess = await authCubit.editAccountData(
+                  UserInfoData(
+                      firstName: _firstNameTextController.text.trim(),
+                      email: _emailTextController.text.trim(),
+                      gender: gender,
+                      phone: _phoneNumber?.phoneNumber,
+                      dateOfBirthDay: day,
+                      dateOfBirthMonth: month,
+                      dateOfBirthYear: year),
+                  ignoreCheckEquality: (_userProfileImage != null &&
+                      !_userProfileImage!.contains('http') == true));
 
               if (isSuccess)
                 _goToHomePageAfterUpdate(context);

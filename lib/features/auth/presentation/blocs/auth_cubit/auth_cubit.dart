@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import '../../../../../core/exceptions/social_media_login_canceled_exception.dart';
 import '../../../data/models/user_info.dart';
@@ -261,11 +262,12 @@ class AuthCubit extends BaseCubit<AuthState> {
     }
   }
 
-  Future<bool> editAccountData(UserInfoData editedUser) async {
+  Future<bool> editAccountData(UserInfoData editedUser,
+      {bool ignoreCheckEquality = false}) async {
     var oldUser = state.userInfo?.data;
     final isEqual = _checkUserEquality(
         newUser: editedUser, oldUser: oldUser ?? UserInfoData());
-    if (isEqual)
+    if (isEqual && !ignoreCheckEquality)
       return false;
     else
       try {
@@ -282,6 +284,44 @@ class AuthCubit extends BaseCubit<AuthState> {
             status: AuthStateStatus.error, errorMessage: e.toString()));
         return false;
       }
+  }
+
+  Future<void> getAvatar() async {
+    try {
+      final userAvatar = await _authRepository.getAvatar();
+
+      emit(state.copyWith(
+          status: AuthStateStatus.loggedIn, userAvatar: userAvatar));
+    } on RedundantRequestException catch (e) {
+      log(e.toString());
+    } catch (e) {
+      emit(state.copyWith(
+          status: AuthStateStatus.error, errorMessage: e.toString()));
+    }
+  }
+
+  Future<void> _deleteAvatar() async {
+    try {
+      await _authRepository.deleteAvatar();
+    } on RedundantRequestException catch (e) {
+      log(e.toString());
+    } catch (e) {
+      emit(state.copyWith(
+          status: AuthStateStatus.error, errorMessage: e.toString()));
+    }
+  }
+
+  Future<void> uploadAvatar(String filePath) async {
+    try {
+      await _deleteAvatar();
+      await _authRepository.uploadAvatar(File(filePath));
+      await getAvatar();
+    } on RedundantRequestException catch (e) {
+      log(e.toString());
+    } catch (e) {
+      emit(state.copyWith(
+          status: AuthStateStatus.error, errorMessage: e.toString()));
+    }
   }
 
   Future<void> logOut() async {

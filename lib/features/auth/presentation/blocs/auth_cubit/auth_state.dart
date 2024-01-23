@@ -38,6 +38,7 @@ class AuthState {
   final bool isAdTrackingNotificationEnabled;
   final bool isUserHaveToken;
   final String? tokenExpirationDate;
+  final String? userAvatar;
   final AuthStateStatus status;
   final String? errorMessage;
 
@@ -48,6 +49,7 @@ class AuthState {
     this.isAdTrackingNotificationEnabled = false,
     this.isUserHaveToken = false,
     this.tokenExpirationDate,
+    this.userAvatar,
     this.status = AuthStateStatus.initial,
     this.errorMessage,
   });
@@ -63,6 +65,7 @@ class AuthState {
         other.isAdTrackingNotificationEnabled ==
             isAdTrackingNotificationEnabled &&
         other.isUserHaveToken == isUserHaveToken &&
+        other.userAvatar == userAvatar &&
         other.tokenExpirationDate == tokenExpirationDate &&
         other.status == status &&
         other.errorMessage == errorMessage;
@@ -75,6 +78,7 @@ class AuthState {
       isNotificationEnabled.hashCode ^
       isAdTrackingNotificationEnabled.hashCode ^
       isUserHaveToken.hashCode ^
+      userAvatar.hashCode ^
       tokenExpirationDate.hashCode ^
       status.hashCode ^
       errorMessage.hashCode;
@@ -87,6 +91,7 @@ class AuthState {
     bool? isAdTrackingNotificationEnabled,
     AuthStateStatus? status,
     String? tokenExpirationDate,
+    String? userAvatar,
     String? errorMessage,
   }) {
     return AuthState(
@@ -99,6 +104,7 @@ class AuthState {
       isUserHaveToken: isUserHaveToken ?? this.isUserHaveToken,
       status: status ?? this.status,
       tokenExpirationDate: tokenExpirationDate ?? this.tokenExpirationDate,
+      userAvatar: userAvatar ?? this.userAvatar,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }
