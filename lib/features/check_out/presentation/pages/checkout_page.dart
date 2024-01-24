@@ -182,6 +182,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
                             margin:
                                 const EdgeInsets.symmetric(horizontal: 32.0),
                             label: 'add_address'.tr(),
+                            icon: const Icon(Icons.add, color: Colors.black),
+                            labelStyle:
+                                Theme.of(context).textTheme.displayLarge!,
+                            backgroundColor: AppColors.PRIMARY_COLOR_LIGHT,
                             onPressed: () => _goToAddAddress(context));
                       return BlocBuilder<CheckoutCubit, CheckoutState>(
                         buildWhen: (previous, current) =>
@@ -747,7 +751,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                     ?.push(MaterialPageRoute(builder: (_) {
                                   return PaymentSuccessScreen(
                                       isSuccess: true,
-                                    orderId: cubit.state.confirmModel!.id);
+                                      orderId: cubit.state.confirmModel!.id);
                                 })));
                       },
                       onError: (error) {
