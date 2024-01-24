@@ -105,9 +105,9 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
         ..._buildDeliveryAddressSection(orderDetailsModel!.shippingAddress),
         ..._buildShippingMethodSection(orderDetailsModel.shippingMethod),
         ..._buildOrderSummary(context, orderDetailsModel.items),
+        const SizedBox(height: 16.0),
         DefaultButton(
-            margin: EdgeInsets.symmetric(
-                horizontal: context.width * 0.15, vertical: 16.0),
+            margin: EdgeInsets.symmetric(horizontal: context.width * 0.15),
             label: 're_order'.tr(),
             onPressed: () => orderCubit.reOrder(orderDetails.data!.id!)),
         DefaultButton(
@@ -135,7 +135,10 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
       if (orderProducts != null && orderProducts.isNotEmpty)
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          child: TitleText(text: 'order_summary'),
+          child: TitleText(
+            text: 'order_summary',
+            color: AppColors.PRIMARY_COLOR_DARK,
+          ),
         ),
       if (orderProducts != null && orderProducts.isNotEmpty)
         ...orderProducts
@@ -191,11 +194,18 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                 TitleText(
                   text: cartItem.productName!,
                   maxLines: 2,
+                  color: AppColors.PRIMARY_COLOR_DARK,
                 ),
                 const Spacer(),
-                TitleText(text: '${'qty'.tr()} : ${cartItem.quantity}'),
+                TitleText(
+                  text: '${'qty'.tr()} : ${cartItem.quantity}',
+                  color: AppColors.PRIMARY_COLOR_DARK,
+                ),
                 const SizedBox(height: 12.0),
-                TitleText(text: cartItem.subTotal ?? ''),
+                TitleText(
+                  text: cartItem.subTotal ?? '',
+                  color: AppColors.PRIMARY_COLOR_DARK,
+                ),
               ],
             ),
           )),
@@ -231,8 +241,14 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SubtitleText(text: label),
-          TitleText(text: value),
+          SubtitleText(
+            text: label,
+            color: AppColors.PRIMARY_COLOR_DARK,
+          ),
+          TitleText(
+            text: value,
+            color: AppColors.PRIMARY_COLOR_DARK,
+          ),
         ],
       ),
     );
@@ -242,7 +258,10 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
     return [
       const Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        child: TitleText(text: 'delivery_address'),
+        child: TitleText(
+          text: 'delivery_address',
+          color: AppColors.PRIMARY_COLOR_DARK,
+        ),
       ),
       AddressItemWidget(
         address: shippingAddress!,
@@ -256,7 +275,10 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
     return [
       const Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        child: TitleText(text: 'shipping_method'),
+        child: TitleText(
+          text: 'shipping_method',
+          color: AppColors.PRIMARY_COLOR_DARK,
+        ),
       ),
       Container(
         decoration: const BoxDecoration(
@@ -265,7 +287,10 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
         ),
         padding: const EdgeInsets.all(16.0),
         margin: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: TitleText.medium(text: shippingMethod ?? ''),
+        child: TitleText.medium(
+          text: shippingMethod ?? '',
+          color: AppColors.PRIMARY_COLOR_DARK,
+        ),
       )
     ];
   }

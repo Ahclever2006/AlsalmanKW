@@ -64,30 +64,77 @@ class AddressItemWidget extends StatelessWidget {
                           child: SvgPicture.asset(
                               'lib/res/assets/selected_icon.svg'),
                         ),
-                      TitleText.large(text: placeType),
+                      TitleText.large(
+                        text: placeType,
+                        color: AppColors.PRIMARY_COLOR_DARK,
+                      ),
                     ],
                   ),
                 const SizedBox(height: 16.0),
-                SubtitleText(text: address.firstName!),
-                if (block != null) SubtitleText(text: block),
+                SubtitleText(
+                  text: address.firstName!,
+                  color: AppColors.PRIMARY_COLOR_DARK,
+                ),
+                if (block != null)
+                  SubtitleText(
+                    text: block,
+                    color: AppColors.PRIMARY_COLOR_DARK,
+                  ),
                 if (address.address1 != null)
-                  SubtitleText(text: address.address1!),
-                if (avenue != null) SubtitleText(text: avenue),
-                if (floor != null) SubtitleText(text: floor),
+                  SubtitleText(
+                    text: address.address1!,
+                    color: AppColors.PRIMARY_COLOR_DARK,
+                  ),
+                if (avenue != null)
+                  SubtitleText(
+                    text: avenue,
+                    color: AppColors.PRIMARY_COLOR_DARK,
+                  ),
+                if (floor != null)
+                  SubtitleText(
+                    text: floor,
+                    color: AppColors.PRIMARY_COLOR_DARK,
+                  ),
                 if (apartment != null &&
                     placeType == AddressType.home_type.name)
-                  SubtitleText(text: apartment),
+                  SubtitleText(
+                    text: apartment,
+                    color: AppColors.PRIMARY_COLOR_DARK,
+                  ),
                 if (office != null && placeType == AddressType.office_type.name)
-                  SubtitleText(text: office),
+                  SubtitleText(
+                    text: office,
+                    color: AppColors.PRIMARY_COLOR_DARK,
+                  ),
                 if (other != null && placeType == AddressType.other_type.name)
-                  SubtitleText(text: other),
-                SubtitleText(text: address.phoneNumber!),
+                  SubtitleText(
+                    text: other,
+                    color: AppColors.PRIMARY_COLOR_DARK,
+                  ),
+                SubtitleText(
+                  text: address.phoneNumber!,
+                  color: AppColors.PRIMARY_COLOR_DARK,
+                ),
                 if (address.countryName != null)
-                  SubtitleText(text: address.countryName!),
+                  SubtitleText(
+                    text: address.countryName!,
+                    color: AppColors.PRIMARY_COLOR_DARK,
+                  ),
                 if (address.stateProvinceName != null)
-                  SubtitleText(text: address.stateProvinceName!),
-                if (address.email != null) SubtitleText(text: address.email!),
-                if (notes != null) SubtitleText(text: notes),
+                  SubtitleText(
+                    text: address.stateProvinceName!,
+                    color: AppColors.PRIMARY_COLOR_DARK,
+                  ),
+                if (address.email != null)
+                  SubtitleText(
+                    text: address.email!,
+                    color: AppColors.PRIMARY_COLOR_DARK,
+                  ),
+                if (notes != null)
+                  SubtitleText(
+                    text: notes,
+                    color: AppColors.PRIMARY_COLOR_DARK,
+                  ),
               ],
             ),
           ),

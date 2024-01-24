@@ -186,11 +186,15 @@ class CartTab extends StatelessWidget {
                     data: cartItem.attributeInfo!,
                     style: {
                       "body": Style(
-                          color: AppColors.PRIMARY_COLOR,
+                          padding: HtmlPaddings.zero,
+                          color: AppColors.PRIMARY_COLOR_DARK,
                           fontSize: FontSize(14.0)),
                     },
                   ),
-                  TitleText(text: cartItem.unitPrice!),
+                  TitleText(
+                    text: cartItem.unitPrice!,
+                    color: AppColors.PRIMARY_COLOR_DARK,
+                  ),
                   const SizedBox(height: 8.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -212,7 +216,11 @@ class CartTab extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TitleText.medium(text: cartItem.productName!, maxLines: 1),
+        TitleText.medium(
+          text: cartItem.productName!,
+          maxLines: 1,
+          color: AppColors.PRIMARY_COLOR_DARK,
+        ),
         const SizedBox(height: 12.0),
         Container(
           decoration: const BoxDecoration(

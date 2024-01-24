@@ -36,7 +36,7 @@ class _GenderChoiceWidgetState extends State<GenderChoiceWidget> {
         children: [
           Expanded(
             child: _buildItem(
-                label: 'male'.tr(),
+                label: 'male',
                 isSelected: _selectedIndex == 1,
                 onPress: () {
                   setState(() {
@@ -49,7 +49,7 @@ class _GenderChoiceWidgetState extends State<GenderChoiceWidget> {
           const SizedBox(width: 16.0),
           Expanded(
             child: _buildItem(
-                label: 'female'.tr(),
+                label: 'female',
                 isSelected: _selectedIndex == 2,
                 onPress: () {
                   setState(() {
@@ -77,7 +77,11 @@ class _GenderChoiceWidgetState extends State<GenderChoiceWidget> {
           color: isSelected ? AppColors.PRIMARY_COLOR : Colors.white,
           borderRadius: const BorderRadius.all(Radius.circular(10.0)),
         ),
-        child: SubtitleText(textAlign: TextAlign.center, text: label),
+        child: SubtitleText(
+          textAlign: TextAlign.center,
+          text: label,
+          color: AppColors.PRIMARY_COLOR_DARK,
+        ),
       ),
       onTap: onPress,
     );

@@ -70,7 +70,7 @@ class SimpleBottomSheetWidget extends StatelessWidget {
           Container(
             height: 156.0,
             decoration: const BoxDecoration(
-              color: AppColors.SECONDARY_COLOR,
+              color: AppColors.PRIMARY_COLOR_LIGHT,
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
             ),
             padding: const EdgeInsets.all(8.0),
@@ -96,11 +96,13 @@ class SimpleBottomSheetWidget extends StatelessWidget {
                                   TitleText.medium(
                                     text: name,
                                     maxLines: 2,
+                                    color: AppColors.PRIMARY_COLOR_DARK,
                                   ),
                                   const SizedBox(height: 16.0),
                                   TitleText.medium(
                                     text: deliveryText,
                                     maxLines: 2,
+                                    color: AppColors.PRIMARY_COLOR_DARK,
                                   ),
                                 ],
                               ),
@@ -139,7 +141,7 @@ class SimpleBottomSheetWidget extends StatelessWidget {
   }
 
   Divider _buildDivider() =>
-      const Divider(thickness: 1.0, color: AppColors.GREY_DARK_COLOR);
+      const Divider(thickness: 1.0, color: AppColors.PRIMARY_COLOR);
 
   Widget _buildActionButtons(BuildContext context) {
     return Padding(
@@ -148,17 +150,14 @@ class SimpleBottomSheetWidget extends StatelessWidget {
         children: [
           Expanded(
             child: DefaultButton(
-                borderRadius: const BorderRadius.all(Radius.circular(40.0)),
                 label: 'cancel'.tr(),
-                backgroundColor: AppColors.ACCENT_COLOR,
+                backgroundColor: AppColors.GREY_DARK_COLOR,
                 onPressed: () => NavigatorHelper.of(context).pop()),
           ),
           const SizedBox(width: 16.0),
           Expanded(
-              child: DefaultButton(
-                  label: 'yes'.tr(),
-                  borderRadius: const BorderRadius.all(Radius.circular(40.0)),
-                  onPressed: () => onPress())),
+              child:
+                  DefaultButton(label: 'yes'.tr(), onPressed: () => onPress())),
         ],
       ),
     );

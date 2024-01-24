@@ -26,12 +26,16 @@ class PaymentSuccessScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 32.0),
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 32, vertical: 32.0),
-              child: Image.asset(isSuccess
-                  ? 'lib/res/assets/goldfish_icon.png'
-                  : 'lib/res/assets/fish_icon.png'),
+              child: Image.asset(
+                isSuccess
+                    ? 'lib/res/assets/goldfish_icon.png'
+                    : 'lib/res/assets/fish_icon.png',
+                width: double.infinity,
+              ),
             ),
             TitleText.large(
               text: isSuccess ? "order_success" : "order_failed",

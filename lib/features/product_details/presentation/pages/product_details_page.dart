@@ -297,8 +297,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
       BuildContext context, String? shortDescription) {
     if (shortDescription == null) return const SizedBox();
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: TitleText.medium(text: shortDescription),
+      padding: const EdgeInsets.all(8.0),
+      child: TitleText.medium(
+        text: shortDescription,
+        color: AppColors.PRIMARY_COLOR_DARK,
+      ),
     );
   }
 
@@ -355,7 +358,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(15.0)),
                     ),
-                    margin: const EdgeInsetsDirectional.only(end: 4.0),
+                    margin: const EdgeInsetsDirectional.only(end: 8.0),
                     child: CustomCachedNetworkImage(
                       imageUrl: images[index],
                       fit: BoxFit.cover,
@@ -501,7 +504,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
       return [
         const Padding(
           padding: EdgeInsets.all(8.0),
-          child: TitleText(text: 'about_product'),
+          child: TitleText(
+            text: 'about_product',
+            color: AppColors.PRIMARY_COLOR_DARK,
+          ),
         ),
         Html(
           data: fullDescription,

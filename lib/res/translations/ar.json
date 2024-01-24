@@ -57,7 +57,7 @@
     "my_account_data": "بيانات حسابي",
     "change_password": "تغيير كلمة السر",
     "complains_and_suggestions": "الشكاوي و الاقتراحات",
-    "about_us": "عنا",
+    "about_us": "من نحن",
     "phone_number_title": "رقم الهاتف",
     "home_page": "الصفحة الرئيسية",
     "now": "الان",
@@ -475,5 +475,10 @@
     "choose_date":"اختر التاريخ",
     "select_date":"حدد التاريخ",
     "select_time":"حدد الوقت",
-    "choose_date_time":"اختر التاريخ والموعد اولا من فضلك"
+    "choose_date_time":"اختر التاريخ والموعد اولا من فضلك",
+    "products":"المنتجات",
+    "governorate":"المحافظة",
+    "qty":"الكمية",
+    "male":"ذكر",
+    "female":"انثي"
 }

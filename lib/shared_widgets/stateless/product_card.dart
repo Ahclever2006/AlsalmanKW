@@ -145,7 +145,7 @@ class _ProductCardState extends State<ProductCard> {
           child: TitleText.small(
             text: widget.name,
             // textAlign: TextAlign.center,
-            maxLines: 2,
+            maxLines: 2, color: AppColors.PRIMARY_COLOR_DARK,
           )),
     );
   }
@@ -165,11 +165,15 @@ class _ProductCardState extends State<ProductCard> {
   Widget _buildProductPrice(double fontSize) {
     return Container(
       width: widget.size,
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
+      padding: const EdgeInsets.symmetric(vertical: 6.0),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Column(
           children: [
-            TitleText.medium(text: widget.price, maxLines: 1),
+            TitleText.medium(
+              text: widget.price,
+              maxLines: 1,
+              color: AppColors.PRIMARY_COLOR_DARK,
+            ),
             // if (widget.oldPrice != null)
             //   TitleText.medium(
             //     text: widget.oldPrice!,

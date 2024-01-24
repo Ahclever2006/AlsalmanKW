@@ -53,7 +53,10 @@ class SimpleDialogWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               const SizedBox(height: 16.0),
-              TitleText(text: label),
+              TitleText(
+                text: label,
+                color: AppColors.PRIMARY_COLOR_DARK,
+              ),
               const SizedBox(height: 16.0),
               SvgPicture.asset(
                 'lib/res/assets/remove_fav_icon.svg',
@@ -84,7 +87,10 @@ class SimpleDialogWidget extends StatelessWidget {
       label: 'cancel'.tr(),
       isExpanded: true,
       backgroundColor: Colors.transparent,
-      labelStyle: Theme.of(context).textTheme.displayLarge!,
+      labelStyle: Theme.of(context)
+          .textTheme
+          .displayLarge!
+          .copyWith(color: AppColors.PRIMARY_COLOR_DARK),
       onPressed: () {
         NavigatorHelper.of(context).pop();
       },

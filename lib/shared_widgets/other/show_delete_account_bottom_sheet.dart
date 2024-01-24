@@ -62,9 +62,16 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          TitleText(text: widget.label),
+          TitleText(
+            text: widget.label,
+            color: AppColors.PRIMARY_COLOR_DARK,
+          ),
           const SizedBox(height: 16.0),
-          SubtitleText(text: widget.subTitle, maxLines: 2),
+          SubtitleText(
+            text: widget.subTitle,
+            maxLines: 2,
+            color: AppColors.PRIMARY_COLOR_DARK,
+          ),
           _buildCheckBox(widget.checkMessage),
           _buildActionButtons(context),
         ],
@@ -83,7 +90,7 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
               labelStyle: Theme.of(context)
                   .textTheme
                   .displayLarge!
-                  .copyWith(color: Colors.black, height: 1.0),
+                  .copyWith(color: AppColors.PRIMARY_COLOR_DARK, height: 1.0),
               backgroundColor: Colors.transparent,
               onPressed: () => NavigatorHelper.of(context).pop()),
           const SizedBox(width: 16.0),
@@ -124,7 +131,11 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
             ),
           ),
           const SizedBox(width: 12.0),
-          Expanded(child: SubtitleText(text: checkMessage)),
+          Expanded(
+              child: SubtitleText(
+            text: checkMessage,
+            color: AppColors.PRIMARY_COLOR_DARK,
+          )),
         ],
       ),
     );

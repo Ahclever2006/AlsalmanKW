@@ -182,9 +182,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
                             margin:
                                 const EdgeInsets.symmetric(horizontal: 32.0),
                             label: 'add_address'.tr(),
-                            icon: const Icon(Icons.add, color: Colors.black),
-                            labelStyle:
-                                Theme.of(context).textTheme.displayLarge!,
+                            icon: const Icon(Icons.add,
+                                color: AppColors.PRIMARY_COLOR_DARK),
+                            labelStyle: Theme.of(context)
+                                .textTheme
+                                .displayLarge!
+                                .copyWith(color: AppColors.PRIMARY_COLOR_DARK),
                             backgroundColor: AppColors.PRIMARY_COLOR_LIGHT,
                             onPressed: () => _goToAddAddress(context));
                       return BlocBuilder<CheckoutCubit, CheckoutState>(
@@ -432,6 +435,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                 : 'subtitle_deactive');
                       });
                     }),
+                Container(
+                  color: AppColors.PRIMARY_COLOR_LIGHT,
+                  width: double.infinity,
+                  height: 2.0,
+                ),
                 ..._buildOrderSummary(context),
                 ..._buildDeliveryAddressSection(context, addressId),
                 ..._buildCouponDiscount(context,
@@ -592,6 +600,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     decoration: InputDecoration(
                         enabledBorder: InputBorder.none,
                         disabledBorder: InputBorder.none,
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 12.0),
                         hintText: couponCode == null
                             ? 'enter_coupon'.tr()
                             : couponCode.tr()),

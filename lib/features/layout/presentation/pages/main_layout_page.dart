@@ -63,17 +63,17 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
     return ZoomDrawer(
       controller: drawerController,
       duration: const Duration(milliseconds: 200),
-      mainScreenScale: 0.3,
-      boxShadow: AppColors.SHADOW,
+      mainScreenScale: 0.0,
+      boxShadow: AppColors.SHADOW_LIGHT,
       angle: 0,
       isRtl: context.locale == const Locale('ar'),
       clipMainScreen: true,
-      borderRadius: 20,
+      borderRadius: 0,
       disableDragGesture: true,
       androidCloseOnBackTap: true,
       mainScreenTapClose: true,
       menuScreenWidth: context.width,
-      slideWidth: context.width * 0.80,
+      slideWidth: context.width * 0.9,
       mainScreenOverlayColor: Colors.black12,
       mainScreen: mainScreen,
       menuScreen: _buildDrawer(context),
@@ -151,6 +151,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
                       state.userInfo?.data?.firstName ?? '',
                       state.userInfo?.data?.email ?? '',
                       state.userAvatar),
+                const SizedBox(height: 12.0),
                 _buildDrawerItem(
                   padding: padding,
                   fontSize: fontSize,
@@ -326,7 +327,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
   Widget _buildGuestUserSection(BuildContext context) {
     return Container(
         width: double.infinity,
-        margin: EdgeInsetsDirectional.only(end: context.width * 0.2),
+        margin: EdgeInsetsDirectional.only(end: context.width * 0.10),
         padding: const EdgeInsets.all(16.0),
         decoration: const BoxDecoration(
           color: Colors.white,
@@ -361,7 +362,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
       String? email, String? userAvatar) {
     return Container(
         width: double.infinity,
-        margin: EdgeInsetsDirectional.only(end: context.width * 0.2),
+        margin: EdgeInsetsDirectional.only(end: context.width * 0.10),
         padding: const EdgeInsets.all(16.0),
         decoration: const BoxDecoration(
           color: Colors.white,

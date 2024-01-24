@@ -1,13 +1,11 @@
 import 'package:alsalman_app/core/utils/navigator_helper.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../core/utils/type_defs.dart';
 import '../../res/style/app_colors.dart';
 import '../stateful/default_button.dart';
 import '../stateless/subtitle_text.dart';
-import '../stateless/title_text.dart';
 
 void showLogOutDialog(BuildContext context,
         {required String label,
@@ -83,7 +81,10 @@ class SimpleDialogWidget extends StatelessWidget {
       label: 'cancel'.tr(),
       isExpanded: true,
       backgroundColor: Colors.transparent,
-      labelStyle: Theme.of(context).textTheme.displayLarge!,
+      labelStyle: Theme.of(context)
+          .textTheme
+          .displayLarge!
+          .copyWith(color: AppColors.PRIMARY_COLOR_DARK),
       onPressed: () {
         NavigatorHelper.of(context).pop();
       },

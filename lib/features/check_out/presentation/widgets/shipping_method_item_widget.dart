@@ -69,14 +69,22 @@ class ShippingMethodItemWidget extends StatelessWidget {
                         child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TitleText(text: shippingMethod.title ?? ''),
+                        TitleText(
+                          text: shippingMethod.title ?? '',
+                          color: AppColors.PRIMARY_COLOR_DARK,
+                        ),
                         if (shippingMethod.description != null)
-                          SubtitleText(text: shippingMethod.description ?? ''),
+                          SubtitleText(
+                            text: shippingMethod.description ?? '',
+                            color: AppColors.PRIMARY_COLOR_DARK,
+                          ),
                       ],
                     )),
                     TitleText(
-                        text:
-                            '${shippingMethod.price!.toStringAsFixed(3)} ${'currency'.tr()}'),
+                      text:
+                          '${shippingMethod.price!.toStringAsFixed(3)} ${'currency'.tr()}',
+                      color: AppColors.PRIMARY_COLOR_DARK,
+                    ),
                   ],
                 ),
                 const SizedBox(height: 12.0),

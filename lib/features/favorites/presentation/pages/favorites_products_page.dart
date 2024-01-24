@@ -206,7 +206,10 @@ class _FavoritesProductsPageState extends State<FavoritesProductsPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const TitleText(text: 'remove_all_fav'),
+          const TitleText(
+            text: 'remove_all_fav',
+            color: AppColors.PRIMARY_COLOR_DARK,
+          ),
           DefaultButton(
               padding: const EdgeInsets.all(12.0),
               backgroundColor: AppColors.SECONDARY_COLOR,

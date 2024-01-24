@@ -196,6 +196,7 @@ class _ProfilePageState extends State<ProfilePage> {
         child: DefaultButton(
             margin: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 8.0),
             label: 'save'.tr(),
+            borderColor: AppColors.GREY_NORMAL_COLOR,
             borderRadius: const BorderRadius.all(Radius.circular(20.0)),
             onPressed: () async {
               if (_isNotValid()) return;
@@ -228,7 +229,10 @@ class _ProfilePageState extends State<ProfilePage> {
           backgroundColor: Colors.transparent,
           borderColor: AppColors.GREY_NORMAL_COLOR,
           borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-          labelStyle: Theme.of(context).textTheme.displayLarge!,
+          labelStyle: Theme.of(context)
+              .textTheme
+              .bodyLarge!
+              .copyWith(color: AppColors.PRIMARY_COLOR_DARK),
           margin: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 8.0),
           onPressed: () {
             showLogOutDialog(context,

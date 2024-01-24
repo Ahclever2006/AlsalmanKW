@@ -88,8 +88,11 @@ class _TopicPageState extends State<TopicPage> with TickerProviderStateMixin {
               ),
             ),
             const SizedBox(height: 16.0),
-            TitleText.large(text: state.topicContent?.title ?? ''),
-            const SizedBox(height: 16.0),
+            // TitleText.large(
+            //   text: state.topicContent?.title ?? '',
+            //   color: AppColors.PRIMARY_COLOR_DARK,
+            // ),
+            // const SizedBox(height: 16.0),
             Expanded(
               child: RefreshIndicator(
                 onRefresh: () => cubit.refresh(widget.id),
@@ -117,7 +120,7 @@ class _TopicPageState extends State<TopicPage> with TickerProviderStateMixin {
     return Html(
       data: data,
       style: {
-        "body": Style(color: AppColors.PRIMARY_COLOR),
+        "body": Style(color: AppColors.PRIMARY_COLOR_DARK),
       },
     );
 
