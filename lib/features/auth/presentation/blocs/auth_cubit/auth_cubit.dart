@@ -79,6 +79,7 @@ class AuthCubit extends BaseCubit<AuthState> {
       await _authRepository.setUserFCMToken();
       await _authRepository.activateAdTrackingNotification();
       await _authRepository.activateNotification();
+      final userInfo = await _authRepository.getUserData();
 
       // FirebaseCrashlytics.instance.setUserIdentifier(
       //     (user.customerId.toString()) + (user.firstName ?? ''));
@@ -86,6 +87,8 @@ class AuthCubit extends BaseCubit<AuthState> {
       emit(state.copyWith(
         status: AuthStateStatus.authSuccess,
         isNotificationEnabled: true,
+        userAvatar: userInfo?.data?.avatarUrl,
+        userInfo: userInfo,
         isAdTrackingNotificationEnabled: true,
         isUserLoggedIn: true,
         isUserHaveToken: true,
@@ -108,9 +111,13 @@ class AuthCubit extends BaseCubit<AuthState> {
       await _authRepository.activateAdTrackingNotification();
       await _authRepository.activateNotification();
 
+      final userInfo = await _authRepository.getUserData();
+
       emit(state.copyWith(
         status: AuthStateStatus.authRegisterSuccess,
         isNotificationEnabled: true,
+        userAvatar: userInfo?.data?.avatarUrl,
+        userInfo: userInfo,
         isAdTrackingNotificationEnabled: true,
         isUserLoggedIn: true,
         isUserHaveToken: true,
@@ -134,10 +141,13 @@ class AuthCubit extends BaseCubit<AuthState> {
       await _authRepository.activateAdTrackingNotification();
       await _authRepository.activateNotification();
 
+      final userInfo = await _authRepository.getUserData();
+
       emit(state.copyWith(
         status: AuthStateStatus.authSuccess,
-        //user: user,
         isNotificationEnabled: true,
+        userAvatar: userInfo?.data?.avatarUrl,
+        userInfo: userInfo,
         isAdTrackingNotificationEnabled: true,
         isUserLoggedIn: true,
         isUserHaveToken: true,
@@ -162,10 +172,14 @@ class AuthCubit extends BaseCubit<AuthState> {
       await _authRepository.setUserFCMToken();
       await _authRepository.activateAdTrackingNotification();
       await _authRepository.activateNotification();
+
+      final userInfo = await _authRepository.getUserData();
+
       emit(state.copyWith(
         status: AuthStateStatus.authSuccess,
-        //user: user,
         isNotificationEnabled: true,
+        userAvatar: userInfo?.data?.avatarUrl,
+        userInfo: userInfo,
         isAdTrackingNotificationEnabled: true,
         isUserLoggedIn: true,
         isUserHaveToken: true,
