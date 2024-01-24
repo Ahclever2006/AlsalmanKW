@@ -375,6 +375,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
         if (state.paymentSummaryModel == null) return const SizedBox();
         return _buildBody(context,
             payment: state.paymentSummaryModel!,
+            addressId: state.addressId!,
             selectedPaymentMethod: state.selectedPaymentMethod,
             walletStatus: state.walletStatus ?? false);
       },
@@ -400,6 +401,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   Widget _buildBody(
     BuildContext context, {
     PaymentSummaryModel? payment,
+    required int addressId,
     required int selectedPaymentMethod,
     required bool walletStatus,
   }) {
@@ -431,6 +433,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       });
                     }),
                 ..._buildOrderSummary(context),
+                ..._buildDeliveryAddressSection(context, addressId),
                 ..._buildCouponDiscount(context,
                     couponCode: payment!.totalsModel!.orderTotalDiscount != null
                         ? enteredCouponCode
@@ -450,6 +453,25 @@ class _CheckoutPageState extends State<CheckoutPage> {
     );
   }
 
+  List<Widget> _buildDeliveryAddressSection(
+      BuildContext context, int addressId) {
+    final addressCubit = context.read<AddressCubit>();
+    Address? shippingAddress = addressCubit.state.addressModel?.addresses
+        ?.firstWhere((e) => e.id == addressId);
+    if (shippingAddress == null) return const [SizedBox()];
+    return [
+      const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        child: TitleText(
+          text: 'delivery_address',
+          color: AppColors.PRIMARY_COLOR_DARK,
+        ),
+      ),
+      AddressItemWidget(
+          address: shippingAddress, inCheckOut: true, onPress: () {})
+    ];
+  }
+
   List<Widget> _buildOrderSummary(BuildContext context) {
     final cubit = context.read<CartCubit>();
     final orderProducts = cubit.state.cart!.items;
@@ -459,7 +481,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
       if (normalItems != null)
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          child: TitleText(text: 'order_summary'),
+          child: TitleText(
+            text: 'order_summary',
+            color: AppColors.PRIMARY_COLOR_DARK,
+          ),
         ),
       if (normalItems != null)
         ...normalItems
@@ -470,8 +495,14 @@ class _CheckoutPageState extends State<CheckoutPage> {
   }
 
   Widget _buildCartItem(BuildContext context, Item cartItem) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+    return Container(
+      height: 156.0,
+      decoration: const BoxDecoration(
+        color: AppColors.PRIMARY_COLOR_LIGHT,
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+      ),
+      margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      padding: const EdgeInsets.all(8.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -481,24 +512,30 @@ class _CheckoutPageState extends State<CheckoutPage> {
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
             ),
             child: CustomCachedNetworkImage(
-              width: 50.0,
-              height: 50.0,
+              width: 140.0,
+              height: 140.0,
               borderRadius: const BorderRadius.all(Radius.circular(10)),
               imageUrl: cartItem.picture!.imageUrl,
               fit: BoxFit.cover,
             ),
           ),
           Expanded(
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-              child: TitleText(
-                text: cartItem.productName!,
-                maxLines: 2,
-              ),
+              child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TitleText(
+                  text: cartItem.productName!,
+                  maxLines: 2,
+                ),
+                const Spacer(),
+                TitleText(text: '${'qty'.tr()} : ${cartItem.quantity}'),
+                const SizedBox(height: 12.0),
+                TitleText(text: cartItem.subTotal ?? ''),
+              ],
             ),
-          ),
-          TitleText(text: cartItem.subTotal ?? ''),
+          )),
         ],
       ),
     );
@@ -509,23 +546,31 @@ class _CheckoutPageState extends State<CheckoutPage> {
     final cartCubit = context.read<CartCubit>();
     final checkOutCubit = context.read<CheckoutCubit>();
     return [
-      Row(
-        children: [
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16.0),
-            padding: const EdgeInsets.all(8.0),
-            decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10.0),
-                )),
-            child: SvgPicture.asset('lib/res/assets/coupon_icon.svg'),
-          ),
-          const TitleText(
-            text: 'coupon',
-            color: AppColors.PRIMARY_COLOR_DARK,
-          )
-        ],
+      Padding(
+        padding: const EdgeInsets.only(top: 16.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              margin: const EdgeInsets.only(
+                left: 16.0,
+                right: 16.0,
+              ),
+              padding: const EdgeInsets.all(8.0),
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10.0),
+                  )),
+              child: SvgPicture.asset('lib/res/assets/coupon_icon.svg'),
+            ),
+            const TitleText(
+              text: 'coupon',
+              textAlign: TextAlign.center,
+              color: AppColors.PRIMARY_COLOR_DARK,
+            )
+          ],
+        ),
       ),
       BlocBuilder<CheckoutCubit, CheckoutState>(
         builder: (context, state) {
