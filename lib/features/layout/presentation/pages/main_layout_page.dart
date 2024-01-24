@@ -60,10 +60,9 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
   }
 
   ZoomDrawer _buildZoomDrawer(BuildContext context, Widget mainScreen) {
-    var width = MediaQuery.of(context).size.width;
     return ZoomDrawer(
       controller: drawerController,
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 200),
       mainScreenScale: 0.3,
       boxShadow: AppColors.SHADOW,
       angle: 0,
@@ -73,8 +72,8 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
       disableDragGesture: true,
       androidCloseOnBackTap: true,
       mainScreenTapClose: true,
-      menuScreenWidth: width,
-      slideWidth: width * 0.80,
+      menuScreenWidth: context.width,
+      slideWidth: context.width * 0.80,
       mainScreenOverlayColor: Colors.black12,
       mainScreen: mainScreen,
       menuScreen: _buildDrawer(context),
@@ -91,12 +90,12 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
               width: double.infinity,
               height: 70.0,
               padding: const EdgeInsets.only(top: 8.0),
-              child: SvgPicture.asset('lib/res/assets/app_logo.svg'),
+              child: Image.asset('lib/res/assets/alsalman_logo.png'),
             ),
             PositionedDirectional(
               top: 16.0,
               end: 8.0,
-              child: InkWell(  
+              child: InkWell(
                 child: Container(
                     padding: const EdgeInsets.all(12.0),
                     decoration: const BoxDecoration(
@@ -140,6 +139,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
               authCubit.getUserData();
             }
             return ListView(
+              shrinkWrap: true,
               padding: EdgeInsets.zero,
               physics: const BouncingScrollPhysics(),
               children: [
