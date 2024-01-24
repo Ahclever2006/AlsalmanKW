@@ -106,7 +106,7 @@ class _QuantityButtonState extends State<QuantityButton> {
   }
 
   void decreaseQuantity() {
-    if (_quantity > (widget.quantity ?? 0)) {
+    if (_quantity > 1) {
       setState(() => _quantity--);
       widget.onRemoveFromCart(_quantity);
     }
