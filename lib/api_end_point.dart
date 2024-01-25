@@ -63,7 +63,8 @@ abstract class ApiEndPoint {
       '$_REQUEST_URL/banner/list?tag=Carousel2';
   static const getCarouselThirdBanner =
       '$_REQUEST_URL/banner/list?tag=Carousel3';
-  static const getCategoriesBanner = '$_REQUEST_URL/banner/list?tag=Categories';
+  static const getCategoriesBanner =
+      '$_REQUEST_URL/banner/list?tag=Categoriesbanner';
 
   static const getCategoryBanner = '$_REQUEST_URL/banner/list';
 

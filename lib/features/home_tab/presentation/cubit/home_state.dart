@@ -25,7 +25,6 @@ class HomeState {
   final HomeBannerModel? carouselFirstBanners;
   final HomeBannerModel? carouselSecondBanners;
   final HomeBannerModel? carouselThirdBanners;
-  final HomeBannerModel? categoriesBanners;
   final HomePageCategoriesModel? categories;
   final JCarouselsModel? carousalSections;
   final int? homeBannerIndex;
@@ -36,7 +35,6 @@ class HomeState {
     this.carouselFirstBanners,
     this.carouselSecondBanners,
     this.carouselThirdBanners,
-    this.categoriesBanners,
     this.categories,
     this.carousalSections,
     this.homeBannerIndex = 0,
@@ -53,7 +51,6 @@ class HomeState {
         other.carouselFirstBanners == carouselFirstBanners &&
         other.carouselSecondBanners == carouselSecondBanners &&
         other.carouselThirdBanners == carouselThirdBanners &&
-        other.categoriesBanners == categoriesBanners &&
         other.categories == categories &&
         other.carousalSections == carousalSections &&
         other.homeBannerIndex == homeBannerIndex &&
@@ -67,7 +64,6 @@ class HomeState {
       carouselFirstBanners.hashCode ^
       carouselSecondBanners.hashCode ^
       carouselThirdBanners.hashCode ^
-      categoriesBanners.hashCode ^
       categories.hashCode ^
       carousalSections.hashCode ^
       homeBannerIndex.hashCode ^
@@ -79,7 +75,6 @@ class HomeState {
     HomeBannerModel? carouselFirstBanners,
     HomeBannerModel? carouselSecondBanners,
     HomeBannerModel? carouselThirdBanners,
-    HomeBannerModel? categoriesBanners,
     HomePageCategoriesModel? categories,
     JCarouselsModel? carousalSections,
     int? homeBannerIndex,
@@ -92,7 +87,6 @@ class HomeState {
       carouselSecondBanners:
           carouselSecondBanners ?? this.carouselSecondBanners,
       carouselThirdBanners: carouselThirdBanners ?? this.carouselThirdBanners,
-      categoriesBanners: categoriesBanners ?? this.categoriesBanners,
       categories: categories ?? this.categories,
       carousalSections: carousalSections ?? this.carousalSections,
       homeBannerIndex: homeBannerIndex ?? this.homeBannerIndex,

@@ -1,6 +1,11 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
+import '../../../../api_end_point.dart';
+import '../../../../core/data/models/banner_model.dart';
 import '../../../../core/utils/media_query_values.dart';
 import '../../../../core/utils/navigator_helper.dart';
+import '../../../../shared_widgets/stateful/gif_widget.dart';
+import '../../../../shared_widgets/stateless/custom_cached_network_image.dart';
 import '../../../../shared_widgets/stateless/inner_appbar.dart';
 import '../../../category_products/presentation/pages/category_products_page.dart';
 import '../blocs/cubit/categories_cubit.dart';
@@ -77,6 +82,9 @@ class _CategoriesPageState extends State<CategoriesPage> {
     return categories.isNotEmpty
         ? Column(
             children: [
+              _buildHomeBanners(
+                  context, categoriesCubit.state.categoriesBanners,
+                  autoPlay: false),
               Expanded(
                 child: RefreshIndicator(
                   onRefresh: () => categoriesCubit.refresh(),
@@ -120,5 +128,53 @@ class _CategoriesPageState extends State<CategoriesPage> {
         categoryId: categoryId,
       );
     }));
+  }
+
+  Widget _buildHomeBanners(BuildContext context, HomeBannerModel? banners,
+      {bool? autoPlay}) {
+    var width = context.width;
+    if (banners == null || banners.data!.isEmpty) return const SizedBox();
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: CarouselSlider.builder(
+        options: CarouselOptions(
+          aspectRatio: 9 / 4.2,
+          viewportFraction: 1.0,
+        ),
+        itemCount: banners.data?.length ?? 0,
+        itemBuilder: (context, index, realIndex) {
+          var banner = banners.data![index];
+          final String? image = banner.fileUrl;
+          final String? bannerType = banner.bannerType;
+          final isGif = bannerType == "Gif";
+
+          return _buildImage(context, width, image, banner.link, isGif);
+        },
+      ),
+    );
+  }
+
+  Widget _buildImage(BuildContext context, double width, String? image,
+      String? link, bool isGif) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: isGif
+          ? ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+              child: GIFWidget(
+                gifUrl: '${ApiEndPoint.domainUrl}/$image',
+              ),
+            )
+          : CustomCachedNetworkImage(
+              imageUrl: '${ApiEndPoint.domainUrl}/$image',
+              width: double.infinity,
+              urlHeight: 300,
+              urlWidth: 600,
+              borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+              imageMode: ImageMode.Pad,
+              scaleMode: ScaleMode.Both,
+              fit: BoxFit.fill,
+            ),
+    );
   }
 }

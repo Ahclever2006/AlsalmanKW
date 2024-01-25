@@ -8,7 +8,6 @@ abstract class HomeRepository {
   Future<HomeBannerModel> getCarouselFirstBanners();
   Future<HomeBannerModel> getCarouselSecondBanners();
   Future<HomeBannerModel> getCarouselThirdBanners();
-  Future<HomeBannerModel> getCategoriesBanners();
   Future<HomePageCategoriesModel> getHomeCategories();
   Future<JCarouselsModel> getHomeCarousalSection();
 }
@@ -29,9 +28,7 @@ class HomeRepositoryImpl implements HomeRepository {
   @override
   Future<HomeBannerModel> getCarouselThirdBanners() =>
       _homeRemoteDataSource.getCarouselThirdBanners();
-  @override
-  Future<HomeBannerModel> getCategoriesBanners() =>
-      _homeRemoteDataSource.getCategoriesBanners();
+
 
   @override
   Future<HomePageCategoriesModel> getHomeCategories() =>

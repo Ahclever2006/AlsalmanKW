@@ -10,7 +10,6 @@ abstract class HomeRemoteDataSource {
   Future<HomeBannerModel> getCarouselFirstBanners();
   Future<HomeBannerModel> getCarouselSecondBanners();
   Future<HomeBannerModel> getCarouselThirdBanners();
-  Future<HomeBannerModel> getCategoriesBanners();
   Future<HomePageCategoriesModel> getHomeCategories();
   Future<JCarouselsModel> getHomeCarousalSection();
 }
@@ -72,18 +71,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     });
   }
 
-  @override
-  Future<HomeBannerModel> getCategoriesBanners() {
-    const url = ApiEndPoint.getCategoriesBanner;
-    return _networkService.get(url).then((response) {
-      if (response.statusCode != 200) throw RequestException(response.data);
-      final result = response.data;
-      final resultStatus = result['IsSuccess'];
-      if (resultStatus != null && !resultStatus)
-        throw RequestException(result['Message']);
-      return HomeBannerModel.fromMap(result);
-    });
-  }
+
 
   @override
   Future<HomePageCategoriesModel> getHomeCategories() {

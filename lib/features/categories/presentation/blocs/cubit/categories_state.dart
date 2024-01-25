@@ -20,6 +20,7 @@ extension CategoriesStateX on CategoriesState {
 class CategoriesState {
   final HomePageCategoriesModel? categories;
   final CategoriesStateStatus status;
+  final HomeBannerModel? categoriesBanners;
   final int? selectedCategoryId;
 
   final String? errorMessage;
@@ -27,6 +28,7 @@ class CategoriesState {
   const CategoriesState(
       {this.categories,
       this.status = CategoriesStateStatus.initial,
+      this.categoriesBanners,
       this.errorMessage,
       this.selectedCategoryId});
 
@@ -37,6 +39,7 @@ class CategoriesState {
     return other.runtimeType == runtimeType &&
         (other as CategoriesState).status == status &&
         other.categories == categories &&
+        other.categoriesBanners == categoriesBanners &&
         other.selectedCategoryId == selectedCategoryId &&
         other.errorMessage == errorMessage;
   }
@@ -45,18 +48,21 @@ class CategoriesState {
   int get hashCode =>
       categories.hashCode ^
       status.hashCode ^
+      categoriesBanners.hashCode ^
       errorMessage.hashCode ^
       selectedCategoryId.hashCode;
 
   CategoriesState copyWith({
     HomePageCategoriesModel? categories,
     CategoriesStateStatus? status,
+    HomeBannerModel? categoriesBanners,
     String? errorMessage,
     int? selectedCategoryId,
   }) {
     return CategoriesState(
         categories: categories ?? this.categories,
         status: status ?? this.status,
+        categoriesBanners: categoriesBanners ?? this.categoriesBanners,
         errorMessage: errorMessage ?? this.errorMessage,
         selectedCategoryId: selectedCategoryId ?? this.selectedCategoryId);
   }

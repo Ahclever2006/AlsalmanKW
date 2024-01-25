@@ -1,3 +1,4 @@
+import '../../../../core/data/models/banner_model.dart';
 import '../../../../core/data/models/home_categ_model.dart';
 
 import '/api_end_point.dart';
@@ -6,6 +7,7 @@ import '/core/service/network_service.dart';
 
 abstract class CategoriesRemoteDataSource {
   Future<HomePageCategoriesModel> loadCategories();
+  Future<HomeBannerModel> getCategoriesBanners();
 }
 
 class CategoriesRemoteDataSourceImpl implements CategoriesRemoteDataSource {
@@ -24,6 +26,19 @@ class CategoriesRemoteDataSourceImpl implements CategoriesRemoteDataSource {
       if (resultStatus != null && !resultStatus)
         throw RequestException(result['Message']);
       return HomePageCategoriesModel.fromMap(result);
+    });
+  }
+
+  @override
+  Future<HomeBannerModel> getCategoriesBanners() {
+    const url = ApiEndPoint.getCategoriesBanner;
+    return _networkService.get(url).then((response) {
+      if (response.statusCode != 200) throw RequestException(response.data);
+      final result = response.data;
+      final resultStatus = result['IsSuccess'];
+      if (resultStatus != null && !resultStatus)
+        throw RequestException(result['Message']);
+      return HomeBannerModel.fromMap(result);
     });
   }
 }

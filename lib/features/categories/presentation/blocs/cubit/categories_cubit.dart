@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart';
 
 import '../../../../../core/abstract/base_cubit.dart';
+import '../../../../../core/data/models/banner_model.dart';
 import '../../../../../core/data/models/home_categ_model.dart';
 import '../../../../../core/exceptions/redundant_request_exception.dart';
 import '../../../data/repositories/categories_repository_impl.dart';
@@ -29,8 +30,13 @@ class CategoriesCubit extends BaseCubit<CategoriesState> {
 
       final categories = await _categoriesRepository.loadCategories();
 
+      final categoriesBanners =
+          await _categoriesRepository.getCategoriesBanners();
+
       emit(state.copyWith(
-          categories: categories, status: CategoriesStateStatus.loaded));
+          categories: categories,
+          categoriesBanners: categoriesBanners,
+          status: CategoriesStateStatus.loaded));
     } on RedundantRequestException catch (e) {
       log(e.toString());
     } catch (e) {

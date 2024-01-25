@@ -32,15 +32,13 @@ class HomeCubit extends BaseCubit<HomeState> {
       final carouselThirdBanners =
           await _homeRepository.getCarouselThirdBanners();
 
-      final categoriesBanners = await _homeRepository.getCategoriesBanners();
-
       emit(state.copyWith(
-          status: HomeStateStatus.loaded,
-          banners: banners,
-          carouselFirstBanners: carouselFirstBanners,
-          carouselSecondBanners: carouselSecondBanners,
-          carouselThirdBanners: carouselThirdBanners,
-          categoriesBanners: categoriesBanners));
+        status: HomeStateStatus.loaded,
+        banners: banners,
+        carouselFirstBanners: carouselFirstBanners,
+        carouselSecondBanners: carouselSecondBanners,
+        carouselThirdBanners: carouselThirdBanners,
+      ));
       final categories = await _homeRepository.getHomeCategories();
       emit(state.copyWith(
         status: HomeStateStatus.loaded,

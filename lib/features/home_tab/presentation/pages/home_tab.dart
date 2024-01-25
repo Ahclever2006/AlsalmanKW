@@ -96,7 +96,6 @@ class _HomeTabState extends State<HomeTab> {
                           context,
                           categories: state.categories,
                           banners: state.banners,
-                          categoriesBanners: state.categoriesBanners,
                           carousalSections: state.carousalSections,
                         ),
                       ),
@@ -115,7 +114,6 @@ class _HomeTabState extends State<HomeTab> {
     BuildContext context, {
     HomePageCategoriesModel? categories,
     HomeBannerModel? banners,
-    HomeBannerModel? categoriesBanners,
     JCarouselsModel? carousalSections,
   }) {
     final homeCubit = context.read<HomeCubit>();
@@ -132,7 +130,6 @@ class _HomeTabState extends State<HomeTab> {
           _buildHomeBanners(context, banners),
           _buildHomeCategories(context, categories),
           _buildShadowDivider(),
-          _buildHomeBanners(context, categoriesBanners, autoPlay: false),
           ..._buildHomeCarousalProductSections(context, carousalSections),
         ],
       ),
