@@ -107,7 +107,7 @@ class _MainTextFormFieldState extends State<MainTextFormField> {
                         .textTheme
                         .bodyText2!
                         .copyWith(fontSize: 21.0))
-                .copyWith(color: Colors.black),
+                .copyWith(color: AppColors.PRIMARY_COLOR_DARK),
         textCapitalization: widget.textCapitalization,
         textAlignVertical:
             widget.expanded ? const TextAlignVertical(y: -0.8) : null,

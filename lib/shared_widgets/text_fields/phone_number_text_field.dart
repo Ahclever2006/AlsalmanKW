@@ -39,7 +39,7 @@ class PhoneTextFormField extends StatelessWidget {
             tabletNormal: Theme.of(context).textTheme.bodyText2!,
             desktopSmall:
                 Theme.of(context).textTheme.bodyText2!.copyWith(fontSize: 21.0))
-        .copyWith(color: Colors.black);
+        .copyWith(color: AppColors.PRIMARY_COLOR_DARK);
     return Container(
       margin: margin,
       child: InternationalPhoneNumberInput(
