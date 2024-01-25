@@ -44,7 +44,7 @@ class _QuantityButtonState extends State<QuantityButton> {
   Widget build(BuildContext context) {
     final double iconSize = context.sizeHelper(
       tabletLarge: 28.0,
-      desktopSmall: 40.0,
+      desktopSmall: 30.0,
     );
     return Container(
       width: context.width * 0.35,

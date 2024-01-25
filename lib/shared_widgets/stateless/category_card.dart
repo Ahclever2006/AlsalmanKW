@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:size_helper/size_helper.dart';
 
 import '../../core/data/models/home_categ_model.dart';
 import 'custom_cached_network_image.dart';
@@ -20,13 +21,18 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       //TODO: check responsive
-      width: 100.0,
+      width: context.sizeHelper(
+        tabletNormal: 100.0,
+        mobileLarge: 100.0,
+        desktopSmall: 140,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           InkWell(
             onTap: onPress,
             child: Container(
+              margin: const EdgeInsetsDirectional.only(end: 12.0),
               clipBehavior: Clip.antiAliasWithSaveLayer,
               decoration: const BoxDecoration(shape: BoxShape.circle),
               child: CustomCachedNetworkImage(

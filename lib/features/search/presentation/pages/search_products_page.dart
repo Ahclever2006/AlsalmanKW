@@ -124,10 +124,10 @@ class _SearchProductsPageState extends State<SearchProductsPage> {
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: context.sizeHelper(
-                      tabletNormal: 0.65,
-                      tabletLarge: 0.70,
-                      mobileLarge: 0.70,
-                      desktopSmall: 0.85,
+                      tabletNormal: 0.70,
+                      tabletLarge: 0.75,
+                      mobileLarge: 0.75,
+                      desktopSmall: 0.80,
                     ),
                   ),
                   itemCount: products!.length,

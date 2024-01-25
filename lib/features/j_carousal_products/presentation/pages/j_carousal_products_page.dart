@@ -56,8 +56,7 @@ class _CategoryProductsPageState extends State<JCarousalProductsPage> {
       body: Column(
         children: [
           InnerPagesAppBar(
-              label: widget.carousalName.toUpperCase(),
-              viewSearchIcon: true),
+              label: widget.carousalName.toUpperCase(), viewSearchIcon: true),
           Expanded(
             child: Stack(
               alignment: Alignment.topCenter,
@@ -125,10 +124,10 @@ class _CategoryProductsPageState extends State<JCarousalProductsPage> {
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         childAspectRatio: context.sizeHelper(
-                          tabletNormal: 0.65,
-                          tabletLarge: 0.70,
-                          mobileLarge: 0.70,
-                          desktopSmall: 0.85,
+                          tabletNormal: 0.70,
+                          tabletLarge: 0.75,
+                          mobileLarge: 0.75,
+                          desktopSmall: 0.80,
                         ),
                       ),
                       shrinkWrap: true,

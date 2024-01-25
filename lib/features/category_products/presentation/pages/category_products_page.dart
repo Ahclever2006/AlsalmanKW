@@ -80,7 +80,6 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                 children: [
                   InnerPagesAppBar(
                     label: widget.categoryName.toUpperCase(),
-                    viewSearchIcon: true,
                   ),
                   Expanded(
                     child: LazyLoadScrollView(
@@ -300,10 +299,10 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               childAspectRatio: context.sizeHelper(
-                tabletNormal: 0.65,
-                tabletLarge: 0.70,
-                mobileLarge: 0.70,
-                desktopSmall: 0.85,
+                tabletNormal: 0.70,
+                tabletLarge: 0.75,
+                mobileLarge: 0.75,
+                desktopSmall: 0.80,
               ),
             ),
             shrinkWrap: true,
@@ -428,8 +427,7 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
             children: [
               CarouselSlider.builder(
                 options: CarouselOptions(
-                  height: width * 0.6,
-                  autoPlay: true,
+                  height: width / 2,
                   viewportFraction: 1,
                   onPageChanged: (index, reason) {
                     cubit.autoChangedCarouselIndex(index);
@@ -471,7 +469,7 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
 
   Widget _buildImage(double width, String? image) {
     return Container(
-      margin: const EdgeInsets.only(top: 32.0, left: 16.0, right: 16.0),
+      margin: const EdgeInsets.only(left: 16.0, right: 16.0),
       width: width,
       decoration: BoxDecoration(
         color: AppColors.GREY_LIGHT_COLOR,

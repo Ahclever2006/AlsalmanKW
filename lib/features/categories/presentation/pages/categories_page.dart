@@ -81,6 +81,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
 
     return categories.isNotEmpty
         ? Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _buildHomeBanners(
                   context, categoriesCubit.state.categoriesBanners,
@@ -138,7 +139,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
       padding: const EdgeInsets.only(bottom: 16.0),
       child: CarouselSlider.builder(
         options: CarouselOptions(
-          aspectRatio: 9 / 4.2,
+          // height: context.width / 2,
+          aspectRatio: 16 / 9,
           viewportFraction: 1.0,
         ),
         itemCount: banners.data?.length ?? 0,
@@ -161,8 +163,11 @@ class _CategoriesPageState extends State<CategoriesPage> {
       child: isGif
           ? ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(15.0)),
-              child: GIFWidget(
-                gifUrl: '${ApiEndPoint.domainUrl}/$image',
+              child: FittedBox(
+                fit: BoxFit.fill,
+                child: GIFWidget(
+                  gifUrl: '${ApiEndPoint.domainUrl}/$image',
+                ),
               ),
             )
           : CustomCachedNetworkImage(

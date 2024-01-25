@@ -174,9 +174,8 @@ class CartTab extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(flex: 1, child: _buildImage(cartItem)),
+          _buildImage(cartItem),
           Expanded(
-            flex: 3,
             child: Padding(
               padding: const EdgeInsetsDirectional.only(start: 16.0, top: 16.0),
               child: Column(
@@ -212,28 +211,32 @@ class CartTab extends StatelessWidget {
   }
 
   Widget _buildImage(Item cartItem) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        TitleText.medium(
-          text: cartItem.productName!,
-          maxLines: 1,
-        ),
-        const SizedBox(height: 12.0),
-        Container(
-          decoration: const BoxDecoration(
-            color: AppColors.PRIMARY_COLOR,
-            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+    //TODO: check responsive in ipad
+    return SizedBox(
+      width: 100.0,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TitleText.medium(
+            text: cartItem.productName!,
+            maxLines: 1,
           ),
-          child: CustomCachedNetworkImage(
-            width: 100.0,
-            height: 100.0,
-            borderRadius: const BorderRadius.all(Radius.circular(10)),
-            imageUrl: cartItem.picture!.imageUrl,
-            fit: BoxFit.cover,
+          const SizedBox(height: 12.0),
+          Container(
+            decoration: const BoxDecoration(
+              color: AppColors.PRIMARY_COLOR,
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            ),
+            child: CustomCachedNetworkImage(
+              width: 100.0,
+              height: 100.0,
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              imageUrl: cartItem.picture!.imageUrl,
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

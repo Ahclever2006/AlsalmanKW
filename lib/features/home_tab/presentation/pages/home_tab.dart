@@ -176,9 +176,13 @@ class _HomeTabState extends State<HomeTab> {
         ),
         SizedBox(
           //TODO: check responsive
-          height: 145.0,
+          height: context.sizeHelper(
+            tabletNormal: 145.0,
+            mobileLarge: 190.0,
+            desktopSmall: 220.0,
+          ),
           child: ListView.builder(
-            padding: const EdgeInsets.all(0.0),
+            padding: EdgeInsets.zero,
             scrollDirection: Axis.horizontal,
             // shrinkWrap: true,
             itemCount: categories.data!.length,
@@ -190,7 +194,11 @@ class _HomeTabState extends State<HomeTab> {
                         context, category.id ?? 0, category.name ?? '');
                   },
                   category: category,
-                  size: context.width / 5);
+                  size: context.sizeHelper(
+                    tabletNormal: context.width / 5,
+                    mobileLarge: context.width / 5,
+                    desktopSmall: context.width / 7,
+                  ));
             },
           ),
         ),
