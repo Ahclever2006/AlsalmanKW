@@ -129,7 +129,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
       desktopSmall: 36.0,
     );
     return Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.only(bottom: 16.0, left: 16.0, right: 16.0),
         child: BlocBuilder<AuthCubit, AuthState>(
           builder: (context, state) {
             final isLoggedIn = state.isUserLoggedIn;
@@ -137,10 +137,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
               final authCubit = context.read<AuthCubit>();
               authCubit.getUserData();
             }
-            return ListView(
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              physics: const BouncingScrollPhysics(),
+            return Column(
               children: [
                 _buildLogo(),
                 if (!isLoggedIn) _buildGuestUserSection(context),
@@ -151,187 +148,197 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
                       state.userInfo?.data?.email ?? '',
                       state.userAvatar),
                 const SizedBox(height: 12.0),
-                _buildDrawerItem(
-                  padding: padding,
-                  fontSize: fontSize,
-                  title: 'basket',
-                  icon: BlocBuilder<CartCubit, CartState>(
-                    builder: (context, state) {
-                      return Stack(
-                        alignment: AlignmentDirectional.center,
-                        clipBehavior: Clip.none,
-                        children: [
-                          SvgPicture.asset(
-                            'lib/res/assets/basket_fill_icon.svg',
+                Expanded(
+                  child: ListView(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    physics: const BouncingScrollPhysics(),
+                    children: [
+                      _buildDrawerItem(
+                        padding: padding,
+                        fontSize: fontSize,
+                        title: 'basket',
+                        icon: BlocBuilder<CartCubit, CartState>(
+                          builder: (context, state) {
+                            return Stack(
+                              alignment: AlignmentDirectional.center,
+                              clipBehavior: Clip.none,
+                              children: [
+                                SvgPicture.asset(
+                                  'lib/res/assets/basket_fill_icon.svg',
+                                  width: iconWidth,
+                                  height: iconWidth,
+                                ),
+                                if (state.cartCount > 0)
+                                  PositionedDirectional(
+                                    top: -16.0,
+                                    end: 12.0,
+                                    child: Container(
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: AppColors.PRIMARY_COLOR_DARK),
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: TitleText.medium(
+                                        text: '${state.cartCount}',
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            );
+                          },
+                        ),
+                        onTap: () => _goToCartPage(context),
+                      ),
+                      if (isLoggedIn)
+                        _buildDrawerItem(
+                          title: 'favorites',
+                          icon: SvgPicture.asset(
+                            'lib/res/assets/fav_account_icon.svg',
                             width: iconWidth,
                             height: iconWidth,
                           ),
-                          if (state.cartCount > 0)
-                            PositionedDirectional(
-                              top: -16.0,
-                              end: 12.0,
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: AppColors.PRIMARY_COLOR_DARK),
-                                padding: const EdgeInsets.all(4.0),
-                                child: TitleText.medium(
-                                  text: '${state.cartCount}',
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                        ],
-                      );
-                    },
-                  ),
-                  onTap: () => _goToCartPage(context),
-                ),
-                if (isLoggedIn)
-                  _buildDrawerItem(
-                    title: 'favorites',
-                    icon: SvgPicture.asset(
-                      'lib/res/assets/fav_account_icon.svg',
-                      width: iconWidth,
-                      height: iconWidth,
-                    ),
-                    onTap: () => _goToFavoritesPage(context),
-                    padding: padding,
-                    fontSize: fontSize,
-                  ),
-                if (isLoggedIn)
-                  _buildDrawerItem(
-                    title: 'wallet',
-                    icon: SvgPicture.asset(
-                      'lib/res/assets/wallet_account_icon.svg',
-                      width: iconWidth,
-                      height: iconWidth,
-                    ),
-                    onTap: () => _goToWalletPage(context),
-                    padding: padding,
-                    fontSize: fontSize,
-                  ),
-                if (isLoggedIn) _buildDivider(),
-                if (isLoggedIn)
-                  _buildDrawerItem(
-                    title: 'orders',
-                    icon: SvgPicture.asset(
-                      'lib/res/assets/orders_account_icon.svg',
-                      width: iconWidth,
-                      height: iconWidth,
-                    ),
-                    onTap: () => _goToOrdersPage(context),
-                    padding: padding,
-                    fontSize: fontSize,
-                  ),
-                if (isLoggedIn)
-                  _buildDrawerItem(
-                    title: 'addresses',
-                    icon: SvgPicture.asset(
-                      'lib/res/assets/addresses_account_icon.svg',
-                      width: iconWidth,
-                      height: iconWidth,
-                    ),
-                    onTap: () => _goToAddressesPage(context),
-                    padding: padding,
-                    fontSize: fontSize,
-                  ),
-                _buildDivider(),
-                if (isLoggedIn)
-                  _buildDrawerItem(
-                    title: 'change_password',
-                    icon: SvgPicture.asset(
-                      'lib/res/assets/change_password_account_icon.svg',
-                      width: iconWidth,
-                    ),
-                    onTap: () => _goToChangePasswordPage(context),
-                    padding: padding,
-                    fontSize: fontSize,
-                  ),
-                _buildDrawerItem(
-                  title: 'notifications',
-                  icon: SvgPicture.asset(
-                    'lib/res/assets/notification_account_icon.svg',
-                    width: iconWidth,
-                    height: iconWidth,
-                  ),
-                  onTap: () => _goToNotificationsPage(context),
-                  padding: padding,
-                  fontSize: fontSize,
-                ),
-                _buildDrawerItem(
-                  isLanguage: true,
-                  title: 'language',
-                  icon: SvgPicture.asset(
-                    'lib/res/assets/language_icon.svg',
-                    width: iconWidth,
-                    height: iconWidth,
-                  ),
-                  onTap: () async {
-                    final authCubit = context.read<AuthCubit>();
+                          onTap: () => _goToFavoritesPage(context),
+                          padding: padding,
+                          fontSize: fontSize,
+                        ),
+                      if (isLoggedIn)
+                        _buildDrawerItem(
+                          title: 'wallet',
+                          icon: SvgPicture.asset(
+                            'lib/res/assets/wallet_account_icon.svg',
+                            width: iconWidth,
+                            height: iconWidth,
+                          ),
+                          onTap: () => _goToWalletPage(context),
+                          padding: padding,
+                          fontSize: fontSize,
+                        ),
+                      if (isLoggedIn) _buildDivider(),
+                      if (isLoggedIn)
+                        _buildDrawerItem(
+                          title: 'orders',
+                          icon: SvgPicture.asset(
+                            'lib/res/assets/orders_account_icon.svg',
+                            width: iconWidth,
+                            height: iconWidth,
+                          ),
+                          onTap: () => _goToOrdersPage(context),
+                          padding: padding,
+                          fontSize: fontSize,
+                        ),
+                      if (isLoggedIn)
+                        _buildDrawerItem(
+                          title: 'addresses',
+                          icon: SvgPicture.asset(
+                            'lib/res/assets/addresses_account_icon.svg',
+                            width: iconWidth,
+                            height: iconWidth,
+                          ),
+                          onTap: () => _goToAddressesPage(context),
+                          padding: padding,
+                          fontSize: fontSize,
+                        ),
+                      _buildDivider(),
+                      if (isLoggedIn)
+                        _buildDrawerItem(
+                          title: 'change_password',
+                          icon: SvgPicture.asset(
+                            'lib/res/assets/change_password_account_icon.svg',
+                            width: iconWidth,
+                          ),
+                          onTap: () => _goToChangePasswordPage(context),
+                          padding: padding,
+                          fontSize: fontSize,
+                        ),
+                      _buildDrawerItem(
+                        title: 'notifications',
+                        icon: SvgPicture.asset(
+                          'lib/res/assets/notification_account_icon.svg',
+                          width: iconWidth,
+                          height: iconWidth,
+                        ),
+                        onTap: () => _goToNotificationsPage(context),
+                        padding: padding,
+                        fontSize: fontSize,
+                      ),
+                      _buildDrawerItem(
+                        isLanguage: true,
+                        title: 'language',
+                        icon: SvgPicture.asset(
+                          'lib/res/assets/language_icon.svg',
+                          width: iconWidth,
+                          height: iconWidth,
+                        ),
+                        onTap: () async {
+                          final authCubit = context.read<AuthCubit>();
 
-                    if (context.locale == const Locale('en')) {
-                      await EasyLocalization.of(context)!
-                          .setLocale(const Locale('ar'));
-                    } else {
-                      await EasyLocalization.of(context)!
-                          .setLocale(const Locale('en'));
-                    }
+                          if (context.locale == const Locale('en')) {
+                            await EasyLocalization.of(context)!
+                                .setLocale(const Locale('ar'));
+                          } else {
+                            await EasyLocalization.of(context)!
+                                .setLocale(const Locale('en'));
+                          }
 
-                    await authCubit
-                        .changeUserLanguage()
-                        .then((value) => drawerController.toggle!());
-                  },
-                  padding: padding,
-                  fontSize: fontSize,
-                ),
-                _buildDivider(),
-                _buildDrawerItem(
-                  title: 'contact_us',
-                  icon: SvgPicture.asset(
-                    'lib/res/assets/contact_us_account_icon.svg',
-                    width: iconWidth,
-                    height: iconWidth,
+                          await authCubit
+                              .changeUserLanguage()
+                              .then((value) => drawerController.toggle!());
+                        },
+                        padding: padding,
+                        fontSize: fontSize,
+                      ),
+                      _buildDivider(),
+                      _buildDrawerItem(
+                        title: 'contact_us',
+                        icon: SvgPicture.asset(
+                          'lib/res/assets/contact_us_account_icon.svg',
+                          width: iconWidth,
+                          height: iconWidth,
+                        ),
+                        onTap: () => _goToContactUsPage(context),
+                        padding: padding,
+                        fontSize: fontSize,
+                      ),
+                      _buildDrawerItem(
+                        title: 'privacy_policy',
+                        icon: SvgPicture.asset(
+                          'lib/res/assets/privacy_account_icon.svg',
+                          width: iconWidth,
+                          height: iconWidth,
+                        ),
+                        onTap: () =>
+                            _goToTopicsPage(context, TopicType.Privacy.value),
+                        padding: padding,
+                        fontSize: fontSize,
+                      ),
+                      _buildDrawerItem(
+                        title: 'terms_of_use',
+                        icon: SvgPicture.asset(
+                          'lib/res/assets/terms_account_icon.svg',
+                          width: iconWidth,
+                          height: iconWidth,
+                        ),
+                        onTap: () =>
+                            _goToTopicsPage(context, TopicType.Terms.value),
+                        padding: padding,
+                        fontSize: fontSize,
+                      ),
+                      _buildDrawerItem(
+                        title: 'about_us',
+                        icon: SvgPicture.asset(
+                          'lib/res/assets/about_us_account_icon.svg',
+                          width: iconWidth,
+                          height: iconWidth,
+                        ),
+                        onTap: () =>
+                            _goToTopicsPage(context, TopicType.AboutUs.value),
+                        padding: padding,
+                        fontSize: fontSize,
+                      ),
+                    ],
                   ),
-                  onTap: () => _goToContactUsPage(context),
-                  padding: padding,
-                  fontSize: fontSize,
-                ),
-                _buildDrawerItem(
-                  title: 'privacy_policy',
-                  icon: SvgPicture.asset(
-                    'lib/res/assets/privacy_account_icon.svg',
-                    width: iconWidth,
-                    height: iconWidth,
-                  ),
-                  onTap: () =>
-                      _goToTopicsPage(context, TopicType.Privacy.value),
-                  padding: padding,
-                  fontSize: fontSize,
-                ),
-                _buildDrawerItem(
-                  title: 'terms_of_use',
-                  icon: SvgPicture.asset(
-                    'lib/res/assets/terms_account_icon.svg',
-                    width: iconWidth,
-                    height: iconWidth,
-                  ),
-                  onTap: () => _goToTopicsPage(context, TopicType.Terms.value),
-                  padding: padding,
-                  fontSize: fontSize,
-                ),
-                _buildDrawerItem(
-                  title: 'about_us',
-                  icon: SvgPicture.asset(
-                    'lib/res/assets/about_us_account_icon.svg',
-                    width: iconWidth,
-                    height: iconWidth,
-                  ),
-                  onTap: () =>
-                      _goToTopicsPage(context, TopicType.AboutUs.value),
-                  padding: padding,
-                  fontSize: fontSize,
-                ),
+                )
               ],
             );
           },
