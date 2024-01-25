@@ -210,7 +210,7 @@ class _HomeTabState extends State<HomeTab> {
             ),
           ),
           const SizedBox(width: 12.0),
-          TitleText(text: label, color: AppColors.PRIMARY_COLOR_DARK),
+          TitleText(text: label),
         ],
       );
 

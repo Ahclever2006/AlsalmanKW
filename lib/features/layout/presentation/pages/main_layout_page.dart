@@ -415,10 +415,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
                       color: AppColors.PRIMARY_COLOR,
                       maxLines: 2),
                   const SizedBox(height: 12.0),
-                  SubtitleText(
-                    text: email ?? 'Unknown',
-                    color: AppColors.PRIMARY_COLOR_DARK,
-                  ),
+                  SubtitleText(text: email ?? 'Unknown'),
                   Align(
                     alignment: AlignmentDirectional.bottomEnd,
                     child: InkWell(
@@ -471,12 +468,10 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
             const SizedBox(width: 8),
             Expanded(
                 child: TitleText(
-                    text: isLanguage == true ? 'language_title' : title,
-                    color: AppColors.PRIMARY_COLOR_DARK)),
+                    text: isLanguage == true ? 'language_title' : title)),
             isLanguage == true
                 ? TitleText(
                     text: title,
-                    color: AppColors.PRIMARY_COLOR_DARK,
                     margin: const EdgeInsets.symmetric(horizontal: 16.0),
                   )
                 : const Icon(

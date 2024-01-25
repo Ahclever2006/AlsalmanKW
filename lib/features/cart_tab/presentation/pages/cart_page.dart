@@ -193,7 +193,6 @@ class CartTab extends StatelessWidget {
                   ),
                   TitleText(
                     text: cartItem.unitPrice!,
-                    color: AppColors.PRIMARY_COLOR_DARK,
                   ),
                   const SizedBox(height: 8.0),
                   Row(
@@ -219,7 +218,6 @@ class CartTab extends StatelessWidget {
         TitleText.medium(
           text: cartItem.productName!,
           maxLines: 1,
-          color: AppColors.PRIMARY_COLOR_DARK,
         ),
         const SizedBox(height: 12.0),
         Container(

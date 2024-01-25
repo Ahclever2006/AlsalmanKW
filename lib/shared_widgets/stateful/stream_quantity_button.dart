@@ -88,10 +88,7 @@ class _StreamQuantityButtonState extends State<StreamQuantityButton> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: TitleText(
-                  text: _quantity.toString().padLeft(2, '0'),
-                  color: AppColors.PRIMARY_COLOR_DARK,
-                ),
+                child: TitleText(text: _quantity.toString().padLeft(2, '0')),
               ),
               GestureDetector(
                 onTap: increaseQuantity,

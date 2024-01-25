@@ -143,8 +143,6 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                                           children: [
                                             const TitleText(
                                                 text: 'products',
-                                                color: AppColors
-                                                    .PRIMARY_COLOR_DARK,
                                                 margin: EdgeInsets.symmetric(
                                                     vertical: 8.0,
                                                     horizontal: 16.0)),

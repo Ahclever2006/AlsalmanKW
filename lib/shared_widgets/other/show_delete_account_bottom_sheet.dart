@@ -62,16 +62,9 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          TitleText(
-            text: widget.label,
-            color: AppColors.PRIMARY_COLOR_DARK,
-          ),
+          TitleText(text: widget.label),
           const SizedBox(height: 16.0),
-          SubtitleText(
-            text: widget.subTitle,
-            maxLines: 2,
-            color: AppColors.PRIMARY_COLOR_DARK,
-          ),
+          SubtitleText(text: widget.subTitle, maxLines: 2),
           _buildCheckBox(widget.checkMessage),
           _buildActionButtons(context),
         ],

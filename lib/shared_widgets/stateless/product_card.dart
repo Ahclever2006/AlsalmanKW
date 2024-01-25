@@ -143,10 +143,9 @@ class _ProductCardState extends State<ProductCard> {
       child: Padding(
           padding: const EdgeInsets.only(top: 4.0),
           child: TitleText.small(
-            text: widget.name,
-            // textAlign: TextAlign.center,
-            maxLines: 2, color: AppColors.PRIMARY_COLOR_DARK,
-          )),
+              text: widget.name,
+              // textAlign: TextAlign.center,
+              maxLines: 2)),
     );
   }
 
@@ -169,11 +168,7 @@ class _ProductCardState extends State<ProductCard> {
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Column(
           children: [
-            TitleText.medium(
-              text: widget.price,
-              maxLines: 1,
-              color: AppColors.PRIMARY_COLOR_DARK,
-            ),
+            TitleText.medium(text: widget.price, maxLines: 1),
             // if (widget.oldPrice != null)
             //   TitleText.medium(
             //     text: widget.oldPrice!,

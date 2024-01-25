@@ -47,7 +47,6 @@ class InnerPagesAppBar extends StatelessWidget {
             width: double.infinity,
             child: TitleText(
               text: label ?? '',
-              color: AppColors.PRIMARY_COLOR_DARK,
               margin: const EdgeInsets.symmetric(vertical: 8.0),
               textAlign: TextAlign.center,
             ),
@@ -100,6 +99,7 @@ class InnerPagesAppBar extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   icon: SvgPicture.asset(
                     'lib/res/assets/$actionIcon.svg',
+                    color: AppColors.PRIMARY_COLOR,
                     width: context.sizeHelper(
                         tabletExtraLarge: 24.0,
                         desktopSmall: 36.0,

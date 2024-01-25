@@ -46,9 +46,8 @@ class WalletSwitchButtonState extends State<WalletSwitchButton> {
           const SizedBox(width: 12.0),
           Expanded(
               child: TitleText(
-            text: !_isEnabled ? 'de_activate_wallet' : 'activate_wallet',
-            color: AppColors.PRIMARY_COLOR_DARK,
-          )),
+                  text:
+                      !_isEnabled ? 'de_activate_wallet' : 'activate_wallet')),
           Theme(
               data: ThemeData(
                   switchTheme: SwitchThemeData(

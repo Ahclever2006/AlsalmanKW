@@ -394,7 +394,6 @@ class _AddAddressPageState extends State<AddAddressPage> {
   Widget _buildTitle({required String label}) {
     return SubtitleText(
       text: label,
-      color: AppColors.PRIMARY_COLOR_DARK,
       margin: const EdgeInsets.only(bottom: 8.0),
     );
   }

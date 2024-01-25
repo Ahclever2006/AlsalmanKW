@@ -77,11 +77,7 @@ class _GenderChoiceWidgetState extends State<GenderChoiceWidget> {
           color: isSelected ? AppColors.PRIMARY_COLOR : Colors.white,
           borderRadius: const BorderRadius.all(Radius.circular(10.0)),
         ),
-        child: SubtitleText(
-          textAlign: TextAlign.center,
-          text: label,
-          color: AppColors.PRIMARY_COLOR_DARK,
-        ),
+        child: SubtitleText(textAlign: TextAlign.center, text: label),
       ),
       onTap: onPress,
     );

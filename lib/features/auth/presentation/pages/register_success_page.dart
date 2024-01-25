@@ -52,26 +52,21 @@ class _RegisterSuccessPageState extends State<RegisterSuccessPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TitleText.large(
-                text: '${'welcome_to'.tr()} ',
-                color: AppColors.PRIMARY_COLOR_DARK),
+            TitleText.large(text: '${'welcome_to'.tr()} '),
             const TitleText.large(
                 text: 'alsalman', color: AppColors.PRIMARY_COLOR),
           ],
         ),
         const SizedBox(height: 8.0),
-        const SubtitleText(
-            text: 'account_created', color: AppColors.PRIMARY_COLOR_DARK),
+        const SubtitleText(text: 'account_created'),
         const SizedBox(height: 8.0),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SubtitleText(
-                text: 'lif_is', color: AppColors.PRIMARY_COLOR_DARK),
+            const SubtitleText(text: 'lif_is'),
             SubtitleText(
                 text: ' ${'colorful'.tr()} ', color: AppColors.PRIMARY_COLOR),
-            const SubtitleText(
-                text: 'with', color: AppColors.PRIMARY_COLOR_DARK),
+            const SubtitleText(text: 'with'),
             SubtitleText(
                 text: ' ${'fish'.tr()}', color: AppColors.PRIMARY_COLOR),
           ],

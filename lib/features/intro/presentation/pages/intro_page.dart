@@ -177,8 +177,7 @@ class _IntroPageState extends State<IntroPage> {
                 child: TitleText(
                     subtractedSize: -4,
                     text: text,
-                    textAlign: TextAlign.center,
-                    color: AppColors.PRIMARY_COLOR_DARK),
+                    textAlign: TextAlign.center),
               ),
             ),
             AnimatedSmoothIndicator(

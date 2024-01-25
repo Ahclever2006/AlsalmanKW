@@ -69,10 +69,7 @@ class _QuantityButtonState extends State<QuantityButton> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: TitleText(
-              text: _quantity.toString(),
-              color: AppColors.PRIMARY_COLOR_DARK,
-            ),
+            child: TitleText(text: _quantity.toString()),
           ),
           GestureDetector(
             onTap: increaseQuantity,

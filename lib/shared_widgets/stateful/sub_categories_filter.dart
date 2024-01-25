@@ -54,10 +54,7 @@ class _SubCategoriesFilterState extends State<SubCategoriesFilter> {
                       ? Border.all(color: AppColors.PRIMARY_COLOR_DARK)
                       : null,
                 ),
-                child: TitleText.medium(
-                  text: e.name!,
-                  color: AppColors.PRIMARY_COLOR_DARK,
-                )),
+                child: TitleText.medium(text: e.name!)),
           );
         }).toList(),
       ),

@@ -19,7 +19,7 @@ class EmptyPageMessage extends StatelessWidget {
     String? svgImage,
     bool isSVG = true,
     double heightRatio = 0.8,
-    Color? textColor,
+    Color? textColor = AppColors.PRIMARY_COLOR_DARK,
     RefreshCallback? onRefresh,
   })  : assert(title != null || svgImage != null,
             "title or svgImage must be not null"),

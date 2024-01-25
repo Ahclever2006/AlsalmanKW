@@ -55,16 +55,11 @@ class _ColorSquareAttributesState extends State<ColorSquareAttributes> {
           widget.attributeModel!.values![model.selectedColorBox!];
     }
 
-    final Widget notRequiredTitle = TitleText(
-      text: '${widget.attributeModel!.name!} : ',
-      color: AppColors.PRIMARY_COLOR_DARK,
-    );
+    final Widget notRequiredTitle =
+        TitleText(text: '${widget.attributeModel!.name!} : ');
     final Widget requiredTitle = Row(
       children: [
-        TitleText(
-          text: widget.attributeModel!.name!,
-          color: AppColors.PRIMARY_COLOR_DARK,
-        ),
+        TitleText(text: widget.attributeModel!.name!),
         const SizedBox(
           width: 5.0,
         ),

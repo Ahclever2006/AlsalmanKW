@@ -298,10 +298,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     if (shortDescription == null) return const SizedBox();
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: TitleText.medium(
-        text: shortDescription,
-        color: AppColors.PRIMARY_COLOR_DARK,
-      ),
+      child: TitleText.medium(text: shortDescription),
     );
   }
 
@@ -504,10 +501,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
       return [
         const Padding(
           padding: EdgeInsets.all(8.0),
-          child: TitleText(
-            text: 'about_product',
-            color: AppColors.PRIMARY_COLOR_DARK,
-          ),
+          child: TitleText(text: 'about_product'),
         ),
         Html(
           data: fullDescription,
@@ -598,25 +592,18 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     return [
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: TitleText.large(
-            text: name ?? '', color: AppColors.PRIMARY_COLOR_DARK),
+        child: TitleText.large(text: name ?? ''),
       ),
       const SizedBox(height: 8.0),
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: TitleText(
-          text: '$price ${'currency'.tr()}',
-          color: AppColors.PRIMARY_COLOR_DARK,
-        ),
+        child: TitleText(text: '$price ${'currency'.tr()}'),
       ),
       if (vendor != null) const SizedBox(height: 8.0),
       if (vendor != null)
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: TitleText(
-            text: '${'vendor'.tr()}: $vendor',
-            color: AppColors.PRIMARY_COLOR,
-          ),
+          child: TitleText(text: '${'vendor'.tr()}: $vendor'),
         ),
     ];
   }
@@ -715,10 +702,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const TitleText(
-                  text: 'select_date',
-                  color: AppColors.PRIMARY_COLOR_DARK,
-                ),
+                const TitleText(text: 'select_date'),
                 InkWell(
                   onTap: () => showTheDatePicker(context),
                   child: Container(
@@ -735,11 +719,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         SvgPicture.asset('lib/res/assets/calendar_icon.svg'),
                         Expanded(
                           child: TitleText(
-                            margin:
-                                const EdgeInsets.symmetric(horizontal: 12.0),
-                            text: state.date?.split(' ').first ?? 'choose_date',
-                            color: AppColors.PRIMARY_COLOR_DARK,
-                          ),
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 12.0),
+                              text: state.date?.split(' ').first ??
+                                  'choose_date'),
                         ),
                         const Icon(
                           Icons.arrow_drop_down,
@@ -781,10 +764,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const TitleText(
-              margin: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-              text: 'select_time',
-              color: AppColors.PRIMARY_COLOR_DARK,
-            ),
+                margin: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
+                text: 'select_time'),
             GridView.builder(
               padding:
                   const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
@@ -864,7 +845,8 @@ class _AddToCartButtonState extends State<AddToCartButton> {
           left: 12.0, right: 12.0, top: 24.0, bottom: 24.0),
       decoration: const BoxDecoration(
         color: AppColors.PRIMARY_COLOR_DARK,
-        borderRadius: BorderRadius.only( topLeft:Radius.circular(15.0),topRight:Radius.circular(15.0) ),
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

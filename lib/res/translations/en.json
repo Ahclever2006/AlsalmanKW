@@ -480,5 +480,6 @@
     "governorate":"Governorate",
     "qty":"Qty",
     "male":"Male",
-    "female":"Female"
+    "female":"Female",
+    "email":"Email"
 }

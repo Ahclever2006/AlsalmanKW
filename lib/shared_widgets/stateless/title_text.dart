@@ -1,3 +1,4 @@
+import 'package:alsalman_app/res/style/app_colors.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:size_helper/size_helper.dart';
@@ -8,7 +9,7 @@ class TitleText extends StatelessWidget {
     Key? key,
     required this.text,
     this.subtractedSize = 0.0,
-    this.color,
+    this.color = AppColors.PRIMARY_COLOR_DARK,
     this.margin,
     this.textAlign = TextAlign.start,
     this.textDirection,
@@ -32,7 +33,7 @@ class TitleText extends StatelessWidget {
   const TitleText.verySmall({
     Key? key,
     required String text,
-    Color? color,
+    Color? color = AppColors.PRIMARY_COLOR_DARK,
     EdgeInsets? margin,
     TextAlign textAlign = TextAlign.start,
     TextDirection? textDirection,
@@ -57,7 +58,7 @@ class TitleText extends StatelessWidget {
   const TitleText.small({
     Key? key,
     required String text,
-    Color? color,
+    Color? color = AppColors.PRIMARY_COLOR_DARK,
     EdgeInsets? margin,
     TextAlign textAlign = TextAlign.start,
     TextDirection? textDirection,
@@ -82,7 +83,7 @@ class TitleText extends StatelessWidget {
   const TitleText.medium({
     Key? key,
     required String text,
-    Color? color,
+    Color? color = AppColors.PRIMARY_COLOR_DARK,
     EdgeInsets? margin,
     TextAlign textAlign = TextAlign.start,
     TextDirection? textDirection,
@@ -107,7 +108,7 @@ class TitleText extends StatelessWidget {
   const TitleText.large({
     Key? key,
     required String text,
-    Color? color,
+    Color? color = AppColors.PRIMARY_COLOR_DARK,
     EdgeInsets? margin,
     TextAlign textAlign = TextAlign.start,
     TextDirection? textDirection,
@@ -132,7 +133,7 @@ class TitleText extends StatelessWidget {
   const TitleText.extraLarge({
     Key? key,
     required String text,
-    Color? color,
+    Color? color = AppColors.PRIMARY_COLOR_DARK,
     EdgeInsets? margin,
     TextAlign textAlign = TextAlign.start,
     TextDirection? textDirection,

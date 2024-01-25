@@ -66,36 +66,24 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
 
   Widget _buildDeleteAccountSubText(BuildContext context) {
     return const SubtitleText(
-      text: 'delete_account_subtitle',
-      textAlign: TextAlign.center,
-      color: AppColors.PRIMARY_COLOR_DARK,
-    );
+        text: 'delete_account_subtitle', textAlign: TextAlign.center);
   }
 
   Widget _buildDeleteAccountWarningText(BuildContext context) {
     return const Padding(
       padding: EdgeInsets.all(16.0),
-      child: TitleText.large(
-        text: 'warning',
-        color: AppColors.PRIMARY_COLOR_DARK,
-      ),
+      child: TitleText.large(text: 'warning'),
     );
   }
 
   Widget _buildDeleteAccountWarningSubtitleText(BuildContext context) {
-    return const SubtitleText(
-      text: 'warning_subtitle',
-      color: AppColors.PRIMARY_COLOR_DARK,
-    );
+    return const SubtitleText(text: 'warning_subtitle');
   }
 
   Widget _buildReadInformationText(BuildContext context) {
     return const Padding(
       padding: EdgeInsets.all(16.0),
-      child: TitleText(
-        text: 'read_information',
-        color: AppColors.PRIMARY_COLOR_DARK,
-      ),
+      child: TitleText(text: 'read_information'),
     );
   }
 

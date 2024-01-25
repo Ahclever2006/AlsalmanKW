@@ -130,11 +130,7 @@ class _LoginPageState extends State<LoginPage> {
               height: 2.0,
             ),
           ),
-          const SubtitleText(
-            text: 'or',
-            textAlign: TextAlign.center,
-            color: AppColors.PRIMARY_COLOR_DARK,
-          ),
+          const SubtitleText(text: 'or', textAlign: TextAlign.center),
           Expanded(
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -182,10 +178,7 @@ class _LoginPageState extends State<LoginPage> {
         child: InkWell(
           child: const Padding(
             padding: EdgeInsets.all(8.0),
-            child: SubtitleText(
-              text: 'forget_password',
-              color: AppColors.PRIMARY_COLOR_DARK,
-            ),
+            child: SubtitleText(text: 'forget_password'),
           ),
           onTap: () => _goToForgetPasswordPage(context),
         ),

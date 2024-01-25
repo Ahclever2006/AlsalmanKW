@@ -59,11 +59,7 @@ class SimpleBottomSheetWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
-          TitleText(
-            text: label,
-            textAlign: TextAlign.center,
-            color: AppColors.PRIMARY_COLOR_DARK,
-          ),
+          TitleText(text: label, textAlign: TextAlign.center),
           const SizedBox(height: 16.0),
           _buildDivider(),
           const SizedBox(height: 8.0),
@@ -93,17 +89,10 @@ class SimpleBottomSheetWidget extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const SizedBox(height: 16.0),
-                                  TitleText.medium(
-                                    text: name,
-                                    maxLines: 2,
-                                    color: AppColors.PRIMARY_COLOR_DARK,
-                                  ),
+                                  TitleText.medium(text: name, maxLines: 2),
                                   const SizedBox(height: 16.0),
                                   TitleText.medium(
-                                    text: deliveryText,
-                                    maxLines: 2,
-                                    color: AppColors.PRIMARY_COLOR_DARK,
-                                  ),
+                                      text: deliveryText, maxLines: 2),
                                 ],
                               ),
                             ),

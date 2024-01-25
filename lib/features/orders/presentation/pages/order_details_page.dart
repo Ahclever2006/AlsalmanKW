@@ -191,21 +191,11 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TitleText(
-                  text: cartItem.productName!,
-                  maxLines: 2,
-                  color: AppColors.PRIMARY_COLOR_DARK,
-                ),
+                TitleText(text: cartItem.productName!, maxLines: 2),
                 const Spacer(),
-                TitleText(
-                  text: '${'qty'.tr()} : ${cartItem.quantity}',
-                  color: AppColors.PRIMARY_COLOR_DARK,
-                ),
+                TitleText(text: '${'qty'.tr()} : ${cartItem.quantity}'),
                 const SizedBox(height: 12.0),
-                TitleText(
-                  text: cartItem.subTotal ?? '',
-                  color: AppColors.PRIMARY_COLOR_DARK,
-                ),
+                TitleText(text: cartItem.subTotal ?? ''),
               ],
             ),
           )),
@@ -241,14 +231,8 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SubtitleText(
-            text: label,
-            color: AppColors.PRIMARY_COLOR_DARK,
-          ),
-          TitleText(
-            text: value,
-            color: AppColors.PRIMARY_COLOR_DARK,
-          ),
+          SubtitleText(text: label),
+          TitleText(text: value),
         ],
       ),
     );
@@ -258,10 +242,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
     return [
       const Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        child: TitleText(
-          text: 'delivery_address',
-          color: AppColors.PRIMARY_COLOR_DARK,
-        ),
+        child: TitleText(text: 'delivery_address'),
       ),
       AddressItemWidget(
         address: shippingAddress!,
@@ -275,10 +256,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
     return [
       const Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        child: TitleText(
-          text: 'shipping_method',
-          color: AppColors.PRIMARY_COLOR_DARK,
-        ),
+        child: TitleText(text: 'shipping_method'),
       ),
       Container(
         decoration: const BoxDecoration(
@@ -287,10 +265,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
         ),
         padding: const EdgeInsets.all(16.0),
         margin: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: TitleText.medium(
-          text: shippingMethod ?? '',
-          color: AppColors.PRIMARY_COLOR_DARK,
-        ),
+        child: TitleText.medium(text: shippingMethod ?? ''),
       )
     ];
   }

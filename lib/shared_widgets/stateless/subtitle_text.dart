@@ -1,3 +1,4 @@
+import 'package:alsalman_app/res/style/app_colors.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:size_helper/size_helper.dart';
@@ -12,7 +13,7 @@ class SubtitleText extends StatelessWidget {
     this.subtractedSize = 0.0,
     this.textDirection,
     this.margin,
-    this.color,
+    this.color = AppColors.PRIMARY_COLOR_DARK,
     this.fontFamily,
     this.maxLines = 10,
   });
@@ -34,7 +35,7 @@ class SubtitleText extends StatelessWidget {
     TextAlign textAlign = TextAlign.start,
     TextDirection? textDirection,
     EdgeInsets? margin,
-    Color? color,
+    Color? color = AppColors.PRIMARY_COLOR_DARK,
     String? fontFamily,
     int? maxLines = 10,
   }) : this(
@@ -56,7 +57,7 @@ class SubtitleText extends StatelessWidget {
     TextAlign textAlign = TextAlign.start,
     TextDirection? textDirection,
     EdgeInsets? margin,
-    Color? color,
+    Color? color = AppColors.PRIMARY_COLOR_DARK,
     String? fontFamily,
     int? maxLines = 10,
   }) : this(
@@ -79,7 +80,7 @@ class SubtitleText extends StatelessWidget {
     TextAlign textAlign = TextAlign.start,
     TextDirection? textDirection,
     EdgeInsets? margin,
-    Color? color,
+    Color? color = AppColors.PRIMARY_COLOR_DARK,
     String? fontFamily,
     int? maxLines = 10,
   }) : this(
@@ -102,7 +103,7 @@ class SubtitleText extends StatelessWidget {
     TextAlign textAlign = TextAlign.start,
     TextDirection? textDirection,
     EdgeInsets? margin,
-    Color? color,
+    Color? color = AppColors.PRIMARY_COLOR_DARK,
     String? fontFamily,
     int? maxLines = 10,
   }) : this(

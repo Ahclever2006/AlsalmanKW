@@ -123,20 +123,11 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              TitleText(
-                text: widget.label,
-                color: AppColors.PRIMARY_COLOR_DARK,
-              ),
-              Row(
-                children: const [
-                  TitleText(
-                    text: 'A-Z',
-                    color: AppColors.PRIMARY_COLOR_DARK,
-                  ),
-                  Icon(
-                    Icons.arrow_upward_outlined,
-                    color: AppColors.PRIMARY_COLOR_DARK,
-                  )
+              TitleText(text: widget.label),
+              const Row(
+                children: [
+                  TitleText(text: 'A-Z'),
+                  Icon(Icons.arrow_upward_outlined)
                 ],
               ),
             ],
@@ -201,10 +192,7 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
         .map((e) => RadioListTile<int?>(
             value: e.value,
             groupValue: selectedSortMethod,
-            title: TitleText(
-              text: e.name,
-              color: AppColors.PRIMARY_COLOR_DARK,
-            ),
+            title: TitleText(text: e.name),
             onChanged: (sortMethod) {
               selectedSortMethod = sortMethod;
               setState(() {});
@@ -305,37 +293,25 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
               children: [
                 Row(
                   children: [
-                    const TitleText(
-                      text: 'currency',
-                      color: AppColors.PRIMARY_COLOR_DARK,
-                    ),
+                    const TitleText(text: 'currency'),
                     const SizedBox(width: 8.0),
                     Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16.0, vertical: 4.0),
                       color: AppColors.GREY_LIGHT_COLOR,
-                      child: TitleText(
-                        text: _lowerValue.toString(),
-                        color: AppColors.PRIMARY_COLOR_DARK,
-                      ),
+                      child: TitleText(text: _lowerValue.toString()),
                     )
                   ],
                 ),
                 Row(
                   children: [
-                    const TitleText(
-                      text: 'currency',
-                      color: AppColors.PRIMARY_COLOR_DARK,
-                    ),
+                    const TitleText(text: 'currency'),
                     const SizedBox(width: 8.0),
                     Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16.0, vertical: 4.0),
                       color: AppColors.GREY_LIGHT_COLOR,
-                      child: TitleText(
-                        text: _upperValue.toString(),
-                        color: AppColors.PRIMARY_COLOR_DARK,
-                      ),
+                      child: TitleText(text: _upperValue.toString()),
                     )
                   ],
                 ),

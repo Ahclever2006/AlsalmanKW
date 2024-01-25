@@ -45,14 +45,11 @@ class _RadioListAttributeState extends State<RadioListAttribute> {
     final cubit = context.read<ProductDetailsCubit>();
     final RadioButtonAttributeModel model =
         RadioButtonAttributeModel(values: widget.attributeModel!.values);
-    final Widget notRequiredTitle = TitleText(
-        text: widget.attributeModel!.name!,
-        color: AppColors.PRIMARY_COLOR_DARK);
+    final Widget notRequiredTitle =
+        TitleText(text: widget.attributeModel!.name!);
     final Widget requiredTitle = Row(
       children: <Widget>[
-        TitleText(
-            text: widget.attributeModel!.name!,
-            color: AppColors.PRIMARY_COLOR_DARK),
+        TitleText(text: widget.attributeModel!.name!),
         const SizedBox(
           width: 5.0,
         ),
@@ -112,9 +109,7 @@ class _RadioListAttributeState extends State<RadioListAttribute> {
                     ),
                   ),
                   Expanded(
-                    child: SubtitleText(
-                        text: model.values![index].name!,
-                        color: AppColors.PRIMARY_COLOR_DARK),
+                    child: SubtitleText(text: model.values![index].name!),
                   ),
                   if (model.values![index].priceAdjustmentValue! > 0)
                     SubtitleText(

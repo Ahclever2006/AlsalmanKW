@@ -470,10 +470,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     return [
       const Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        child: TitleText(
-          text: 'delivery_address',
-          color: AppColors.PRIMARY_COLOR_DARK,
-        ),
+        child: TitleText(text: 'delivery_address'),
       ),
       AddressItemWidget(
           address: shippingAddress, inCheckOut: true, onPress: () {})
@@ -489,10 +486,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
       if (normalItems != null)
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          child: TitleText(
-            text: 'order_summary',
-            color: AppColors.PRIMARY_COLOR_DARK,
-          ),
+          child: TitleText(text: 'order_summary'),
         ),
       if (normalItems != null)
         ...normalItems
@@ -572,11 +566,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   )),
               child: SvgPicture.asset('lib/res/assets/coupon_icon.svg'),
             ),
-            const TitleText(
-              text: 'coupon',
-              textAlign: TextAlign.center,
-              color: AppColors.PRIMARY_COLOR_DARK,
-            )
+            const TitleText(text: 'coupon', textAlign: TextAlign.center)
           ],
         ),
       ),
@@ -703,11 +693,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
               children: [
                 TitleText(
                   text: label,
-                  color: color ?? AppColors.PRIMARY_COLOR_DARK,
+                  color: color,
                 ),
                 TitleText(
                   text: value,
-                  color: color ?? AppColors.PRIMARY_COLOR_DARK,
+                  color: color,
                 ),
               ],
             ),
@@ -846,7 +836,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
     return [
       const TitleText(
           text: 'payment_method',
-          color: AppColors.PRIMARY_COLOR_DARK,
           margin: EdgeInsets.symmetric(horizontal: 16.0)),
       const SizedBox(height: 16.0),
       SizedBox(

@@ -53,10 +53,7 @@ class SimpleDialogWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               const SizedBox(height: 16.0),
-              TitleText(
-                text: label,
-                color: AppColors.PRIMARY_COLOR_DARK,
-              ),
+              TitleText(text: label),
               const SizedBox(height: 16.0),
               SvgPicture.asset(
                 'lib/res/assets/remove_fav_icon.svg',

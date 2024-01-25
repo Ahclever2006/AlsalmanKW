@@ -167,11 +167,7 @@ class _SignUpPageState extends State<SignUpPage> {
               height: 2.0,
             ),
           ),
-          const SubtitleText(
-            text: 'or',
-            textAlign: TextAlign.center,
-            color: AppColors.PRIMARY_COLOR_DARK,
-          ),
+          const SubtitleText(text: 'or', textAlign: TextAlign.center),
           Expanded(
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 8.0),

@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../../core/enums/address_type_enum.dart';
@@ -64,76 +65,60 @@ class AddressItemWidget extends StatelessWidget {
                           child: SvgPicture.asset(
                               'lib/res/assets/selected_icon.svg'),
                         ),
-                      TitleText.large(
-                        text: placeType,
-                        color: AppColors.PRIMARY_COLOR_DARK,
-                      ),
+                      TitleText.large(text: placeType),
                     ],
                   ),
                 const SizedBox(height: 16.0),
                 SubtitleText(
                   text: address.firstName!,
-                  color: AppColors.PRIMARY_COLOR_DARK,
                 ),
                 if (block != null)
                   SubtitleText(
-                    text: block,
-                    color: AppColors.PRIMARY_COLOR_DARK,
+                    text: '${'block'.tr()} : $block',
                   ),
                 if (address.address1 != null)
                   SubtitleText(
-                    text: address.address1!,
-                    color: AppColors.PRIMARY_COLOR_DARK,
+                    text: '${'street'.tr()} : ${address.address1!}',
                   ),
                 if (avenue != null)
                   SubtitleText(
-                    text: avenue,
-                    color: AppColors.PRIMARY_COLOR_DARK,
+                    text: '${'avenue'.tr()} : $avenue',
                   ),
                 if (floor != null)
                   SubtitleText(
-                    text: floor,
-                    color: AppColors.PRIMARY_COLOR_DARK,
+                    text: '${'floor'.tr()} : $floor',
                   ),
                 if (apartment != null &&
                     placeType == AddressType.home_type.name)
                   SubtitleText(
-                    text: apartment,
-                    color: AppColors.PRIMARY_COLOR_DARK,
+                    text: '${'apartment'.tr()} : $apartment',
                   ),
                 if (office != null && placeType == AddressType.office_type.name)
                   SubtitleText(
-                    text: office,
-                    color: AppColors.PRIMARY_COLOR_DARK,
+                    text: '${'office'.tr()} : $office',
                   ),
                 if (other != null && placeType == AddressType.other_type.name)
                   SubtitleText(
-                    text: other,
-                    color: AppColors.PRIMARY_COLOR_DARK,
+                    text: '${'other'.tr()} : $other',
                   ),
                 SubtitleText(
-                  text: address.phoneNumber!,
-                  color: AppColors.PRIMARY_COLOR_DARK,
+                  text: '${'phone_number_title'.tr()} : ${address.phoneNumber}',
                 ),
                 if (address.countryName != null)
                   SubtitleText(
-                    text: address.countryName!,
-                    color: AppColors.PRIMARY_COLOR_DARK,
+                    text: '${'governorate'.tr()} : ${address.countryName!}',
                   ),
                 if (address.stateProvinceName != null)
                   SubtitleText(
-                    text: address.stateProvinceName!,
-                    color: AppColors.PRIMARY_COLOR_DARK,
+                    text: '${'area'.tr()} : ${address.stateProvinceName!}',
                   ),
                 if (address.email != null)
                   SubtitleText(
-                    text: address.email!,
-                    color: AppColors.PRIMARY_COLOR_DARK,
+                    text: '${'email'.tr()} : ${address.email!}',
                   ),
                 if (notes != null)
                   SubtitleText(
-                    text: notes,
-                    color: AppColors.PRIMARY_COLOR_DARK,
+                    text: '${'notes'.tr()} : $notes',
                   ),
               ],
             ),
