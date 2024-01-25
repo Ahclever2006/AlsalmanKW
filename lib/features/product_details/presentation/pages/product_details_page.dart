@@ -864,7 +864,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
           left: 12.0, right: 12.0, top: 24.0, bottom: 24.0),
       decoration: const BoxDecoration(
         color: AppColors.PRIMARY_COLOR_DARK,
-        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+        borderRadius: BorderRadius.only( topLeft:Radius.circular(15.0),topRight:Radius.circular(15.0) ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
