@@ -75,7 +75,7 @@ class PaymentSuccessScreen extends StatelessWidget {
                 }),
             const SizedBox(height: 16.0),
             DefaultButton(
-                label: 'home'.tr(),
+                label: 'home_page'.tr(),
                 labelStyle: Theme.of(context)
                     .textTheme
                     .displayLarge!

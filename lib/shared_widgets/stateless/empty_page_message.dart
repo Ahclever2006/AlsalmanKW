@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../core/utils/media_query_values.dart';
 
 import '../../core/utils/connection_checker.dart';
+import '../../core/utils/navigator_helper.dart';
 import '../../res/style/app_colors.dart';
 import '../stateful/default_button.dart';
 import 'title_text.dart';
@@ -125,6 +126,14 @@ class EmptyPageMessage extends StatelessWidget {
                 color: AppColors.ACCENT_COLOR,
               ),
             ),
+          DefaultButton(
+              label: 'go_to_home'.tr(),
+              margin:
+                  const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
+              isExpanded: true,
+              onPressed: () {
+                _goToHomePage(context);
+              }),
           if (showTryAgainButton) _buildTryAgainButton(),
         ],
       );
@@ -160,5 +169,10 @@ class EmptyPageMessage extends StatelessWidget {
       ),
       onPressed: _onRefresh,
     );
+  }
+
+  void _goToHomePage(BuildContext context) {
+    NavigatorHelper.of(context)
+        .popUntil(ModalRoute.withName("/MainLayOutPage"));
   }
 }
