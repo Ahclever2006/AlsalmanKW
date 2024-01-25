@@ -227,6 +227,14 @@ class _HomeTabState extends State<HomeTab> {
     }));
   }
 
+  void _goToProductDetailsPageFromBanner(BuildContext context, int productId) {
+    NavigatorHelper.of(context).push(MaterialPageRoute(builder: (_) {
+      return ProductDetailsPage(
+        productId: productId,
+      );
+    }));
+  }
+
   Widget _buildHomeBanners(BuildContext context, HomeBannerModel? banners,
       {bool? autoPlay}) {
     final cubit = context.read<HomeCubit>();
@@ -272,6 +280,9 @@ class _HomeTabState extends State<HomeTab> {
             else if (link.contains('Category')) {
               _goToCategoryProductsPage(context,
                   int.parse(link.replaceAll('Category:', '')), 'category');
+            } else if (link.contains('Product')) {
+              _goToProductDetailsPageFromBanner(
+                  context, int.parse(link.replaceAll('Product:', '')));
             }
           }
         },

@@ -347,21 +347,30 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
           children: [
-            const SubtitleText(
-              text: 'welcome_guest',
-              color: AppColors.PRIMARY_COLOR,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SubtitleText(
+                  text: 'welcome_guest',
+                  color: AppColors.PRIMARY_COLOR,
+                ),
+                const SizedBox(height: 12.0),
+                const SubtitleText(text: 'not_logged_in'),
+                const SizedBox(height: 12.0),
+                DefaultButton(
+                    label: 'login'.tr().toUpperCase(),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24.0, vertical: 12.0),
+                    onPressed: () => _goToLoginPage(context)),
+              ],
             ),
-            const SizedBox(height: 12.0),
-            const SubtitleText(text: 'not_logged_in'),
-            const SizedBox(height: 12.0),
-            DefaultButton(
-                label: 'login'.tr().toUpperCase(),
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 24.0, vertical: 12.0),
-                onPressed: () => _goToLoginPage(context)),
+            const Spacer(),
+            Image.asset(
+              'lib/res/assets/fish_icon.png',
+              width: 90.0,
+            )
           ],
         ));
   }

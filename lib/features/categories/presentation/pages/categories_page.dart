@@ -33,7 +33,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         InnerPagesAppBar(
-          label: 'categories'.tr(),
+          label: 'categories'.tr().toUpperCase(),
         ),
         Expanded(
           child: BlocConsumer<CategoriesCubit, CategoriesState>(
@@ -85,7 +85,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3,
-                            childAspectRatio: 0.9,
+                            childAspectRatio: 1.0,
                             mainAxisSpacing: 15),
                     shrinkWrap: true,
                     itemCount: categories.length,
