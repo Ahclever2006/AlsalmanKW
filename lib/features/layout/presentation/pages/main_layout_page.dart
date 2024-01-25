@@ -238,16 +238,17 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
                     fontSize: fontSize,
                   ),
                 _buildDivider(),
-                _buildDrawerItem(
-                  title: 'change_password',
-                  icon: SvgPicture.asset(
-                    'lib/res/assets/change_password_account_icon.svg',
-                    width: iconWidth,
+                if (isLoggedIn)
+                  _buildDrawerItem(
+                    title: 'change_password',
+                    icon: SvgPicture.asset(
+                      'lib/res/assets/change_password_account_icon.svg',
+                      width: iconWidth,
+                    ),
+                    onTap: () => _goToChangePasswordPage(context),
+                    padding: padding,
+                    fontSize: fontSize,
                   ),
-                  onTap: () => _goToChangePasswordPage(context),
-                  padding: padding,
-                  fontSize: fontSize,
-                ),
                 _buildDrawerItem(
                   title: 'notifications',
                   icon: SvgPicture.asset(

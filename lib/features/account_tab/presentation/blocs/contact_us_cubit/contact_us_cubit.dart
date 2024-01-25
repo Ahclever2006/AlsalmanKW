@@ -5,10 +5,10 @@ import '../../../../../core/service/launcher_service.dart';
 
 part 'contact_us_state.dart';
 
-const whatsAppNumber = "+96598979797";
-const customerServiceNumber = "+96598979797";
+const whatsAppNumber = "+96597762996";
+const customerServiceNumber = "+96522622474";
 const twitterLink = "https://twitter.com/slots";
-const instagramLink = "https://www.instagram.com/slots/";
+const instagramLink = "https://www.instagram.com/alsalmankw/";
 
 class ContactUsCubit extends BaseCubit<ContactUsState> {
   ContactUsCubit(this._launcherService) : super(const ContactUsState());
