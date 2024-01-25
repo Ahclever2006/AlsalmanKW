@@ -73,13 +73,16 @@ class _AddressTypeSelectorState extends State<AddressTypeSelector> {
               const SizedBox(height: 16.0),
               SvgPicture.asset(
                 type == AddressType.home_type.index
-                    ? 'lib/res/assets/home_address_icon.svg'
+                    ? isSelected
+                        ? 'lib/res/assets/home_address_selected_icon.svg'
+                        : 'lib/res/assets/home_address_icon.svg'
                     : type == AddressType.office_type.index
-                        ? 'lib/res/assets/office_address_icon.svg'
-                        : 'lib/res/assets/other_address_icon.svg',
-                color: isSelected
-                    ? AppColors.PRIMARY_COLOR_DARK
-                    : AppColors.GREY_DARK_COLOR,
+                        ? isSelected
+                            ? 'lib/res/assets/office_address_selected_icon.svg'
+                            : 'lib/res/assets/office_address_icon.svg'
+                        : isSelected
+                            ? 'lib/res/assets/other_address_selected_icon.svg'
+                            : 'lib/res/assets/other_address_icon.svg',
               ),
             ],
           ),

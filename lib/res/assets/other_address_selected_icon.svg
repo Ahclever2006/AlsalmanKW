@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="37.824" height="37.824" viewBox="0 0 37.824 37.824">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Bold_Map_Location_Map_Point" data-name="Bold / Map &amp; Location / Map Point" width="37.824" height="37.824" transform="translate(0)" fill="#5fa8d3"/>
+    </clipPath>
+  </defs>
+  <g id="Group_36563" data-name="Group 36563" clip-path="url(#clip-path)">
+    <path id="Vector" d="M4943.607,21343c-6.966,0-12.607,6.3-12.607,13.395s4.019,14.66,10.307,17.652a5.847,5.847,0,0,0,4.6,0c6.289-2.992,10.308-10.559,10.308-17.652S4950.573,21343,4943.607,21343Zm0,15.758a3.15,3.15,0,1,0-3.151-3.152A3.161,3.161,0,0,0,4943.607,21358.758Z" transform="translate(-4924.696 -21339.848)" fill="#5fa8d3" fill-rule="evenodd"/>
+  </g>
+</svg>
