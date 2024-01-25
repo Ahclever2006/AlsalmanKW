@@ -9,7 +9,6 @@ import '../../../../shared_widgets/stateful/default_button.dart';
 import '../../../../shared_widgets/stateful/user_profile_image_picker.dart';
 import '../../../account_tab/presentation/pages/change_password_page.dart';
 import '../../../account_tab/presentation/pages/contact_us_page.dart';
-import '../../../account_tab/presentation/pages/language_chooser_page.dart';
 import '../../../account_tab/presentation/pages/profile_page.dart';
 import '../../../account_tab/presentation/pages/topic_page.dart';
 import '../../../address/presentation/pages/address_screen.dart';
@@ -268,7 +267,21 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
                     width: iconWidth,
                     height: iconWidth,
                   ),
-                  onTap: () => _goToLanguagePage(context),
+                  onTap: () async {
+                    final authCubit = context.read<AuthCubit>();
+
+                    if (context.locale == const Locale('en')) {
+                      await EasyLocalization.of(context)!
+                          .setLocale(const Locale('ar'));
+                    } else {
+                      await EasyLocalization.of(context)!
+                          .setLocale(const Locale('en'));
+                    }
+
+                    await authCubit
+                        .changeUserLanguage()
+                        .then((value) => drawerController.toggle!());
+                  },
                   padding: padding,
                   fontSize: fontSize,
                 ),
@@ -434,13 +447,13 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: padding),
+        padding: EdgeInsetsDirectional.only(
+            top: padding, bottom: padding, end: context.width * 0.15),
         child: Row(
           children: [
-            icon,
+            SizedBox(width: 30.0, child: icon),
             const SizedBox(width: 8),
             Expanded(
-                flex: 3,
                 child: TitleText(
                     text: isLanguage == true ? 'language_title' : title,
                     color: AppColors.PRIMARY_COLOR_DARK)),
@@ -454,17 +467,10 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
                     Icons.chevron_right,
                     color: AppColors.PRIMARY_COLOR_DARK,
                   ),
-            const Spacer(),
           ],
         ),
       ),
     );
-  }
-
-  void _goToLanguagePage(BuildContext context) {
-    drawerController.toggle!();
-
-    NavigatorHelper.of(context).pushNamed(LanguageChooserPage.routeName);
   }
 
   void _goToCartPage(BuildContext context) {

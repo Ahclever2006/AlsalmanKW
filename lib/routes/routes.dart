@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../features/account_tab/presentation/pages/change_password_page.dart';
 import '../features/account_tab/presentation/pages/contact_us_page.dart';
 import '../features/account_tab/presentation/pages/delete_account_page.dart';
-import '../features/account_tab/presentation/pages/language_chooser_page.dart';
 
 import '../features/account_tab/presentation/pages/profile_page.dart';
 import '../features/address/presentation/pages/add_address_screen.dart';
@@ -35,7 +34,6 @@ final routes = <String, WidgetBuilder>{
   AddAddressPage.routeName: (context) => const AddAddressPage(),
   OrdersPage.routeName: (context) => const OrdersPage(),
   CheckoutPage.routeName: (context) => const CheckoutPage(),
-  LanguageChooserPage.routeName: (context) => const LanguageChooserPage(),
   BrandsPage.routeName: (context) => const BrandsPage(),
   LoginPage.routeName: (context) => const LoginPage(),
   SignUpPage.routeName: (context) => const SignUpPage(),
