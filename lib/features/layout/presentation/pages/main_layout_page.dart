@@ -168,8 +168,8 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
                           ),
                           if (state.cartCount > 0)
                             PositionedDirectional(
-                              top: -12.0,
-                              end: 4.0,
+                              top: -16.0,
+                              end: 12.0,
                               child: Container(
                                 decoration: const BoxDecoration(
                                     shape: BoxShape.circle,

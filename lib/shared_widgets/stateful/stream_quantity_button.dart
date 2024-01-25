@@ -64,10 +64,17 @@ class _StreamQuantityButtonState extends State<StreamQuantityButton> {
                 onTap: decreaseQuantity,
                 // onLongPress: removeProduct,
                 child: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.white,
-                    border: Border.all(color: AppColors.GREY_BORDER_COLOR),
-                    borderRadius: const BorderRadiusDirectional.only(
+                    border: BorderDirectional(
+                        end: BorderSide(color: AppColors.GREY_BORDER_COLOR),
+                        bottom: BorderSide(
+                            color: AppColors.GREY_BORDER_COLOR, width: 0),
+                        start: BorderSide(
+                            color: AppColors.GREY_BORDER_COLOR, width: 0),
+                        top: BorderSide(
+                            color: AppColors.GREY_BORDER_COLOR, width: 0)),
+                    borderRadius: BorderRadiusDirectional.only(
                       bottomStart: Radius.circular(6.0),
                       topStart: Radius.circular(6.0),
                     ),
@@ -100,10 +107,17 @@ class _StreamQuantityButtonState extends State<StreamQuantityButton> {
                   timer?.cancel();
                 },
                 child: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.white,
-                    border: Border.all(color: AppColors.GREY_BORDER_COLOR),
-                    borderRadius: const BorderRadiusDirectional.only(
+                    border: BorderDirectional(
+                        end: BorderSide(
+                            color: AppColors.GREY_BORDER_COLOR, width: 0),
+                        bottom: BorderSide(
+                            color: AppColors.GREY_BORDER_COLOR, width: 0),
+                        start: BorderSide(color: AppColors.GREY_BORDER_COLOR),
+                        top: BorderSide(
+                            color: AppColors.GREY_BORDER_COLOR, width: 0)),
+                    borderRadius: BorderRadiusDirectional.only(
                       topEnd: Radius.circular(6.0),
                       bottomEnd: Radius.circular(6.0),
                     ),
