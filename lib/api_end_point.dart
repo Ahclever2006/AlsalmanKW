@@ -189,6 +189,9 @@ abstract class ApiEndPoint {
   static const getFilterData =
       '$_REQUEST_URL/baqah/filter/getspecificationsbygroupname';
 
+  static const getPriceRangeData =
+      '$_REQUEST_URL/baqah/filter/getproductpricerange';
+
   static const getTagsData = '$_REQUEST_URL/baqah/product/tags';
   static const getCategoryBrandsData =
       '$_REQUEST_URL/baqah/filter/getbrandsbycategoryids';

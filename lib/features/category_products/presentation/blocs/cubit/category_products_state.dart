@@ -26,6 +26,8 @@ class CategoryProductsState {
   final List<FilterAttribute>? filterData;
   final HomePageCategoriesModel? subCategories;
   final List<IdNameModel>? tagsData;
+  final PriceRangeModel? priceRange;
+  final PriceRangeModel? priceRangeData;
   final List<CategoryBrandModel>? brandsData;
   final CategoryProductsStateStatus status;
   final int? categoryBannerIndex;
@@ -41,6 +43,8 @@ class CategoryProductsState {
     this.subCategories,
     this.tagsData,
     this.brandsData,
+    this.priceRange,
+    this.priceRangeData,
     this.categoryBannerIndex = 0,
     this.notifyProductIndex,
     this.selectedBrandId,
@@ -62,6 +66,8 @@ class CategoryProductsState {
         listEquals(other.tagsData, tagsData) &&
         listEquals(other.brandsData, brandsData) &&
         other.subCategories == subCategories &&
+        other.priceRange == priceRange &&
+        other.priceRangeData == priceRangeData &&
         other.categoryBanners == categoryBanners &&
         other.selectedBrandId == selectedBrandId &&
         other.selectedSubCategoryId == selectedSubCategoryId &&
@@ -77,6 +83,8 @@ class CategoryProductsState {
       filterData.hashCode ^
       subCategories.hashCode ^
       tagsData.hashCode ^
+      priceRange.hashCode ^
+      priceRangeData.hashCode ^
       brandsData.hashCode ^
       selectedBrandId.hashCode ^
       selectedSubCategoryId.hashCode ^
@@ -92,6 +100,8 @@ class CategoryProductsState {
     List<CategoryBrandModel>? brandsData,
     HomePageCategoriesModel? subCategories,
     CategoryProductsStateStatus? status,
+    PriceRangeModel? priceRange,
+    PriceRangeModel? priceRangeData,
     int? categoryBannerIndex,
     int? notifyProductIndex,
     int? selectedBrandId,
@@ -108,6 +118,8 @@ class CategoryProductsState {
       categoryBannerIndex: categoryBannerIndex ?? this.categoryBannerIndex,
       notifyProductIndex: notifyProductIndex ?? this.notifyProductIndex,
       selectedBrandId: selectedBrandId ?? this.selectedBrandId,
+      priceRange: priceRange ?? this.priceRange,
+      priceRangeData: priceRangeData ?? this.priceRangeData,
       selectedSubCategoryId:
           selectedSubCategoryId ?? this.selectedSubCategoryId,
       status: status ?? this.status,

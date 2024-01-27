@@ -5,6 +5,7 @@ import '../../../../core/data/models/id_name_model.dart';
 import '../../../../core/data/models/banner_model.dart';
 import '../../../../core/data/models/filter_attribute.dart';
 import '../../../../core/data/models/home_section_product_model.dart';
+import '../../../../core/data/models/price_range_model.dart';
 import '../datasources/category_products_list_remote_data_source.dart';
 
 abstract class CategoryProductsRepository {
@@ -14,6 +15,7 @@ abstract class CategoryProductsRepository {
     int sort = 0,
     List<int>? tags,
     List<Map>? filterOption,
+    PriceRangeModel? priceRange,
     int pageNumber = 1,
     int pageSize = 9,
     bool? soldOut,
@@ -21,6 +23,7 @@ abstract class CategoryProductsRepository {
   Future<HomeBannerModel> loadCategoryBannersData(int categoryId);
   Future<List<FilterAttribute>> loadFilterData(int categoryId);
   Future<List<IdNameModel>> loadTags(int categoryId);
+  Future<PriceRangeModel> loadPriceRange(int categoryId);
   Future<List<CategoryBrandModel>> loadCategoryBrands(int categoryId);
   Future<HomePageCategoriesModel> loadSubCategoriesData(int categoryId);
 }
@@ -36,6 +39,7 @@ class CategoryProductsRepositoryImpl implements CategoryProductsRepository {
     int sort = 0,
     List<int>? tags,
     List<Map>? filterOption,
+    PriceRangeModel? priceRange,
     int pageNumber = 1,
     int pageSize = 9,
     bool? soldOut,
@@ -45,6 +49,7 @@ class CategoryProductsRepositoryImpl implements CategoryProductsRepository {
         brandId: brandId,
         pageNumber: pageNumber,
         pageSize: pageSize,
+        priceRange: priceRange,
         sort: sort,
         filterOption: filterOption,
         tags: tags,
@@ -70,4 +75,8 @@ class CategoryProductsRepositoryImpl implements CategoryProductsRepository {
   @override
   Future<HomePageCategoriesModel> loadSubCategoriesData(int categoryId) =>
       _categoryProductsRemoteDataSource.loadSubCategoriesData(categoryId);
+
+  @override
+  Future<PriceRangeModel> loadPriceRange(int categoryId) =>
+      _categoryProductsRemoteDataSource.loadPriceRange(categoryId);
 }

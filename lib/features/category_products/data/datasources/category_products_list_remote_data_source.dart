@@ -1,3 +1,4 @@
+import '../../../../core/data/models/price_range_model.dart';
 import '/api_end_point.dart';
 import '/core/exceptions/request_exception.dart';
 import '/core/service/network_service.dart';
@@ -15,6 +16,7 @@ abstract class CategoryProductsRemoteDataSource {
     int sort = 0,
     int pageNumber = 1,
     int pageSize = 9,
+    PriceRangeModel? priceRange,
     List<int>? tags,
     List<Map>? filterOption,
     bool? soldOut,
@@ -22,6 +24,7 @@ abstract class CategoryProductsRemoteDataSource {
   Future<HomeBannerModel> loadCategoryBannersData(int categoryId);
   Future<List<FilterAttribute>> loadFilterData(int categoryId);
   Future<List<IdNameModel>> loadTags(int categoryId);
+  Future<PriceRangeModel> loadPriceRange(int categoryId);
   Future<List<CategoryBrandModel>> loadCategoryBrands(int categoryId);
   Future<HomePageCategoriesModel> loadSubCategoriesData(int categoryId);
 }
@@ -39,6 +42,7 @@ class CategoryProductsRemoteDataSourceImpl
     int sort = 0,
     List<Map>? filterOption,
     List<int>? tags,
+    PriceRangeModel? priceRange,
     int pageNumber = 1,
     int pageSize = 9,
     bool? soldOut,
@@ -49,6 +53,8 @@ class CategoryProductsRemoteDataSourceImpl
       "SubCategories": true,
       if (categoryId != null) "CategoriesIds": [categoryId],
       if (brandId != null && brandId != -1) "ManufacturerIds": [brandId],
+      if (priceRange != null)
+        "Price": {"From": priceRange.from, "To": priceRange.to},
       "OrderBy": sort,
       "FilteredSpecOptions": filterOption,
       "ProductTagIds": tags,
@@ -147,6 +153,23 @@ class CategoryProductsRemoteDataSourceImpl
       if (resultStatus != null && !resultStatus)
         throw RequestException(result['Message']);
       return HomePageCategoriesModel.fromMap(result);
+    });
+  }
+
+  @override
+  Future<PriceRangeModel> loadPriceRange(int categoryId) {
+    const url = ApiEndPoint.getPriceRangeData;
+
+    final params = {"categoryId": categoryId};
+
+    return _networkService.get(url, queryParameters: params).then((response) {
+      if (response.statusCode != 200) throw RequestException(response.data);
+      final result = response.data;
+      final resultStatus = result['IsSuccess'];
+      if (resultStatus != null && !resultStatus)
+        throw RequestException(result['Message']);
+      final data = result['Data'];
+      return PriceRangeModel.fromMap(data);
     });
   }
 }

@@ -9,6 +9,7 @@ import '../../../../../core/data/models/filter_attribute.dart';
 import '../../../../../core/data/models/home_categ_model.dart';
 import '../../../../../core/data/models/home_section_product_model.dart';
 import '../../../../../core/data/models/id_name_model.dart';
+import '../../../../../core/data/models/price_range_model.dart';
 import '../../../../../core/exceptions/redundant_request_exception.dart';
 import '../../../data/repositories/category_products_repository_impl.dart';
 
@@ -29,6 +30,7 @@ class CategoryProductsCubit extends BaseCubit<CategoryProductsState> {
       int? subCategoryId,
       List<int>? tags,
       List<Map>? filterOption,
+      PriceRangeModel? priceRangeData,
       int pageSize = 9,
       bool? soldOut,
       bool refresh = false}) async {
@@ -39,9 +41,13 @@ class CategoryProductsCubit extends BaseCubit<CategoryProductsState> {
       List<IdNameModel>? tagsData;
       List<CategoryBrandModel>? brandsData;
       HomePageCategoriesModel? subCategories;
+      PriceRangeModel? priceRange;
 
       if (state.filterData == null && categoryId != null)
         filterData = await getFilterData(categoryId);
+
+      if (state.priceRange == null && categoryId != null)
+        priceRange = await getPriceRangeData(categoryId);
 
       if (state.tagsData == null && categoryId != null)
         tagsData = await getTagsData(categoryId);
@@ -65,6 +71,7 @@ class CategoryProductsCubit extends BaseCubit<CategoryProductsState> {
         categoryId: categoryIdValue,
         brandId: brandId ?? state.selectedBrandId,
         sort: sort,
+        priceRange: priceRangeData,
         filterOption: filterOption,
         tags: categoryId == null ? [10] : tags,
         soldOut: soldOut,
@@ -80,6 +87,8 @@ class CategoryProductsCubit extends BaseCubit<CategoryProductsState> {
           categoryBanners: categoryBanners,
           filterData: filterData,
           tagsData: tagsData,
+          priceRange: priceRange,
+          priceRangeData: priceRangeData,
           selectedBrandId: brandId,
           brandsData: brandsData,
           subCategories: subCategories,
@@ -97,11 +106,13 @@ class CategoryProductsCubit extends BaseCubit<CategoryProductsState> {
     int? categoryId,
     List<int>? tags,
     List<Map>? filterOption,
+    PriceRangeModel? priceRangeData,
   }) =>
       getCategoryProductsData(
         categoryId: categoryId,
         refresh: true,
         tags: tags,
+        priceRangeData: priceRangeData,
         filterOption: filterOption,
       );
 
@@ -110,6 +121,7 @@ class CategoryProductsCubit extends BaseCubit<CategoryProductsState> {
     int sort = 0,
     List<int>? tags,
     List<Map>? filterOption,
+    PriceRangeModel? priceRangeData,
     bool? soldOut,
     int pageSize = 9,
   }) async {
@@ -126,6 +138,7 @@ class CategoryProductsCubit extends BaseCubit<CategoryProductsState> {
         brandId: state.selectedBrandId,
         pageSize: pageSize,
         pageNumber: ++pageNumber,
+        priceRange: priceRangeData,
         sort: sort,
         tags: categoryId == null ? [10] : tags,
         filterOption: filterOption,
@@ -180,6 +193,23 @@ class CategoryProductsCubit extends BaseCubit<CategoryProductsState> {
       final tagsData = await _categoryProductsRepository.loadTags(categoryId!);
 
       return tagsData;
+    } on RedundantRequestException catch (e) {
+      log(e.toString());
+      return null;
+    } catch (e) {
+      emit(state.copyWith(
+          status: CategoryProductsStateStatus.error,
+          errorMessage: e.toString()));
+      return null;
+    }
+  }
+
+  Future<PriceRangeModel?> getPriceRangeData(int? categoryId) async {
+    try {
+      final priceRange =
+          await _categoryProductsRepository.loadPriceRange(categoryId!);
+
+      return priceRange;
     } on RedundantRequestException catch (e) {
       log(e.toString());
       return null;
