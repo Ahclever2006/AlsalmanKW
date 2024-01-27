@@ -72,7 +72,7 @@ class _IntroPageState extends State<IntroPage> {
       body: Column(children: [
         SizedBox(height: context.height * 0.15),
         _buildIntroBanners(context, banners),
-        SizedBox(height: context.height * 0.10),
+        SizedBox(height: context.height * 0.05),
         Expanded(child: _buildTextAndDots()),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

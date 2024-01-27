@@ -607,46 +607,42 @@ class _AddAddressPageState extends State<AddAddressPage> {
         if (state is AddressInitial ||
             state is AddressStateLoading ||
             state.cities == null) return const CustomLoading();
-        return Container(
+        return CustomSearchableDropDown(
+          dropdownHintText: 'search'.tr(),
+          showLabelInMenu: false,
+          dropdownItemStyle: const TextStyle(
+              color: AppColors.PRIMARY_COLOR_DARK, fontWeight: FontWeight.bold),
+          primaryColor: AppColors.PRIMARY_COLOR,
+          menuMode: false,
+          labelStyle: Theme.of(context)
+              .textTheme
+              .displayLarge!
+              .copyWith(height: textHeight),
+          items: state.cities!,
+          hint: 'select_city'.tr(),
           decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-            border: Border.all(color: AppColors.PRIMARY_COLOR_DARK),
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: AppColors.PRIMARY_COLOR)),
+          label: 'select_city'.tr(),
+          menuPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsetsDirectional.only(
+              start: 16.0, top: 8.0, bottom: 8.0, end: 8.0),
+          suffixIcon: const Icon(Icons.keyboard_arrow_down,
+              color: AppColors.PRIMARY_COLOR),
+          dropDownMenuItems: state.cities!.map((item) {
+            return item.name;
+          }).toList(),
+          onChanged: (item) => setState(
+            () {
+              selectedCityId = item!.id.toString();
+              selectedCityName = item.name;
+            },
           ),
-          child: CustomSearchableDropDown(
-            dropdownHintText: 'search'.tr(),
-            showLabelInMenu: false,
-            dropdownItemStyle: const TextStyle(
-                color: AppColors.PRIMARY_COLOR_DARK,
-                fontWeight: FontWeight.bold),
-            primaryColor: AppColors.PRIMARY_COLOR_DARK,
-            menuMode: false,
-            labelStyle: Theme.of(context)
-                .textTheme
-                .displayLarge!
-                .copyWith(height: textHeight),
-            items: state.cities!,
-            hint: 'select_city'.tr(),
-            label: 'select_city'.tr(),
-            menuPadding: const EdgeInsets.symmetric(horizontal: 16.0),
-            padding: const EdgeInsetsDirectional.only(
-                start: 16.0, top: 8.0, bottom: 8.0, end: 8.0),
-            suffixIcon: const Icon(Icons.keyboard_arrow_down,
-                color: AppColors.PRIMARY_COLOR),
-            dropDownMenuItems: state.cities!.map((item) {
-              return item.name;
-            }).toList(),
-            onChanged: (item) => setState(
-              () {
-                selectedCityId = item!.id.toString();
-                selectedCityName = item.name;
-              },
-            ),
-            initialIndex: selectedCityId != null
-                ? state.cities!.indexOf(state.cities!
-                    .where((e) => e.id.toString() == selectedCityId)
-                    .first)
-                : null,
-          ),
+          initialIndex: selectedCityId != null
+              ? state.cities!.indexOf(state.cities!
+                  .where((e) => e.id.toString() == selectedCityId)
+                  .first)
+              : null,
         );
       },
     );

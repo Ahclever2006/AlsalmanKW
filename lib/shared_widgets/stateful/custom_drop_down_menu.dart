@@ -1,3 +1,4 @@
+import 'package:alsalman_app/shared_widgets/stateless/subtitle_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -69,11 +70,12 @@ class _CustomDropDownMenuState<T> extends State<CustomDropDownMenu<T>> {
         hint: _buildHintText(context),
         decoration: InputDecoration(
           contentPadding: widget._padding,
-          // filled: true,
+          filled: true,
+          fillColor: Colors.white,
           enabledBorder: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10.0)),
             borderSide: BorderSide(
-              color: AppColors.PRIMARY_COLOR_DARK,
+              color: AppColors.PRIMARY_COLOR,
             ),
           ),
           focusedBorder: const OutlineInputBorder(
@@ -139,7 +141,10 @@ class _CustomDropDownMenuState<T> extends State<CustomDropDownMenu<T>> {
   }
 
   Widget _buildHintText(BuildContext context) {
-    return TitleText(text: widget._hint + (widget._isRequired ? '*' : ''));
+    return SubtitleText(
+      text: widget._hint + (widget._isRequired ? '*' : ''),
+      color: AppColors.GREY_DARK_COLOR,
+    );
   }
 
   DropdownMenuItem<T> Function(T) _buildDropDownMenuItem(

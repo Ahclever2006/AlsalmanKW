@@ -294,6 +294,7 @@ class _SignUpPageState extends State<SignUpPage> {
               initialValue: _phoneNumber,
               currentFocusNode: _phoneFocusNode,
               nextFocusNode: _passwordFocusNode,
+              
               onInputChanged: (PhoneNumber value) {
                 _phoneNumber = value;
               },

@@ -79,15 +79,15 @@ class PhoneTextFormField extends StatelessWidget {
           counterText: '',
           disabledBorder: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            borderSide: BorderSide(color: AppColors.GREY_LIGHT_COLOR),
+            borderSide: BorderSide(color: AppColors.PRIMARY_COLOR),
           ),
           enabledBorder: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            borderSide: BorderSide(color: AppColors.GREY_LIGHT_COLOR),
+            borderSide: BorderSide(color: AppColors.PRIMARY_COLOR),
           ),
           focusedBorder: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            borderSide: BorderSide(color: AppColors.GREY_LIGHT_COLOR),
+            borderSide: BorderSide(color: AppColors.PRIMARY_COLOR),
           ),
           errorBorder: const OutlineInputBorder(
             borderSide: BorderSide(
