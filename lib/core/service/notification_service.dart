@@ -163,12 +163,15 @@ class _FlutterLocalNotificationHelper {
     importance: Importance.max,
   );
 
-  static FlutterLocalNotificationsPlugin? flutterLocalNotificationsPlugin;
-
+  static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
   static Future<void> init() async {
-    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    if (Platform.isAndroid) {
+      flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation;
+      AndroidFlutterLocalNotificationsPlugin().requestNotificationsPermission();
+    }
 
-    flutterLocalNotificationsPlugin!.initialize(const InitializationSettings(
+    flutterLocalNotificationsPlugin.initialize(const InitializationSettings(
       android: AndroidInitializationSettings('@mipmap/ic_launcher'),
       iOS: DarwinInitializationSettings(
           requestAlertPermission: true,
@@ -189,7 +192,7 @@ class _FlutterLocalNotificationHelper {
     String? imagePath;
     if (image != '')
       imagePath = image == null ? null : await _downloadAndSaveFile(image);
-    return flutterLocalNotificationsPlugin!.show(
+    return flutterLocalNotificationsPlugin.show(
       const _NotificationIdGenerator().generate(),
       title,
       body,
@@ -223,7 +226,7 @@ class _FlutterLocalNotificationHelper {
   }
 
   static Future<void> cancelAll() async =>
-      await flutterLocalNotificationsPlugin?.cancelAll();
+      await flutterLocalNotificationsPlugin.cancelAll();
 }
 
 Future<void> navigateToPage(
