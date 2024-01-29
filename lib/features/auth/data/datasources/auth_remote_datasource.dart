@@ -401,10 +401,15 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<void> uploadAvatar(File file) {
+  Future<void> uploadAvatar(File file) async {
     const url = ApiEndPoint.uploadAvatar;
 
     String? fileName = file.path.split('/').last;
+
+    // final headers = await _networkService.getDefaultHeaders();
+
+    // headers['Keep-Alive'] = 'true';
+    // headers['content-type'] = 'application/json';
 
     final params = {'fileName': fileName, 'contentType': 'jpeg'};
 
@@ -412,7 +417,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         .post(
       url,
       queryParameters: params,
-      data: file.readAsBytesSync(),
+      // headers: headers,
+      data: file.readAsBytesSync().toList(),
     )
         .then((response) async {
       if (response.statusCode! > 399)

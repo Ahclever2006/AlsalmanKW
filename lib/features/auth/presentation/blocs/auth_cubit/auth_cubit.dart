@@ -309,7 +309,9 @@ class AuthCubit extends BaseCubit<AuthState> {
       final userAvatar = await _authRepository.getAvatar();
 
       emit(state.copyWith(
-          status: AuthStateStatus.loggedIn, userAvatar: userAvatar));
+          status: AuthStateStatus.loggedIn,
+          userInfo: state.userInfo?.copyWith(
+              data: state.userInfo?.data?.copyWith(avatarUrl: userAvatar))));
     } on RedundantRequestException catch (e) {
       log(e.toString());
     } catch (e) {
@@ -331,7 +333,7 @@ class AuthCubit extends BaseCubit<AuthState> {
 
   Future<void> uploadAvatar(String filePath) async {
     try {
-      await _deleteAvatar();
+      // await _deleteAvatar();
       await _authRepository.uploadAvatar(File(filePath));
       await getAvatar();
     } on RedundantRequestException catch (e) {

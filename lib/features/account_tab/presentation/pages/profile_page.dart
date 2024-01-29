@@ -120,7 +120,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     final authCubit = context.read<AuthCubit>();
-    _userProfileImage ??= authCubit.state.userAvatar;
+    _userProfileImage ??= authCubit.state.userInfo?.data?.avatarUrl;
     return CustomAppPage(
       safeTop: true,
       child: Scaffold(

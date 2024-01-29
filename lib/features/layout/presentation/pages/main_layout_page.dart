@@ -146,7 +146,7 @@ class _MainLayOutPageState extends State<MainLayOutPage> {
                       context,
                       state.userInfo?.data?.firstName ?? '',
                       state.userInfo?.data?.email ?? '',
-                      state.userAvatar),
+                      state.userInfo?.data?.avatarUrl ?? ''),
                 const SizedBox(height: 12.0),
                 Expanded(
                   child: ListView(
