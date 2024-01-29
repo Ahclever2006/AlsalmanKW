@@ -3,7 +3,7 @@
 <plist version="1.0">
 	<dict>
 		<key>CADisableMinimumFrameDurationOnPhone</key>
-		<true/>
+		<true />
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>
@@ -49,15 +49,15 @@
 			<string>whatsapp</string>
 		</array>
 		<key>LSRequiresIPhoneOS</key>
-		<true/>
+		<true />
 		<key>NSCameraUsageDescription</key>
-		<string>This app requires access to the camera to upload photo.</string>
+		<string>This app requires access to the camera to upload user profile photo.</string>
 		<key>NSPhotoLibraryAddUsageDescription</key>
-		<string>This app requires access to the camera to upload photo.</string>
+		<string>This app requires access to the camera to upload user profile photo.</string>
 		<key>NSPhotoLibraryUsageDescription</key>
-		<string>This app requires access to the camera to upload photo.</string>
+		<string>This app requires access to the camera to upload user profile photo.</string>
 		<key>UIApplicationSupportsIndirectInputEvents</key>
-		<true/>
+		<true />
 		<key>UIBackgroundModes</key>
 		<array>
 			<string>fetch</string>
@@ -68,7 +68,7 @@
 		<key>UIMainStoryboardFile</key>
 		<string>Main</string>
 		<key>UIStatusBarHidden</key>
-		<false/>
+		<false />
 		<key>UIStatusBarStyle</key>
 		<string>UIStatusBarStyleDarkContent</string>
 		<key>UISupportedInterfaceOrientations</key>
@@ -85,6 +85,6 @@
 			<string>UIInterfaceOrientationLandscapeRight</string>
 		</array>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
-		<false/>
+		<false />
 	</dict>
 </plist>
