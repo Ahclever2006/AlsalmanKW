@@ -333,7 +333,7 @@ class AuthCubit extends BaseCubit<AuthState> {
 
   Future<void> uploadAvatar(String filePath) async {
     try {
-      // await _deleteAvatar();
+      await _deleteAvatar();
       await _authRepository.uploadAvatar(File(filePath));
       await getAvatar();
     } on RedundantRequestException catch (e) {

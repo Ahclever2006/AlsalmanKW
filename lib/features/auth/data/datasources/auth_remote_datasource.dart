@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
+
 import '../../../../api_end_point.dart';
 import '../../../../core/data/models/topic_model.dart';
 import '../../../../core/enums/otp_for.dart';
@@ -402,27 +405,56 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<void> uploadAvatar(File file) async {
-    const url = ApiEndPoint.uploadAvatar;
+    const url = ApiEndPoint.uploadAvatarFile;
+
+    Map<String, dynamic> data = {};
 
     String? fileName = file.path.split('/').last;
 
-    // final headers = await _networkService.getDefaultHeaders();
+    data['file'] = await MultipartFile.fromFile(file.path,
+        filename: fileName.split('.').first,
+        contentType: MediaType("image", fileName.split('.').last));
 
-    // headers['Keep-Alive'] = 'true';
-    // headers['content-type'] = 'application/json';
-
-    final params = {'fileName': fileName, 'contentType': 'jpeg'};
+    final headers = {
+      ...await _networkService.getDefaultHeaders(),
+      'Content-Type': 'multipart/form-data'
+    };
 
     return _networkService
         .post(
       url,
-      queryParameters: params,
-      // headers: headers,
-      data: file.readAsBytesSync().toList(),
+      headers: headers,
+      data: FormData.fromMap(data),
     )
         .then((response) async {
       if (response.statusCode! > 399)
         throw RequestException(response.data['Message']);
     });
   }
+
+  // @override
+  // Future<void> uploadAvatar(File file) async {
+  //   const url = ApiEndPoint.uploadAvatar;
+
+  //   String? fileName = file.path.split('/').last;
+
+  //   // final headers = await _networkService.getDefaultHeaders();
+
+  //   // headers['Keep-Alive'] = 'true';
+  //   // headers['content-type'] = 'application/json';
+
+  //   final params = {'fileName': fileName, 'contentType': 'jpeg'};
+
+  //   return _networkService
+  //       .post(
+  //     url,
+  //     queryParameters: params,
+  //     // headers: headers,
+  //     data: file.readAsBytesSync().toList(),
+  //   )
+  //       .then((response) async {
+  //     if (response.statusCode! > 399)
+  //       throw RequestException(response.data['Message']);
+  //   });
+  // }
 }

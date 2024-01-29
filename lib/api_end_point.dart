@@ -14,6 +14,7 @@ abstract class ApiEndPoint {
   static const loginAsGuest = '$_REQUEST_URL/authenticate/gettoken';
   static const userDetails = '$_REQUEST_URL/customer/info';
   static const uploadAvatar = '$_REQUEST_URL/customer/uploadavatar';
+  static const uploadAvatarFile = '$_REQUEST_URL/customer/UploadByFileAvatar';
   static const getAvatar = '$_REQUEST_URL/customer/avatar';
   static const deleteAvatar = '$_REQUEST_URL/customer/removeavatar';
   static const google_login = '$_REQUEST_URL/authenticate/gettokenbygoogle';
