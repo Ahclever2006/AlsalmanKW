@@ -68,8 +68,7 @@ class _CategoryProductsPageState extends State<JCarousalProductsPage> {
                   },
                   builder: (context, state) {
                     if (state.isInitial || state.isLoading)
-                      return const CustomLoading(
-                          loadingStyle: LoadingStyle.ShimmerList);
+                      return const CustomLoading();
 
                     return _buildProductsList(context,
                         products: state.carousalSection?.data?.first.products!);

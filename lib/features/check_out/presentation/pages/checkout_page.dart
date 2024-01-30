@@ -134,9 +134,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
         if (state is AddressInitial ||
             (state is AddressStateLoading && state.addressModel == null))
           return const Expanded(
-            child: CustomLoading(
-              loadingStyle: LoadingStyle.ShimmerList,
-            ),
+            child: CustomLoading(),
           );
 
         return _buildAddresses(context, addressModel: state.addressModel);

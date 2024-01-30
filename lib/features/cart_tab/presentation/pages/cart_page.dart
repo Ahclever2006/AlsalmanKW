@@ -47,9 +47,7 @@ class CartTab extends StatelessWidget {
                 builder: (context, state) {
                   if (state.isInitial ||
                       (state.isLoading && state.cart == null))
-                    return const CustomLoading(
-                      loadingStyle: LoadingStyle.ShimmerList,
-                    );
+                    return const CustomLoading();
                   if (state.cart?.items?.isNotEmpty == true) {
                     return _buildBody(
                       context,

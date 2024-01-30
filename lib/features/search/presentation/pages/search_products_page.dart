@@ -96,8 +96,7 @@ class _SearchProductsPageState extends State<SearchProductsPage> {
 
         if (state.isInitial) return const SizedBox();
 
-        if (state.isLoading)
-          return const CustomLoading(loadingStyle: LoadingStyle.ShimmerGrid);
+        if (state.isLoading) return const CustomLoading();
 
         if (state.products?.data?.products?.isNotEmpty != true)
           return const EmptyPageMessage(

@@ -66,9 +66,7 @@ class _AddressesScreenState extends State<AddressesScreen> {
                     (state is AddressStateLoading &&
                         state.addressModel == null))
                   return const Expanded(
-                    child: CustomLoading(
-                      loadingStyle: LoadingStyle.ShimmerList,
-                    ),
+                    child: CustomLoading(),
                   );
 
                 return _buildAddresses(context,

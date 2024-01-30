@@ -3,7 +3,6 @@ import 'package:gif/gif.dart';
 
 import '../blocs/topics_cubit/topics_cubit.dart';
 import '../../../../shared_widgets/other/show_snack_bar.dart';
-import '../../../../shared_widgets/stateless/title_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 
@@ -72,8 +71,7 @@ class _TopicPageState extends State<TopicPage> with TickerProviderStateMixin {
         if (state.isError) showSnackBar(context, message: state.errorMessage);
       },
       builder: (context, state) {
-        if (state.isInitial || state.isLoading)
-          return const CustomLoading(loadingStyle: LoadingStyle.Default);
+        if (state.isInitial || state.isLoading) return const CustomLoading();
 
         final cubit = context.read<TopicsCubit>();
 

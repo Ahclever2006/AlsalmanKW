@@ -46,8 +46,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
             },
             builder: (context, state) {
               if (state.isInitial || state.isLoading)
-                return const CustomLoading(
-                    loadingStyle: LoadingStyle.ShimmerList);
+                return const CustomLoading();
 
               if (state.categories != null)
                 return _buildCategories(context,

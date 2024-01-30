@@ -198,8 +198,7 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                                 },
                                 builder: (context, state) {
                                   if (state.isInitial || state.isLoading)
-                                    return const CustomLoading(
-                                        loadingStyle: LoadingStyle.ShimmerList);
+                                    return const CustomLoading();
 
                                   if (state.categoryProductsData != null)
                                     return _buildBody(

@@ -1,4 +1,6 @@
+import 'package:alsalman_app/core/utils/media_query_values.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shimmer/shimmer.dart';
 
 enum LoadingStyle {
@@ -29,7 +31,7 @@ class CustomLoading extends StatelessWidget {
     Widget? child;
     switch (_loadingStyle) {
       case LoadingStyle.Default:
-        child = _buildDefaultLoading();
+        child = _buildLottieAnimationLoading(context);
         break;
       case LoadingStyle.ShimmerList:
         child = _buildShimmerListLoading();
@@ -56,6 +58,10 @@ class CustomLoading extends StatelessWidget {
 
   Widget _buildDefaultLoading() =>
       Center(child: CircularProgressIndicator(color: _color));
+
+  Widget _buildLottieAnimationLoading(BuildContext context) => Center(
+      child: Lottie.asset('lib/res/assets/loading_animation.json',
+          width: context.width * 0.4));
 
   Widget _buildPaginationLoading() => const Align(
         alignment: Alignment.center,

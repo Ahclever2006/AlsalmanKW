@@ -196,9 +196,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
                         (state is AddressStateLoading &&
                             state.countries == null))
                       return const Expanded(
-                        child: CustomLoading(
-                          loadingStyle: LoadingStyle.ShimmerList,
-                        ),
+                        child: CustomLoading(),
                       );
                     else
                       return Expanded(

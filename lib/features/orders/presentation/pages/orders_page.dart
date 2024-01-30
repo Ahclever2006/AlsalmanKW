@@ -58,9 +58,7 @@ class _OrdersPageState extends State<OrdersPage> {
                   if (state.isInitial ||
                       (state.isLoading && state.orders == null))
                     return const Expanded(
-                      child: CustomLoading(
-                        loadingStyle: LoadingStyle.ShimmerList,
-                      ),
+                      child: CustomLoading(),
                     );
 
                   return Expanded(

@@ -68,8 +68,7 @@ class SubCategoriesBottomSheet extends StatelessWidget {
               builder: (context, state) {
                 if (state.isInitial || state.isLoading)
                   return const Expanded(
-                    child:
-                        CustomLoading(loadingStyle: LoadingStyle.ShimmerList),
+                    child: CustomLoading(),
                   );
                 if (state.subCategories?.data != null &&
                     state.subCategories!.data!.isNotEmpty) {

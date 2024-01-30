@@ -79,8 +79,7 @@ class _HomeTabState extends State<HomeTab> {
               final cubit = context.read<HomeCubit>();
 
               if (state.isInitial || state.isLoading)
-                return const CustomLoading(
-                    loadingStyle: LoadingStyle.ShimmerList);
+                return const CustomLoading();
 
               return Column(
                 children: [

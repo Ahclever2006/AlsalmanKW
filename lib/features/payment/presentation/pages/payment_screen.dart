@@ -79,7 +79,7 @@
 //                     if (state is PaymentStateLoading ||
 //                         cubit.myfatoorahPaymentMethods == null)
 //                       return const CustomLoading(
-//                         loadingStyle: LoadingStyle.ShimmerList,
+//                         
 //                       );
 //                     if (state.paymentMethodsModel != null &&
 //                         state.paymentSummaryModel != null) {

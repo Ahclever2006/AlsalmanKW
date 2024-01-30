@@ -60,9 +60,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                   if (state.isInitial ||
                       (state.isLoading && state.notifications == null))
                     return const Expanded(
-                      child: CustomLoading(
-                        loadingStyle: LoadingStyle.ShimmerList,
-                      ),
+                      child: CustomLoading(),
                     );
 
                   return Expanded(

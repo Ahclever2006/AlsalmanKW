@@ -65,8 +65,7 @@ class _WalletPageState extends State<WalletPage> {
                 builder: (context, state) {
                   if (state.isInitial || state.isLoading)
                     return const Expanded(
-                      child:
-                          CustomLoading(loadingStyle: LoadingStyle.ShimmerList),
+                      child: CustomLoading(),
                     );
 
                   final cubit = context.read<WalletCubit>();

@@ -68,9 +68,7 @@ class _FavoritesProductsPageState extends State<FavoritesProductsPage> {
                 builder: (context, state) {
                   if (state.isInitial || state.isLoading)
                     return const Expanded(
-                      child: CustomLoading(
-                        loadingStyle: LoadingStyle.ShimmerList,
-                      ),
+                      child: CustomLoading(),
                     );
 
                   return _buildProductsList(context,
