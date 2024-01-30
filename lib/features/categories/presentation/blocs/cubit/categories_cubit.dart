@@ -30,12 +30,12 @@ class CategoriesCubit extends BaseCubit<CategoriesState> {
 
       final categories = await _categoriesRepository.loadCategories();
 
-      final categoriesBanners =
-          await _categoriesRepository.getCategoriesBanners();
+      // final categoriesBanners =
+      //     await _categoriesRepository.getCategoriesBanners();
 
       emit(state.copyWith(
           categories: categories,
-          categoriesBanners: categoriesBanners,
+          // categoriesBanners: categoriesBanners,
           status: CategoriesStateStatus.loaded));
     } on RedundantRequestException catch (e) {
       log(e.toString());

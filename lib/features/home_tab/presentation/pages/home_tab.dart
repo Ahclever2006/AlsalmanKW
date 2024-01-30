@@ -3,7 +3,7 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import '../../../../shared_widgets/stateless/drawer_appbar.dart';
 import '../../../../core/utils/media_query_values.dart';
 import 'package:upgrader/upgrader.dart';
-import '../../../../shared_widgets/stateful/gif_widget.dart';
+import '../../../../shared_widgets/stateful/gif_netwrok_widget.dart';
 import '../../../auth/presentation/blocs/auth_cubit/auth_cubit.dart';
 import '../../../cart_tab/presentation/cubit/cart_cubit.dart';
 import '../../../categories/presentation/pages/categories_page.dart';
@@ -292,7 +292,7 @@ class _HomeTabState extends State<HomeTab> {
           }
         },
         child: isGif
-            ? GIFWidget(
+            ? GIFNetworkWidget(
                 gifUrl: '${ApiEndPoint.domainUrl}/$image',
               )
             : CustomCachedNetworkImage(
