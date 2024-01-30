@@ -1,4 +1,4 @@
-import 'package:alsalman_app/features/notifications/presentation/pages/notifications_page.dart';
+import 'package:alsalman_app/features/cart_tab/presentation/pages/cart_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
@@ -66,14 +66,24 @@ class _DrawerAppBarWidgetState extends State<DrawerAppBarWidget>
                   _buildDrawerIcon(context),
                   Row(
                     children: [
+                      // DefaultButton(
+                      //     backgroundColor: Colors.white,
+                      //     padding: const EdgeInsets.all(10.0),
+                      //     icon: SvgPicture.asset(
+                      //       'lib/res/assets/notification_account_icon.svg',
+                      //     ),
+                      //     onPressed: () {
+                      //       _goToNotificationsPage(context);
+                      //     }),
                       DefaultButton(
                           backgroundColor: Colors.white,
-                          padding: const EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.all(8.0),
                           icon: SvgPicture.asset(
-                            'lib/res/assets/notification_account_icon.svg',
+                            'lib/res/assets/basket_fill_icon.svg',
+                            height: 24,
                           ),
                           onPressed: () {
-                            _goToNotificationsPage(context);
+                            _goToCartPage(context);
                           }),
                       const SizedBox(width: 8.0),
                       DefaultButton(
@@ -81,6 +91,7 @@ class _DrawerAppBarWidgetState extends State<DrawerAppBarWidget>
                           padding: const EdgeInsets.all(8.0),
                           icon: SvgPicture.asset(
                             'lib/res/assets/search_icon.svg',
+                            height: 24,
                             color: AppColors.PRIMARY_COLOR,
                           ),
                           onPressed: () {
@@ -112,7 +123,11 @@ class _DrawerAppBarWidgetState extends State<DrawerAppBarWidget>
     NavigatorHelper.of(context).pushNamed(SearchProductsPage.routeName);
   }
 
-  void _goToNotificationsPage(BuildContext context) {
-    NavigatorHelper.of(context).pushNamed(NotificationsPage.routeName);
+  // void _goToNotificationsPage(BuildContext context) {
+  //   NavigatorHelper.of(context).pushNamed(NotificationsPage.routeName);
+  // }
+
+  void _goToCartPage(BuildContext context) {
+    NavigatorHelper.of(context).pushNamed(CartTab.routeName);
   }
 }
