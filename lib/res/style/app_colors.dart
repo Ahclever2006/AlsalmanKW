@@ -57,4 +57,12 @@ abstract class AppColors {
       blurRadius: 6,
     ),
   ];
+
+  static const CUSTOM_SHADOW_LIGHT = [
+    BoxShadow(
+      color: Color(0x445FA8D3),
+      spreadRadius: 0.09,
+      blurRadius: 1,
+    ),
+  ];
 }

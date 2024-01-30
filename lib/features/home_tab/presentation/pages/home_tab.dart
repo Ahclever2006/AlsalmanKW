@@ -140,7 +140,7 @@ class _HomeTabState extends State<HomeTab> {
     return Container(
       margin: const EdgeInsets.only(bottom: 16.0),
       decoration: const BoxDecoration(
-          color: Colors.white12, boxShadow: AppColors.SHADOW),
+          color: Colors.white12, boxShadow: AppColors.CUSTOM_SHADOW_LIGHT),
       height: 1.0,
     );
   }
