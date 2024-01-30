@@ -91,7 +91,7 @@ class AddressItemWidget extends StatelessWidget {
                 if (apartment != null &&
                     placeType == AddressType.home_type.name)
                   SubtitleText(
-                    text: '${'apartment'.tr()} : $apartment',
+                    text: '${'house_number'.tr()} : $apartment',
                   ),
                 if (office != null && placeType == AddressType.office_type.name)
                   SubtitleText(

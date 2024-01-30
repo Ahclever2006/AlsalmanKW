@@ -479,7 +479,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
                       state.addressType == AddressType.office_type.index;
                   return _buildTitle(
                       label: isHome
-                          ? 'apartment'.tr()
+                          ? 'house_number'.tr()
                           : isOffice
                               ? 'office'.tr()
                               : 'other'.tr());
