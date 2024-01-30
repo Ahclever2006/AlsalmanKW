@@ -342,7 +342,7 @@ class _ProfilePageState extends State<ProfilePage> {
           onChange: (value) {
             gender = value.toString();
           }),
-      const SizedBox(height: 48.0),
+      const SizedBox(height: 8.0),
     ];
   }
 }

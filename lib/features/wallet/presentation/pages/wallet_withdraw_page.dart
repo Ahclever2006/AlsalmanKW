@@ -80,26 +80,34 @@ class _WalletWithDrawPageState extends State<WalletWithDrawPage> {
       child: CustomAppPage(
         safeTop: true,
         child: Scaffold(
-          body: ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          body: Column(
             children: [
               InnerPagesAppBar(
                 backIcon: 'custom_back_icon',
                 label: 'wallet_withdraw'.tr().toUpperCase(),
               ),
-              _buildForm(),
-              const SizedBox(height: 48.0),
-              Builder(builder: (context) {
-                return BlocListener<WalletWithDrawCubit, WalletWithDrawState>(
-                  listener: (context, state) {
-                    if (state.isError)
-                      showSnackBar(context, message: state.errorMessage);
+              Expanded(
+                child: ListView(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  children: [
+                    _buildForm(),
+                    const SizedBox(height: 48.0),
+                    Builder(builder: (context) {
+                      return BlocListener<WalletWithDrawCubit,
+                          WalletWithDrawState>(
+                        listener: (context, state) {
+                          if (state.isError)
+                            showSnackBar(context, message: state.errorMessage);
 
-                    if (state.isSuccess) NavigatorHelper.of(context).pop(true);
-                  },
-                  child: _buildWithDrawButton(context),
-                );
-              }),
+                          if (state.isSuccess)
+                            NavigatorHelper.of(context).pop(true);
+                        },
+                        child: _buildWithDrawButton(context),
+                      );
+                    }),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

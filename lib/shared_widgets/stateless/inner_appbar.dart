@@ -57,15 +57,20 @@ class InnerPagesAppBar extends StatelessWidget {
               start: 8.0,
               child: InkWell(
                 child: Container(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(8.0),
                   decoration: const BoxDecoration(
                       color: Colors.white, shape: BoxShape.circle),
                   child: backIcon == null
                       ? SvgPicture.asset(
                           'lib/res/assets/back_arrow.svg',
+                          height: 20.0,
                           matchTextDirection: true,
                         )
-                      : SvgPicture.asset('lib/res/assets/$backIcon.svg'),
+                      : SvgPicture.asset(
+                          'lib/res/assets/$backIcon.svg',
+                          height: 20.0,
+                          matchTextDirection: true,
+                        ),
                 ),
                 onTap: () {
                   NavigatorHelper.of(context).pop();

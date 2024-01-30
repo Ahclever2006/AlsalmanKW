@@ -1,3 +1,5 @@
+import 'package:alsalman_app/core/utils/media_query_values.dart';
+import 'package:alsalman_app/shared_widgets/stateless/custom_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:gif/gif.dart';
 
@@ -32,7 +34,10 @@ class _GIFWidgetState extends State<GIFWidget> with TickerProviderStateMixin {
       image: NetworkImage(widget.gifUrl),
       controller: _controller,
       autostart: Autostart.loop,
-      placeholder: (context) => const Text('Loading...'),
+      placeholder: (context) => Padding(
+        padding: EdgeInsets.all(context.width * 0.25),
+        child: const CustomLoading(),
+      ),
       onFetchCompleted: () {
         _controller.reset();
         _controller.forward();
