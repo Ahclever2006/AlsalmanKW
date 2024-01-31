@@ -32,7 +32,7 @@ class CategoryCard extends StatelessWidget {
           InkWell(
             onTap: onPress,
             child: Container(
-              margin: const EdgeInsetsDirectional.only(end: 12.0),
+              margin: const EdgeInsetsDirectional.symmetric(horizontal: 6.0),
               clipBehavior: Clip.antiAliasWithSaveLayer,
               decoration: const BoxDecoration(shape: BoxShape.circle),
               child: CustomCachedNetworkImage(
@@ -48,12 +48,10 @@ class CategoryCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8.0),
-          Flexible(
-            child: TitleText.medium(
-              text: category.name!,
-              maxLines: 2,
-              textAlign: TextAlign.center,
-            ),
+          TitleText.medium(
+            text: category.name!,
+            maxLines: 2,
+            textAlign: TextAlign.center,
           )
         ],
       ),
