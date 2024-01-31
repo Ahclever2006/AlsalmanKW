@@ -6,7 +6,6 @@ import '../../core/data/models/price_range_model.dart';
 import '../../core/data/models/filter_attribute.dart';
 import '../../core/data/models/id_name_model.dart';
 import '../../core/utils/type_defs.dart';
-import '../../res/style/theme.dart';
 import '../stateless/subtitle_text.dart';
 import '../../core/utils/navigator_helper.dart';
 import '../../res/style/app_colors.dart';
@@ -114,7 +113,7 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
           topLeft: Radius.circular(20.0),
           topRight: Radius.circular(20.0),
         ),
-        color: Colors.white,
+        color: AppColors.CUSTOM_APP_PAGE_COLOR,
       ),
       child: Stack(
         children: [
@@ -140,8 +139,8 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
                 _buildHeader(context),
                 const SizedBox(height: 16.0),
                 _buildSortTile(widget.sortData),
-                const Divider(
-                    color: AppColors.GREY_NORMAL_COLOR, thickness: 2.0),
+                _buildDivider(),
+
                 _buildFilterData(
                     widget.tagsData, widget.filterData, widget.priceRange),
               ],
@@ -289,10 +288,13 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
             )
           ],
         ),
-        const Divider(color: AppColors.GREY_NORMAL_COLOR, thickness: 2.0),
+        _buildDivider(),
       ],
     );
   }
+
+  Widget _buildDivider() =>
+      const Divider(color: AppColors.PRIMARY_COLOR_LIGHT, thickness: 2.0);
 
   Widget _buildPriceRange(
       {required String label,
@@ -375,7 +377,7 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
                 },
               )
             ]),
-        const Divider(color: AppColors.GREY_NORMAL_COLOR, thickness: 2.0),
+        _buildDivider(),
       ],
     );
   }

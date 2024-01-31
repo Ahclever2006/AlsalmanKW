@@ -19,17 +19,8 @@ class SortAndFilterButton extends StatefulWidget {
 class _SortAndFilterButtonState extends State<SortAndFilterButton> {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        _buildButton(icon: 'flitter_and_sort_icon', onPress: widget.onSortPress),
-        // Container(
-        //   height: 25.0,
-        //   width: 1.0,
-        //   color: AppColors.GREY_NORMAL_COLOR,
-        // ),
-        // _buildButton(icon: 'filter_icon', onPress: widget.onFilterPress),
-      ],
-    );
+    return _buildButton(
+        icon: 'flitter_and_sort_icon', onPress: widget.onSortPress);
   }
 
   Widget _buildButton({

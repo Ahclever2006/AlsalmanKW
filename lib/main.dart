@@ -17,7 +17,7 @@ import 'res/style/theme.dart';
 import 'routes/routes.dart';
 
 const isRelease = false;
-const inspectorEnabled = false;
+const inspectorEnabled = true;
 
 void main() async {
   runZonedGuarded<Future<void>>(() async {
