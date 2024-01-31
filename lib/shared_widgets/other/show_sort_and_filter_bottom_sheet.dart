@@ -31,6 +31,7 @@ void showSortAndFilterBottomSheet(
   required List<FilterAttribute> filterData,
   required ValueChangedFilterAndSort onPress,
   required List<int> selectedTags,
+  required int? selectedSortMethod,
   required List<Map> selectedAttributes,
   required PriceRangeModel? priceRange,
   required PriceRangeModel? selectedPriceRange,
@@ -50,6 +51,7 @@ void showSortAndFilterBottomSheet(
             filterData: filterData,
             selectedAttributes: selectedAttributes,
             selectedTags: selectedTags,
+            selectedSortMethod: selectedSortMethod,
             priceRange: priceRange,
             selectedPriceRange: selectedPriceRange,
           );
@@ -62,6 +64,7 @@ class SimpleBottomSheetWidget extends StatefulWidget {
       required this.onPress,
       required this.tagsData,
       required this.filterData,
+      required this.selectedSortMethod,
       required this.selectedTags,
       required this.selectedAttributes,
       required this.priceRange,
@@ -74,6 +77,7 @@ class SimpleBottomSheetWidget extends StatefulWidget {
   final List<IdNameModel> tagsData;
   final List<FilterAttribute> filterData;
   final List<int> selectedTags;
+  final int? selectedSortMethod;
   final List<Map> selectedAttributes;
   final PriceRangeModel? priceRange;
   final PriceRangeModel? selectedPriceRange;
@@ -84,7 +88,7 @@ class SimpleBottomSheetWidget extends StatefulWidget {
 }
 
 class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
-  int? selectedSortMethod;
+  int? _selectedSortMethod;
   double? _lowerValue;
   double? _upperValue;
   int selectedMainFilterIndex = -1;
@@ -100,6 +104,7 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
         (widget.selectedPriceRange?.to ?? widget.priceRange!.to) as double;
     _selectedTags = widget.selectedTags;
     _selectedAttributes = widget.selectedAttributes;
+    _selectedSortMethod = widget.selectedSortMethod ?? 0;
     super.initState();
   }
 
@@ -121,29 +126,14 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
             data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
             child: ListView(
               shrinkWrap: true,
-              // crossAxisAlignment: CrossAxisAlignment.start,
-              // mainAxisSize: MainAxisSize.min,
               children: [
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [
-                //     TitleText(text: widget.label),
-                //     const Row(
-                //       children: [
-                //         TitleText(text: 'A-Z'),
-                //         Icon(Icons.arrow_upward_outlined)
-                //       ],
-                //     ),
-                //   ],
-                // ),
                 _buildHeader(context),
                 const SizedBox(height: 16.0),
                 _buildSortTile(widget.sortData),
                 _buildDivider(),
-
                 _buildFilterData(
                     widget.tagsData, widget.filterData, widget.priceRange),
-                SizedBox(height: 64.0),
+                const SizedBox(height: 64.0),
               ],
             ),
           ),
@@ -155,7 +145,7 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
                     horizontal: 64.0, vertical: 20.0),
                 margin: const EdgeInsets.symmetric(
                     horizontal: 24.0, vertical: 20.0),
-                enabled: selectedSortMethod != null ||
+                enabled: _selectedSortMethod != null ||
                     _selectedTags.isNotEmpty ||
                     _selectedAttributes.isNotEmpty ||
                     _lowerValue != null ||
@@ -167,7 +157,7 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
                       _selectedTags,
                       _selectedAttributes,
                       PriceRangeModel(from: _lowerValue!, to: _upperValue!),
-                      selectedSortMethod ?? 0);
+                      _selectedSortMethod ?? 0);
                 }),
           ),
         ],
@@ -177,7 +167,6 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
 
   Widget _buildHeader(BuildContext context) {
     return Stack(
-      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Align(
           alignment: Alignment.topLeft,
@@ -206,13 +195,15 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
               borderColor: AppColors.BARRIER_COLOR,
               borderRadius: const BorderRadius.all(Radius.circular(25.0)),
               padding: const EdgeInsets.all(8.0),
-              enabled: selectedSortMethod != null ||
+              enabled: _selectedSortMethod != null ||
                   _selectedTags.isNotEmpty ||
                   _selectedAttributes.isNotEmpty,
               onPressed: () {
-                selectedSortMethod = null;
+                _selectedSortMethod = 0;
                 _selectedTags.clear();
                 _selectedAttributes.clear();
+                _lowerValue = widget.priceRange!.from as double;
+                _upperValue = widget.priceRange!.to as double;
                 setState(() {});
               }),
         ),
@@ -235,9 +226,9 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
                 Expanded(child: SubtitleText(text: e.name)),
                 Radio(
                     value: e.value,
-                    groupValue: selectedSortMethod,
+                    groupValue: _selectedSortMethod,
                     onChanged: (sortMethod) {
-                      selectedSortMethod = sortMethod;
+                      _selectedSortMethod = sortMethod;
                       setState(() {});
                     })
               ],

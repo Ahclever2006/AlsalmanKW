@@ -174,7 +174,6 @@ class _HomeTabState extends State<HomeTab> {
           ),
         ),
         SizedBox(
-          //TODO: check responsive
           height: context.sizeHelper(
             tabletNormal: 145.0,
             mobileLarge: 190.0,

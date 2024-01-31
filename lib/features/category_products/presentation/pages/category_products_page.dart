@@ -20,7 +20,6 @@ import '../../../../core/data/models/home_section_product_model.dart';
 import '../../../../core/utils/media_query_values.dart';
 import '../../../../core/utils/navigator_helper.dart';
 import '../../../../res/style/app_colors.dart';
-import '../../../../shared_widgets/other/show_filter_bottom_sheet.dart';
 import '../../../../shared_widgets/other/show_sort_bottom_sheet.dart';
 import '../../../../shared_widgets/stateful/brands_filter.dart';
 import '../../../../shared_widgets/stateful/scroll_up_button.dart';
@@ -172,6 +171,7 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                                                             priceRangeData:
                                                                 priceRangeSelectedData);
                                                   },
+                                                  selectedSortMethod: sortBy,
                                                   tagsData:
                                                       cubit.state.tagsData ??
                                                           [],
