@@ -143,6 +143,7 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
 
                 _buildFilterData(
                     widget.tagsData, widget.filterData, widget.priceRange),
+                SizedBox(height: 64.0),
               ],
             ),
           ),
@@ -326,7 +327,11 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
                         Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 4.0),
-                          color: AppColors.GREY_LIGHT_COLOR,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[400],
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(16.0)),
+                          ),
                           child: TitleText(text: _lowerValue.toString()),
                         )
                       ],
@@ -338,7 +343,11 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
                         Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 4.0),
-                          color: AppColors.GREY_LIGHT_COLOR,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[400],
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(16.0)),
+                          ),
                           child: TitleText(text: _upperValue.toString()),
                         )
                       ],
@@ -390,6 +399,7 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
     final validPriceRange =
         ((priceRange?.to as double) > 0 || (priceRange?.from as double) > 0);
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (priceRange != null && validPriceRange)
           _buildPriceRange(
