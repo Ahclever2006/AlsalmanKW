@@ -29,6 +29,7 @@ import '../../../../shared_widgets/stateful/share_button.dart';
 import '../../../../shared_widgets/stateless/custom_cached_network_image.dart';
 import '../../../../shared_widgets/stateless/product_card.dart';
 import '../../../../shared_widgets/text_fields/default_text_form_field.dart';
+import '../../../cart_tab/presentation/pages/cart_page.dart';
 import '../../data/model/product_details_model.dart';
 import '../blocs/cubit/product_details_cubit.dart';
 import '../widgets/attribute_list_widget.dart';
@@ -524,36 +525,83 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           if (state.isInitial ||
               state.isLoading ||
               state.productDetailsData == null) return const SizedBox();
-          return AddToCartButton(
-            initialQuantity: 1,
-            onAddPress: (quantity) {
-              if (cubit.state.isBookingFeatureEnable == true) {
-                if (cubit.state.date != null &&
-                    (cubit.state.timeId != null && cubit.state.timeId != -1)) {
-                  cubit.addToAttributeList({
-                    'product_attribute_$_dateAttributeId':
-                        cubit.state.date!.split(' ').first,
-                    'product_attribute_$_timeAttributeId':
-                        cubit.state.timeId.toString()
-                  });
+          return Column(
+            children: [
+              if (state.isProductAddedToCart)
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 12.0, horizontal: 32.0),
+                  margin: const EdgeInsets.all(12.0),
+                  decoration: const BoxDecoration(
+                    color: AppColors.PRIMARY_COLOR,
+                    borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                  ),
+                  child: BlocBuilder<CartCubit, CartState>(
+                    builder: (context, state) {
+                      return Row(
+                        children: [
+                          TitleText(
+                            text: state.cartCount.toString(),
+                            color: Colors.white,
+                          ),
+                          const SizedBox(width: 8.0),
+                          DefaultButton(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12.0, vertical: 4.0),
+                              label: 'view_cart'.tr(),
+                              onPressed: () {
+                                _goToCartPage(context);
+                              }),
+                          const Spacer(),
+                          TitleText(
+                            text: state.paymentSummary!.totalsModel!.subTotal
+                                .toString(),
+                            color: Colors.white,
+                          )
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              AddToCartButton(
+                initialQuantity: 1,
+                onAddPress: (quantity) {
+                  if (cubit.state.isBookingFeatureEnable == true) {
+                    if (cubit.state.date != null &&
+                        (cubit.state.timeId != null &&
+                            cubit.state.timeId != -1)) {
+                      cubit.addToAttributeList({
+                        'product_attribute_$_dateAttributeId':
+                            cubit.state.date!.split(' ').first,
+                        'product_attribute_$_timeAttributeId':
+                            cubit.state.timeId.toString()
+                      });
 
-                  return cubit
-                      .addProductToCart(widget.productId.toString(), quantity,
-                          cubit.state.selectedAttributesList ?? {})
-                      .whenComplete(() => cartCubit.loadCart());
-                } else
-                  showSnackBar(context, message: 'choose_date_time');
-              } else {
-                return cubit
-                    .addProductToCart(widget.productId.toString(), quantity,
-                        cubit.state.selectedAttributesList ?? {})
-                    .whenComplete(() => cartCubit.loadCart());
-              }
-            },
+                      return cubit
+                          .addProductToCart(
+                              widget.productId.toString(),
+                              quantity,
+                              cubit.state.selectedAttributesList ?? {})
+                          .whenComplete(() => cartCubit.loadCart());
+                    } else
+                      showSnackBar(context, message: 'choose_date_time');
+                  } else {
+                    return cubit
+                        .addProductToCart(widget.productId.toString(), quantity,
+                            cubit.state.selectedAttributesList ?? {})
+                        .whenComplete(() => cartCubit.loadCart());
+                  }
+                },
+              ),
+            ],
           );
         },
       ),
     );
+  }
+
+  void _goToCartPage(BuildContext context) {
+    NavigatorHelper.of(context).pushNamed(CartTab.routeName);
   }
 
   Widget _buildDownLoadProductSample(BuildContext context) {

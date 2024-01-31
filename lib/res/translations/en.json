@@ -482,5 +482,6 @@
     "male":"Male",
     "female":"Female",
     "email":"Email",
-    "house_number":"House Number"
+    "house_number":"House Number",
+    "view_cart":"View Cart"
 }
