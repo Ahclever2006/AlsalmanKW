@@ -258,6 +258,10 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
         ExpansionTile(
           iconColor: AppColors.PRIMARY_COLOR,
           collapsedIconColor: AppColors.PRIMARY_COLOR,
+          expandedCrossAxisAlignment: CrossAxisAlignment.start,
+          expandedAlignment: context.locale.languageCode == "ar"
+              ? Alignment.centerRight
+              : Alignment.centerLeft,
           title: TitleText(
             text: label,
           ),
@@ -267,6 +271,8 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
           children: [
             Wrap(
               alignment: WrapAlignment.start,
+              crossAxisAlignment: WrapCrossAlignment.start,
+              runAlignment: WrapAlignment.start,
               children: data
                   .map((e) => Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 3),
