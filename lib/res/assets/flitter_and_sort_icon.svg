@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20.164" height="18.741" viewBox="0 0 20.164 18.741">
+  <g id="Group_36407" data-name="Group 36407" transform="translate(-391.182 -216)">
+    <g id="Group_36399" data-name="Group 36399" transform="translate(-2284.818 61)">
+      <g id="Group_36398" data-name="Group 36398" transform="translate(2677 155)">
+        <g id="Group_19548" data-name="Group 19548">
+          <g id="Ellipse_1" data-name="Ellipse 1" fill="none" stroke="#5fa8d3" stroke-width="2">
+            <circle cx="4.102" cy="4.102" r="4.102" stroke="none"/>
+            <circle cx="4.102" cy="4.102" r="3.102" fill="none"/>
+          </g>
+          <line id="Line_1" data-name="Line 1" x2="7.031" transform="translate(11.133 4.102)" fill="none" stroke="#5fa8d3" stroke-linecap="round" stroke-width="2"/>
+        </g>
+        <g id="Group_19549" data-name="Group 19549" transform="translate(18.164 18.741) rotate(180)">
+          <g id="Ellipse_1-2" data-name="Ellipse 1" transform="translate(0 0)" fill="none" stroke="#5fa8d3" stroke-width="2">
+            <circle cx="4.341" cy="4.341" r="4.341" stroke="none"/>
+            <circle cx="4.341" cy="4.341" r="3.341" fill="none"/>
+          </g>
+          <line id="Line_1-2" data-name="Line 1" x2="7.031" transform="translate(11.133 4.093)" fill="none" stroke="#5fa8d3" stroke-linecap="round" stroke-width="2"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -483,5 +483,8 @@
     "female":"انثي",
     "email":"البردد الالكترونى",
     "house_number":"رقم المنزل",
-    "view_cart":"اذهب للسلة"
+    "view_cart":"اذهب للسلة",
+    "sort_and_filter":"فرز و تصفية",
+    "show_products" : "عرض المنتجات"
+
 }

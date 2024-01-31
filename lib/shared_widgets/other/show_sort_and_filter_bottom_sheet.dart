@@ -1,3 +1,4 @@
+import 'package:flutter_svg/svg.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 import '../../core/enums/sort_type.dart';
 import '../../core/utils/media_query_values.dart';
@@ -115,88 +116,132 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
         ),
         color: Colors.white,
       ),
-      child: ListView(
-        shrinkWrap: true,
-        // crossAxisAlignment: CrossAxisAlignment.start,
-        // mainAxisSize: MainAxisSize.min,
+      child: Stack(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              TitleText(text: widget.label),
-              const Row(
-                children: [
-                  TitleText(text: 'A-Z'),
-                  Icon(Icons.arrow_upward_outlined)
-                ],
-              ),
-            ],
+          Theme(
+            data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+            child: ListView(
+              shrinkWrap: true,
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              // mainAxisSize: MainAxisSize.min,
+              children: [
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     TitleText(text: widget.label),
+                //     const Row(
+                //       children: [
+                //         TitleText(text: 'A-Z'),
+                //         Icon(Icons.arrow_upward_outlined)
+                //       ],
+                //     ),
+                //   ],
+                // ),
+                _buildHeader(context),
+                const SizedBox(height: 16.0),
+                _buildSortTile(widget.sortData),
+                const Divider(
+                    color: AppColors.GREY_NORMAL_COLOR, thickness: 2.0),
+                _buildFilterData(
+                    widget.tagsData, widget.filterData, widget.priceRange),
+              ],
+            ),
           ),
-          const SizedBox(height: 16.0),
-          ..._buildSortRadioList(widget.sortData),
-          _buildFilterData(
-              widget.tagsData, widget.filterData, widget.priceRange),
-          _buildActionButtons(context),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: DefaultButton(
+                isExpanded: false,
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 64.0, vertical: 20.0),
+                margin: const EdgeInsets.symmetric(
+                    horizontal: 24.0, vertical: 20.0),
+                enabled: selectedSortMethod != null ||
+                    _selectedTags.isNotEmpty ||
+                    _selectedAttributes.isNotEmpty ||
+                    _lowerValue != null ||
+                    _upperValue != null,
+                label: 'show_products'.tr(),
+                onPressed: () {
+                  NavigatorHelper.of(context).pop();
+                  widget.onPress(
+                      _selectedTags,
+                      _selectedAttributes,
+                      PriceRangeModel(from: _lowerValue!, to: _upperValue!),
+                      selectedSortMethod ?? 0);
+                }),
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildActionButtons(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          DefaultButton(
-              label: 'clear_all'.tr(),
+  Widget _buildHeader(BuildContext context) {
+    return Stack(
+      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Align(
+          alignment: Alignment.topLeft,
+          child: InkWell(
+              onTap: () {
+                NavigatorHelper.of(context).pop(true);
+              },
+              child: SvgPicture.asset('lib/res/assets/cancel_icon.svg')),
+        ),
+        Align(
+          alignment: Alignment.topCenter,
+          child: TitleText(
+            text: widget.label,
+            textAlign: TextAlign.center,
+          ),
+        ),
+        Align(
+          alignment: Alignment.topRight,
+          child: DefaultButton(
+              label: 'clear_all'.tr().toLowerCase(),
               labelStyle: Theme.of(context).textTheme.displayLarge!.copyWith(
-                  color: AppColors.PRIMARY_COLOR_DARK, height: textHeight),
+                  color: AppColors.PRIMARY_COLOR_DARK,
+                  height: 1.0,
+                  fontWeight: FontWeight.normal),
               backgroundColor: AppColors.PRIMARY_COLOR_LIGHT,
-              enabled: selectedSortMethod != null ||
-                  (_selectedTags.isNotEmpty || _selectedAttributes.isNotEmpty),
-              onPressed: () {
-                if (selectedSortMethod != null) {
-                  selectedSortMethod = null;
-                }
-                if (_selectedTags.isNotEmpty ||
-                    _selectedAttributes.isNotEmpty) {
-                  _selectedTags.clear();
-                  _selectedAttributes.clear();
-                }
-                setState(() {});
-              }),
-          const SizedBox(width: 16.0),
-          DefaultButton(
+              borderColor: AppColors.BARRIER_COLOR,
+              borderRadius: const BorderRadius.all(Radius.circular(25.0)),
+              padding: const EdgeInsets.all(8.0),
               enabled: selectedSortMethod != null ||
                   _selectedTags.isNotEmpty ||
-                  _selectedAttributes.isNotEmpty ||
-                  _lowerValue != null ||
-                  _upperValue != null,
-              label: 'show_result'.tr(),
+                  _selectedAttributes.isNotEmpty,
               onPressed: () {
-                NavigatorHelper.of(context).pop();
-                widget.onPress(
-                    _selectedTags,
-                    _selectedAttributes,
-                    PriceRangeModel(from: _lowerValue!, to: _upperValue!),
-                    selectedSortMethod!);
+                selectedSortMethod = null;
+                _selectedTags.clear();
+                _selectedAttributes.clear();
+                setState(() {});
               }),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
+  Widget _buildSortTile(List<SortType> sortData) => ExpansionTile(
+        iconColor: AppColors.PRIMARY_COLOR,
+        collapsedIconColor: AppColors.PRIMARY_COLOR,
+        title: TitleText(
+          text: "sort".tr(),
+        ),
+        children: _buildSortRadioList(sortData),
+      );
   List<Widget> _buildSortRadioList(List<SortType> sortData) {
     return sortData
-        .map((e) => RadioListTile<int?>(
-            value: e.value,
-            groupValue: selectedSortMethod,
-            title: TitleText(text: e.name),
-            onChanged: (sortMethod) {
-              selectedSortMethod = sortMethod;
-              setState(() {});
-            }))
+        .map((e) => Row(
+              children: [
+                Expanded(child: SubtitleText(text: e.name)),
+                Radio(
+                    value: e.value,
+                    groupValue: selectedSortMethod,
+                    onChanged: (sortMethod) {
+                      selectedSortMethod = sortMethod;
+                      setState(() {});
+                    })
+              ],
+            ))
         .toList();
   }
 
@@ -210,46 +255,40 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        InkWell(
-          onTap: onPress,
-          child: Container(
-            margin: const EdgeInsets.all(12.0),
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TitleText(
-                    text: label,
-                    color: AppColors.PRIMARY_COLOR,
-                  ),
-                ),
-                Icon(
-                  isPressed ? Icons.remove : Icons.add,
-                  color: AppColors.PRIMARY_COLOR,
-                ),
-              ],
-            ),
+        ExpansionTile(
+          iconColor: AppColors.PRIMARY_COLOR,
+          collapsedIconColor: AppColors.PRIMARY_COLOR,
+          title: TitleText(
+            text: label,
           ),
+          onExpansionChanged: (value) {
+            onPress();
+          },
+          children: [
+            Wrap(
+              alignment: WrapAlignment.start,
+              children: data
+                  .map((e) => Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 3),
+                        child: ChoiceChip(
+                          backgroundColor: Colors.grey[400],
+                          label:
+                              SubtitleText(text: e.name, color: Colors.white),
+                          selectedColor: AppColors.PRIMARY_COLOR_DARK,
+                          selected: isTags
+                              ? _selectedTags.contains(e.id)
+                              : _selectedAttributes.any((m) =>
+                                  m['SpecificationAttributeOptionId'] == e.id),
+                          onSelected: (value) {
+                            onPressItem(e.id);
+                            setState(() {});
+                          },
+                        ),
+                      ))
+                  .toList(),
+            )
+          ],
         ),
-        if (isPressed)
-          Wrap(
-            alignment: WrapAlignment.start,
-            children: data
-                .map((e) => ChoiceChip(
-                      label: SubtitleText(text: e.name, color: Colors.white),
-                      selectedColor: AppColors.PRIMARY_COLOR_DARK,
-                      selected: isTags
-                          ? _selectedTags.contains(e.id)
-                          : _selectedAttributes.any((m) =>
-                              m['SpecificationAttributeOptionId'] == e.id),
-                      onSelected: (value) {
-                        onPressItem(e.id);
-                        setState(() {});
-                      },
-                    ))
-                .toList(),
-          ),
         const Divider(color: AppColors.GREY_NORMAL_COLOR, thickness: 2.0),
       ],
     );
@@ -263,89 +302,79 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        InkWell(
-          onTap: onPress,
-          child: Container(
-            margin: const EdgeInsets.all(12.0),
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TitleText(
-                    text: label,
-                    color: AppColors.PRIMARY_COLOR,
-                  ),
-                ),
-                Icon(
-                  isPressed ? Icons.remove : Icons.add,
-                  color: AppColors.PRIMARY_COLOR,
-                ),
-              ],
-            ),
-          ),
-        ),
-        if (isPressed)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    const TitleText(text: 'currency'),
-                    const SizedBox(width: 8.0),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 4.0),
-                      color: AppColors.GREY_LIGHT_COLOR,
-                      child: TitleText(text: _lowerValue.toString()),
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    const TitleText(text: 'currency'),
-                    const SizedBox(width: 8.0),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 4.0),
-                      color: AppColors.GREY_LIGHT_COLOR,
-                      child: TitleText(text: _upperValue.toString()),
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
-        if (isPressed)
-          FlutterSlider(
-            values: [
-              _lowerValue ?? (widget.priceRange!.from as double),
-              _upperValue ?? (widget.priceRange!.to as double)
-            ],
-            rightHandler: FlutterSliderHandler(
-                child: Container(
-              padding: const EdgeInsets.all(4.0),
-              decoration: const BoxDecoration(
-                  shape: BoxShape.circle, color: AppColors.PRIMARY_COLOR_DARK),
-            )),
-            handler: FlutterSliderHandler(
-                child: Container(
-              decoration: const BoxDecoration(
-                  shape: BoxShape.circle, color: AppColors.PRIMARY_COLOR_DARK),
-            )),
-            trackBar: const FlutterSliderTrackBar(
-                activeTrackBar: BoxDecoration(color: AppColors.PRIMARY_COLOR)),
-            rangeSlider: true,
-            max: widget.priceRange!.to as double,
-            min: widget.priceRange!.from as double,
-            onDragging: (handlerIndex, lowerValue, upperValue) {
-              _lowerValue = lowerValue;
-              _upperValue = upperValue;
-              setState(() {});
+        ExpansionTile(
+            iconColor: AppColors.PRIMARY_COLOR,
+            collapsedIconColor: AppColors.PRIMARY_COLOR,
+            onExpansionChanged: (value) {
+              onPress();
             },
-          ),
+            title: TitleText(
+              text: label,
+            ),
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        const TitleText(text: 'currency'),
+                        const SizedBox(width: 8.0),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0, vertical: 4.0),
+                          color: AppColors.GREY_LIGHT_COLOR,
+                          child: TitleText(text: _lowerValue.toString()),
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const TitleText(text: 'currency'),
+                        const SizedBox(width: 8.0),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0, vertical: 4.0),
+                          color: AppColors.GREY_LIGHT_COLOR,
+                          child: TitleText(text: _upperValue.toString()),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              FlutterSlider(
+                values: [
+                  _lowerValue ?? (widget.priceRange!.from as double),
+                  _upperValue ?? (widget.priceRange!.to as double)
+                ],
+                rightHandler: FlutterSliderHandler(
+                    child: Container(
+                  padding: const EdgeInsets.all(4.0),
+                  decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColors.PRIMARY_COLOR_DARK),
+                )),
+                handler: FlutterSliderHandler(
+                    child: Container(
+                  decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColors.PRIMARY_COLOR_DARK),
+                )),
+                trackBar: const FlutterSliderTrackBar(
+                    activeTrackBar:
+                        BoxDecoration(color: AppColors.PRIMARY_COLOR)),
+                rangeSlider: true,
+                max: widget.priceRange!.to as double,
+                min: widget.priceRange!.from as double,
+                onDragging: (handlerIndex, lowerValue, upperValue) {
+                  _lowerValue = lowerValue;
+                  _upperValue = upperValue;
+                  setState(() {});
+                },
+              )
+            ]),
         const Divider(color: AppColors.GREY_NORMAL_COLOR, thickness: 2.0),
       ],
     );

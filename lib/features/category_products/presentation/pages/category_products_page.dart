@@ -1,3 +1,4 @@
+import 'package:alsalman_app/shared_widgets/other/show_sort_and_filter_bottom_sheet.dart';
 import 'package:alsalman_app/shared_widgets/stateless/title_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -7,6 +8,7 @@ import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:size_helper/size_helper.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../../../core/data/models/price_range_model.dart';
 import '/di/injector.dart';
 import '/shared_widgets/other/show_snack_bar.dart';
 import '/shared_widgets/stateless/custom_app_page.dart';
@@ -53,6 +55,7 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
   int? subCategoryId = -1;
   List<int>? tagsList = [];
   List<Map>? filterList = [];
+  PriceRangeModel? priceRangeSelectedData;
 
   @override
   void initState() {
@@ -146,23 +149,29 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                                                     vertical: 8.0,
                                                     horizontal: 16.0)),
                                             SortAndFilterButton(
-                                                onSortPress: () {
-                                              showSortBottomSheet(context,
-                                                  label: 'sort',
+                                              onSortPress: () {
+                                                showSortAndFilterBottomSheet(
+                                                  context,
+                                                  label: 'sort_and_filter',
                                                   sortData: sortListData,
-                                                  onPress: (sort) async {
-                                                sortBy = sort;
-                                                await cubit
-                                                    .getCategoryProductsData(
-                                                  categoryId: widget.categoryId,
-                                                  sort: sort,
-                                                  tags: tagsList,
-                                                  filterOption: filterList,
-                                                );
-                                              });
-                                            }, onFilterPress: () {
-                                              showFilterBottomSheet(context,
-                                                  label: 'filter',
+                                                  onPress: (tags, attributes,
+                                                      price, sort) async {
+                                                    sortBy = sort;
+                                                    filterList = attributes;
+                                                    tagsList = tags;
+                                                    priceRangeSelectedData =
+                                                        price;
+                                                    await cubit
+                                                        .getCategoryProductsData(
+                                                            categoryId: widget
+                                                                .categoryId,
+                                                            sort: sort,
+                                                            tags: tagsList,
+                                                            filterOption:
+                                                                filterList,
+                                                            priceRangeData:
+                                                                priceRangeSelectedData);
+                                                  },
                                                   tagsData:
                                                       cubit.state.tagsData ??
                                                           [],
@@ -172,18 +181,49 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                                                   filterData:
                                                       cubit.state.filterData ??
                                                           [],
-                                                  onPress: (tags, attributes) {
-                                                filterList = attributes;
-                                                return cubit
-                                                    .getCategoryProductsData(
-                                                        categoryId:
-                                                            widget.categoryId,
-                                                        sort: sortBy,
-                                                        filterOption:
-                                                            attributes,
-                                                        tags: tags);
-                                              });
-                                            }),
+                                                  priceRange:
+                                                      categoryProductsCubit
+                                                          .state.priceRange,
+                                                  selectedPriceRange:
+                                                      priceRangeSelectedData,
+                                                  //     onPress: (sort) async {
+                                                  //   sortBy = sort;
+                                                  //   await cubit
+                                                  //       .getCategoryProductsData(
+                                                  //     categoryId:
+                                                  //         widget.categoryId,
+                                                  //     sort: sort,
+                                                  //     tags: tagsList,
+                                                  //     filterOption: filterList,
+                                                  //   );
+                                                  // }
+                                                );
+                                              },
+                                              // onFilterPress: () {
+                                              //   showFilterBottomSheet(context,
+                                              //       label: 'filter',
+                                              //       tagsData:
+                                              //           cubit.state.tagsData ??
+                                              //               [],
+                                              //       selectedTags: tagsList ?? [],
+                                              //       selectedAttributes:
+                                              //           filterList ?? [],
+                                              //       filterData:
+                                              //           cubit.state.filterData ??
+                                              //               [],
+                                              //       onPress: (tags, attributes) {
+                                              //     filterList = attributes;
+                                              //     return cubit
+                                              //         .getCategoryProductsData(
+                                              //             categoryId:
+                                              //                 widget.categoryId,
+                                              //             sort: sortBy,
+                                              //             filterOption:
+                                              //                 attributes,
+                                              //             tags: tags);
+                                              //   });
+                                              //}
+                                            ),
                                           ],
                                         )
                                       : const SizedBox();

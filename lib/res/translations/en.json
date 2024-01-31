@@ -483,5 +483,8 @@
     "female":"Female",
     "email":"Email",
     "house_number":"House Number",
-    "view_cart":"View Cart"
+    "view_cart":"View Cart",
+    "sort_and_filter":"Sort & Filter",
+    "show_products" : "Show Products"
+
 }

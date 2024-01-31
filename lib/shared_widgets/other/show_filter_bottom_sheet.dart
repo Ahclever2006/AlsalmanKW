@@ -115,10 +115,10 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
           children: [
             DefaultButton(
                 label: 'clear_all'.tr(),
-                labelStyle: Theme.of(context)
-                    .textTheme
-                    .displayLarge!
-                    .copyWith(color: AppColors.PRIMARY_COLOR_DARK, height: 1.0),
+                labelStyle: Theme.of(context).textTheme.displayLarge!.copyWith(
+                    color: AppColors.PRIMARY_COLOR_DARK,
+                    height: 1.0,
+                    fontWeight: FontWeight.normal),
                 backgroundColor: AppColors.PRIMARY_COLOR_LIGHT,
                 enabled: (_selectedTags.isNotEmpty ||
                     _selectedAttributes.isNotEmpty),
