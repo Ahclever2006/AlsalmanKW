@@ -50,11 +50,12 @@ class CategoryProductsPage extends StatefulWidget {
 
 class _CategoryProductsPageState extends State<CategoryProductsPage> {
   late final ScrollController _scrollController;
-  int sortBy = 0;
   int? subCategoryId = -1;
-  List<int>? tagsList = [];
-  List<Map>? filterList = [];
-  PriceRangeModel? priceRangeSelectedData;
+
+  // int sortBy = 0;
+  // List<int>? tagsList = [];
+  // List<Map>? filterList = [];
+  // PriceRangeModel? priceRangeSelectedData;
 
   @override
   void initState() {
