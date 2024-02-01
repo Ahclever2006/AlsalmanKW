@@ -7,8 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:size_helper/size_helper.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
-import '../../../../core/data/models/price_range_model.dart';
 import '/di/injector.dart';
 import '/shared_widgets/other/show_snack_bar.dart';
 import '/shared_widgets/stateless/custom_app_page.dart';
@@ -92,9 +90,9 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                             (subCategoryId != null && subCategoryId != -1)
                                 ? subCategoryId
                                 : widget.categoryId,
-                        filterOption: filterList,
-                        tags: tagsList,
-                        sort: sortBy,
+                        filterOption: state.filterList,
+                        tags: state.tagsList,
+                        sort: state.sortBy,
                       ),
                       isLoading: categoryProductsCubit.state.isLoadingMore,
                       child: RefreshIndicator(
@@ -103,8 +101,8 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                               (subCategoryId != null && subCategoryId != -1)
                                   ? subCategoryId
                                   : widget.categoryId,
-                          tags: tagsList,
-                          filterOption: filterList,
+                          tags: state.tagsList,
+                          filterOption: state.filterList,
                         ),
                         child: SingleChildScrollView(
                           controller: _scrollController,
@@ -135,8 +133,9 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                                   return (state.categoryProductsData?.data
                                                   ?.products?.isNotEmpty ==
                                               true ||
-                                          (tagsList?.isNotEmpty == true ||
-                                              filterList?.isNotEmpty == true))
+                                          (state.tagsList?.isNotEmpty == true ||
+                                              state.filterList?.isNotEmpty ==
+                                                  true))
                                       ? Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -156,37 +155,50 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                                                   sortData: sortListData,
                                                   onPress: (tags, attributes,
                                                       price, sort) async {
-                                                    sortBy = sort;
-                                                    filterList = attributes;
-                                                    tagsList = tags;
-                                                    priceRangeSelectedData =
-                                                        price;
+                                                    // sortBy = sort;
+                                                    // filterList = attributes;
+                                                    // tagsList = tags;
+                                                    // priceRangeSelectedData =
+                                                    //     price;
+                                                    cubit.setFilterData(
+                                                        tags,
+                                                        attributes,
+                                                        price,
+                                                        sort);
                                                     await cubit
                                                         .getCategoryProductsData(
                                                             categoryId: widget
                                                                 .categoryId,
-                                                            sort: sort,
-                                                            tags: tagsList,
-                                                            filterOption:
-                                                                filterList,
-                                                            priceRangeData:
-                                                                priceRangeSelectedData);
+                                                            sort: cubit
+                                                                .state.sortBy,
+                                                            tags: cubit
+                                                                .state.tagsList,
+                                                            filterOption: cubit
+                                                                .state
+                                                                .filterList,
+                                                            priceRangeData: cubit
+                                                                .state
+                                                                .priceRangeSelectedData);
                                                   },
-                                                  selectedSortMethod: sortBy,
+                                                  selectedSortMethod:
+                                                      cubit.state.sortBy,
                                                   tagsData:
                                                       cubit.state.tagsData ??
                                                           [],
-                                                  selectedTags: tagsList ?? [],
+                                                  selectedTags:
+                                                      cubit.state.tagsList ??
+                                                          [],
                                                   selectedAttributes:
-                                                      filterList ?? [],
+                                                      cubit.state.filterList ??
+                                                          [],
                                                   filterData:
                                                       cubit.state.filterData ??
                                                           [],
                                                   priceRange:
-                                                      categoryProductsCubit
-                                                          .state.priceRange,
-                                                  selectedPriceRange:
-                                                      priceRangeSelectedData,
+                                                      cubit.state.priceRange,
+                                                  selectedPriceRange: cubit
+                                                      .state
+                                                      .priceRangeSelectedData,
                                                   //     onPress: (sort) async {
                                                   //   sortBy = sort;
                                                   //   await cubit
@@ -312,9 +324,9 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
           cubit.getCategoryProductsData(
             categoryId: widget.categoryId,
             subCategoryId: id,
-            sort: sortBy,
-            tags: tagsList,
-            filterOption: filterList,
+            sort: cubit.state.sortBy ?? 0,
+            tags: cubit.state.tagsList,
+            filterOption: cubit.state.filterList,
           );
         });
   }
@@ -401,8 +413,8 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
               categoryId: (subCategoryId != null && subCategoryId != -1)
                   ? subCategoryId
                   : widget.categoryId,
-              filterOption: filterList,
-              tags: tagsList,
+              filterOption: categoryProductsCubit.state.filterList,
+              tags: categoryProductsCubit.state.tagsList,
             ),
           );
   }
@@ -417,15 +429,14 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
     ];
 
     brands.addAll(categoryBrands);
-
     return BrandsFilter(
         brands: brands,
         onPress: (id) => cubit.getCategoryProductsData(
               categoryId: widget.categoryId,
               brandId: id,
-              sort: sortBy,
-              tags: tagsList,
-              filterOption: filterList,
+              sort: cubit.state.sortBy ?? 0,
+              tags: cubit.state.tagsList,
+              filterOption: cubit.state.filterList,
             ));
   }
 

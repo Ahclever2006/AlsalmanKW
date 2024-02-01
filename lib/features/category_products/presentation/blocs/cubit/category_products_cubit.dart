@@ -24,7 +24,7 @@ class CategoryProductsCubit extends BaseCubit<CategoryProductsState> {
   final CategoryProductsRepository _categoryProductsRepository;
 
   Future<void> getCategoryProductsData(
-      {int sort = 0,
+      {int? sort = 0,
       int? categoryId,
       int? brandId,
       int? subCategoryId,
@@ -42,7 +42,6 @@ class CategoryProductsCubit extends BaseCubit<CategoryProductsState> {
       List<CategoryBrandModel>? brandsData;
       HomePageCategoriesModel? subCategories;
       PriceRangeModel? priceRange;
-
       if (state.filterData == null && categoryId != null)
         filterData = await getFilterData(categoryId);
 
@@ -70,7 +69,7 @@ class CategoryProductsCubit extends BaseCubit<CategoryProductsState> {
           await _categoryProductsRepository.loadCategoryProductsData(
         categoryId: categoryIdValue,
         brandId: brandId ?? state.selectedBrandId,
-        sort: sort,
+        sort: sort ?? 0,
         priceRange: priceRangeData,
         filterOption: filterOption,
         tags: categoryId == null ? [10] : tags,
@@ -102,6 +101,19 @@ class CategoryProductsCubit extends BaseCubit<CategoryProductsState> {
     }
   }
 
+  void setFilterData(List<int>? tags, List<Map>? attributes,
+      PriceRangeModel? price, int? sort) {
+    emit(state.copyWith(status: CategoryProductsStateStatus.loadingFilterData));
+
+    emit(state.copyWith(
+      status: CategoryProductsStateStatus.filterDataLoaded,
+      filterList: attributes,
+      tagsList: tags,
+      priceRangeSelectedData: price,
+      sortBy: sort,
+    ));
+  }
+
   Future<void> refresh({
     int? categoryId,
     List<int>? tags,
@@ -118,7 +130,7 @@ class CategoryProductsCubit extends BaseCubit<CategoryProductsState> {
 
   Future<void> getMoreCategoryProductsData({
     int? categoryId,
-    int sort = 0,
+    int? sort = 0,
     List<int>? tags,
     List<Map>? filterOption,
     PriceRangeModel? priceRangeData,
@@ -139,7 +151,7 @@ class CategoryProductsCubit extends BaseCubit<CategoryProductsState> {
         pageSize: pageSize,
         pageNumber: ++pageNumber,
         priceRange: priceRangeData,
-        sort: sort,
+        sort: sort ?? 0,
         tags: categoryId == null ? [10] : tags,
         filterOption: filterOption,
         soldOut: soldOut,

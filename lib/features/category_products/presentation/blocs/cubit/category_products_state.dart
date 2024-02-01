@@ -7,6 +7,8 @@ enum CategoryProductsStateStatus {
   loadingMore,
   updateNotifyStatus,
   error,
+  loadingFilterData,
+  filterDataLoaded
 }
 
 extension CategoryProductsStateX on CategoryProductsState {
@@ -17,6 +19,10 @@ extension CategoryProductsStateX on CategoryProductsState {
   bool get isUpdateNotifyStatus =>
       status == CategoryProductsStateStatus.updateNotifyStatus;
   bool get isError => status == CategoryProductsStateStatus.error;
+  bool get isLoadingFilterData =>
+      status == CategoryProductsStateStatus.loadingFilterData;
+  bool get isFilterDataLoaded =>
+      status == CategoryProductsStateStatus.filterDataLoaded;
 }
 
 @immutable
@@ -35,6 +41,10 @@ class CategoryProductsState {
   final int? selectedBrandId;
   final int? selectedSubCategoryId;
   final String? errorMessage;
+  final int? sortBy;
+  final List<int>? tagsList;
+  final List<Map>? filterList;
+  final PriceRangeModel? priceRangeSelectedData;
 
   const CategoryProductsState({
     this.categoryProductsData,
@@ -51,6 +61,10 @@ class CategoryProductsState {
     this.selectedSubCategoryId,
     this.status = CategoryProductsStateStatus.initial,
     this.errorMessage,
+    this.sortBy = 0,
+    this.filterList = const [],
+    this.priceRangeSelectedData,
+    this.tagsList = const [],
   });
 
   @override
@@ -72,7 +86,11 @@ class CategoryProductsState {
         other.selectedBrandId == selectedBrandId &&
         other.selectedSubCategoryId == selectedSubCategoryId &&
         other.status == status &&
-        other.errorMessage == errorMessage;
+        other.errorMessage == errorMessage &&
+        other.sortBy == sortBy &&
+        listEquals(other.tagsList, tagsList) &&
+        listEquals(other.filterList, filterList) &&
+        priceRangeSelectedData == priceRangeSelectedData;
   }
 
   @override
@@ -90,40 +108,51 @@ class CategoryProductsState {
       selectedSubCategoryId.hashCode ^
       categoryBanners.hashCode ^
       status.hashCode ^
-      errorMessage.hashCode;
+      errorMessage.hashCode ^
+      sortBy.hashCode ^
+      tagsList.hashCode ^
+      filterList.hashCode ^
+      priceRangeSelectedData.hashCode;
 
-  CategoryProductsState copyWith({
-    HomeSectionProductModel? categoryProductsData,
-    HomeBannerModel? categoryBanners,
-    List<FilterAttribute>? filterData,
-    List<IdNameModel>? tagsData,
-    List<CategoryBrandModel>? brandsData,
-    HomePageCategoriesModel? subCategories,
-    CategoryProductsStateStatus? status,
-    PriceRangeModel? priceRange,
-    PriceRangeModel? priceRangeData,
-    int? categoryBannerIndex,
-    int? notifyProductIndex,
-    int? selectedBrandId,
-    int? selectedSubCategoryId,
-    String? errorMessage,
-  }) {
+  CategoryProductsState copyWith(
+      {HomeSectionProductModel? categoryProductsData,
+      HomeBannerModel? categoryBanners,
+      List<FilterAttribute>? filterData,
+      List<IdNameModel>? tagsData,
+      List<CategoryBrandModel>? brandsData,
+      HomePageCategoriesModel? subCategories,
+      CategoryProductsStateStatus? status,
+      PriceRangeModel? priceRange,
+      PriceRangeModel? priceRangeData,
+      int? categoryBannerIndex,
+      int? notifyProductIndex,
+      int? selectedBrandId,
+      int? selectedSubCategoryId,
+      String? errorMessage,
+      int? sortBy,
+      List<int>? tagsList,
+      List<Map>? filterList,
+      PriceRangeModel? priceRangeSelectedData}) {
     return CategoryProductsState(
-      categoryProductsData: categoryProductsData ?? this.categoryProductsData,
-      categoryBanners: categoryBanners ?? this.categoryBanners,
-      subCategories: subCategories ?? this.subCategories,
-      filterData: filterData ?? this.filterData,
-      tagsData: tagsData ?? this.tagsData,
-      brandsData: brandsData ?? this.brandsData,
-      categoryBannerIndex: categoryBannerIndex ?? this.categoryBannerIndex,
-      notifyProductIndex: notifyProductIndex ?? this.notifyProductIndex,
-      selectedBrandId: selectedBrandId ?? this.selectedBrandId,
-      priceRange: priceRange ?? this.priceRange,
-      priceRangeData: priceRangeData ?? this.priceRangeData,
-      selectedSubCategoryId:
-          selectedSubCategoryId ?? this.selectedSubCategoryId,
-      status: status ?? this.status,
-      errorMessage: errorMessage ?? this.errorMessage,
-    );
+        categoryProductsData: categoryProductsData ?? this.categoryProductsData,
+        categoryBanners: categoryBanners ?? this.categoryBanners,
+        subCategories: subCategories ?? this.subCategories,
+        filterData: filterData ?? this.filterData,
+        tagsData: tagsData ?? this.tagsData,
+        brandsData: brandsData ?? this.brandsData,
+        categoryBannerIndex: categoryBannerIndex ?? this.categoryBannerIndex,
+        notifyProductIndex: notifyProductIndex ?? this.notifyProductIndex,
+        selectedBrandId: selectedBrandId ?? this.selectedBrandId,
+        priceRange: priceRange ?? this.priceRange,
+        priceRangeData: priceRangeData ?? this.priceRangeData,
+        selectedSubCategoryId:
+            selectedSubCategoryId ?? this.selectedSubCategoryId,
+        status: status ?? this.status,
+        errorMessage: errorMessage ?? this.errorMessage,
+        sortBy: sortBy ?? this.sortBy,
+        tagsList: tagsList ?? this.tagsList,
+        filterList: filterList ?? this.filterList,
+        priceRangeSelectedData:
+            priceRangeSelectedData ?? this.priceRangeSelectedData);
   }
 }
