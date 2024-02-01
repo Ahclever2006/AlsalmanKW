@@ -318,13 +318,14 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
         subCategories: subCategories,
         onPress: (id) {
           subCategoryId = id;
+          var state = cubit.state;
           cubit.getCategoryProductsData(
-            categoryId: widget.categoryId,
-            subCategoryId: id,
-            sort: cubit.state.sortBy ?? 0,
-            tags: cubit.state.tagsList,
-            filterOption: cubit.state.filterList,
-          );
+              categoryId: widget.categoryId,
+              subCategoryId: id,
+              sort: state.sortBy ?? 0,
+              tags: state.tagsList,
+              filterOption: state.filterList,
+              priceRangeData: state.priceRangeData);
         });
   }
 
