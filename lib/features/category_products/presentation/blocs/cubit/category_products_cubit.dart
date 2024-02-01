@@ -118,6 +118,7 @@ class CategoryProductsCubit extends BaseCubit<CategoryProductsState> {
 
   Future<void> refresh({
     int? categoryId,
+    int? sort = 0,
     List<int>? tags,
     List<Map>? filterOption,
     PriceRangeModel? priceRangeData,

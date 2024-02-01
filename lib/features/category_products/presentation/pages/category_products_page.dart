@@ -86,24 +86,25 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                     child: LazyLoadScrollView(
                       onEndOfPage: () =>
                           categoryProductsCubit.getMoreCategoryProductsData(
-                        categoryId:
-                            (subCategoryId != null && subCategoryId != -1)
-                                ? subCategoryId
-                                : widget.categoryId,
-                        filterOption: state.filterList,
-                        tags: state.tagsList,
-                        sort: state.sortBy,
-                      ),
+                              categoryId:
+                                  (subCategoryId != null && subCategoryId != -1)
+                                      ? subCategoryId
+                                      : widget.categoryId,
+                              filterOption: state.filterList,
+                              tags: state.tagsList,
+                              sort: state.sortBy,
+                              priceRangeData: state.priceRangeData),
                       isLoading: categoryProductsCubit.state.isLoadingMore,
                       child: RefreshIndicator(
                         onRefresh: () => categoryProductsCubit.refresh(
-                          categoryId:
-                              (subCategoryId != null && subCategoryId != -1)
-                                  ? subCategoryId
-                                  : widget.categoryId,
-                          tags: state.tagsList,
-                          filterOption: state.filterList,
-                        ),
+                            categoryId:
+                                (subCategoryId != null && subCategoryId != -1)
+                                    ? subCategoryId
+                                    : widget.categoryId,
+                            tags: state.tagsList,
+                            sort: state.sortBy,
+                            filterOption: state.filterList,
+                            priceRangeData: state.priceRangeData),
                         child: SingleChildScrollView(
                           controller: _scrollController,
                           physics: const AlwaysScrollableScrollPhysics(),
