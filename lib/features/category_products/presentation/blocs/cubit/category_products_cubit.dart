@@ -81,7 +81,7 @@ class CategoryProductsCubit extends BaseCubit<CategoryProductsState> {
       if (categoryId != null && state.categoryBanners == null)
         categoryBanners = await _categoryProductsRepository
             .loadCategoryBannersData(categoryId);
-            
+
       emit(state.copyWith(
           categoryProductsData: categoryProductsData,
           categoryBanners: categoryBanners,
@@ -92,6 +92,10 @@ class CategoryProductsCubit extends BaseCubit<CategoryProductsState> {
           selectedBrandId: brandId,
           brandsData: brandsData,
           subCategories: subCategories,
+          filterList: filterOption,
+          tagsList: tags,
+          priceRangeSelectedData: priceRangeData,
+          sortBy: sort,
           status: CategoryProductsStateStatus.loaded));
     } on RedundantRequestException catch (e) {
       log(e.toString());
@@ -102,18 +106,15 @@ class CategoryProductsCubit extends BaseCubit<CategoryProductsState> {
     }
   }
 
-  void setFilterData(List<int>? tags, List<Map>? attributes,
-      PriceRangeModel? price, int? sort) {
-    emit(state.copyWith(status: CategoryProductsStateStatus.loadingFilterData));
+  // void setFilterData(List<int>? tags, List<Map>? attributes,
+  //     PriceRangeModel? price, int? sort) {
+  //   emit(state.copyWith(status: CategoryProductsStateStatus.loadingFilterData));
 
-    emit(state.copyWith(
-      status: CategoryProductsStateStatus.filterDataLoaded,
-      filterList: attributes,
-      tagsList: tags,
-      priceRangeSelectedData: price,
-      sortBy: sort,
-    ));
-  }
+  //   emit(state.copyWith(
+  //     status: CategoryProductsStateStatus.filterDataLoaded,
+
+  //   ));
+  // }
 
   Future<void> refresh({
     int? categoryId,

@@ -160,25 +160,21 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                                                     // tagsList = tags;
                                                     // priceRangeSelectedData =
                                                     //     price;
-                                                    cubit.setFilterData(
-                                                        tags,
-                                                        attributes,
-                                                        price,
-                                                        sort);
+                                                    // cubit.setFilterData(
+                                                    //     tags,
+                                                    //     attributes,
+                                                    //     price,
+                                                    //     sort);
                                                     await cubit
                                                         .getCategoryProductsData(
                                                             categoryId: widget
                                                                 .categoryId,
-                                                            sort: cubit
-                                                                .state.sortBy,
-                                                            tags: cubit
-                                                                .state.tagsList,
-                                                            filterOption: cubit
-                                                                .state
-                                                                .filterList,
-                                                            priceRangeData: cubit
-                                                                .state
-                                                                .priceRangeSelectedData);
+                                                            sort: sort,
+                                                            tags: tags,
+                                                            filterOption:
+                                                                attributes,
+                                                            priceRangeData:
+                                                                price);
                                                   },
                                                   selectedSortMethod:
                                                       cubit.state.sortBy,

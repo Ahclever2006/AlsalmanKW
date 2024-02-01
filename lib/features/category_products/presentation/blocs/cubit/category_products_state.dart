@@ -7,8 +7,8 @@ enum CategoryProductsStateStatus {
   loadingMore,
   updateNotifyStatus,
   error,
-  loadingFilterData,
-  filterDataLoaded
+  // loadingFilterData,
+  // filterDataLoaded
 }
 
 extension CategoryProductsStateX on CategoryProductsState {
@@ -19,10 +19,10 @@ extension CategoryProductsStateX on CategoryProductsState {
   bool get isUpdateNotifyStatus =>
       status == CategoryProductsStateStatus.updateNotifyStatus;
   bool get isError => status == CategoryProductsStateStatus.error;
-  bool get isLoadingFilterData =>
-      status == CategoryProductsStateStatus.loadingFilterData;
-  bool get isFilterDataLoaded =>
-      status == CategoryProductsStateStatus.filterDataLoaded;
+  // bool get isLoadingFilterData =>
+  //     status == CategoryProductsStateStatus.loadingFilterData;
+  // bool get isFilterDataLoaded =>
+  //     status == CategoryProductsStateStatus.filterDataLoaded;
 }
 
 @immutable
