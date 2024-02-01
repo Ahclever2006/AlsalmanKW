@@ -78,9 +78,10 @@ class CategoryProductsCubit extends BaseCubit<CategoryProductsState> {
 
       HomeBannerModel? categoryBanners;
 
-      if (categoryId != null)
+      if (categoryId != null && state.categoryBanners == null)
         categoryBanners = await _categoryProductsRepository
             .loadCategoryBannersData(categoryId);
+            
       emit(state.copyWith(
           categoryProductsData: categoryProductsData,
           categoryBanners: categoryBanners,
