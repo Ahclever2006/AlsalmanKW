@@ -44,7 +44,6 @@ class CategoryProductsState {
   final int? sortBy;
   final List<int>? tagsList;
   final List<Map>? filterList;
-  final PriceRangeModel? priceRangeSelectedData;
 
   const CategoryProductsState({
     this.categoryProductsData,
@@ -63,7 +62,6 @@ class CategoryProductsState {
     this.errorMessage,
     this.sortBy = 0,
     this.filterList,
-    this.priceRangeSelectedData,
     this.tagsList,
   });
 
@@ -89,8 +87,7 @@ class CategoryProductsState {
         other.errorMessage == errorMessage &&
         other.sortBy == sortBy &&
         listEquals(other.tagsList, tagsList) &&
-        listEquals(other.filterList, filterList) &&
-        priceRangeSelectedData == priceRangeSelectedData;
+        listEquals(other.filterList, filterList);
   }
 
   @override
@@ -111,8 +108,7 @@ class CategoryProductsState {
       errorMessage.hashCode ^
       sortBy.hashCode ^
       tagsList.hashCode ^
-      filterList.hashCode ^
-      priceRangeSelectedData.hashCode;
+      filterList.hashCode;
 
   CategoryProductsState copyWith(
       {HomeSectionProductModel? categoryProductsData,
@@ -151,8 +147,6 @@ class CategoryProductsState {
         errorMessage: errorMessage ?? this.errorMessage,
         sortBy: sortBy ?? this.sortBy,
         tagsList: tagsList ?? this.tagsList,
-        filterList: filterList ?? this.filterList,
-        priceRangeSelectedData:
-            priceRangeSelectedData ?? this.priceRangeSelectedData);
+        filterList: filterList ?? this.filterList);
   }
 }

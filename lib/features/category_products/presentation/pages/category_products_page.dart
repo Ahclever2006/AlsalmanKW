@@ -194,8 +194,7 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                                                   priceRange:
                                                       cubit.state.priceRange,
                                                   selectedPriceRange: cubit
-                                                      .state
-                                                      .priceRangeSelectedData,
+                                                      .state.priceRangeData,
                                                   //     onPress: (sort) async {
                                                   //   sortBy = sort;
                                                   //   await cubit
