@@ -62,9 +62,9 @@ class CategoryProductsState {
     this.status = CategoryProductsStateStatus.initial,
     this.errorMessage,
     this.sortBy = 0,
-    this.filterList = const [],
+    this.filterList,
     this.priceRangeSelectedData,
-    this.tagsList = const [],
+    this.tagsList,
   });
 
   @override
