@@ -96,7 +96,14 @@ class CategoryProductsCubit extends BaseCubit<CategoryProductsState> {
           tagsList: tags,
           priceRangeSelectedData: priceRangeData,
           sortBy: sort,
-          status: CategoryProductsStateStatus.loaded));
+          status: CategoryProductsStateStatus.loaded,
+          hasFilteredData: sort != 0 ||
+              tags?.isNotEmpty == true ||
+              ((priceRangeData?.from ?? 0) >
+                      (state.priceRangeData?.from ?? 0) ||
+                  (priceRangeData?.to ?? 0) <
+                      (state.priceRangeData?.to ?? 0)) ||
+              filterOption?.isNotEmpty == true));
     } on RedundantRequestException catch (e) {
       log(e.toString());
     } catch (e) {
@@ -170,7 +177,14 @@ class CategoryProductsCubit extends BaseCubit<CategoryProductsState> {
             hasNextPage: categoryProductsData.data?.hasNextPage,
             pageIndex: categoryProductsData.data?.pageIndex,
           )),
-          status: CategoryProductsStateStatus.loaded));
+          status: CategoryProductsStateStatus.loaded,
+          hasFilteredData: sort != 0 ||
+              tags?.isNotEmpty == true ||
+              ((priceRangeData?.from ?? 0) >
+                      (state.priceRangeData?.from ?? 0) ||
+                  (priceRangeData?.to ?? 0) <
+                      (state.priceRangeData?.to ?? 0)) ||
+              filterOption?.isNotEmpty == true));
     } on RedundantRequestException catch (e) {
       log(e.toString());
     } catch (e) {

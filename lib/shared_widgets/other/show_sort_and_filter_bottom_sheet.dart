@@ -23,19 +23,18 @@ const sortListData2 = [
   SortType.priceDescending,
 ];
 
-void showSortAndFilterBottomSheet(
-  BuildContext context, {
-  required String label,
-  required List<SortType> sortData,
-  required List<IdNameModel> tagsData,
-  required List<FilterAttribute> filterData,
-  required ValueChangedFilterAndSort onPress,
-  required List<int> selectedTags,
-  required int? selectedSortMethod,
-  required List<Map> selectedAttributes,
-  required PriceRangeModel? priceRange,
-  required PriceRangeModel? selectedPriceRange,
-}) =>
+void showSortAndFilterBottomSheet(BuildContext context,
+        {required String label,
+        required List<SortType> sortData,
+        required List<IdNameModel> tagsData,
+        required List<FilterAttribute> filterData,
+        required ValueChangedFilterAndSort onPress,
+        required List<int> selectedTags,
+        required int? selectedSortMethod,
+        required List<Map> selectedAttributes,
+        required PriceRangeModel? priceRange,
+        required PriceRangeModel? selectedPriceRange,
+        required Function onClear}) =>
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -54,6 +53,7 @@ void showSortAndFilterBottomSheet(
             selectedSortMethod: selectedSortMethod,
             priceRange: priceRange,
             selectedPriceRange: selectedPriceRange,
+            onClear: onClear,
           );
         });
 
@@ -69,6 +69,7 @@ class SimpleBottomSheetWidget extends StatefulWidget {
       required this.selectedAttributes,
       required this.priceRange,
       required this.selectedPriceRange,
+      required this.onClear,
       super.key});
 
   final String label;
@@ -81,6 +82,7 @@ class SimpleBottomSheetWidget extends StatefulWidget {
   final List<Map> selectedAttributes;
   final PriceRangeModel? priceRange;
   final PriceRangeModel? selectedPriceRange;
+  final Function onClear;
 
   @override
   State<SimpleBottomSheetWidget> createState() =>
@@ -205,6 +207,7 @@ class _SimpleBottomSheetWidgetState extends State<SimpleBottomSheetWidget> {
                 _lowerValue = widget.priceRange!.from as double;
                 _upperValue = widget.priceRange!.to as double;
                 setState(() {});
+                widget.onClear();
               }),
         ),
       ],

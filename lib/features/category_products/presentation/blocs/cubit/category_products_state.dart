@@ -44,26 +44,27 @@ class CategoryProductsState {
   final int? sortBy;
   final List<int>? tagsList;
   final List<Map>? filterList;
+  final bool hasFilteredData;
 
-  const CategoryProductsState({
-    this.categoryProductsData,
-    this.categoryBanners,
-    this.filterData,
-    this.subCategories,
-    this.tagsData,
-    this.brandsData,
-    this.priceRange,
-    this.priceRangeData,
-    this.categoryBannerIndex = 0,
-    this.notifyProductIndex,
-    this.selectedBrandId,
-    this.selectedSubCategoryId,
-    this.status = CategoryProductsStateStatus.initial,
-    this.errorMessage,
-    this.sortBy = 0,
-    this.filterList,
-    this.tagsList,
-  });
+  const CategoryProductsState(
+      {this.categoryProductsData,
+      this.categoryBanners,
+      this.filterData,
+      this.subCategories,
+      this.tagsData,
+      this.brandsData,
+      this.priceRange,
+      this.priceRangeData,
+      this.categoryBannerIndex = 0,
+      this.notifyProductIndex,
+      this.selectedBrandId,
+      this.selectedSubCategoryId,
+      this.status = CategoryProductsStateStatus.initial,
+      this.errorMessage,
+      this.sortBy = 0,
+      this.filterList,
+      this.tagsList,
+      this.hasFilteredData = false});
 
   @override
   bool operator ==(Object other) {
@@ -86,6 +87,7 @@ class CategoryProductsState {
         other.status == status &&
         other.errorMessage == errorMessage &&
         other.sortBy == sortBy &&
+        other.hasFilteredData == hasFilteredData &&
         listEquals(other.tagsList, tagsList) &&
         listEquals(other.filterList, filterList);
   }
@@ -108,7 +110,8 @@ class CategoryProductsState {
       errorMessage.hashCode ^
       sortBy.hashCode ^
       tagsList.hashCode ^
-      filterList.hashCode;
+      filterList.hashCode ^
+      hasFilteredData.hashCode;
 
   CategoryProductsState copyWith(
       {HomeSectionProductModel? categoryProductsData,
@@ -128,7 +131,8 @@ class CategoryProductsState {
       int? sortBy,
       List<int>? tagsList,
       List<Map>? filterList,
-      PriceRangeModel? priceRangeSelectedData}) {
+      PriceRangeModel? priceRangeSelectedData,
+      bool? hasFilteredData}) {
     return CategoryProductsState(
         categoryProductsData: categoryProductsData ?? this.categoryProductsData,
         categoryBanners: categoryBanners ?? this.categoryBanners,
@@ -147,6 +151,7 @@ class CategoryProductsState {
         errorMessage: errorMessage ?? this.errorMessage,
         sortBy: sortBy ?? this.sortBy,
         tagsList: tagsList ?? this.tagsList,
+        hasFilteredData: hasFilteredData ?? this.hasFilteredData,
         filterList: filterList ?? this.filterList);
   }
 }

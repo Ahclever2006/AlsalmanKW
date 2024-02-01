@@ -1,12 +1,17 @@
+import 'package:alsalman_app/core/enums/sort_type.dart';
 import 'package:alsalman_app/shared_widgets/other/show_sort_and_filter_bottom_sheet.dart';
 import 'package:alsalman_app/shared_widgets/stateless/title_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:size_helper/size_helper.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import '../../../../core/data/models/filter_attribute.dart';
+import '../../../../core/data/models/id_name_model.dart';
+import '../../../../core/data/models/price_range_model.dart';
 import '/di/injector.dart';
 import '/shared_widgets/other/show_snack_bar.dart';
 import '/shared_widgets/stateless/custom_app_page.dart';
@@ -109,6 +114,7 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                           controller: _scrollController,
                           physics: const AlwaysScrollableScrollPhysics(),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               _buildCategoryBanners(context),
                               const SizedBox(height: 8.0),
@@ -154,6 +160,18 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                                                   context,
                                                   label: 'sort_and_filter',
                                                   sortData: sortListData,
+                                                  onClear: () async {
+                                                    await cubit
+                                                        .getCategoryProductsData(
+                                                            categoryId: widget
+                                                                .categoryId,
+                                                            sort: 0,
+                                                            tags: [],
+                                                            filterOption: [],
+                                                            priceRangeData: cubit
+                                                                .state
+                                                                .priceRangeData);
+                                                  },
                                                   onPress: (tags, attributes,
                                                       price, sort) async {
                                                     // sortBy = sort;
@@ -238,6 +256,7 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                                       : const SizedBox();
                                 },
                               ),
+                              _buildFilteredItemsList(),
                               BlocConsumer<CategoryProductsCubit,
                                   CategoryProductsState>(
                                 listener: (context, state) {
@@ -415,6 +434,210 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
             ),
           );
   }
+
+  Widget _buildFilteredItemsList() =>
+      BlocBuilder<CategoryProductsCubit, CategoryProductsState>(
+          builder: (context, state) {
+        final cubit = context.read<CategoryProductsCubit>();
+        if (cubit.state.hasFilteredData)
+          return SizedBox(
+            height: 50,
+            child: ListView(
+              shrinkWrap: true,
+              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16.0),
+              scrollDirection: Axis.horizontal,
+              children: [
+                InkWell(
+                    onTap: () async {
+                      await cubit.getCategoryProductsData(
+                          categoryId: widget.categoryId,
+                          sort: 0,
+                          tags: [],
+                          filterOption: [],
+                          priceRangeData: cubit.state.priceRangeData);
+                    },
+                    child: Row(
+                      children: [
+                        _buildClearData("clear_all"),
+                        const SizedBox(
+                          width: 6.0,
+                        )
+                      ],
+                    )),
+                _buildSelectedSort(sortListData, cubit.state.sortBy),
+                _buildSelectedPrice(
+                    cubit.state.priceRangeData, cubit.state.priceRange),
+                _buildSelectedTagsList(
+                    cubit.state.tagsList, cubit.state.tagsData),
+                _buildSelectedAttributesList(
+                    cubit.state.filterList, cubit.state.filterData)
+              ],
+            ),
+          );
+        return const SizedBox();
+      });
+
+  Widget _buildSelectedSort(List<SortType>? sortListData, int? sortBy) {
+    if (sortBy != null && sortBy != 0) {
+      final sortItem = sortListData!.cast<SortType?>().firstWhere(
+          (element) => element?.value == sortBy,
+          orElse: () => null);
+      if (sortItem != null) {
+        return Row(
+          children: [
+            _buildFilterContainer(sortItem.name),
+            const SizedBox(
+              width: 8.0,
+            )
+          ],
+        );
+      }
+    }
+
+    return const SizedBox();
+  }
+
+  Widget _buildSelectedPrice(PriceRangeModel? selectedPriceRangeModel,
+      PriceRangeModel? priceRangeModel) {
+    if (selectedPriceRangeModel != null &&
+            priceRangeModel!.to > selectedPriceRangeModel.to ||
+        priceRangeModel!.from < selectedPriceRangeModel!.from)
+      return Row(
+        children: [
+          _buildFilterContainer(
+              "${"price".tr()} ${selectedPriceRangeModel.from} - ${selectedPriceRangeModel.to}"),
+          const SizedBox(
+            width: 8.0,
+          )
+        ],
+      );
+
+    return const SizedBox();
+  }
+
+  Widget _buildSelectedTagsList(List<int>? tags, List<IdNameModel>? tagsData) {
+    if (tags?.isNotEmpty == true && tagsData != null) {
+      List<IdNameModel>? selectedList = [];
+
+      for (var element in tagsData) {
+        tags?.forEach((tag) {
+          if (tag == element.id) {
+            selectedList.add(element);
+          }
+        });
+      }
+      if (selectedList.isNotEmpty)
+        return SizedBox(
+          height: 45,
+          child: ListView.separated(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, i) => i == selectedList.length
+                  ? const SizedBox()
+                  : _buildFilterContainer(selectedList[i].name),
+              separatorBuilder: (context, i) => const SizedBox(
+                    width: 6.0,
+                  ),
+              itemCount: selectedList.length + 1),
+        );
+    }
+
+    return const SizedBox();
+  }
+
+  Widget _buildSelectedAttributesList(
+      List<Map<dynamic, dynamic>>? selectedAttributes,
+      List<FilterAttribute>? filterData) {
+    if (selectedAttributes?.isNotEmpty == true && filterData != null) {
+      List<FilterAttributeValue>? selectedList = [];
+
+      selectedAttributes?.forEach((attr) {
+        final attrItem = filterData.cast<FilterAttribute?>().firstWhere(
+            (element) =>
+                element?.specificationAttributeId ==
+                attr["SpecificationAttributeId"],
+            orElse: () => null);
+        if (attrItem != null) {
+          final specItem = attrItem.specificationAttributeOptions
+              .cast<FilterAttributeValue?>()
+              .firstWhere(
+                  (element) =>
+                      element?.id == attr["SpecificationAttributeOptionId"],
+                  orElse: () => null);
+          if (specItem != null) selectedList.add(specItem);
+        }
+      });
+
+      if (selectedList.isNotEmpty)
+        return SizedBox(
+          height: 45,
+          child: ListView.separated(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, i) => i == selectedList.length
+                  ? const SizedBox()
+                  : _buildFilterContainer(selectedList[i].name),
+              separatorBuilder: (context, i) => const SizedBox(
+                    width: 6.0,
+                  ),
+              itemCount: selectedList.length + 1),
+        );
+    }
+
+    return const SizedBox();
+  }
+
+  Widget _buildClearData(String name) => Container(
+        child: Center(
+          child: Row(
+            children: [
+              TitleText.medium(
+                text: name,
+                color: AppColors.PRIMARY_COLOR_DARK,
+              ),
+            ],
+          ),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(
+              22,
+            ),
+            color: AppColors.PRIMARY_COLOR_LIGHT,
+            border: Border.all(color: AppColors.PRIMARY_COLOR_DARK)),
+      );
+
+  Widget _buildFilterContainer(String name) => Container(
+        child: Center(
+          child: Row(
+            children: [
+              TitleText.medium(
+                text: name,
+                color: AppColors.PRIMARY_COLOR_DARK,
+              ),
+              const SizedBox(width: 16.0),
+              InkWell(
+                onTap: () {},
+                child: SvgPicture.asset(
+                  'lib/res/assets/cancel_options_icon.svg',
+                  color: AppColors.PRIMARY_COLOR_DARK,
+                  width: 18,
+                  height: 18,
+                ),
+              )
+            ],
+          ),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(
+              22,
+            ),
+            color: AppColors.PRIMARY_COLOR_LIGHT,
+            border: Border.all(color: AppColors.PRIMARY_COLOR_DARK)),
+      );
 
   Widget _buildBrands(
       BuildContext context, List<CategoryBrandModel> categoryBrands) {
