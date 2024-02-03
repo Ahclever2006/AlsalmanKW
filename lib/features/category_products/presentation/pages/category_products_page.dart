@@ -98,7 +98,7 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                               filterOption: state.filterList,
                               tags: state.tagsList,
                               sort: state.sortBy,
-                              priceRangeData: state.priceRangeData),
+                              priceRangeData: state.selectedPriceRange),
                       isLoading: categoryProductsCubit.state.isLoadingMore,
                       child: RefreshIndicator(
                         onRefresh: () => categoryProductsCubit.refresh(
@@ -109,7 +109,7 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                             tags: state.tagsList,
                             sort: state.sortBy,
                             filterOption: state.filterList,
-                            priceRangeData: state.priceRangeData),
+                            selectedPriceRange: state.selectedPriceRange),
                         child: SingleChildScrollView(
                           controller: _scrollController,
                           physics: const AlwaysScrollableScrollPhysics(),
@@ -161,16 +161,15 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                                                   label: 'sort_and_filter',
                                                   sortData: sortListData,
                                                   onClear: () async {
-                                                    await cubit
-                                                        .getCategoryProductsData(
-                                                            categoryId: widget
-                                                                .categoryId,
-                                                            sort: 0,
-                                                            tags: [],
-                                                            filterOption: [],
-                                                            priceRangeData: cubit
-                                                                .state
-                                                                .priceRangeData);
+                                                    await cubit.getCategoryProductsData(
+                                                        categoryId:
+                                                            widget.categoryId,
+                                                        sort: 0,
+                                                        tags: [],
+                                                        filterOption: [],
+                                                        selectedPriceRange: cubit
+                                                            .state
+                                                            .priceRange);
                                                   },
                                                   onPress: (tags, attributes,
                                                       price, sort) async {
@@ -192,7 +191,7 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                                                             tags: tags,
                                                             filterOption:
                                                                 attributes,
-                                                            priceRangeData:
+                                                            selectedPriceRange:
                                                                 price);
                                                   },
                                                   selectedSortMethod:
@@ -212,7 +211,7 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                                                   priceRange:
                                                       cubit.state.priceRange,
                                                   selectedPriceRange: cubit
-                                                      .state.priceRangeData,
+                                                      .state.selectedPriceRange,
                                                   //     onPress: (sort) async {
                                                   //   sortBy = sort;
                                                   //   await cubit
@@ -343,7 +342,7 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
               sort: state.sortBy ?? 0,
               tags: state.tagsList,
               filterOption: state.filterList,
-              priceRangeData: state.priceRangeData);
+              selectedPriceRange: state.selectedPriceRange);
         });
   }
 
@@ -454,7 +453,7 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                           sort: 0,
                           tags: [],
                           filterOption: [],
-                          priceRangeData: cubit.state.priceRangeData);
+                          selectedPriceRange: cubit.state.priceRange);
                     },
                     child: Row(
                       children: [
@@ -466,7 +465,7 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                     )),
                 _buildSelectedSort(sortListData, cubit.state.sortBy),
                 _buildSelectedPrice(
-                    cubit.state.priceRangeData, cubit.state.priceRange),
+                    cubit.state.selectedPriceRange, cubit.state.priceRange),
                 _buildSelectedTagsList(
                     cubit.state.tagsList, cubit.state.tagsData),
                 _buildSelectedAttributesList(
@@ -617,16 +616,16 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                 text: name,
                 color: AppColors.PRIMARY_COLOR_DARK,
               ),
-              const SizedBox(width: 16.0),
-              InkWell(
-                onTap: () {},
-                child: SvgPicture.asset(
-                  'lib/res/assets/cancel_options_icon.svg',
-                  color: AppColors.PRIMARY_COLOR_DARK,
-                  width: 18,
-                  height: 18,
-                ),
-              )
+              // const SizedBox(width: 16.0),
+              // InkWell(
+              //   onTap: () {},
+              //   child: SvgPicture.asset(
+              //     'lib/res/assets/cancel_options_icon.svg',
+              //     color: AppColors.PRIMARY_COLOR_DARK,
+              //     width: 18,
+              //     height: 18,
+              //   ),
+            //  )
             ],
           ),
         ),

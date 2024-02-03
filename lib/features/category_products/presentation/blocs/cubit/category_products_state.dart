@@ -33,7 +33,7 @@ class CategoryProductsState {
   final HomePageCategoriesModel? subCategories;
   final List<IdNameModel>? tagsData;
   final PriceRangeModel? priceRange;
-  final PriceRangeModel? priceRangeData;
+  final PriceRangeModel? selectedPriceRange;
   final List<CategoryBrandModel>? brandsData;
   final CategoryProductsStateStatus status;
   final int? categoryBannerIndex;
@@ -54,7 +54,7 @@ class CategoryProductsState {
       this.tagsData,
       this.brandsData,
       this.priceRange,
-      this.priceRangeData,
+      this.selectedPriceRange,
       this.categoryBannerIndex = 0,
       this.notifyProductIndex,
       this.selectedBrandId,
@@ -80,7 +80,7 @@ class CategoryProductsState {
         listEquals(other.brandsData, brandsData) &&
         other.subCategories == subCategories &&
         other.priceRange == priceRange &&
-        other.priceRangeData == priceRangeData &&
+        other.selectedPriceRange == selectedPriceRange &&
         other.categoryBanners == categoryBanners &&
         other.selectedBrandId == selectedBrandId &&
         other.selectedSubCategoryId == selectedSubCategoryId &&
@@ -101,7 +101,7 @@ class CategoryProductsState {
       subCategories.hashCode ^
       tagsData.hashCode ^
       priceRange.hashCode ^
-      priceRangeData.hashCode ^
+      selectedPriceRange.hashCode ^
       brandsData.hashCode ^
       selectedBrandId.hashCode ^
       selectedSubCategoryId.hashCode ^
@@ -122,7 +122,6 @@ class CategoryProductsState {
       HomePageCategoriesModel? subCategories,
       CategoryProductsStateStatus? status,
       PriceRangeModel? priceRange,
-      PriceRangeModel? priceRangeData,
       int? categoryBannerIndex,
       int? notifyProductIndex,
       int? selectedBrandId,
@@ -131,7 +130,7 @@ class CategoryProductsState {
       int? sortBy,
       List<int>? tagsList,
       List<Map>? filterList,
-      PriceRangeModel? priceRangeSelectedData,
+      PriceRangeModel? selectedPriceRange,
       bool? hasFilteredData}) {
     return CategoryProductsState(
         categoryProductsData: categoryProductsData ?? this.categoryProductsData,
@@ -144,7 +143,7 @@ class CategoryProductsState {
         notifyProductIndex: notifyProductIndex ?? this.notifyProductIndex,
         selectedBrandId: selectedBrandId ?? this.selectedBrandId,
         priceRange: priceRange ?? this.priceRange,
-        priceRangeData: priceRangeData ?? this.priceRangeData,
+        selectedPriceRange: selectedPriceRange ?? this.selectedPriceRange,
         selectedSubCategoryId:
             selectedSubCategoryId ?? this.selectedSubCategoryId,
         status: status ?? this.status,

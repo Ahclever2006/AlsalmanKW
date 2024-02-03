@@ -30,7 +30,7 @@ class CategoryProductsCubit extends BaseCubit<CategoryProductsState> {
       int? subCategoryId,
       List<int>? tags,
       List<Map>? filterOption,
-      PriceRangeModel? priceRangeData,
+      PriceRangeModel? selectedPriceRange,
       int pageSize = 9,
       bool? soldOut,
       bool refresh = false}) async {
@@ -70,7 +70,7 @@ class CategoryProductsCubit extends BaseCubit<CategoryProductsState> {
         categoryId: categoryIdValue,
         brandId: brandId ?? state.selectedBrandId,
         sort: sort ?? 0,
-        priceRange: priceRangeData,
+        priceRange: selectedPriceRange,
         filterOption: filterOption,
         tags: categoryId == null ? [10] : tags,
         soldOut: soldOut,
@@ -88,21 +88,20 @@ class CategoryProductsCubit extends BaseCubit<CategoryProductsState> {
           filterData: filterData,
           tagsData: tagsData,
           priceRange: priceRange,
-          priceRangeData: priceRangeData,
+          selectedPriceRange: selectedPriceRange,
           selectedBrandId: brandId,
           brandsData: brandsData,
           subCategories: subCategories,
           filterList: filterOption,
           tagsList: tags,
-          priceRangeSelectedData: priceRangeData,
           sortBy: sort,
           status: CategoryProductsStateStatus.loaded,
           hasFilteredData: sort != 0 ||
               tags?.isNotEmpty == true ||
-              ((priceRangeData?.from ?? 0) >
-                      (state.priceRangeData?.from ?? 0) ||
-                  (priceRangeData?.to ?? 0) <
-                      (state.priceRangeData?.to ?? 0)) ||
+              ((selectedPriceRange?.from ?? 0) >
+                      (state.selectedPriceRange?.from ?? 0) ||
+                  (selectedPriceRange?.to ?? 0) <
+                      (state.selectedPriceRange?.to ?? 0)) ||
               filterOption?.isNotEmpty == true));
     } on RedundantRequestException catch (e) {
       log(e.toString());
@@ -128,13 +127,13 @@ class CategoryProductsCubit extends BaseCubit<CategoryProductsState> {
     int? sort = 0,
     List<int>? tags,
     List<Map>? filterOption,
-    PriceRangeModel? priceRangeData,
+    PriceRangeModel? selectedPriceRange,
   }) =>
       getCategoryProductsData(
         categoryId: categoryId,
         refresh: true,
         tags: tags,
-        priceRangeData: priceRangeData,
+        selectedPriceRange: selectedPriceRange,
         filterOption: filterOption,
       );
 
@@ -181,9 +180,9 @@ class CategoryProductsCubit extends BaseCubit<CategoryProductsState> {
           hasFilteredData: sort != 0 ||
               tags?.isNotEmpty == true ||
               ((priceRangeData?.from ?? 0) >
-                      (state.priceRangeData?.from ?? 0) ||
+                      (state.selectedPriceRange?.from ?? 0) ||
                   (priceRangeData?.to ?? 0) <
-                      (state.priceRangeData?.to ?? 0)) ||
+                      (state.selectedPriceRange?.to ?? 0)) ||
               filterOption?.isNotEmpty == true));
     } on RedundantRequestException catch (e) {
       log(e.toString());
