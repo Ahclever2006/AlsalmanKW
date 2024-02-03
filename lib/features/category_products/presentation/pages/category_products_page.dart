@@ -1,5 +1,6 @@
 import 'package:alsalman_app/core/enums/sort_type.dart';
 import 'package:alsalman_app/shared_widgets/other/show_sort_and_filter_bottom_sheet.dart';
+import 'package:alsalman_app/shared_widgets/stateful/default_button.dart';
 import 'package:alsalman_app/shared_widgets/stateless/title_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -161,15 +162,16 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                                                   label: 'sort_and_filter',
                                                   sortData: sortListData,
                                                   onClear: () async {
-                                                    await cubit.getCategoryProductsData(
-                                                        categoryId:
-                                                            widget.categoryId,
-                                                        sort: 0,
-                                                        tags: [],
-                                                        filterOption: [],
-                                                        selectedPriceRange: cubit
-                                                            .state
-                                                            .priceRange);
+                                                    await cubit
+                                                        .getCategoryProductsData(
+                                                            categoryId: widget
+                                                                .categoryId,
+                                                            sort: 0,
+                                                            tags: [],
+                                                            filterOption: [],
+                                                            selectedPriceRange:
+                                                                cubit.state
+                                                                    .priceRange);
                                                   },
                                                   onPress: (tags, attributes,
                                                       price, sort) async {
@@ -446,23 +448,33 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
               padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16.0),
               scrollDirection: Axis.horizontal,
               children: [
-                InkWell(
-                    onTap: () async {
-                      await cubit.getCategoryProductsData(
-                          categoryId: widget.categoryId,
-                          sort: 0,
-                          tags: [],
-                          filterOption: [],
-                          selectedPriceRange: cubit.state.priceRange);
-                    },
-                    child: Row(
-                      children: [
-                        _buildClearData("clear_all"),
-                        const SizedBox(
-                          width: 6.0,
-                        )
-                      ],
-                    )),
+                Row(
+                  children: [
+                    DefaultButton(
+                      onPressed: () async {
+                        await cubit.getCategoryProductsData(
+                            categoryId: widget.categoryId,
+                            sort: 0,
+                            tags: [],
+                            filterOption: [],
+                            selectedPriceRange: cubit.state.priceRange);
+                      },
+                      padding: const EdgeInsets.only(
+                          top: 8, bottom: 8, left: 8.0, right: 8.0),
+                      label: 'clear_all'.tr(),
+                      labelStyle: Theme.of(context)
+                          .textTheme
+                          .displayLarge!
+                          .copyWith(color: AppColors.PRIMARY_COLOR_DARK),
+                      borderRadius: BorderRadius.circular(22.0),
+                      borderColor: AppColors.PRIMARY_COLOR_DARK,
+                      backgroundColor: AppColors.PRIMARY_COLOR_LIGHT,
+                    ),
+                    const SizedBox(
+                      width: 6.0,
+                    )
+                  ],
+                ),
                 _buildSelectedSort(sortListData, cubit.state.sortBy),
                 _buildSelectedPrice(
                     cubit.state.selectedPriceRange, cubit.state.priceRange),
@@ -625,7 +637,7 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
               //     width: 18,
               //     height: 18,
               //   ),
-            //  )
+              //  )
             ],
           ),
         ),
