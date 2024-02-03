@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:sticky_headers/sticky_headers.dart';
 import '../../../../shared_widgets/stateless/drawer_appbar.dart';
 import '../../../../core/utils/media_query_values.dart';
 import 'package:upgrader/upgrader.dart';
@@ -87,18 +88,25 @@ class _HomeTabState extends State<HomeTab> {
                       gifUrl: 'lib/res/assets/logo_animation.gif'),
                   Expanded(
                     child: RefreshIndicator(
-                      onRefresh: () => cubit.refresh(),
-                      child: SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        controller: _controller,
+                        onRefresh: () => cubit.refresh(),
                         child: _buildHomeTabBody(
                           context,
                           categories: state.categories,
                           banners: state.banners,
                           carousalSections: state.carousalSections,
+                        )
+
+                        // SingleChildScrollView(
+                        //   physics: const BouncingScrollPhysics(),
+                        //   controller: _controller,
+                        //   child: _buildHomeTabBody(
+                        //     context,
+                        //     categories: state.categories,
+                        //     banners: state.banners,
+                        //     carousalSections: state.carousalSections,
+                        //   ),
+                        // ),
                         ),
-                      ),
-                    ),
                   ),
                 ],
               );
@@ -122,14 +130,20 @@ class _HomeTabState extends State<HomeTab> {
         if (state.isUserLanguageChanged) homeCubit.refresh();
       },
       child: ListView(
-        physics: const NeverScrollableScrollPhysics(),
+        // physics: const NeverScrollableScrollPhysics(),
         padding: EdgeInsets.zero,
         shrinkWrap: true,
         children: [
           _buildHomeBanners(context, banners),
-          _buildHomeCategories(context, categories),
-          _buildShadowDivider(),
-          ..._buildHomeCarousalProductSections(context, carousalSections),
+          StickyHeader(
+              header: _buildHomeCategories(context, categories),
+              content: Column(
+                children: [
+                  _buildShadowDivider(),
+                  ..._buildHomeCarousalProductSections(
+                      context, carousalSections),
+                ],
+              ))
         ],
       ),
     );
@@ -147,60 +161,63 @@ class _HomeTabState extends State<HomeTab> {
   Widget _buildHomeCategories(
       BuildContext context, HomePageCategoriesModel? categories) {
     if (categories == null) return const SizedBox();
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 16.0, left: 8.0, right: 8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _buildCustomTitle(label: "explore_categories"),
-              DefaultButton(
-                  label: 'view_all'.tr(),
-                  labelStyle: Theme.of(context)
-                      .textTheme
-                      .displayLarge!
-                      .copyWith(color: AppColors.PRIMARY_COLOR, height: 1.0),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 8.0),
-                  backgroundColor: AppColors.PRIMARY_COLOR_LIGHT,
-                  borderRadius: const BorderRadius.all(Radius.circular(25.0)),
-                  borderColor: AppColors.PRIMARY_COLOR,
-                  onPressed: () {
-                    _goToCategoriesPage(context);
-                  })
-            ],
+    return Container(
+      color: AppColors.CUSTOM_APP_PAGE_COLOR,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16.0, left: 8.0, right: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _buildCustomTitle(label: "explore_categories"),
+                DefaultButton(
+                    label: 'view_all'.tr(),
+                    labelStyle: Theme.of(context)
+                        .textTheme
+                        .displayLarge!
+                        .copyWith(color: AppColors.PRIMARY_COLOR, height: 1.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 8.0),
+                    backgroundColor: AppColors.PRIMARY_COLOR_LIGHT,
+                    borderRadius: const BorderRadius.all(Radius.circular(25.0)),
+                    borderColor: AppColors.PRIMARY_COLOR,
+                    onPressed: () {
+                      _goToCategoriesPage(context);
+                    })
+              ],
+            ),
           ),
-        ),
-        SizedBox(
-          height: context.sizeHelper(
-            tabletNormal: 145.0,
-            mobileLarge: 190.0,
-            desktopSmall: 220.0,
+          SizedBox(
+            height: context.sizeHelper(
+              tabletNormal: 145.0,
+              mobileLarge: 190.0,
+              desktopSmall: 220.0,
+            ),
+            child: ListView.builder(
+              padding: EdgeInsets.zero,
+              scrollDirection: Axis.horizontal,
+              // shrinkWrap: true,
+              itemCount: categories.data!.length,
+              itemBuilder: (BuildContext context, int index) {
+                final category = categories.data![index];
+                return CategoryCard(
+                    onPress: () {
+                      _goToCategoryProductsPage(
+                          context, category.id ?? 0, category.name ?? '');
+                    },
+                    category: category,
+                    size: context.sizeHelper(
+                      tabletNormal: context.width / 5,
+                      mobileLarge: context.width / 5,
+                      desktopSmall: context.width / 7,
+                    ));
+              },
+            ),
           ),
-          child: ListView.builder(
-            padding: EdgeInsets.zero,
-            scrollDirection: Axis.horizontal,
-            // shrinkWrap: true,
-            itemCount: categories.data!.length,
-            itemBuilder: (BuildContext context, int index) {
-              final category = categories.data![index];
-              return CategoryCard(
-                  onPress: () {
-                    _goToCategoryProductsPage(
-                        context, category.id ?? 0, category.name ?? '');
-                  },
-                  category: category,
-                  size: context.sizeHelper(
-                    tabletNormal: context.width / 5,
-                    mobileLarge: context.width / 5,
-                    desktopSmall: context.width / 7,
-                  ));
-            },
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
