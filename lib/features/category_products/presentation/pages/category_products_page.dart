@@ -440,6 +440,7 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
       BlocBuilder<CategoryProductsCubit, CategoryProductsState>(
           builder: (context, state) {
         final cubit = context.read<CategoryProductsCubit>();
+
         if (cubit.state.hasFilteredData)
           return SizedBox(
             height: 50,
@@ -475,20 +476,23 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                     )
                   ],
                 ),
-                _buildSelectedSort(sortListData, cubit.state.sortBy),
-                _buildSelectedPrice(
-                    cubit.state.selectedPriceRange, cubit.state.priceRange),
+                _buildSelectedSort(sortListData, cubit.state.sortBy, context),
+                _buildSelectedPrice(cubit.state.selectedPriceRange,
+                    cubit.state.priceRange, context),
                 _buildSelectedTagsList(
-                    cubit.state.tagsList, cubit.state.tagsData),
+                    cubit.state.tagsList, cubit.state.tagsData, context),
                 _buildSelectedAttributesList(
-                    cubit.state.filterList, cubit.state.filterData)
+                    cubit.state.filterList, cubit.state.filterData, context)
               ],
             ),
           );
         return const SizedBox();
       });
 
-  Widget _buildSelectedSort(List<SortType>? sortListData, int? sortBy) {
+  Widget _buildSelectedSort(
+      List<SortType>? sortListData, int? sortBy, BuildContext context) {
+    final cubit = context.read<CategoryProductsCubit>();
+
     if (sortBy != null && sortBy != 0) {
       final sortItem = sortListData!.cast<SortType?>().firstWhere(
           (element) => element?.value == sortBy,
@@ -496,7 +500,15 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
       if (sortItem != null) {
         return Row(
           children: [
-            _buildFilterContainer(sortItem.name),
+            _buildFilterContainer(sortItem.name, () async {
+              await cubit.getCategoryProductsData(
+                  categoryId: widget.categoryId,
+                  sort: 0,
+                  tags: cubit.state.tagsList,
+                  filterOption: cubit.state.filterList,
+                  
+                  selectedPriceRange: cubit.state.selectedPriceRange);
+            }),
             const SizedBox(
               width: 8.0,
             )
@@ -509,14 +521,23 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
   }
 
   Widget _buildSelectedPrice(PriceRangeModel? selectedPriceRangeModel,
-      PriceRangeModel? priceRangeModel) {
+      PriceRangeModel? priceRangeModel, BuildContext context) {
+    final cubit = context.read<CategoryProductsCubit>();
     if (selectedPriceRangeModel != null &&
             priceRangeModel!.to > selectedPriceRangeModel.to ||
         priceRangeModel!.from < selectedPriceRangeModel!.from)
       return Row(
         children: [
           _buildFilterContainer(
-              "${"price".tr()} ${selectedPriceRangeModel.from} - ${selectedPriceRangeModel.to}"),
+              "${"price".tr()} ${selectedPriceRangeModel.from} - ${selectedPriceRangeModel.to}",
+              () async {
+            await cubit.getCategoryProductsData(
+                categoryId: widget.categoryId,
+                selectedPriceRange: cubit.state.priceRange,
+                sort: cubit.state.sortBy,
+                tags: cubit.state.tagsList,
+                filterOption: cubit.state.filterList);
+          }),
           const SizedBox(
             width: 8.0,
           )
@@ -526,7 +547,10 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
     return const SizedBox();
   }
 
-  Widget _buildSelectedTagsList(List<int>? tags, List<IdNameModel>? tagsData) {
+  Widget _buildSelectedTagsList(
+      List<int>? tags, List<IdNameModel>? tagsData, BuildContext context) {
+    final cubit = context.read<CategoryProductsCubit>();
+
     if (tags?.isNotEmpty == true && tagsData != null) {
       List<IdNameModel>? selectedList = [];
 
@@ -546,7 +570,16 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, i) => i == selectedList.length
                   ? const SizedBox()
-                  : _buildFilterContainer(selectedList[i].name),
+                  : _buildFilterContainer(selectedList[i].name, () async {
+                      tags!.removeWhere(
+                          (element) => element == selectedList[i].id);
+                      await cubit.getCategoryProductsData(
+                          tags: tags,
+                          categoryId: widget.categoryId,
+                          sort: cubit.state.sortBy,
+                          filterOption: cubit.state.filterList,
+                          selectedPriceRange: cubit.state.selectedPriceRange);
+                    }),
               separatorBuilder: (context, i) => const SizedBox(
                     width: 6.0,
                   ),
@@ -559,7 +592,10 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
 
   Widget _buildSelectedAttributesList(
       List<Map<dynamic, dynamic>>? selectedAttributes,
-      List<FilterAttribute>? filterData) {
+      List<FilterAttribute>? filterData,
+      BuildContext context) {
+    final cubit = context.read<CategoryProductsCubit>();
+
     if (selectedAttributes?.isNotEmpty == true && filterData != null) {
       List<FilterAttributeValue>? selectedList = [];
 
@@ -589,7 +625,19 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, i) => i == selectedList.length
                   ? const SizedBox()
-                  : _buildFilterContainer(selectedList[i].name),
+                  : _buildFilterContainer(selectedList[i].name, () async {
+                      selectedAttributes!.removeWhere((element) =>
+                          element.values.contains(selectedList[i].id) &&
+                          element.values.contains(
+                              selectedList[i].specificationAttributeId));
+
+                      await cubit.getCategoryProductsData(
+                          categoryId: widget.categoryId,
+                          selectedPriceRange: cubit.state.selectedPriceRange,
+                          sort: cubit.state.sortBy,
+                          tags: cubit.state.tagsList,
+                          filterOption: selectedAttributes);
+                    }),
               separatorBuilder: (context, i) => const SizedBox(
                     width: 6.0,
                   ),
@@ -620,7 +668,7 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
             border: Border.all(color: AppColors.PRIMARY_COLOR_DARK)),
       );
 
-  Widget _buildFilterContainer(String name) => Container(
+  Widget _buildFilterContainer(String name, onPress) => Container(
         child: Center(
           child: Row(
             children: [
@@ -628,16 +676,32 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                 text: name,
                 color: AppColors.PRIMARY_COLOR_DARK,
               ),
-              // const SizedBox(width: 16.0),
+              const SizedBox(width: 16.0),
+              DefaultButton(
+                onPressed: () async {
+                  await onPress();
+                },
+                padding: EdgeInsets.zero,
+                margin: EdgeInsets.zero,
+                icon: SvgPicture.asset(
+                  'lib/res/assets/cancel_options_icon.svg',
+                  color: AppColors.PRIMARY_COLOR_DARK,
+                  width: 18,
+                  height: 18,
+                ),
+                backgroundColor: AppColors.PRIMARY_COLOR_LIGHT,
+              ),
               // InkWell(
-              //   onTap: () {},
+              //   onTap: () async {
+              //     onPress();
+              //   },
               //   child: SvgPicture.asset(
               //     'lib/res/assets/cancel_options_icon.svg',
               //     color: AppColors.PRIMARY_COLOR_DARK,
               //     width: 18,
               //     height: 18,
               //   ),
-              //  )
+              // )
             ],
           ),
         ),

@@ -98,10 +98,11 @@ class CategoryProductsCubit extends BaseCubit<CategoryProductsState> {
           status: CategoryProductsStateStatus.loaded,
           hasFilteredData: sort != 0 ||
               tags?.isNotEmpty == true ||
-              ((selectedPriceRange?.from ?? 0) >
-                      (state.selectedPriceRange?.from ?? 0) ||
-                  (selectedPriceRange?.to ?? 0) <
-                      (state.selectedPriceRange?.to ?? 0)) ||
+              (state.priceRange != null &&
+                  ((selectedPriceRange?.from ?? state.priceRange!.from) >
+                          state.priceRange!.from ||
+                      (selectedPriceRange?.to ?? state.priceRange!.to) <
+                          (state.priceRange!.to))) ||
               filterOption?.isNotEmpty == true));
     } on RedundantRequestException catch (e) {
       log(e.toString());
