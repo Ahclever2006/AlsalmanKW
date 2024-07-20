@@ -1,7 +1,7 @@
 import 'main.dart';
 
 abstract class ApiEndPoint {
-  static const domainUrl = 'https://alsalmankw.k-pack.online';
+  static const domainUrl = 'https://alsalmankw.com';
 
   static const BASE_URL =
       isRelease ? '$domainUrl/frontendapi' : '$domainUrl/frontendapi';
