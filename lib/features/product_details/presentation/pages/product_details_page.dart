@@ -553,11 +553,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                 _goToCartPage(context);
                               }),
                           const Spacer(),
-                          TitleText(
-                            text: state.paymentSummary!.totalsModel!.subTotal
-                                .toString(),
-                            color: Colors.white,
-                          )
+                          if (state.paymentSummary != null)
+                            TitleText(
+                              text: state.paymentSummary!.totalsModel!.subTotal
+                                  .toString(),
+                              color: Colors.white,
+                            )
                         ],
                       );
                     },
