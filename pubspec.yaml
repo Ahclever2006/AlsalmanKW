@@ -51,7 +51,7 @@ dependencies:
   flutter_datetime_picker_plus: ^2.0.1
   flutter_html: ^3.0.0-alpha.6
   flutter_gif: ^0.0.4
-  flutter_inappwebview: ^5.7.2+3
+  flutter_inappwebview: ^5.8.0
   flutter_local_notifications: ^16.3.2
   flutter_native_splash: ^2.2.15
   flutter_secure_storage: ^8.0.0

@@ -5,7 +5,7 @@ variables:
   - group: "myVariables"
 
 pool:
-  vmImage: macOS-latest
+  vmImage: 'macos-13'
 
 # variables:
 #       DELIVER_ITMSTRANSPORTER_ADDITIONAL_UPLOAD_PARAMETERS: "-asc_provider <your team ID or short name if different>"  
