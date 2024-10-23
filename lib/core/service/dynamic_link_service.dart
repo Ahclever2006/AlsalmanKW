@@ -72,7 +72,7 @@ class DynamicLinkServiceImpl implements DynamicLinkService {
       link: url,
       androidParameters: AndroidParameters(
         fallbackUrl: fallbackUrl,
-        packageName: 'com.baramjk.alsalman',
+        packageName: 'com.baramjk.alsalmanapp',
       ),
       iosParameters: IOSParameters(
         fallbackUrl: fallbackUrl,
