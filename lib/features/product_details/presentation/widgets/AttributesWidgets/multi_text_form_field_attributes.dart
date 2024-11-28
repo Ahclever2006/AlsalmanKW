@@ -1,4 +1,6 @@
+import 'package:alsalman_app/features/product_details/presentation/blocs/cubit/product_details_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../res/style/app_colors.dart';
 import '../../../data/model/attributes/text_form_field_attribute_model.dart';
@@ -15,8 +17,11 @@ class MultiTextFormFieldAttributes extends StatefulWidget {
 
 class _MultiTextFormFieldAttributesState
     extends State<MultiTextFormFieldAttributes> {
+      
   @override
   Widget build(BuildContext context) {
+                        final cubit = context.read<ProductDetailsCubit>();
+
     final TextFormFieldAttributeModel model =
         TextFormFieldAttributeModel(hint: 'write here');
     if (widget.attributeModel!.textEditingController!.text.isEmpty &&
@@ -65,6 +70,29 @@ class _MultiTextFormFieldAttributesState
               border: const OutlineInputBorder(),
               hintText: model.hint,
             ),
+                  onChanged: (value) {
+
+              if (widget
+                  .attributeModel!.textEditingController!.text.isNotEmpty) {
+                cubit.addToAttributeList({
+                  'product_attribute_${widget.attributeModel!.id}':
+                      widget.attributeModel!.textEditingController!.text
+                });
+
+                cubit.adjustProductPrice(0);
+              } else {
+                cubit.removeFromAttributeList(
+                    'product_attribute_${widget.attributeModel!.id}');
+
+                cubit.adjustProductPrice(0);
+              }
+              if (widget
+                  .attributeModel!.textEditingController!.text.isNotEmpty) {
+                widget.attributeModel!.error = null;
+
+                setState(() {});
+              }
+            },
             onFieldSubmitted: (value) {
               if (widget
                   .attributeModel!.textEditingController!.text.isNotEmpty) {
