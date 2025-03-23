@@ -160,8 +160,8 @@ class TitleText extends StatelessWidget {
     final textStyleBefore = context
         .sizeHelper(
           tabletSmall: Theme.of(context).textTheme.displayLarge,
-          tabletNormal: Theme.of(context).textTheme.headline2,
-          desktopSmall: Theme.of(context).textTheme.headline3,
+          tabletNormal: Theme.of(context).textTheme.headlineSmall,
+          desktopSmall: Theme.of(context).textTheme.headlineMedium,
         )
         .copyWith(color: color);
 

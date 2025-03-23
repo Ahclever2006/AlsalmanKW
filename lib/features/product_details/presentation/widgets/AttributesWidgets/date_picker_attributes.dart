@@ -28,13 +28,13 @@ class _DatePickerAttributesState extends State<DatePickerAttributes> {
 
     final Widget notRequiredTitle = Text(
       widget.attributeModel!.name!,
-      style: Theme.of(context).textTheme.bodyText1,
+      style: Theme.of(context).textTheme.displaySmall,
     );
     final Widget requiredTitle = Row(
       children: <Widget>[
         Text(
           widget.attributeModel!.name!,
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.displaySmall,
         ),
         const SizedBox(
           width: 5.0,
@@ -78,9 +78,9 @@ class _DatePickerAttributesState extends State<DatePickerAttributes> {
                   focusedBorder: InputBorder.none,
                   border: InputBorder.none,
                   hintText: model.hint,
-                  hintStyle: Theme.of(context).textTheme.bodyText1,
+                  hintStyle: Theme.of(context).textTheme.displaySmall,
                 ),
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context).textTheme.displaySmall,
                 controller: textEditingController,
                 onEditingComplete: () async {
                   // final String request =

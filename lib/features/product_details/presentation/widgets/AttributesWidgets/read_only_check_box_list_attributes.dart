@@ -21,13 +21,13 @@ class _ReadOnlyCheckBoxListAttributesState
 
     final Widget notRequiredTitle = Text(
       widget.attributeModel!.name!,
-      style: Theme.of(context).textTheme.bodyText1,
+      style: Theme.of(context).textTheme.displaySmall,
     );
     final Widget requiredTitle = Row(
       children: <Widget>[
         Text(
           widget.attributeModel!.name!,
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.displaySmall,
         ),
         const SizedBox(
           width: 5.0,
@@ -71,7 +71,7 @@ class _ReadOnlyCheckBoxListAttributesState
                     child: Text(
                       model.values![index].name!,
                       maxLines: 1,
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: Theme.of(context).textTheme.displaySmall,
                     ),
                   ))
                 ],

@@ -1,44 +1,40 @@
-import '../../../../shared_widgets/other/show_register_first_snack_bar.dart';
-
-import '../../../../api_end_point.dart';
-import '../../../../core/utils/media_query_values.dart';
-
-import '../../../../shared_widgets/dialogs/image_interactive_dialog.dart';
-import '../../../cart_tab/presentation/cubit/cart_cubit.dart';
-import '../../../../shared_widgets/other/show_size_guide_bottom_sheet.dart';
-
-import '../../../../core/utils/navigator_helper.dart';
-import '../../../../core/utils/type_defs.dart';
-import '../../../auth/presentation/blocs/auth_cubit/auth_cubit.dart';
-import '../../../../res/style/theme.dart';
-import '../../../../shared_widgets/other/show_simple_bottom_sheet.dart';
-import '../../../../shared_widgets/stateful/quantity_button.dart';
-import '../../../../shared_widgets/stateless/title_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../res/style/app_colors.dart';
-import '../../../../shared_widgets/stateful/default_button.dart';
-import '../../../../shared_widgets/stateful/favorite_button.dart';
-
-import '../../../../shared_widgets/stateful/share_button.dart';
-import '../../../../shared_widgets/stateless/custom_cached_network_image.dart';
-import '../../../../shared_widgets/stateless/product_card.dart';
-import '../../../../shared_widgets/text_fields/default_text_form_field.dart';
-import '../../../cart_tab/presentation/pages/cart_page.dart';
-import '../../data/model/product_details_model.dart';
-import '../blocs/cubit/product_details_cubit.dart';
-import '../widgets/attribute_list_widget.dart';
 import '/di/injector.dart';
 import '/shared_widgets/other/show_snack_bar.dart';
 import '/shared_widgets/stateless/custom_app_page.dart';
 import '/shared_widgets/stateless/custom_loading.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../api_end_point.dart';
+import '../../../../core/utils/media_query_values.dart';
+import '../../../../core/utils/navigator_helper.dart';
+import '../../../../core/utils/type_defs.dart';
+import '../../../../res/style/app_colors.dart';
+import '../../../../res/style/theme.dart';
+import '../../../../shared_widgets/dialogs/image_interactive_dialog.dart';
+import '../../../../shared_widgets/other/show_register_first_snack_bar.dart';
+import '../../../../shared_widgets/other/show_simple_bottom_sheet.dart';
+import '../../../../shared_widgets/other/show_size_guide_bottom_sheet.dart';
+import '../../../../shared_widgets/stateful/default_button.dart';
+import '../../../../shared_widgets/stateful/favorite_button.dart';
+import '../../../../shared_widgets/stateful/quantity_button.dart';
+import '../../../../shared_widgets/stateful/share_button.dart';
+import '../../../../shared_widgets/stateless/custom_cached_network_image.dart';
+import '../../../../shared_widgets/stateless/product_card.dart';
+import '../../../../shared_widgets/stateless/title_text.dart';
+import '../../../../shared_widgets/text_fields/default_text_form_field.dart';
+import '../../../auth/presentation/blocs/auth_cubit/auth_cubit.dart';
+import '../../../cart_tab/presentation/cubit/cart_cubit.dart';
+import '../../../cart_tab/presentation/pages/cart_page.dart';
+import '../../data/model/product_details_model.dart';
+import '../blocs/cubit/product_details_cubit.dart';
+import '../widgets/attribute_list_widget.dart';
 
 class ProductDetailsPage extends StatefulWidget {
   static const routeName = '/ProductDetailsPage';
@@ -63,10 +59,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   bool? isFav;
   int? _timeAttributeId;
   int? _dateAttributeId;
-  late CarouselController imageController;
+  late CarouselSliderController imageController;
   @override
   void initState() {
-    imageController = CarouselController();
+    imageController = CarouselSliderController();
     super.initState();
   }
 

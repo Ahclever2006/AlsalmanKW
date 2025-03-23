@@ -40,7 +40,7 @@ class NoInternetConnectionWidget extends StatelessWidget {
           const SizedBox(height: 16.0),
           Text(
             'sorry_no_result_found'.tr(),
-            style: Theme.of(context).textTheme.headline2,
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
           const Spacer(),
           _buildRefreshButton(context),

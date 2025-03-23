@@ -49,13 +49,13 @@ class _ImageSquareAttributesState extends State<ImageSquareAttributes> {
 
     final Widget notRequiredTitle = Text(
       widget.attributeModel!.name!,
-      style: Theme.of(context).textTheme.bodyText1,
+      style: Theme.of(context).textTheme.displaySmall,
     );
     final Widget requiredTitle = Row(
       children: <Widget>[
         Text(
           widget.attributeModel!.name!,
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.displaySmall,
         ),
         const SizedBox(
           width: 5.0,

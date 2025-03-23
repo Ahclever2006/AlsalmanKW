@@ -1,37 +1,38 @@
-import 'package:collection/collection.dart';
-import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:sticky_headers/sticky_headers.dart';
-import '../../../../shared_widgets/stateless/drawer_appbar.dart';
-import '../../../../core/utils/media_query_values.dart';
-import 'package:upgrader/upgrader.dart';
-import '../../../../shared_widgets/stateful/gif_network_widget.dart';
-import '../../../auth/presentation/blocs/auth_cubit/auth_cubit.dart';
-import '../../../cart_tab/presentation/cubit/cart_cubit.dart';
-import '../../../categories/presentation/pages/categories_page.dart';
-import '../../../j_carousal_products/presentation/pages/j_carousal_products_page.dart';
-import '../../../../shared_widgets/stateful/default_button.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:size_helper/size_helper.dart';
-import '../../../../api_end_point.dart';
-import '../../../../core/data/models/banner_model.dart';
-import '../../../../core/data/models/home_categ_model.dart';
-import '../../../../di/injector.dart';
-import '../../../category_products/presentation/pages/category_products_page.dart';
-import '../../../product_details/presentation/pages/product_details_page.dart';
-import '../../../../shared_widgets/stateless/category_card.dart';
-import '../../../../shared_widgets/stateless/custom_cached_network_image.dart';
-import '../../../../shared_widgets/stateless/product_card.dart';
-import '../../../../shared_widgets/stateless/title_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import '../../../../core/data/models/home_carousal_collection_model.dart';
-import '../../../../res/style/app_colors.dart';
-import '../../../../shared_widgets/stateless/custom_app_page.dart';
-import '../cubit/home_cubit.dart';
+import 'package:collection/collection.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:size_helper/size_helper.dart';
+import 'package:sticky_headers/sticky_headers.dart';
+import 'package:upgrader/upgrader.dart';
+
 import '/core/utils/navigator_helper.dart';
 import '/shared_widgets/other/show_snack_bar.dart';
 import '/shared_widgets/stateless/custom_loading.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../api_end_point.dart';
+import '../../../../core/data/models/banner_model.dart';
+import '../../../../core/data/models/home_carousal_collection_model.dart';
+import '../../../../core/data/models/home_categ_model.dart';
+import '../../../../core/utils/media_query_values.dart';
+import '../../../../di/injector.dart';
+import '../../../../res/style/app_colors.dart';
+import '../../../../shared_widgets/stateful/default_button.dart';
+import '../../../../shared_widgets/stateful/gif_network_widget.dart';
+import '../../../../shared_widgets/stateless/category_card.dart';
+import '../../../../shared_widgets/stateless/custom_app_page.dart';
+import '../../../../shared_widgets/stateless/custom_cached_network_image.dart';
+import '../../../../shared_widgets/stateless/drawer_appbar.dart';
+import '../../../../shared_widgets/stateless/product_card.dart';
+import '../../../../shared_widgets/stateless/title_text.dart';
+import '../../../auth/presentation/blocs/auth_cubit/auth_cubit.dart';
+import '../../../cart_tab/presentation/cubit/cart_cubit.dart';
+import '../../../categories/presentation/pages/categories_page.dart';
+import '../../../category_products/presentation/pages/category_products_page.dart';
+import '../../../j_carousal_products/presentation/pages/j_carousal_products_page.dart';
+import '../../../product_details/presentation/pages/product_details_page.dart';
+import '../cubit/home_cubit.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({
@@ -60,12 +61,12 @@ class _HomeTabState extends State<HomeTab> {
   @override
   Widget build(BuildContext context) {
     return UpgradeAlert(
+      showIgnore: false,
+      dialogStyle: UpgradeDialogStyle.cupertino,
+      showLater: false,
       upgrader: Upgrader(
-          showIgnore: false,
-          dialogStyle: UpgradeDialogStyle.cupertino,
           messages: UpgraderMessages(
               code: context.locale == const Locale('en') ? 'en' : 'ar'),
-          showLater: false,
           durationUntilAlertAgain: const Duration(seconds: 1)),
       child: CustomAppPage(
         safeTop: true,

@@ -85,9 +85,9 @@ class _TextFormFieldAttributesState extends State<TextFormFieldAttributes> {
               border: InputBorder.none,
               hintText: model.hint,
               counterText: '',
-              hintStyle: Theme.of(context).textTheme.bodyText1,
+              hintStyle: Theme.of(context).textTheme.displaySmall,
             ),
-            style: Theme.of(context).textTheme.bodyText1,
+            style: Theme.of(context).textTheme.displaySmall,
             onChanged: (value) {
               if (textEditingController!.text.isNotEmpty) {
                 cubit.addToAttributeList({

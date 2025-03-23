@@ -2,17 +2,14 @@ import 'dart:async';
 
 import 'package:alsalman_app/shared_widgets/stateless/subtitle_text.dart';
 import 'package:collection/collection.dart';
-import 'package:custom_searchable_dropdown/custom_searchable_dropdown.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import '../../data/models/states_model.dart';
 
-import '../../../../core/enums/address_type_enum.dart';
-import '../../../../res/style/theme.dart';
-import '../widgets/address_type_selector.dart';
 import '/shared_widgets/stateless/custom_app_page.dart';
+import '../../../../core/enums/address_type_enum.dart';
 import '../../../../core/utils/media_query_values.dart';
 import '../../../../core/utils/navigator_helper.dart';
 import '../../../../di/injector.dart';
@@ -23,12 +20,15 @@ import '../../../../shared_widgets/stateful/custom_drop_down_menu.dart';
 import '../../../../shared_widgets/stateful/default_button.dart';
 import '../../../../shared_widgets/stateless/custom_loading.dart';
 import '../../../../shared_widgets/stateless/inner_appbar.dart';
+import '../../../../shared_widgets/stateless/title_text.dart';
 import '../../../../shared_widgets/text_fields/default_text_form_field.dart';
 import '../../../../shared_widgets/text_fields/email_text_form_field.dart';
 import '../../../../shared_widgets/text_fields/phone_number_text_field.dart';
 import '../../data/models/address_by_id_model.dart';
 import '../../data/models/address_submit_model.dart';
+import '../../data/models/states_model.dart';
 import '../blocs/address_cubit/address_cubit.dart';
+import '../widgets/address_type_selector.dart';
 
 class AddAddressPage extends StatefulWidget {
   static const routeName = '/AddAddressPage';
@@ -66,6 +66,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
   late final TextEditingController _officeTextController;
   late final TextEditingController _otherTextController;
   late final TextEditingController _notesTextController;
+  late final TextEditingController _cityTextController;
 
   late final FocusNode _addressNameFocusNode;
   late final FocusNode _emailFocusNode;
@@ -97,6 +98,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
     _officeTextController = TextEditingController();
     _otherTextController = TextEditingController();
     _notesTextController = TextEditingController();
+    _cityTextController = TextEditingController();
 
     _addressNameFocusNode = FocusNode();
     _emailFocusNode = FocusNode();
@@ -124,6 +126,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
     _floorTextController.dispose();
     _apartmentTextController.dispose();
     _notesTextController.dispose();
+    _cityTextController.dispose();
 
     _addressNameFocusNode.dispose();
     _addressFocusNode.dispose();
@@ -605,43 +608,148 @@ class _AddAddressPageState extends State<AddAddressPage> {
         if (state is AddressInitial ||
             state is AddressStateLoading ||
             state.cities == null) return const CustomLoading();
-        return CustomSearchableDropDown(
-          dropdownHintText: 'search'.tr(),
-          showLabelInMenu: false,
-          dropdownItemStyle: const TextStyle(
-              color: AppColors.PRIMARY_COLOR_DARK, fontWeight: FontWeight.bold),
-          primaryColor: AppColors.PRIMARY_COLOR,
-          menuMode: false,
-          labelStyle: Theme.of(context)
-              .textTheme
-              .displayLarge!
-              .copyWith(height: textHeight),
-          items: state.cities!,
-          hint: 'select_city'.tr(),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: AppColors.PRIMARY_COLOR)),
-          label: 'select_city'.tr(),
-          menuPadding: const EdgeInsets.symmetric(horizontal: 16.0),
-          padding: const EdgeInsetsDirectional.only(
-              start: 16.0, top: 8.0, bottom: 8.0, end: 8.0),
-          suffixIcon: const Icon(Icons.keyboard_arrow_down,
-              color: AppColors.PRIMARY_COLOR),
-          dropDownMenuItems: state.cities!.map((item) {
-            return item.name;
-          }).toList(),
-          onChanged: (item) => setState(
-            () {
-              selectedCityId = item!.id.toString();
-              selectedCityName = item.name;
-            },
-          ),
-          initialIndex: selectedCityId != null
-              ? state.cities!.indexOf(state.cities!
-                  .where((e) => e.id.toString() == selectedCityId)
-                  .first)
-              : null,
-        );
+        return Container(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+              border: Border.all(color: AppColors.PRIMARY_COLOR_DARK),
+            ),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton2<StatesModel>(
+                isExpanded: true,
+                iconStyleData: const IconStyleData(
+                  icon: Icon(
+                    Icons.keyboard_arrow_down,
+                    color: AppColors.PRIMARY_COLOR,
+                  ),
+                ),
+                hint: Text(
+                  'select_city'.tr(),
+                  style: TextStyle(
+                    fontSize: 15.4,
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+                items: state.cities!.map((item) {
+                  return DropdownMenuItem(
+                    value: item,
+                    child: TitleText(
+                      text: item.name!,
+                    ),
+                  );
+                }).toList(),
+                onChanged: (item) => setState(
+                  () {
+                    selectedCityId = item!.id.toString();
+                    selectedCityName = item.name;
+                  },
+                ),
+                value: selectedCityId != null
+                    ? state.cities!
+                        .where((e) => e.id.toString() == selectedCityId)
+                        .first
+                    : null,
+                buttonStyleData: const ButtonStyleData(
+                  padding: EdgeInsets.symmetric(horizontal: 11),
+                  height: 48,
+                  // width: 200,
+                ),
+                dropdownStyleData: const DropdownStyleData(
+                  maxHeight: 300,
+                ),
+                menuItemStyleData: const MenuItemStyleData(
+                  height: 45,
+                ),
+                dropdownSearchData: DropdownSearchData(
+                  searchController: _cityTextController,
+                  searchInnerWidgetHeight: 50,
+                  searchInnerWidget: Container(
+                    height: 50,
+                    padding: const EdgeInsets.only(
+                      top: 8,
+                      bottom: 4,
+                      right: 8,
+                      left: 8,
+                    ),
+                    child: TextFormField(
+                      expands: true,
+                      maxLines: null,
+                      controller: _cityTextController,
+                      decoration: InputDecoration(
+                        fillColor: AppColors.PRIMARY_COLOR,
+                        isDense: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 8,
+                        ),
+                        hintText: 'search'.tr(),
+                        hintStyle: const TextStyle(
+                          fontSize: 12,
+                          color: AppColors.PRIMARY_COLOR,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ),
+                  searchMatchFn: (item, searchValue) {
+                    return item.value
+                        .toString()
+                        .toLowerCase()
+                        .contains(searchValue.toLowerCase());
+                  },
+                ),
+                //This to clear the search value when you close the menu
+                onMenuStateChange: (isOpen) {
+                  if (!isOpen) {
+                    _cityTextController.clear();
+                  }
+                },
+                // value: selectedCityId != null
+                //     ? state.cities!.indexOf(state.cities!
+                //         .where((e) => e.id.toString() == selectedCityId)
+                //         .first)
+                //     : null,
+              ),
+            ));
+        //   CustomSearchableDropDown(
+        //   dropdownHintText: 'search'.tr(),
+        //   showLabelInMenu: false,
+        //   dropdownItemStyle: const TextStyle(
+        //       color: AppColors.PRIMARY_COLOR_DARK, fontWeight: FontWeight.bold),
+        //   primaryColor: AppColors.PRIMARY_COLOR,
+        //   menuMode: false,
+        //   labelStyle: Theme.of(context)
+        //       .textTheme
+        //       .displayLarge!
+        //       .copyWith(height: textHeight),
+        //   items: state.cities!,
+        //   hint: 'select_city'.tr(),
+        //   decoration: BoxDecoration(
+        //       borderRadius: BorderRadius.circular(10),
+        //       border: Border.all(color: AppColors.PRIMARY_COLOR)),
+        //   label: 'select_city'.tr(),
+        //   menuPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+        //   padding: const EdgeInsetsDirectional.only(
+        //       start: 16.0, top: 8.0, bottom: 8.0, end: 8.0),
+        //   suffixIcon: const Icon(Icons.keyboard_arrow_down,
+        //       color: AppColors.PRIMARY_COLOR),
+        //   dropDownMenuItems: state.cities!.map((item) {
+        //     return item.name;
+        //   }).toList(),
+        //   onChanged: (item) => setState(
+        //     () {
+        //       selectedCityId = item!.id.toString();
+        //       selectedCityName = item.name;
+        //     },
+        //   ),
+        //   initialIndex: selectedCityId != null
+        //       ? state.cities!.indexOf(state.cities!
+        //           .where((e) => e.id.toString() == selectedCityId)
+        //           .first)
+        //       : null,
+        // );
       },
     );
   }

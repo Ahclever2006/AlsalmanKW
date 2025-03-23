@@ -166,7 +166,7 @@
 //         child: Text(
 //           type?.name ?? 'all'.tr(),
 //           textAlign: TextAlign.center,
-//           style: Theme.of(context).textTheme.bodyText1!.copyWith(
+//           style: Theme.of(context).textTheme.displaySmall!.copyWith(
 //                 color: isSelected ? Colors.white : null,
 //                 fontWeight: FontWeight.bold,
 //               ),

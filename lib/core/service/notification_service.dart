@@ -251,7 +251,7 @@ Future<void> navigateToPage(
                 ),
               ),
               initialUrlRequest: URLRequest(
-                url: Uri.parse(link),
+                url: WebUri(link),
               ),
             ),
           ),

@@ -32,14 +32,14 @@ class _FilePickerAttributesState extends State<FilePickerAttributes> {
 
     final Widget notRequiredTitle = Text(
       widget.attributeModel!.name!,
-      style: Theme.of(context).textTheme.bodyText1,
+      style: Theme.of(context).textTheme.displaySmall,
     );
     final Widget requiredTitle = Row(
       children: <Widget>[
         Expanded(
           child: Text(
             widget.attributeModel!.name!,
-            style: Theme.of(context).textTheme.bodyText1,
+            style: Theme.of(context).textTheme.displaySmall,
           ),
         ),
         const SizedBox(

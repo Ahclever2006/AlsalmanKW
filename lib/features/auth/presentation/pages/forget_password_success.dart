@@ -1,12 +1,12 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../../../shared_widgets/stateless/subtitle_text.dart';
 
 import '/core/utils/navigator_helper.dart';
 import '/res/style/app_colors.dart';
-import '/shared_widgets/stateless/custom_app_page.dart';
 import '/shared_widgets/stateful/default_button.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
+import '/shared_widgets/stateless/custom_app_page.dart';
+import '../../../../shared_widgets/stateless/subtitle_text.dart';
 
 class ForgetPasswordSuccessPage extends StatelessWidget {
   static const routeName = '/ForgetPasswordSuccessPage';
@@ -44,7 +44,7 @@ class ForgetPasswordSuccessPage extends StatelessWidget {
       textAlign: TextAlign.center,
       style: Theme.of(context)
           .textTheme
-          .headline6!
+          .titleLarge!
           .copyWith(color: AppColors.PRIMARY_COLOR),
     );
   }

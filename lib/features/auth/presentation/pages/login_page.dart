@@ -1,29 +1,26 @@
 import 'dart:io';
 
 import 'package:alsalman_app/core/utils/media_query_values.dart';
-
-import '../../../../shared_widgets/stateless/subtitle_text.dart';
-
-import '../../../../core/utils/navigator_helper.dart';
-import '../../../../shared_widgets/stateless/inner_appbar.dart';
-import '../../../address/presentation/blocs/address_cubit/address_cubit.dart';
-import '../../../cart_tab/presentation/cubit/cart_cubit.dart';
-import '../blocs/auth_cubit/auth_cubit.dart';
-import 'sign_up_page.dart';
-import '../../../../res/style/app_colors.dart';
-import '../../../../shared_widgets/other/show_snack_bar.dart';
-import '../../../../shared_widgets/text_fields/email_text_form_field.dart';
-import '../../../../shared_widgets/text_fields/password_text_form_field.dart';
-import '/shared_widgets/stateless/custom_app_page.dart';
-import '/shared_widgets/stateful/default_button.dart';
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:easy_localization/easy_localization.dart';
 
+import '/shared_widgets/stateful/default_button.dart';
+import '/shared_widgets/stateless/custom_app_page.dart';
+import '../../../../core/utils/navigator_helper.dart';
+import '../../../../res/style/app_colors.dart';
+import '../../../../shared_widgets/other/show_snack_bar.dart';
+import '../../../../shared_widgets/stateless/inner_appbar.dart';
+import '../../../../shared_widgets/stateless/subtitle_text.dart';
+import '../../../../shared_widgets/text_fields/email_text_form_field.dart';
+import '../../../../shared_widgets/text_fields/password_text_form_field.dart';
+import '../../../address/presentation/blocs/address_cubit/address_cubit.dart';
+import '../../../cart_tab/presentation/cubit/cart_cubit.dart';
+import '../blocs/auth_cubit/auth_cubit.dart';
 import 'forget_password_page.dart';
+import 'sign_up_page.dart';
 
 class LoginPage extends StatefulWidget {
   static const routeName = '/LoginPage';
@@ -216,17 +213,17 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             TextSpan(
               text: 'no_account'.tr(),
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.displaySmall,
             ),
             TextSpan(
               text: ' ',
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.displaySmall,
             ),
             TextSpan(
               text: 'sign_up'.tr(),
               style: Theme.of(context)
                   .textTheme
-                  .headline1!
+                  .displayMedium!
                   .copyWith(fontSize: 14.0, color: AppColors.PRIMARY_COLOR),
               recognizer: TapGestureRecognizer()
                 ..onTap = () => _goToSignUpPage(context),
@@ -245,7 +242,7 @@ class _LoginPageState extends State<LoginPage> {
       contentAlignment: MainAxisAlignment.start,
       labelStyle: Theme.of(context)
           .textTheme
-          .bodyText2!
+          .displayMedium!
           .copyWith(color: AppColors.PRIMARY_COLOR_DARK),
       backgroundColor: Colors.white,
       borderColor: AppColors.PRIMARY_COLOR,
@@ -266,7 +263,7 @@ class _LoginPageState extends State<LoginPage> {
       contentAlignment: MainAxisAlignment.start,
       labelStyle: Theme.of(context)
           .textTheme
-          .bodyText2!
+          .displayMedium!
           .copyWith(color: AppColors.PRIMARY_COLOR_DARK),
       backgroundColor: Colors.white,
       borderColor: AppColors.PRIMARY_COLOR,

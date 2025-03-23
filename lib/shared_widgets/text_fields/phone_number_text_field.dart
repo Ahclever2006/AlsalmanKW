@@ -33,12 +33,16 @@ class PhoneTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     final textStyle = context
         .sizeHelper(
-            mobileLarge:
-                Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 14.0),
-            tabletSmall: Theme.of(context).textTheme.bodyText2!,
-            tabletNormal: Theme.of(context).textTheme.bodyText2!,
-            desktopSmall:
-                Theme.of(context).textTheme.bodyText2!.copyWith(fontSize: 21.0))
+            mobileLarge: Theme.of(context)
+                .textTheme
+                .displaySmall!
+                .copyWith(fontSize: 14.0),
+            tabletSmall: Theme.of(context).textTheme.displayMedium!,
+            tabletNormal: Theme.of(context).textTheme.displayMedium!,
+            desktopSmall: Theme.of(context)
+                .textTheme
+                .displayMedium!
+                .copyWith(fontSize: 21.0))
         .copyWith(color: AppColors.PRIMARY_COLOR_DARK);
     return Container(
       margin: margin,
@@ -60,19 +64,19 @@ class PhoneTextFormField extends StatelessWidget {
               .sizeHelper(
                 mobileLarge: Theme.of(context)
                     .textTheme
-                    .bodyText1!
+                    .displaySmall!
                     .copyWith(fontSize: 10.0),
                 tabletSmall: Theme.of(context)
                     .textTheme
-                    .bodyText1!
+                    .displaySmall!
                     .copyWith(fontSize: 12.0),
                 tabletNormal: Theme.of(context)
                     .textTheme
-                    .bodyText1!
+                    .displaySmall!
                     .copyWith(fontSize: 12.0),
                 desktopSmall: Theme.of(context)
                     .textTheme
-                    .bodyText1!
+                    .displaySmall!
                     .copyWith(fontSize: 20.0),
               )
               .copyWith(color: AppColors.GREY_DARK_COLOR),

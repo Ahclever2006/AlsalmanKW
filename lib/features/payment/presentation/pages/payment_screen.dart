@@ -79,7 +79,7 @@
 //                     if (state is PaymentStateLoading ||
 //                         cubit.myfatoorahPaymentMethods == null)
 //                       return const CustomLoading(
-//                         
+//
 //                       );
 //                     if (state.paymentMethodsModel != null &&
 //                         state.paymentSummaryModel != null) {
@@ -132,7 +132,7 @@
 //                       label: 'check_out'.tr(),
 //                       labelStyle: Theme.of(context)
 //                           .textTheme
-//                           .bodyText1!
+//                           .displaySmall!
 //                           .copyWith(
 //                               color: AppColors.PRIMARY_COLOR, height: 1.0),
 //                       padding: const EdgeInsets.symmetric(
@@ -239,11 +239,11 @@
 //           children: [
 //             Text(
 //               'sub_total'.tr(),
-//               style: Theme.of(context).textTheme.bodyText2,
+//               style: Theme.of(context).textTheme.displayMedium,
 //             ),
 //             Text(
 //               payment!.totalsModel!.subTotal!,
-//               style: Theme.of(context).textTheme.bodyText2,
+//               style: Theme.of(context).textTheme.displayMedium,
 //             ),
 //           ],
 //         ),
@@ -255,11 +255,11 @@
 //           children: [
 //             Text(
 //               'taxes'.tr(),
-//               style: Theme.of(context).textTheme.bodyText2,
+//               style: Theme.of(context).textTheme.displayMedium,
 //             ),
 //             Text(
 //               payment.totalsModel!.tax!,
-//               style: Theme.of(context).textTheme.bodyText2,
+//               style: Theme.of(context).textTheme.displayMedium,
 //             ),
 //           ],
 //         ),
@@ -271,11 +271,11 @@
 //           children: [
 //             Text(
 //               'total'.tr(),
-//               style: Theme.of(context).textTheme.bodyText2,
+//               style: Theme.of(context).textTheme.displayMedium,
 //             ),
 //             Text(
 //               payment.totalsModel!.orderTotal!,
-//               style: Theme.of(context).textTheme.bodyText2,
+//               style: Theme.of(context).textTheme.displayMedium,
 //             ),
 //           ],
 //         ),

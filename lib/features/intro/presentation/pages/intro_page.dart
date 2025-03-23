@@ -1,22 +1,22 @@
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../../../res/style/app_colors.dart';
-import '../../../../shared_widgets/stateless/image_not_exist_place_holder.dart';
-import '../../../../core/utils/media_query_values.dart';
 
+import '/shared_widgets/other/show_snack_bar.dart';
+import '/shared_widgets/stateless/custom_loading.dart';
 import '../../../../api_end_point.dart';
 import '../../../../core/data/models/banner_model.dart';
+import '../../../../core/utils/media_query_values.dart';
 import '../../../../core/utils/navigator_helper.dart';
 import '../../../../di/injector.dart';
-import '../../../../shared_widgets/stateless/custom_cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import '../../../../res/style/app_colors.dart';
 import '../../../../shared_widgets/stateless/custom_app_page.dart';
+import '../../../../shared_widgets/stateless/custom_cached_network_image.dart';
+import '../../../../shared_widgets/stateless/image_not_exist_place_holder.dart';
 import '../../../../shared_widgets/stateless/title_text.dart';
 import '../../../layout/presentation/pages/main_layout_page.dart';
 import '../cubit/intro_cubit.dart';
-import '/shared_widgets/other/show_snack_bar.dart';
-import '/shared_widgets/stateless/custom_loading.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class IntroPage extends StatefulWidget {
   static const routeName = '/IntroPage';
@@ -29,11 +29,11 @@ class IntroPage extends StatefulWidget {
 }
 
 class _IntroPageState extends State<IntroPage> {
-  late CarouselController imageController;
+  late CarouselSliderController imageController;
 
   @override
   void initState() {
-    imageController = CarouselController();
+    imageController = CarouselSliderController();
 
     super.initState();
   }

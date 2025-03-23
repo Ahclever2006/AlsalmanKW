@@ -63,7 +63,7 @@ class _MyCheckboxListTileState extends State<MyCheckboxListTile> {
                 children: [
                   TextSpan(
                     text: 'by_sign_up'.tr(),
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    style: Theme.of(context).textTheme.displaySmall!.copyWith(
                         fontSize: 14.0, color: AppColors.PRIMARY_COLOR_DARK),
                   ),
                   TextSpan(
@@ -83,7 +83,7 @@ class _MyCheckboxListTileState extends State<MyCheckboxListTile> {
                   ),
                   TextSpan(
                     text: 'and'.tr(),
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    style: Theme.of(context).textTheme.displaySmall!.copyWith(
                         fontSize: 14.0, color: AppColors.PRIMARY_COLOR_DARK),
                   ),
                   TextSpan(

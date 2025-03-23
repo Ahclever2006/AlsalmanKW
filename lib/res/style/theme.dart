@@ -7,14 +7,15 @@ final theme = ThemeData(
   fontFamily: 'Roboto',
   scaffoldBackgroundColor: Colors.transparent,
   textTheme: TextTheme(
-    bodyText1: _normalText(14.0),
-    bodyText2: _normalText(16.0),
-    headline1: _boldText(16.0),
-    headline2: _boldText(18.0),
-    headline3: _boldText(21.0),
-    headline4: _boldText(24.0),
-    headline5: _boldText(28.0),
-    headline6: _boldText(32.0),
+    displaySmall: _normalText(11.0),
+    displayMedium: _normalText(13.0),
+    displayLarge: _boldText(16.0),
+    headlineSmall: _boldText(13.0),
+    headlineMedium: _boldText(15.0),
+    headlineLarge: _boldText(18.0),
+    titleSmall: _boldText(21.0),
+    titleMedium: _boldText(23.0),
+    titleLarge: _boldText(29.0),
   ),
   appBarTheme: const AppBarTheme(
     systemOverlayStyle: SystemUiOverlayStyle(
@@ -26,10 +27,10 @@ final theme = ThemeData(
   iconTheme: const IconThemeData(color: Colors.white),
   colorScheme: const ColorScheme.light(primary: AppColors.PRIMARY_COLOR),
   radioTheme: RadioThemeData(
-    overlayColor: MaterialStateColor.resolveWith(
+    overlayColor: WidgetStateColor.resolveWith(
       (states) => AppColors.GREY_NORMAL_COLOR,
     ),
-    fillColor: MaterialStateColor.resolveWith(
+    fillColor: WidgetStateColor.resolveWith(
       (states) => AppColors.PRIMARY_COLOR,
     ),
   ),

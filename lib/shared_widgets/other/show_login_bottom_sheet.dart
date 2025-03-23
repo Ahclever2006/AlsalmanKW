@@ -334,7 +334,7 @@
 //                     text: 'by_sign_up'.tr(),
 //                     style: Theme.of(context)
 //                         .textTheme
-//                         .bodyText1!
+//                         .displaySmall!
 //                         .copyWith(fontSize: 16.0),
 //                   ),
 //                   TextSpan(
@@ -355,7 +355,7 @@
 //                     text: 'and'.tr(),
 //                     style: Theme.of(context)
 //                         .textTheme
-//                         .bodyText1!
+//                         .displaySmall!
 //                         .copyWith(fontSize: 16.0),
 //                   ),
 //                   TextSpan(

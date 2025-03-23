@@ -1,17 +1,16 @@
-import '../../../../shared_widgets/stateless/inner_appbar.dart';
-
-import '../blocs/auth_cubit/auth_cubit.dart';
-import '/core/utils/navigator_helper.dart';
-import '/di/injector.dart';
-import '/res/style/app_colors.dart';
-import '/shared_widgets/stateless/custom_app_page.dart';
-import '/shared_widgets/stateful/default_button.dart';
-import '/shared_widgets/other/show_snack_bar.dart';
-import '/shared_widgets/text_fields/email_text_form_field.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '/core/utils/navigator_helper.dart';
+import '/di/injector.dart';
+import '/res/style/app_colors.dart';
+import '/shared_widgets/other/show_snack_bar.dart';
+import '/shared_widgets/stateful/default_button.dart';
+import '/shared_widgets/stateless/custom_app_page.dart';
+import '/shared_widgets/text_fields/email_text_form_field.dart';
+import '../../../../shared_widgets/stateless/inner_appbar.dart';
+import '../blocs/auth_cubit/auth_cubit.dart';
 import 'forget_password_success.dart';
 
 class ForgetPasswordPage extends StatefulWidget {
@@ -85,7 +84,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
       'forget_password_sub'.tr(),
       style: Theme.of(context)
           .textTheme
-          .bodyText1!
+          .displaySmall!
           .copyWith(color: AppColors.GREY_DARK_COLOR),
     );
   }

@@ -17,10 +17,9 @@ class MultiTextFormFieldAttributes extends StatefulWidget {
 
 class _MultiTextFormFieldAttributesState
     extends State<MultiTextFormFieldAttributes> {
-      
   @override
   Widget build(BuildContext context) {
-                        final cubit = context.read<ProductDetailsCubit>();
+    final cubit = context.read<ProductDetailsCubit>();
 
     final TextFormFieldAttributeModel model =
         TextFormFieldAttributeModel(hint: 'write here');
@@ -32,13 +31,13 @@ class _MultiTextFormFieldAttributesState
 
     final Widget notRequiredTitle = Text(
       widget.attributeModel!.name!,
-      style: Theme.of(context).textTheme.bodyText1,
+      style: Theme.of(context).textTheme.displaySmall,
     );
     final Widget requiredTitle = Row(
       children: <Widget>[
         Text(
           widget.attributeModel!.name!,
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.displaySmall,
         ),
         const SizedBox(
           width: 5.0,
@@ -70,8 +69,7 @@ class _MultiTextFormFieldAttributesState
               border: const OutlineInputBorder(),
               hintText: model.hint,
             ),
-                  onChanged: (value) {
-
+            onChanged: (value) {
               if (widget
                   .attributeModel!.textEditingController!.text.isNotEmpty) {
                 cubit.addToAttributeList({

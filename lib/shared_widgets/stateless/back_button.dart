@@ -31,7 +31,7 @@ class CustomBackButton extends StatelessWidget {
                   label!,
                   style: Theme.of(context)
                       .textTheme
-                      .bodyText1!
+                      .displaySmall!
                       .copyWith(fontSize: 18.0),
                   textAlign: TextAlign.center,
                 ),

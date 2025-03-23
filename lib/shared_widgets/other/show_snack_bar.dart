@@ -43,7 +43,7 @@ void showSnackBar(BuildContext context,
                   (message as String).tr(),
                   style: Theme.of(context)
                       .textTheme
-                      .bodyText1!
+                      .displaySmall!
                       .copyWith(color: Colors.white),
                 ),
               ),

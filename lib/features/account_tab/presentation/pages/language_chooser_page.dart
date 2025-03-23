@@ -73,7 +73,7 @@
 //               label: 'ع',
 //               labelStyle: Theme.of(context)
 //                   .textTheme
-//                   .headline1!
+//                   .displayMedium!
 //                   .copyWith(color: AppColors.PRIMARY_COLOR, height: 1.0),
 //               backgroundColor: Colors.white,
 //               borderColor: AppColors.PRIMARY_COLOR,
@@ -93,7 +93,7 @@
 //               label: 'EN',
 //               labelStyle: Theme.of(context)
 //                   .textTheme
-//                   .headline1!
+//                   .displayMedium!
 //                   .copyWith(color: Colors.white, height: 1.0),
 //               backgroundColor: AppColors.PRIMARY_COLOR,
 //               borderRadius: const BorderRadius.all(Radius.circular(9.0)),

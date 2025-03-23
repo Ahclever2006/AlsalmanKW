@@ -15,7 +15,7 @@ class MainTitleText extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Text(
         _title,
-        style: Theme.of(context).textTheme.headline2!.copyWith(
+        style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                 fontSize: context.sizeHelper(
               tabletLarge: 20.0,
               desktopSmall: 30.0,

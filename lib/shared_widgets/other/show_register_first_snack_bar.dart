@@ -19,7 +19,7 @@ Widget _buildRegisterButton(BuildContext context) {
   return InkWell(
     child: Text(
       'login'.tr(),
-      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+      style: Theme.of(context).textTheme.displayMedium!.copyWith(
           fontWeight: FontWeight.bold, color: AppColors.PRIMARY_COLOR),
     ),
     onTap: () => _goToSignUpPage(context),

@@ -19,7 +19,7 @@ class NoDataFoundWidget extends StatelessWidget {
       child: Center(
         child: Text(
           'sorry_no_result_found'.tr(),
-          style: Theme.of(context).textTheme.headline2,
+          style: Theme.of(context).textTheme.headlineSmall,
         ),
       ),
     );
