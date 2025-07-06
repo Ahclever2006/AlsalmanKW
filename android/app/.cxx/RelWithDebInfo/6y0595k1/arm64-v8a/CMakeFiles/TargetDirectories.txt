@@ -1,0 +1,2 @@
+E:/companyProjects/AlsalmanKW/android/app/.cxx/RelWithDebInfo/6y0595k1/arm64-v8a/CMakeFiles/edit_cache.dir
+E:/companyProjects/AlsalmanKW/android/app/.cxx/RelWithDebInfo/6y0595k1/arm64-v8a/CMakeFiles/rebuild_cache.dir
